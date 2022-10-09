@@ -1,0 +1,16 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "prettier",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["prettier", "react", "@typescript-eslint", "react-hooks"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": { "react/react-in-jsx-scope": "off" }
+}
