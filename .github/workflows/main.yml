@@ -52,7 +52,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Run test
         run: |
-          npm run test
+          npm test
     
   enable-yarn-cashe: # yarn casheing
     runs-on: ubuntu-latest
