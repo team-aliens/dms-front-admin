@@ -58,7 +58,7 @@ jobs:
     strategy:
       matrix:
         node: [16.x]
-    needs: [type-check, unit-test, enable-yarn-cashe]
+    needs: [type-check, enable-yarn-cashe]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
