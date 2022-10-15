@@ -36,7 +36,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Check types
         run: |
-          tsc -p tsconfig.json --noEmit
+          tsc
           
   unit-test: # unit test & storybook ui test
     runs-on: ubuntu-latest
