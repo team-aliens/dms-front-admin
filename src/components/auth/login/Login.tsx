@@ -70,7 +70,25 @@ const ChoiceDiv = styled.div`
 `;
 
 function Login() {
+  // id,pw state는 api 연결할 때 수정 오류 방지 및 disabled용도 state
+  const [id, setId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(true);
+
+  const onChangeID = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setId(value);
+  };
+
+  const onChangePW = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setPassword(value);
+    if (password === '') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  };
 
   return (
     <Wrapper>
@@ -88,6 +106,7 @@ function Login() {
           <LoginInputDiv>
             <Input
               label="로그인"
+              onChange={onChangeID}
               placeholder="아이디를 입력해주세요"
               width={480}
               type="text"
@@ -96,6 +115,7 @@ function Login() {
           <PasswordInputDiv>
             <Input
               label="비밀번호"
+              onChange={onChangePW}
               placeholder="비밀번호를 입력해주세요"
               width={480}
               type="password"
