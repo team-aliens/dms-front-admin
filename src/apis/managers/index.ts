@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { instance } from '../axios';
 import { FindAccountIdResponse } from './response';
 import { ResetPasswordRequest } from './request';
@@ -7,8 +6,9 @@ const router = '/managers';
 
 // 아이디 찾기
 export const findAccountId = async (schoolId: string) => {
-  const { data }: AxiosResponse<Promise<FindAccountIdResponse>> =
-    await instance.get(`${router}/account-id/${schoolId}`);
+  const { data } = await instance.get<Promise<FindAccountIdResponse>>(
+    `${router}/account-id/${schoolId}`,
+  );
   return data;
 };
 
