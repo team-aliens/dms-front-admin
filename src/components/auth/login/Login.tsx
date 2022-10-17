@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Title, Input, CheckBox, Button } from 'aliens-design-system-front';
 
@@ -25,6 +26,7 @@ const TitleDiv = styled.div`
   .textDiv {
     display: flex;
     justify-content: start;
+    padding-bottom: 24px;
   }
   .Hr {
     width: 100%;
@@ -68,6 +70,8 @@ const ChoiceDiv = styled.div`
 `;
 
 function Login() {
+  const [disabled, setDisabled] = useState<boolean>(true);
+
   return (
     <Wrapper>
       <ImgWrapper>
@@ -98,10 +102,15 @@ function Login() {
             />
           </PasswordInputDiv>
           <CheckInputDiv>
-            <CheckBox disabled={false} />
+            <CheckBox disabled={false} label="아이디 저장" />
           </CheckInputDiv>
           <SubmitInputDiv>
-            <Button type="contained" color="primary">
+            <Button
+              type="contained"
+              disabled={disabled}
+              color="primary"
+              size="medium"
+            >
               로그인
             </Button>
           </SubmitInputDiv>
