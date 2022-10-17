@@ -22,22 +22,6 @@ concurrency:
   cancel-in-progress: true
       
 jobs: 
-  type-check: # type check
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [16.x]
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Check types
-        run: |
-          tsc
-    
   enable-yarn-cashe: # yarn casheing
     runs-on: ubuntu-latest
     strategy:
@@ -58,7 +42,7 @@ jobs:
     strategy:
       matrix:
         node: [16.x]
-    needs: [type-check, enable-yarn-cashe]
+    needs: [enable-yarn-cashe]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
