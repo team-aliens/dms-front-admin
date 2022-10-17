@@ -36,5 +36,5 @@ jobs:
       - name: Install packages
         run: yarn install --immutable
 
-      - name: Build packages
-        run: yarn build:all
+      - name: Build packages 
+        run: yarn build
