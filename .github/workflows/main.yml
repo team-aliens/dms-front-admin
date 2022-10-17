@@ -22,27 +22,11 @@ concurrency:
   cancel-in-progress: true
       
 jobs: 
-  enable-yarn-cashe: # yarn casheing
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        node: [16.x]
-    steps:
-      - name: Restoring Yarn cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Bootstraping packages
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
-    
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [16.x]
-    needs: [enable-yarn-cashe]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
