@@ -51,5 +51,4 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Run build
-        run: |
-          yarn build
+        run: yarn build:all
