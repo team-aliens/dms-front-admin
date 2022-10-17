@@ -52,4 +52,4 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Run build
         run: |
-          npm run build
+          yarn build
