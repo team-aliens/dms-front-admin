@@ -5,22 +5,23 @@ import {
   LoginRequest,
   AuthCodeType,
 } from './request';
-import { AuthResponse, EmailDuplicateCheckResponse } from './response';
+import { AuthorizationResponse, EmailDuplicateCheckResponse } from './response';
 
 const router = '/auth';
 
+// 로그인
 export const login = async (body: LoginRequest) => {
-  const { data }: AxiosResponse<Promise<AuthResponse>> = await instance.post(
-    `${router}/tokens`,
-    body,
-  );
+  const { data }: AxiosResponse<Promise<AuthorizationResponse>> =
+    await instance.post(`${router}/tokens`, body);
   return data;
 };
 
+// 이메일 인증번호 보내기
 export const postEmailAuthCode = async (body: PostEmailAuthCodeRequest) => {
   await instance.post(`${router}/code`, body);
 };
 
+// 이메일 인증번호 확인
 export const checkEmailAuthCode = async (
   email: string,
   auth_code: string,
@@ -31,24 +32,24 @@ export const checkEmailAuthCode = async (
   );
 };
 
+// 토큰 재발급
 export const tokenRefresh = async () => {
   const refreshToken = localStorage.getItem('refresh_token');
-  const { data }: AxiosResponse<Promise<AuthResponse>> = await instance.post(
-    `${router}/reissue`,
-    null,
-    {
+  const { data }: AxiosResponse<Promise<AuthorizationResponse>> =
+    await instance.post(`${router}/reissue`, null, {
       headers: {
         'refresh-token': refreshToken,
       },
-    },
-  );
+    });
   return data;
 };
 
+// 이메일 검증
 export const verificationEmail = async (account_id: string, email: string) => {
   await instance.get(`${router}/email?account_id=${account_id}&email=${email}`);
 };
 
+// 아이디 존재 여부 확인(비밀번호 재설정)
 export const checkEmailDuplicate = async (account_id: string) => {
   const { data }: AxiosResponse<Promise<EmailDuplicateCheckResponse>> =
     await instance.get(`${router}/account-id&account_id=${account_id}`);
