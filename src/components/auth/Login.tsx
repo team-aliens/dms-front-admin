@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Input, CheckBox, Button, Text } from 'aliens-design-system-front';
+import { Link } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 import { TitleBox } from './TitleBox';
 
@@ -48,9 +49,11 @@ export function Login() {
         </_SubmitInputWrapper>
         <_FindAccontWrapper>
           <_FindAccountArea>
-            <Text fontSize="s" cursor="pointer">
-              아이디 찾기
-            </Text>
+            <Link to="/findid">
+              <Text fontSize="s" cursor="pointer">
+                아이디 찾기
+              </Text>
+            </Link>
             <Text fontSize="s">|</Text>
             <Text fontSize="s" cursor="pointer">
               비밀번호 변경
