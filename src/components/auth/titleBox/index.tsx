@@ -4,12 +4,11 @@ import { Title } from 'aliens-design-system-front';
 const _TitleWrapper = styled.h1`
   width: 480px;
   .textDiv {
-    display: flex;
-    justify-content: start;
     padding-bottom: 24px;
   }
   > hr {
     width: 480px;
+    height: 1px;
     background-color: ${({ theme }) => theme.color.primary};
   }
 `;
