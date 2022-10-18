@@ -15,6 +15,12 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"]
+      }
+    ]
   }
 }
