@@ -21,16 +21,15 @@ const InputWrapper = styled.div`
   align-items: center;
 `;
 
-const TitleDiv = styled.div`
+const TitleWrapper = styled.h1`
   width: 480px;
   .textDiv {
     display: flex;
     justify-content: start;
     padding-bottom: 24px;
   }
-  .Hr {
-    width: 100%;
-    height: 1px;
+  > hr {
+    width: 480px;
     background-color: #3d8aff;
   }
 `;
@@ -41,22 +40,22 @@ const InputDiv = styled.div`
   padding-top: 56px;
 `;
 
-const LoginInputDiv = styled.div``;
+const LoginInputWrapper = styled.div``;
 
-const PasswordInputDiv = styled.div`
+const PasswordInputWrapper = styled.div`
   padding-top: 40px;
 `;
 
-const CheckInputDiv = styled.div`
+const CheckInputWrapper = styled.div`
   padding-top: 60px;
   padding-bottom: 36px;
 `;
 
-const SubmitInputDiv = styled.div`
+const SubmitInputWrapper = styled.div`
   padding-bottom: 62px;
 `;
 
-const ChoiceDiv = styled.div`
+const ChoiceWrapper = styled.div`
   display: flex;
   justify-content: center;
   #btn {
@@ -69,25 +68,18 @@ const ChoiceDiv = styled.div`
   }
 `;
 
-function Login() {
-  // id,pw state는 api 연결할 때 수정 오류 방지 및 disabled용도 state
-  const [id, setId] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [disabled, setDisabled] = useState<boolean>(true);
+export const Login = () => {
+  const [inputData, setInputData] = useState({
+    id: '',
+    password: '',
+  });
 
   const onChangeID = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setId(value);
+    setInputData({ id: e.target.value, ...inputData });
   };
 
-  const onChangePW = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setPassword(value);
-    if (password === '') {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputData({ password: e.target.value, ...inputData });
   };
 
   return (
@@ -96,14 +88,14 @@ function Login() {
         <img src="" alt="" />
       </ImgWrapper>
       <InputWrapper>
-        <TitleDiv>
+        <TitleWrapper>
           <div className="textDiv">
             <Title fontSize="l">로그인</Title>
           </div>
-          <div className="Hr" />
-        </TitleDiv>
+          <hr />
+        </TitleWrapper>
         <InputDiv>
-          <LoginInputDiv>
+          <LoginInputWrapper>
             <Input
               label="로그인"
               onChange={onChangeID}
@@ -111,38 +103,36 @@ function Login() {
               width={480}
               type="text"
             />
-          </LoginInputDiv>
-          <PasswordInputDiv>
+          </LoginInputWrapper>
+          <PasswordInputWrapper>
             <Input
               label="비밀번호"
-              onChange={onChangePW}
+              onChange={onChangePassword}
               placeholder="비밀번호를 입력해주세요"
               width={480}
               type="password"
             />
-          </PasswordInputDiv>
-          <CheckInputDiv>
+          </PasswordInputWrapper>
+          <CheckInputWrapper>
             <CheckBox disabled={false} label="아이디 저장" />
-          </CheckInputDiv>
-          <SubmitInputDiv>
+          </CheckInputWrapper>
+          <SubmitInputWrapper>
             <Button
               type="contained"
-              disabled={disabled}
+              disabled={inputData.password === ''}
               color="primary"
               size="medium"
             >
               로그인
             </Button>
-          </SubmitInputDiv>
-          <ChoiceDiv>
+          </SubmitInputWrapper>
+          <ChoiceWrapper>
             <p id="btn">아이디 찾기</p>
             <p id="bar">|</p>
             <p id="btn">비밀번호 변경</p>
-          </ChoiceDiv>
+          </ChoiceWrapper>
         </InputDiv>
       </InputWrapper>
     </Wrapper>
   );
-}
-
-export default Login;
+};
