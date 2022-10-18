@@ -1,5 +1,8 @@
+import { Router } from './router';
+
+
 function App() {
-  return <div>This is the default template.</div>;
+  return <Router />;
 }
 
 export default App;
