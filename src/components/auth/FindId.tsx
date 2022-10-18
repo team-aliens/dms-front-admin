@@ -2,52 +2,53 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Input, DropDown, Button, Text } from 'aliens-design-system-front';
 import { useForm } from '@/hooks/useForm';
+import { useDropDown } from '@/hooks/useDropDown';
 import { TitleBox } from './TitleBox';
 
 const exampleData = ['1', '2'];
 
 export function FindId() {
-  const [nextStep, setNextStep] = useState<boolean>(false);
+  const [nextStep, setNextStep] = useState<boolean>(true);
 
-  const { onHandleChange, state } = useForm<{ answer: string }>({
+  const { onHandleChange, state } = useForm<{
+    answer: string;
+  }>({
     answer: '',
   });
 
-  const onDropDownChange = () => {};
+  const { onDropDownChange, sort } = useDropDown<string>('');
 
   return (
     <_Wrapper>
       <TitleBox>아이디 찾기</TitleBox>
-      <DropDownWrapper>
+      <_DropDownWrapper>
         <DropDown
           width={480}
           placeholder="학교를 선택해주세요"
-          value=""
+          value={sort}
           disable={false}
           onChange={onDropDownChange}
           items={exampleData}
         />
         {nextStep ? (
-          <QuestionWrapper>
-            <QuestionTitle>
+          <_QuestionWrapper>
+            <_QuestionTitle>
               <Text fontSize="s">학교 인증 질문</Text>
-            </QuestionTitle>
-            <QuestionContent>
-              <Text fontSize="m" color="#55555">
-                학교 학생 수는 몇 명인가요?
-              </Text>
-            </QuestionContent>
-          </QuestionWrapper>
+            </_QuestionTitle>
+            <Text fontSize="m" color="#55555">
+              학교 학생 수는 몇 명인가요?
+            </Text>
+          </_QuestionWrapper>
         ) : (
-          <ButtonWrapper>
+          <_ButtonWrapper>
             <Button size="default" color="primary" type="contained">
               다음
             </Button>
-          </ButtonWrapper>
+          </_ButtonWrapper>
         )}
-      </DropDownWrapper>
-      {nextStep ? (
-        <InputWrapper>
+      </_DropDownWrapper>
+      {nextStep && (
+        <div>
           <Input
             label="답변"
             placeholder="답변을 작성해주세요."
@@ -57,14 +58,12 @@ export function FindId() {
             onChange={onHandleChange}
             value={state.answer}
           />
-          <ButtonWrapper>
+          <_ButtonWrapper>
             <Button type="contained" color="primary" size="default">
               다음
             </Button>
-          </ButtonWrapper>
-        </InputWrapper>
-      ) : (
-        ''
+          </_ButtonWrapper>
+        </div>
       )}
     </_Wrapper>
   );
@@ -78,19 +77,17 @@ const _Wrapper = styled.div`
   align-items: center;
 `;
 
-const DropDownWrapper = styled.div`
+const _DropDownWrapper = styled.div`
   padding-top: 56px;
 `;
 
-const ButtonWrapper = styled.div`
+const _ButtonWrapper = styled.div`
   padding-top: 40px;
   display: flex;
   justify-content: flex-end;
 `;
 
-const InputWrapper = styled.div``;
-
-const QuestionWrapper = styled.div`
+const _QuestionWrapper = styled.div`
   margin-top: 16px;
   margin-bottom: 40px;
   padding: 12px 16px;
@@ -99,8 +96,6 @@ const QuestionWrapper = styled.div`
   background-color: ${({ theme }) => theme.color.gray2};
 `;
 
-const QuestionTitle = styled.div`
+const _QuestionTitle = styled.div`
   margin-bottom: 8px;
 `;
-
-const QuestionContent = styled.div``;
