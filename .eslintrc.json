@@ -19,6 +19,8 @@
     "@typescript-eslint/naming-convention": "off",
     "no-underscore-dangle": "off",
     "@typescript-eslint/no-empty-interface": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "warn",
     "react/jsx-pascal-case": [0, { "allowLeadingUnderscore": true }],
     "arrow-body-style": ["error", "as-needed"]
   }
