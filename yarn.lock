@@ -1696,10 +1696,10 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-aliens-design-system-front@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.2.6.tgz#780a36fc0edb4de3783d5c98ff12e61570bba464"
-  integrity sha512-k79F9Ez8neVCqy/7hX3FxAA/ZK//2msXchRmlAKJdF4APWAz8pujs9clMkVQbr945oYL3U5GGgjUXCL94fI2yw==
+aliens-design-system-front@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.2.8.tgz#6e1d87468e7f61934ba025d667dd1df74a4f72ce"
+  integrity sha512-qd++DBAjuKzGkCryj5HpWLI4SYVLqbBnq65uD6yTZl07BmKExAEDycIibMbcs3eMheWWyATMbSC+IW0hSvmcHw==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
