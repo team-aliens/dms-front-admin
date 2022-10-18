@@ -3,7 +3,7 @@ import { Title } from 'aliens-design-system-front';
 
 const _TitleWrapper = styled.h1`
   width: 480px;
-  .textDiv {
+  .textWrapper {
     padding-bottom: 24px;
   }
   > hr {
@@ -16,7 +16,7 @@ const _TitleWrapper = styled.h1`
 export function TitleBox() {
   return (
     <_TitleWrapper>
-      <div className="textDiv">
+      <div className="textWrapper">
         <Title fontSize="l">로그인</Title>
       </div>
       <hr />

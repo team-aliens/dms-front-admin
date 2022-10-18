@@ -7,10 +7,10 @@ const _ImgWrapper = styled.div`
   box-shadow: 0px 2px 40px rgba(52, 52, 52, 0.1);
 `;
 
-export const LogoBox = () => {
+export function LogoBox() {
   return (
     <_ImgWrapper>
       <img src="" alt="" />
     </_ImgWrapper>
   );
-};
+}

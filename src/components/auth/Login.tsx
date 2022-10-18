@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input, CheckBox, Button, Text } from 'aliens-design-system-front';
 import { useForm } from '@/hooks/useForm';
-import { TitleBox } from '../titleBox';
+import { TitleBox } from './TitleBox';
 
 export function Login() {
   const { onHandleChange, state } = useForm<{ id: string; password: string }>({
@@ -39,7 +39,7 @@ export function Login() {
         <_SubmitInputWrapper>
           <Button
             type="contained"
-            disabled={state.password === ''}
+            disabled={!state.password}
             color="primary"
             size="medium"
           >
@@ -48,9 +48,13 @@ export function Login() {
         </_SubmitInputWrapper>
         <_FindAccontWrapper>
           <_FindAccountArea>
-            <Text cursor="pointer">아이디 찾기</Text>
-            <Text>|</Text>
-            <Text cursor="pointer">비밀번호 변경</Text>
+            <Text fontSize="s" cursor="pointer">
+              아이디 찾기
+            </Text>
+            <Text fontSize="s">|</Text>
+            <Text fontSize="s" cursor="pointer">
+              비밀번호 변경
+            </Text>
           </_FindAccountArea>
         </_FindAccontWrapper>
       </_InputWrapper>
@@ -94,11 +98,4 @@ const _FindAccountArea = styled.div`
   width: 238px;
   display: flex;
   justify-content: space-between;
-  #btn {
-    cursor: pointer;
-  }
-  #bar {
-    font-size: 14px;
-    font-weight: 600;
-  }
 `;
