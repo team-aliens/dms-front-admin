@@ -1,21 +1,13 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { Input, CheckBox, Button } from 'aliens-design-system-front';
+import { useForm } from '@/hooks/useForm';
 import { TitleBox } from '../titleBox';
 
 export function Login() {
-  const [inputData, setInputData] = useState({
+  const { onHandleChange, state } = useForm<{ id: string; password: string }>({
     id: '',
     password: '',
   });
-
-  const onChangeID = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData({ id: e.target.value, ...inputData });
-  };
-
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData({ password: e.target.value, ...inputData });
-  };
 
   return (
     <_Wrapper>
@@ -24,21 +16,22 @@ export function Login() {
         <_InputDiv>
           <Input
             label="로그인"
-            onChange={onChangeID}
+            onChange={onHandleChange}
             placeholder="아이디를 입력해주세요"
             width={480}
             type="text"
-            value={inputData.id}
+            name="id"
+            value={state.id}
           />
-
           <_PasswordInputWrapper>
             <Input
               label="비밀번호"
-              onChange={onChangePassword}
+              onChange={onHandleChange}
               placeholder="비밀번호를 입력해주세요"
               width={480}
               type="password"
-              value={inputData.password}
+              name="password"
+              value={state.password}
             />
           </_PasswordInputWrapper>
           <_CheckInputWrapper>
@@ -47,7 +40,7 @@ export function Login() {
           <_SubmitInputWrapper>
             <Button
               type="contained"
-              disabled={inputData.password === ''}
+              disabled={state.password === ''}
               color="primary"
               size="medium"
             >
