@@ -11,7 +11,7 @@ export function Login() {
 
   return (
     <_Wrapper>
-      <TitleBox />
+      <TitleBox>로그인</TitleBox>
       <_InputWrapper>
         <Input
           label="로그인"

@@ -1,6 +1,21 @@
 import styled from 'styled-components';
 import { Title } from 'aliens-design-system-front';
 
+interface TitleProps {
+  children: React.ReactNode;
+}
+
+export function TitleBox({ children }: TitleProps) {
+  return (
+    <_TitleWrapper>
+      <div className="textWrapper">
+        <Title fontSize="l">{children}</Title>
+      </div>
+      <hr />
+    </_TitleWrapper>
+  );
+}
+
 const _TitleWrapper = styled.h1`
   width: 480px;
   .textWrapper {
@@ -12,14 +27,3 @@ const _TitleWrapper = styled.h1`
     background-color: ${({ theme }) => theme.color.primary};
   }
 `;
-
-export function TitleBox() {
-  return (
-    <_TitleWrapper>
-      <div className="textWrapper">
-        <Title fontSize="l">로그인</Title>
-      </div>
-      <hr />
-    </_TitleWrapper>
-  );
-}
