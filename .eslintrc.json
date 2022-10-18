@@ -22,6 +22,17 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "warn",
     "react/jsx-pascal-case": [0, { "allowLeadingUnderscore": true }],
-    "arrow-body-style": ["error", "as-needed"]
+    "arrow-body-style": ["error", "as-needed"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never",
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }

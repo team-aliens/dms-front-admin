@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Input, CheckBox, Button } from 'aliens-design-system-front';
 import { TitleBox } from '../titleBox';
@@ -22,16 +22,15 @@ export function Login() {
       <TitleBox />
       <_InputWrapper>
         <_InputDiv>
-          <_LoginInputWrapper>
-            <Input
-              label="로그인"
-              onChange={onChangeID}
-              placeholder="아이디를 입력해주세요"
-              width={480}
-              type="text"
-              value={inputData.id}
-            />
-          </_LoginInputWrapper>
+          <Input
+            label="로그인"
+            onChange={onChangeID}
+            placeholder="아이디를 입력해주세요"
+            width={480}
+            type="text"
+            value={inputData.id}
+          />
+
           <_PasswordInputWrapper>
             <Input
               label="비밀번호"
@@ -87,8 +86,6 @@ const _InputDiv = styled.div`
   flex-direction: column;
   padding-top: 56px;
 `;
-
-const _LoginInputWrapper = styled.div``;
 
 const _PasswordInputWrapper = styled.div`
   padding-top: 40px;
