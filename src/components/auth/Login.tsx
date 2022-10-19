@@ -1,101 +1,137 @@
 import styled from 'styled-components';
 import { Input, CheckBox, Button, Text } from 'aliens-design-system-front';
+import { AxiosError } from 'axios';
+import { FormEvent, useState } from 'react';
 import { useForm } from '@/hooks/useForm';
 import { TitleBox } from './TitleBox';
+import { LoginRequest } from '@/apis/auth/request';
+import { login } from '@/apis/auth';
+import { useToast } from '@/hooks/useToast';
+import { useErrorMessage } from '@/hooks/useErrorMessage';
+
+const errorTypes = ['account_id', 'password'] as const;
 
 export function Login() {
-  const { onHandleChange, state } = useForm<{ id: string; password: string }>({
-    id: '',
+  const savedAccountId = localStorage.getItem('account_id');
+  const { toastDispatch } = useToast();
+  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const { onHandleChange, state: loginState } = useForm<LoginRequest>({
+    account_id: savedAccountId,
     password: '',
   });
+  const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
+  const onClickLogin = async () => {
+    if (autoSave) localStorage.setItem('account_id', loginState.account_id);
+    else localStorage.removeItem('account_id');
 
+    await login(loginState)
+      .then((res) => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'SUCCESS',
+          message: '로그인이 완료되었습니다.',
+        });
+      })
+      .catch((err: AxiosError) => {
+        if (err.response.status === 404) {
+          changeErrorMessage('account_id', '존재하지 않는 사용자입니다.');
+        } else if (err.response.status === 401) {
+          changeErrorMessage('password', '비밀번호가 일치하지 않습니다.');
+        }
+      });
+  };
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+  const onChangeAutoSaveStatus = (status: boolean) => {
+    setAutoSave(status);
+  };
   return (
-    <_Wrapper>
-      <TitleBox />
-      <_InputWrapper>
-        <Input
+    <_Wrapper onSubmit={onSubmit}>
+      <_Contents>
+        <TitleBox />
+        <_LoginInput
           label="로그인"
           onChange={onHandleChange}
           placeholder="아이디를 입력해주세요"
           width={480}
           type="text"
-          name="id"
-          value={state.id}
+          name="account_id"
+          value={loginState.account_id}
+          errorMsg={errorMessages?.account_id}
         />
-        <_PasswordInputWrapper>
-          <Input
-            label="비밀번호"
-            onChange={onHandleChange}
-            placeholder="비밀번호를 입력해주세요"
-            width={480}
-            type="password"
-            name="password"
-            value={state.password}
-          />
-        </_PasswordInputWrapper>
-        <_CheckInputWrapper>
-          <CheckBox disabled={false} label="아이디 저장" />
-        </_CheckInputWrapper>
-        <_SubmitInputWrapper>
-          <Button
-            type="contained"
-            disabled={!state.password}
-            color="primary"
-            size="medium"
-          >
-            로그인
-          </Button>
-        </_SubmitInputWrapper>
-        <_FindAccontWrapper>
-          <_FindAccountArea>
-            <Text fontSize="s" cursor="pointer">
-              아이디 찾기
-            </Text>
-            <Text fontSize="s">|</Text>
-            <Text fontSize="s" cursor="pointer">
-              비밀번호 변경
-            </Text>
-          </_FindAccountArea>
-        </_FindAccontWrapper>
-      </_InputWrapper>
+        <_PasswordInput
+          label="비밀번호"
+          onChange={onHandleChange}
+          placeholder="비밀번호를 입력해주세요"
+          width={480}
+          type="password"
+          name="password"
+          value={loginState.password}
+          errorMsg={errorMessages?.password}
+        />
+        <_AutoLoginCheckBox
+          disabled={false}
+          label="아이디 저장"
+          isChecked={autoSave}
+          onChangeIsChecked={onChangeAutoSaveStatus}
+        />
+        <_LoginButton
+          type="contained"
+          disabled={!loginState.password || !loginState.account_id}
+          color="primary"
+          size="medium"
+          onClick={onClickLogin}
+        >
+          로그인
+        </_LoginButton>
+        <_FindAccountArea>
+          <Text fontSize="s" className="button">
+            아이디 찾기
+          </Text>
+          <Text fontSize="s">|</Text>
+          <Text fontSize="s" className="button">
+            비밀번호 변경
+          </Text>
+        </_FindAccountArea>
+      </_Contents>
     </_Wrapper>
   );
 }
 
-const _Wrapper = styled.div`
+const _Wrapper = styled.form`
   width: 50%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 `;
 
-const _InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 56px;
+const _Contents = styled.div`
+  margin: 0 auto;
 `;
 
-const _PasswordInputWrapper = styled.div`
-  padding-top: 40px;
+const _LoginInput = styled(Input)`
+  margin-top: 56px;
 `;
 
-const _CheckInputWrapper = styled.div`
-  padding-top: 60px;
-  padding-bottom: 36px;
+const _PasswordInput = styled(Input)`
+  margin-top: 40px;
 `;
 
-const _SubmitInputWrapper = styled.div`
-  padding-bottom: 62px;
+const _AutoLoginCheckBox = styled(CheckBox)`
+  margin-top: 62px;
 `;
 
-const _FindAccontWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+const _LoginButton = styled(Button)`
+  margin-top: 38px;
 `;
 
 const _FindAccountArea = styled.div`
   width: 238px;
+  margin: 76px auto 0 auto;
   display: flex;
   justify-content: space-between;
+  > .button {
+    cursor: pointer;
+  }
 `;
