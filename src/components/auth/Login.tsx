@@ -10,6 +10,9 @@ export function Login() {
     password: '',
   });
 
+  // button onclick 없으면 error 나서 임시로 만들었습니다. api 연결할 때 함수명 바꿔서 쓰셔도 될 것 같아요
+  const onHandleClick = () => {};
+
   return (
     <_Wrapper>
       <TitleBox>로그인</TitleBox>
@@ -43,13 +46,14 @@ export function Login() {
             disabled={!state.password}
             color="primary"
             size="medium"
+            onClick={onHandleClick}
           >
             로그인
           </Button>
         </_SubmitInputWrapper>
         <_FindAccontWrapper>
           <_FindAccountArea>
-            <Link to="/findid">
+            <Link to="/find-id">
               <Text fontSize="s" cursor="pointer">
                 아이디 찾기
               </Text>
