@@ -13,6 +13,7 @@ const errorTypes = ['account_id', 'password'] as const;
 
 export function Login() {
   const savedAccountId = localStorage.getItem('account_id');
+
   const { toastDispatch } = useToast();
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
@@ -20,6 +21,7 @@ export function Login() {
     password: '',
   });
   const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
+
   const onClickLogin = async () => {
     if (autoSave) localStorage.setItem('account_id', loginState.account_id);
     else localStorage.removeItem('account_id');
@@ -31,6 +33,8 @@ export function Login() {
           toastType: 'SUCCESS',
           message: '로그인이 완료되었습니다.',
         });
+        localStorage.setItem('access_token', res.access_token);
+        if (autoSave) localStorage.setItem('refresh_token', res.refresh_token);
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 404) {
