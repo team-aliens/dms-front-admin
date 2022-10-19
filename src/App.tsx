@@ -1,12 +1,15 @@
+import { RecoilRoot } from 'recoil';
 import { ToastContainer, ToastProvider } from 'aliens-design-system-front';
 import { Router } from './router';
 
 function App() {
   return (
-    <ToastProvider>
-      <ToastContainer />
-      <Router />
-    </ToastProvider>
+    <RecoilRoot>
+      <ToastProvider>
+        <ToastContainer />
+        <Router />
+      </ToastProvider>
+    </RecoilRoot>
   );
 }
 
