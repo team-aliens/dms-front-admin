@@ -166,18 +166,13 @@ const _ReAuthCodeWrapper = styled.div`
   bottom: 267px;
 `;
 
-const _ReAuthCodeText = styled.p`
-  color: ${({ theme }) => theme.color.gray5};
-  font-size: ${({ theme }) => theme.textFont.xs.size}px;
-  font-weight: ${({ theme }) => theme.textFont.xs.weight};
+const _ReAuthCodeText = styled(Text)`
   margin-right: 12px;
 `;
 
-const _ReAuthCodeButton = styled.p`
+const _ReAuthCodeButton = styled(Text)`
   text-decoration: underline;
-  color: ${({ theme }) => theme.color.gray6};
   font-weight: 600;
-  font-size: ${({ theme }) => theme.textFont.xs.size}px;
 `;
 
 const _SeeEmailWrapper = styled.div`
