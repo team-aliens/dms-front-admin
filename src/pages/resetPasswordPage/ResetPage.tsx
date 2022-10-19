@@ -1,12 +1,12 @@
-import { Login } from '@/components/auth/Login';
 import { LogoBox } from '@/components/auth/LogoBox';
+import { Reset } from '@/components/auth/Reset';
 import { _FlexWrapper } from '@/styles/flexWrapper';
 
-export function LoginPage() {
+export function ResetPage() {
   return (
     <_FlexWrapper>
       <LogoBox />
-      <Login />
+      <Reset />
     </_FlexWrapper>
   );
 }
