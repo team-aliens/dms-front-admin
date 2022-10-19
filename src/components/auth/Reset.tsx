@@ -1,24 +1,29 @@
 import styled from 'styled-components';
 import { Input, Button } from 'aliens-design-system-front';
-import { useForm } from '@/hooks/useForm';
-import { TitleBox } from './TitleBox';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { checkPasswordReg } from '@/utils/regs';
 
-interface ResetPassword {
-  new_password: string;
-  re_password: string;
+interface Props {
+  onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  newPassword: string;
 }
 
-export function Reset() {
-  const { onHandleChange, state: newPasswordState } = useForm<ResetPassword>({
-    new_password: '',
-    re_password: '',
-  });
+const errorTypes = ['newPassword'] as const;
 
+export function Reset({ onChangeValue, newPassword }: Props) {
+  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const [checkPassword, setCheckPassword] = useState('');
   const onClickSubmit = () => {};
-
+  useEffect(() => {
+    if (checkPasswordReg(newPassword) || !newPassword) {
+      changeErrorMessage('newPassword', '');
+    } else if (newPassword.length !== 0) {
+      changeErrorMessage('newPassword', '비밀번호 형식이 올바르지 않습니다.');
+    }
+  }, [newPassword, checkPassword]);
   return (
     <_Wrapper>
-      <TitleBox>비밀번호 재설정</TitleBox>
       <_Contents>
         <_NewPassword
           label="새 비밀번호 입력"
@@ -26,8 +31,9 @@ export function Reset() {
           width={480}
           type="password"
           name="new_password"
-          onChange={onHandleChange}
-          value={newPasswordState.new_password}
+          onChange={onChangeValue}
+          value={newPassword}
+          errorMsg={errorMessages?.newPassword}
         />
         <_RePassword
           label="새 비밀번호 확인"
@@ -35,14 +41,21 @@ export function Reset() {
           width={480}
           type="password"
           name="re_password"
-          onChange={onHandleChange}
-          value={newPasswordState.re_password}
+          onChange={(e) => setCheckPassword(e.target.value)}
+          value={checkPassword}
+          errorMsg={
+            checkPasswordReg(newPassword) &&
+            checkPassword &&
+            checkPassword !== newPassword &&
+            '비밀번호가 일치하지 않습니다.'
+          }
         />
         <_SubmitPassword
           size="default"
           color="primary"
           type="contained"
           onClick={onClickSubmit}
+          disabled={newPassword !== checkPassword}
         >
           완료
         </_SubmitPassword>

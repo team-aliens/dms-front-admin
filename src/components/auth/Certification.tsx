@@ -1,130 +1,149 @@
 import styled from 'styled-components';
 import { Input, Text, Button } from 'aliens-design-system-front';
-import { useState } from 'react';
-import { useForm } from '@/hooks/useForm';
-import { TitleBox } from './TitleBox';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
+import { AxiosError } from 'axios';
+import { Steps } from '@/pages/auth/ResetPage';
+import {
+  checkEmailAuthCode,
+  checkEmailDuplicate,
+  postEmailAuthCode,
+} from '@/apis/auth';
+import { useErrorMessage } from '@/hooks/useErrorMessage';
 
-interface CertificationProps {
-  id: string;
-  email: string;
+interface Props {
+  account_id: string;
   auth_code: string;
+  email: string;
+  onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  step: Steps;
+  setStep: Dispatch<SetStateAction<Steps>>;
 }
 
-export function Certification() {
-  const [emailStep, setEmailStep] = useState<boolean>(false);
-  const [authCode, setAuthCode] = useState<boolean>(false);
+const errorTypes = ['account_id', 'auth_code', 'email'] as const;
 
-  const { onHandleChange, state: CertificationState } =
-    useForm<CertificationProps>({
-      id: '',
-      email: '',
-      auth_code: '',
-    });
-
-  const onClickEmail = () => {
-    setEmailStep(!emailStep);
-  };
-
-  const onClickAuthCode = () => {
-    setAuthCode(!authCode);
-  };
-
-  const onClickNextStep = () => {};
-
+export function Certification({
+  account_id,
+  auth_code,
+  email,
+  onChangeValue,
+  setStep,
+  step,
+}: Props) {
+  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const [emailHint, setEmailHint] = useState('');
+  const onClickNextButton = useCallback(() => {
+    if (step === 'ACCOUNT_ID') {
+      checkEmailDuplicate(account_id)
+        .then((res) => {
+          setStep('EMAIL');
+          setEmailHint(res.email);
+          changeErrorMessage('account_id', '');
+        })
+        .catch((err: AxiosError) => {
+          if (err.response.status === 404) {
+            changeErrorMessage(
+              'account_id',
+              '일치하는 아이디가 존재하지 않습니다.',
+            );
+          }
+        });
+    } else if (step === 'EMAIL') {
+      postEmailAuthCode({
+        email,
+        type: 'PASSWORD',
+      })
+        .then(() => {
+          setStep('AUTH_CODE');
+          changeErrorMessage('email', '');
+        })
+        .catch((err: AxiosError) => {
+          if (err.response.status === 404) {
+            changeErrorMessage(
+              'email',
+              '입력하신 이메일이 아이디 정보와 일치하지 않습니다.',
+            );
+          }
+        });
+    } else {
+      checkEmailAuthCode(email, auth_code, 'PASSWORD')
+        .then(() => {
+          changeErrorMessage('auth_code', '');
+        })
+        .catch((err: AxiosError) => {
+          changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
+        });
+      setStep('RESET');
+    }
+  }, [step, setStep]);
   return (
-    <_Wrapper>
-      <TitleBox>비밀번호 재설정</TitleBox>
-      <_Contents>
-        <_IdInput
-          label="아이디"
-          placeholder="id를 입력해주세요."
-          onChange={onHandleChange}
-          width={480}
-          type="text"
-          name="id"
-          value={CertificationState.id}
-        />
-        {emailStep ? (
-          <>
-            <_SeeEmailWrapper>
-              <_SeeEmailTitle>
-                <Text fontSize="s">아이디와 일치하는 이메일입니다.</Text>
-              </_SeeEmailTitle>
-              <Text fontSize="s" color="primary">
-                bluehome8626@daum.net
-              </Text>
-            </_SeeEmailWrapper>
-            <_EmailInput
-              label="이메일"
-              placeholder="이메일을 입력해주세요"
-              onChange={onHandleChange}
-              width={480}
-              type="text"
-              name="email"
-              value={CertificationState.email}
-            />
-            {!authCode && (
-              <_NextButton
-                onClick={onClickAuthCode}
-                size="default"
-                color="primary"
-                type="contained"
-              >
-                다음
-              </_NextButton>
-            )}
-          </>
-        ) : (
-          <_NextButton
-            onClick={onClickEmail}
-            size="default"
-            color="primary"
-            type="contained"
-          >
-            다음
-          </_NextButton>
-        )}
-        {authCode && (
-          <>
-            <_AuthCodeInput
-              label="인증코드"
-              name="auth_code"
-              onChange={onHandleChange}
-              type="text"
-              width={480}
-              placeholder="이메일로 발송된 인증코드를 입력해주세요."
-              value={CertificationState.auth_code}
-            />
-            <_ReAuthCodeWrapper>
-              <_ReAuthCodeText>인증번호가 발송되지 않았나요?</_ReAuthCodeText>
-              <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
-            </_ReAuthCodeWrapper>
-            <_NextButton
-              onClick={onClickNextStep}
-              size="default"
-              color="primary"
-              type="contained"
-            >
-              인증
-            </_NextButton>
-          </>
-        )}
-      </_Contents>
-    </_Wrapper>
+    <>
+      <_IdInput
+        label="아이디"
+        placeholder="id를 입력해주세요."
+        onChange={onChangeValue}
+        width={480}
+        type="text"
+        name="account_id"
+        value={account_id}
+        errorMsg={errorMessages?.account_id}
+      />
+      {step !== 'RESET' && step !== 'ACCOUNT_ID' && (
+        <>
+          <_SeeEmailWrapper>
+            <_SeeEmailTitle>
+              <Text fontSize="s">아이디와 일치하는 이메일입니다.</Text>
+            </_SeeEmailTitle>
+            <Text fontSize="s" color="primary">
+              {emailHint}
+            </Text>
+          </_SeeEmailWrapper>
+          <_EmailInput
+            label="이메일"
+            placeholder="이메일을 입력해주세요"
+            onChange={onChangeValue}
+            width={480}
+            type="text"
+            name="email"
+            value={email}
+            errorMsg={errorMessages?.email}
+          />
+        </>
+      )}
+      {step === 'AUTH_CODE' && (
+        <>
+          <_AuthCodeInput
+            label="인증코드"
+            name="auth_code"
+            onChange={onChangeValue}
+            type="text"
+            width={480}
+            placeholder="이메일로 발송된 인증코드를 입력해주세요."
+            value={auth_code}
+            errorMsg={errorMessages?.auth_code}
+          />
+          <_ReAuthCodeWrapper>
+            <_ReAuthCodeText>인증번호가 발송되지 않았나요?</_ReAuthCodeText>
+            <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
+          </_ReAuthCodeWrapper>
+        </>
+      )}
+      <_NextButton
+        onClick={onClickNextButton}
+        size="default"
+        color="primary"
+        type="contained"
+      >
+        인증
+      </_NextButton>
+    </>
   );
 }
-
-const _Wrapper = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const _Contents = styled.div`
-  margin: 0 auto;
-`;
 
 const _IdInput = styled(Input)`
   margin-top: 56px;
