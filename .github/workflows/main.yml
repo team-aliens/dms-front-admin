@@ -1,6 +1,13 @@
 name: DMS-Front-CI
 
 on:
+  push:
+    branches:
+      - 'feature/**' # git-flow에서 push할 branch 명시
+      - 'hotfixes'
+      - 'release/**'
+      - 'main'
+      - 'develop'
   pull_request:
     branches:
       - 'main' # git-flow에서 pr을 날릴 branch 명시
