@@ -1,20 +1,38 @@
 import styled from 'styled-components';
 import { Input, Button } from 'aliens-design-system-front';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useErrorMessage } from '@/hooks/useErrorMessage';
 import { checkPasswordReg } from '@/utils/regs';
+import { resetPassword } from '@/apis/managers';
+import { ResetPasswordRequest } from '@/apis/managers/request';
+import { useToast } from '@/hooks/useToast';
 
 interface Props {
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
-  newPassword: string;
+  resetPasswordState: ResetPasswordRequest;
 }
 
 const errorTypes = ['newPassword'] as const;
 
-export function Reset({ onChangeValue, newPassword }: Props) {
+export function Reset({ onChangeValue, resetPasswordState }: Props) {
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const { toastDispatch } = useToast();
+  const navigate = useNavigate();
   const [checkPassword, setCheckPassword] = useState('');
-  const onClickSubmit = () => {};
+  const onClickResetPassword = () => {
+    resetPassword(resetPasswordState)
+      .then(() => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'SUCCESS',
+          message: '비밀번호가 변경되었습니다.',
+        });
+        navigate('/');
+      })
+      .catch(() => {});
+  };
+  const { new_password: newPassword } = resetPasswordState;
   useEffect(() => {
     if (checkPasswordReg(newPassword) || !newPassword) {
       changeErrorMessage('newPassword', '');
@@ -54,8 +72,10 @@ export function Reset({ onChangeValue, newPassword }: Props) {
           size="default"
           color="primary"
           type="contained"
-          onClick={onClickSubmit}
-          disabled={newPassword !== checkPassword}
+          onClick={onClickResetPassword}
+          disabled={
+            !checkPasswordReg(newPassword) || newPassword !== checkPassword
+          }
         >
           완료
         </_SubmitPassword>

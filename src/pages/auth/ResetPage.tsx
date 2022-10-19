@@ -40,7 +40,7 @@ export function ResetPage() {
           ) : (
             <Reset
               onChangeValue={onHandleChange}
-              newPassword={resetPasswordState.new_password}
+              resetPasswordState={resetPasswordState}
             />
           )}
         </_Contents>
