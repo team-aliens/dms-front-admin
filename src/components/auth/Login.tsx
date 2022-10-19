@@ -16,7 +16,7 @@ export function Login() {
   const { toastDispatch } = useToast();
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
-    account_id: savedAccountId,
+    account_id: savedAccountId || '',
     password: '',
   });
   const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
@@ -86,13 +86,9 @@ export function Login() {
           로그인
         </_LoginButton>
         <_FindAccountArea>
-          <Text fontSize="s" className="button">
-            아이디 찾기
-          </Text>
+          <Text fontSize="s">아이디 찾기</Text>
           <Text fontSize="s">|</Text>
-          <Text fontSize="s" className="button">
-            비밀번호 변경
-          </Text>
+          <Text fontSize="s">비밀번호 변경</Text>
         </_FindAccountArea>
       </_Contents>
     </_Wrapper>
@@ -131,7 +127,7 @@ const _FindAccountArea = styled.div`
   margin: 76px auto 0 auto;
   display: flex;
   justify-content: space-between;
-  > .button {
+  > p {
     cursor: pointer;
   }
 `;
