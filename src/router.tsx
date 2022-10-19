@@ -7,7 +7,7 @@ export function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/findid" element={<FindIdPage />} />
+        <Route path="/find-id" element={<FindIdPage />} />
       </Routes>
     </BrowserRouter>
   );
