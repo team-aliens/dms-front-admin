@@ -88,13 +88,17 @@ export function Certification() {
           <>
             <_AuthCodeInput
               label="인증코드"
-              name="authcode"
+              name="auth_code"
               onChange={onHandleChange}
               type="text"
               width={480}
               placeholder="이메일로 발송된 인증코드를 입력해주세요."
               value={CertificationState.auth_code}
             />
+            <_ReAuthCodeWrapper>
+              <_ReAuthCodeText>인증번호가 발송되지 않았나요?</_ReAuthCodeText>
+              <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
+            </_ReAuthCodeWrapper>
             <_NextButton
               onClick={onClickNextStep}
               size="default"
@@ -133,6 +137,28 @@ const _EmailInput = styled(Input)`
 
 const _AuthCodeInput = styled(Input)`
   margin-bottom: 40px;
+  position: relative;
+`;
+
+const _ReAuthCodeWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  right: 145px;
+  bottom: 267px;
+`;
+
+const _ReAuthCodeText = styled.p`
+  color: ${({ theme }) => theme.color.gray5};
+  font-size: ${({ theme }) => theme.textFont.xs.size}px;
+  font-weight: ${({ theme }) => theme.textFont.xs.weight};
+  margin-right: 12px;
+`;
+
+const _ReAuthCodeButton = styled.p`
+  text-decoration: underline;
+  color: ${({ theme }) => theme.color.gray6};
+  font-weight: 600;
+  font-size: ${({ theme }) => theme.textFont.xs.size}px;
 `;
 
 const _SeeEmailWrapper = styled.div`

@@ -8,10 +8,8 @@ export function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/reset">
-          <Route path="/" element={<CertificationPage />} />
-          <Route path=":password" element={<ResetPage />} />
-        </Route>
+        <Route path="/reset" element={<CertificationPage />} />
+        <Route path="/reset-password" element={<ResetPage />} />
       </Routes>
     </BrowserRouter>
   );
