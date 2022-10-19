@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
 import { LogoBox } from '@/components/auth/LogoBox';
 import { Reset } from '@/components/auth/Reset';
@@ -19,11 +19,14 @@ export function ResetPage() {
       email: '',
       new_password: '',
     });
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
     <_FlexWrapper>
       <LogoBox />
       <_Wrapper>
-        <_Contents>
+        <_Contents onSubmit={onSubmit}>
           <_ResetPasswordTitle>비밀번호 재설정</_ResetPasswordTitle>
           {step !== 'RESET' ? (
             <Certification
@@ -54,7 +57,7 @@ const _Wrapper = styled.div`
   align-items: center;
 `;
 
-const _Contents = styled.div`
+const _Contents = styled.form`
   margin: 0 auto;
 `;
 
