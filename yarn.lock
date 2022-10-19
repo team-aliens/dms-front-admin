@@ -1158,11 +1158,6 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
-    
-"@remix-run/router@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.0.2.tgz#1c17eadb2fa77f80a796ad5ea9bf108e6993ef06"
-  integrity sha512-GRSOFhJzjGN+d4sKHTMSvNeUPoZiDHWmRnXfzaxrqe7dE/Nzlc8BiMSJdLDESZlndM7jIUrZ/F4yWqVYlI0rwQ==
 
 "@remix-run/router@1.0.2":
   version "1.0.2"
@@ -1701,10 +1696,10 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-aliens-design-system-front@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.3.3.tgz#83f466522967bedd8013a276d93e73d6699deb5f"
-  integrity sha512-9xm1V7l7257q1cXQ3lhN3TYUMIMlaa3tdVRX+lAN1cA8YWfgOKW3WsJ8gE5BuHw3d+V4ybVivjNC7Myk4HAPaw==
+aliens-design-system-front@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.4.0.tgz#0aa57e231162183bbafd33fcff804caebf6d75d0"
+  integrity sha512-6luuu7+71VQ7QYtkRHkiz/SORzLrBKqu7sabrXH0o8GP3U/RCZlq0Dbg0+QEUWx3B4HdA9RLf2P6cqLtoq5xbQ==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
