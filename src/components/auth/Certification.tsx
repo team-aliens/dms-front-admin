@@ -80,7 +80,7 @@ export function Certification({
         });
       setStep('RESET');
     }
-  }, [step, setStep]);
+  }, [step, setStep, account_id, email, auth_code]);
   return (
     <>
       <_IdInput
