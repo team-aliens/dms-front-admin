@@ -5,7 +5,7 @@ import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
 import { TitleBox } from './TitleBox';
 
-const exampleData = ['학교이름1', '학교이름2', '학교이름3'];
+const schools = ['학교이름1', '학교이름2', '학교이름3'];
 
 export function FindId() {
   const [nextStep, setNextStep] = useState<boolean>(false);
@@ -35,7 +35,7 @@ export function FindId() {
           value={sort}
           disable={false}
           onChange={onDropDownChange}
-          items={['학교이름1', '학교이름2', '학교이름3']}
+          items={schools}
         />
         {nextStep ? (
           <_QuestionWrapper>
