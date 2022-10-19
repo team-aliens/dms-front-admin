@@ -1,7 +1,12 @@
 import { instance } from '../axios';
-import { SchoolQuestionResponse } from './response';
+import { SchoolListResponse, SchoolQuestionResponse } from './response';
 
 const router = '/schools';
+
+export const getSchoolList = async () => {
+  const { data } = await instance.get<Promise<SchoolListResponse>>(router);
+  return data;
+};
 
 // 학교 확인 질문
 export const getSchoolQuestion = async (schoolId: string) => {
