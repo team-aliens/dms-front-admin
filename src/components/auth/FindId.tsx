@@ -5,10 +5,10 @@ import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
 import { TitleBox } from './TitleBox';
 
-const exampleData = ['1', '2'];
+const exampleData = ['학교이름1', '학교이름2', '학교이름3'];
 
 export function FindId() {
-  const [nextStep, setNextStep] = useState<boolean>(true);
+  const [nextStep, setNextStep] = useState<boolean>(false);
 
   const { onHandleChange, state } = useForm<{
     answer: string;
@@ -17,6 +17,13 @@ export function FindId() {
   });
 
   const { onDropDownChange, sort } = useDropDown<string>('');
+
+  const onClickNext = () => {
+    setNextStep(!nextStep);
+  };
+
+  // button onclick error 떠서 만든 함수 api 연동 때 사용해도 될 듯
+  const onClickAnswer = () => {};
 
   return (
     <_Wrapper>
@@ -28,7 +35,7 @@ export function FindId() {
           value={sort}
           disable={false}
           onChange={onDropDownChange}
-          items={exampleData}
+          items={['학교이름1', '학교이름2', '학교이름3']}
         />
         {nextStep ? (
           <_QuestionWrapper>
@@ -41,7 +48,12 @@ export function FindId() {
           </_QuestionWrapper>
         ) : (
           <_ButtonWrapper>
-            <Button size="default" color="primary" type="contained">
+            <Button
+              size="default"
+              color="primary"
+              type="contained"
+              onClick={onClickNext}
+            >
               다음
             </Button>
           </_ButtonWrapper>
@@ -59,7 +71,12 @@ export function FindId() {
             value={state.answer}
           />
           <_ButtonWrapper>
-            <Button type="contained" color="primary" size="default">
+            <Button
+              type="contained"
+              color="primary"
+              size="default"
+              onClick={onClickAnswer}
+            >
               다음
             </Button>
           </_ButtonWrapper>
