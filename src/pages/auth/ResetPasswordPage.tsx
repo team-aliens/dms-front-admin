@@ -26,7 +26,7 @@ export function ResetPasswordPage() {
     <_FlexWrapper>
       <LogoBox />
       <_Wrapper>
-        <_Contents onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           <_ResetPasswordTitle>비밀번호 재설정</_ResetPasswordTitle>
           {step !== 'RESET' ? (
             <Certification
@@ -43,7 +43,7 @@ export function ResetPasswordPage() {
               resetPasswordState={resetPasswordState}
             />
           )}
-        </_Contents>
+        </form>
       </_Wrapper>
     </_FlexWrapper>
   );
@@ -55,9 +55,6 @@ const _Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const _Contents = styled.form`
   margin: 0 auto;
 `;
 
