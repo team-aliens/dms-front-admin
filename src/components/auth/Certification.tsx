@@ -172,7 +172,7 @@ const _ReAuthCodeText = styled(Text)`
 
 const _ReAuthCodeButton = styled(Text)`
   text-decoration: underline;
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.buttonFont.weight};
 `;
 
 const _SeeEmailWrapper = styled.div`
