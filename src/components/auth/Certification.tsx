@@ -73,17 +73,17 @@ export function Certification({
     } else {
       checkEmailAuthCode(email, auth_code, 'PASSWORD')
         .then(() => {
+          setStep('RESET');
           changeErrorMessage('auth_code', '');
         })
         .catch((err: AxiosError) => {
           changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
         });
-      setStep('RESET');
     }
   }, [step, setStep, account_id, email, auth_code]);
   return (
     <>
-      <_IdInput
+      <_AccountIdInput
         label="아이디"
         placeholder="id를 입력해주세요."
         onChange={onChangeValue}
@@ -95,14 +95,14 @@ export function Certification({
       />
       {step !== 'RESET' && step !== 'ACCOUNT_ID' && (
         <>
-          <_SeeEmailWrapper>
-            <_SeeEmailTitle>
-              <Text fontSize="s">아이디와 일치하는 이메일입니다.</Text>
-            </_SeeEmailTitle>
+          <_EmailHintBox>
+            <Text fontSize="s" display="block">
+              아이디와 일치하는 이메일입니다.
+            </Text>
             <Text fontSize="s" color="primary">
               {emailHint}
             </Text>
-          </_SeeEmailWrapper>
+          </_EmailHintBox>
           <_EmailInput
             label="이메일"
             placeholder="이메일을 입력해주세요"
@@ -127,10 +127,10 @@ export function Certification({
             value={auth_code}
             errorMsg={errorMessages?.auth_code}
           />
-          <_ReAuthCodeWrapper>
-            <_ReAuthCodeText>인증번호가 발송되지 않았나요?</_ReAuthCodeText>
+          <_ReSendAuthCodeWrapper>
+            <_ReSendButton>인증번호가 발송되지 않았나요?</_ReSendButton>
             <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
-          </_ReAuthCodeWrapper>
+          </_ReSendAuthCodeWrapper>
         </>
       )}
       <_NextButton
@@ -145,7 +145,7 @@ export function Certification({
   );
 }
 
-const _IdInput = styled(Input)`
+const _AccountIdInput = styled(Input)`
   margin-top: 56px;
   margin-bottom: 40px;
 `;
@@ -159,14 +159,14 @@ const _AuthCodeInput = styled(Input)`
   position: relative;
 `;
 
-const _ReAuthCodeWrapper = styled.div`
+const _ReSendAuthCodeWrapper = styled.div`
   display: flex;
   position: absolute;
   right: 145px;
   bottom: 267px;
 `;
 
-const _ReAuthCodeText = styled(Text)`
+const _ReSendButton = styled(Text)`
   margin-right: 12px;
 `;
 
@@ -175,17 +175,16 @@ const _ReAuthCodeButton = styled(Text)`
   font-weight: ${({ theme }) => theme.buttonFont.weight};
 `;
 
-const _SeeEmailWrapper = styled.div`
+const _EmailHintBox = styled.div`
   margin-top: 16px;
   margin-bottom: 40px;
   padding: 12px 16px;
   width: 480px;
   height: 70px;
   background-color: ${({ theme }) => theme.color.gray2};
-`;
-
-const _SeeEmailTitle = styled.div`
-  margin-bottom: 8px;
+  > p {
+    line-height: 24px;
+  }
 `;
 
 const _NextButton = styled(Button)`
