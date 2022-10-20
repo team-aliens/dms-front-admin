@@ -1,19 +1,26 @@
 name: DMS-Front-CI
 
-on: 
-  pull_request: 
-    branches: 
+on:
+  push:
+    branches:
+      - 'feature/**' # git-flow에서 push할 branch 명시
+      - 'hotfixes'
+      - 'release/**'
+      - 'main'
+      - 'develop'
+  pull_request:
+    branches:
       - 'main' # git-flow에서 pr을 날릴 branch 명시
       - 'develop'
       - 'release/**'
 
-# 반복 삭제 
+# 반복 삭제
 concurrency:
   # 그룹을 pr의 head_ref로 정의
   group: ${{ github.workflow }}-${{ github.ref }}
   # 해당 pr에서 새로운 워크플로우가 실행될 경우, 이전에 워크플로우가 있다면 이전 워크플로우를 취소하도록 한다.
   cancel-in-progress: true
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +34,7 @@ jobs:
           node-version: 16
 
       - name: Install packages
-        run: yarn install --immutable
+        run: yarn install
 
-      - name: Build packages 
+      - name: Build packages
         run: yarn build
