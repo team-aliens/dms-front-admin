@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/recoil": "^0.0.9",
     "@babel/core": "^7.18.2",
     "@babel/plugin-transform-runtime": "^7.18.10",
     "@babel/preset-env": "^7.18.2",
@@ -53,7 +54,6 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@types/recoil": "^0.0.9",
     "@types/styled-components": "^5.1.26",
     "aliens-design-system-front": "^0.4.0",
     "axios": "^1.1.3",
