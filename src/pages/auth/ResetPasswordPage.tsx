@@ -27,7 +27,14 @@ export function ResetPasswordPage() {
       <LogoBox />
       <_Wrapper>
         <form onSubmit={onSubmit}>
-          <_ResetPasswordTitle>비밀번호 재설정</_ResetPasswordTitle>
+          <TitleBox
+            moreInfo={
+              step === 'RESET' &&
+              '비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.'
+            }
+          >
+            비밀번호 재설정
+          </TitleBox>
           {step !== 'RESET' ? (
             <Certification
               onChangeValue={onHandleChange}
@@ -56,5 +63,3 @@ const _Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const _ResetPasswordTitle = styled(TitleBox)``;
