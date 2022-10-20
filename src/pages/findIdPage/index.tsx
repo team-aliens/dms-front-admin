@@ -1,12 +1,17 @@
 import { FindId } from '@/components/auth/FindId';
 import { LogoBox } from '@/components/auth/LogoBox';
-import { _FlexWrapper } from '@/components/common/flexWrapper';
+import styled from 'styled-components';
 
 export function FindIdPage() {
   return (
-    <_FlexWrapper>
+    <_Wrapper>
       <LogoBox />
       <FindId />
-    </_FlexWrapper>
+    </_Wrapper>
   );
 }
+
+const _Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+`;

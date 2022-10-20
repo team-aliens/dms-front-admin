@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Input, CheckBox, Button, Text } from 'aliens-design-system-front';
+import { Input, CheckBox, Button, Text, Title } from 'aliens-design-system-front';
 import { Link } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
-import { TitleBox } from './TitleBox';
 
 export function Login() {
   const { onHandleChange, state } = useForm<{ id: string; password: string }>({
@@ -15,7 +14,7 @@ export function Login() {
 
   return (
     <_Wrapper>
-      <TitleBox>로그인</TitleBox>
+      <_TitleWrapper>로그인</_TitleWrapper>
       <_InputWrapper>
         <Input
           label="로그인"
@@ -54,20 +53,22 @@ export function Login() {
         <_FindAccontWrapper>
           <_FindAccountArea>
             <Link to="/find-id">
-              <Text fontSize="s" cursor="pointer">
-                아이디 찾기
-              </Text>
+              <Text fontSize="s">아이디 찾기</Text>
             </Link>
             <Text fontSize="s">|</Text>
-            <Text fontSize="s" cursor="pointer">
-              비밀번호 변경
-            </Text>
+            <Text fontSize="s">비밀번호 변경</Text>
           </_FindAccountArea>
         </_FindAccontWrapper>
       </_InputWrapper>
     </_Wrapper>
   );
 }
+
+const _TitleWrapper = styled(Title)`
+  width: 480px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.primary};
+  padding-bottom: 24px;
+`;
 
 const _Wrapper = styled.div`
   width: 50%;

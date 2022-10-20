@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Input, DropDown, Button, Text } from 'aliens-design-system-front';
+import { Input, DropDown, Button, Title } from 'aliens-design-system-front';
 import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
-import { TitleBox } from './TitleBox';
+import { fadeInRight } from '../animation/fade';
+import { Question } from './Question';
 
 const schools = ['학교이름1', '학교이름2', '학교이름3'];
 
 export function FindId() {
   const [nextStep, setNextStep] = useState<boolean>(false);
-
-  const { onHandleChange, state } = useForm<{
+  const { onHandleChange, state: answerState } = useForm<{
     answer: string;
   }>({
     answer: '',
@@ -18,49 +18,25 @@ export function FindId() {
 
   const { onDropDownChange, sort } = useDropDown<string>('');
 
-  const onClickNext = () => {
-    setNextStep(!nextStep);
-  };
+  const onClickShowQNA = () => setNextStep(!nextStep);
 
-  // button onclick error 떠서 만든 함수 api 연동 때 사용해도 될 듯
   const onClickAnswer = () => {};
 
   return (
     <_Wrapper>
-      <TitleBox>아이디 찾기</TitleBox>
-      <_DropDownWrapper>
-        <DropDown
+      <div>
+        <_TitleWrapper display="block">아이디 찾기</_TitleWrapper>
+        <_DropDown
           width={480}
+          label={'학교 이름'}
           placeholder="학교를 선택해주세요"
           value={sort}
           disable={false}
           onChange={onDropDownChange}
           items={schools}
         />
-        {nextStep ? (
-          <_QuestionWrapper>
-            <_QuestionTitle>
-              <Text fontSize="s">학교 인증 질문</Text>
-            </_QuestionTitle>
-            <Text fontSize="m" color="#55555">
-              학교 학생 수는 몇 명인가요?
-            </Text>
-          </_QuestionWrapper>
-        ) : (
-          <_ButtonWrapper>
-            <Button
-              size="default"
-              color="primary"
-              type="contained"
-              onClick={onClickNext}
-            >
-              다음
-            </Button>
-          </_ButtonWrapper>
-        )}
-      </_DropDownWrapper>
-      {nextStep && (
-        <div>
+        <_QNA nextStep={nextStep}>
+          <Question />
           <Input
             label="답변"
             placeholder="답변을 작성해주세요."
@@ -68,51 +44,51 @@ export function FindId() {
             type="text"
             name="answer"
             onChange={onHandleChange}
-            value={state.answer}
+            value={answerState.answer}
           />
-          <_ButtonWrapper>
-            <Button
-              type="contained"
-              color="primary"
-              size="default"
-              onClick={onClickAnswer}
-            >
-              다음
-            </Button>
-          </_ButtonWrapper>
-        </div>
-      )}
+        </_QNA>
+        <_BtnWrapper>
+          <Button
+            type="contained"
+            color="primary"
+            size="default"
+            onClick={nextStep ? onClickAnswer : onClickShowQNA}
+          >
+            다음
+          </Button>
+        </_BtnWrapper>
+      </div>
     </_Wrapper>
   );
 }
 
+const _QNA = styled.div<{ nextStep: boolean }>`
+  animation: ${fadeInRight} 1s;
+  display: ${({ nextStep }) => !nextStep && 'none'};
+`;
+
+const _BtnWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-top: 40px;
+`;
+
+const _TitleWrapper = styled(Title)`
+  border-bottom: 1px solid ${({ theme }) => theme.color.primary};
+  padding-bottom: 24px;
+`;
+
+const _DropDown = styled(DropDown)`
+  margin-top: 56px;
+`;
+
 const _Wrapper = styled.div`
   width: 50%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const _DropDownWrapper = styled.div`
-  padding-top: 56px;
-`;
-
-const _ButtonWrapper = styled.div`
-  padding-top: 40px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const _QuestionWrapper = styled.div`
-  margin-top: 16px;
-  margin-bottom: 40px;
-  padding: 12px 16px;
-  width: 480px;
-  height: 70px;
-  background-color: ${({ theme }) => theme.color.gray2};
-`;
-
-const _QuestionTitle = styled.div`
-  margin-bottom: 8px;
+  transition: 0.25s;
+  > div {
+    width: 480px;
+  }
 `;
