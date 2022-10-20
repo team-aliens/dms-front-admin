@@ -15,6 +15,7 @@ import {
   postEmailAuthCode,
 } from '@/apis/auth';
 import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { useToast } from '@/hooks/useToast';
 
 interface Props {
   account_id: string;
@@ -36,6 +37,7 @@ export function Certification({
   step,
 }: Props) {
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const { toastDispatch } = useToast();
   const [emailHint, setEmailHint] = useState('');
   const onClickNextButton = useCallback(() => {
     if (step === 'ACCOUNT_ID') {
@@ -75,12 +77,31 @@ export function Certification({
         .then(() => {
           setStep('RESET');
           changeErrorMessage('auth_code', '');
+          toastDispatch({
+            actionType: 'APPEND_TOAST',
+            toastType: 'SUCCESS',
+            message: '인증에 성공했습니다.',
+          });
         })
         .catch((err: AxiosError) => {
           changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
         });
     }
   }, [step, setStep, account_id, email, auth_code]);
+  const onClickReSendAuthCode = () => {
+    postEmailAuthCode({
+      email,
+      type: 'PASSWORD',
+    })
+      .then(() => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'INFORMATION',
+          message: `${emailHint}으로 인증코드가 재전송 되었습니다.`,
+        });
+      })
+      .catch((err: AxiosError) => {});
+  };
   return (
     <>
       <_AccountIdInput
@@ -116,7 +137,7 @@ export function Certification({
         </>
       )}
       {step === 'AUTH_CODE' && (
-        <>
+        <_AuthCodeArea>
           <_AuthCodeInput
             label="인증코드"
             name="auth_code"
@@ -128,10 +149,19 @@ export function Certification({
             errorMsg={errorMessages?.auth_code}
           />
           <_ReSendAuthCodeWrapper>
-            <_ReSendButton>인증번호가 발송되지 않았나요?</_ReSendButton>
-            <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
+            <_ResendQuestion fontSize="xs" color="gray5">
+              인증번호가 발송되지 않았나요?
+            </_ResendQuestion>
+            <Button
+              onClick={onClickReSendAuthCode}
+              color="gray"
+              type="underline"
+              clickType="button"
+            >
+              인증번호 재발송
+            </Button>
           </_ReSendAuthCodeWrapper>
-        </>
+        </_AuthCodeArea>
       )}
       <_NextButton
         onClick={onClickNextButton}
@@ -154,25 +184,8 @@ const _EmailInput = styled(Input)`
   margin-bottom: 40px;
 `;
 
-const _AuthCodeInput = styled(Input)`
-  margin-bottom: 40px;
-  position: relative;
-`;
-
-const _ReSendAuthCodeWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  right: 145px;
-  bottom: 267px;
-`;
-
-const _ReSendButton = styled(Text)`
+const _ResendQuestion = styled(Text)`
   margin-right: 12px;
-`;
-
-const _ReAuthCodeButton = styled(Text)`
-  text-decoration: underline;
-  font-weight: ${({ theme }) => theme.buttonFont.weight};
 `;
 
 const _EmailHintBox = styled.div`
@@ -185,6 +198,25 @@ const _EmailHintBox = styled.div`
   > p {
     line-height: 24px;
   }
+`;
+
+const _AuthCodeArea = styled.div`
+  position: relative;
+  margin-top: 60px;
+`;
+
+const _ReSendAuthCodeWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: -5px;
+  > button {
+    padding: 0;
+  }
+`;
+
+const _AuthCodeInput = styled(Input)`
+  margin-bottom: 40px;
 `;
 
 const _NextButton = styled(Button)`
