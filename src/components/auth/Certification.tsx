@@ -81,6 +81,9 @@ export function Certification({
         });
     }
   }, [step, setStep, account_id, email, auth_code]);
+
+  const onClickReturnEmail = () => {};
+
   return (
     <>
       <_AccountIdInput
@@ -129,7 +132,14 @@ export function Certification({
           />
           <_ReSendAuthCodeWrapper>
             <_ReSendButton>인증번호가 발송되지 않았나요?</_ReSendButton>
-            <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
+            <_ReAuthCodeButton
+              type="text"
+              color="gray"
+              size="default"
+              onClick={onClickReturnEmail}
+            >
+              인증번호 재발송
+            </_ReAuthCodeButton>
           </_ReSendAuthCodeWrapper>
         </>
       )}
@@ -170,9 +180,8 @@ const _ReSendButton = styled(Text)`
   margin-right: 12px;
 `;
 
-const _ReAuthCodeButton = styled(Text)`
+const _ReAuthCodeButton = styled(Button)`
   text-decoration: underline;
-  font-weight: ${({ theme }) => theme.buttonFont.weight};
 `;
 
 const _EmailHintBox = styled.div`

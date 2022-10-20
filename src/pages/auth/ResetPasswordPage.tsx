@@ -51,6 +51,8 @@ export function ResetPasswordPage() {
 
 const _Wrapper = styled.div`
   width: 50%;
+  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
