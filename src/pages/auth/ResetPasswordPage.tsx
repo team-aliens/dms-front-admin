@@ -10,7 +10,7 @@ import { TitleBox } from '@/components/auth/TitleBox';
 
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
-export function ResetPage() {
+export function ResetPasswordPage() {
   const [step, setStep] = useState<Steps>('ACCOUNT_ID');
   const { state: resetPasswordState, onHandleChange } =
     useForm<ResetPasswordRequest>({
