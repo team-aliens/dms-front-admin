@@ -149,8 +149,16 @@ export function Certification({
             errorMsg={errorMessages?.auth_code}
           />
           <_ReSendAuthCodeWrapper>
-            <_ReSendButton>인증번호가 발송되지 않았나요?</_ReSendButton>
-            <_ReAuthCodeButton>인증번호 재발송</_ReAuthCodeButton>
+            <_ResendQuestion>인증번호가 발송되지 않았나요?</_ResendQuestion>
+            <Button
+              onClick={onClickReSendAuthCode}
+              color="gray"
+              type="underline"
+              clickType="button"
+              size="default"
+            >
+              인증번호 재발송
+            </Button>
           </_ReSendAuthCodeWrapper>
         </_AuthCodeArea>
       )}
@@ -177,11 +185,6 @@ const _EmailInput = styled(Input)`
 
 const _ResendQuestion = styled(Text)`
   margin-right: 12px;
-`;
-
-const _ReAuthCodeButton = styled(Text)`
-  text-decoration: underline;
-  font-weight: ${({ theme }) => theme.buttonFont.weight};
 `;
 
 const _EmailHintBox = styled.div`
