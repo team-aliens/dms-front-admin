@@ -55,7 +55,6 @@ const _Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
 `;
 
 const _ResetPasswordTitle = styled(TitleBox)``;
