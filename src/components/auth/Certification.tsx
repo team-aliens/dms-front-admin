@@ -188,8 +188,7 @@ const _ResendQuestion = styled(Text)`
 `;
 
 const _EmailHintBox = styled.div`
-  margin-top: 16px;
-  margin-bottom: 40px;
+  margin: 16px 0 40px 0;
   padding: 12px 16px;
   width: 480px;
   height: 70px;
