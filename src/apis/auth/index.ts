@@ -56,7 +56,7 @@ export const verificationEmail = async (account_id: string, email: string) => {
 // 아이디 존재 여부 확인(비밀번호 재설정)
 export const checkEmailDuplicate = async (account_id: string) => {
   const { data } = await instance.get<Promise<EmailDuplicateCheckResponse>>(
-    `${router}/account-id&account_id=${account_id}`,
+    `${router}/account-id?account_id=${account_id}`,
   );
   return data;
 };

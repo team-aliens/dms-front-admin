@@ -53,7 +53,7 @@ export function Login() {
   return (
     <_Wrapper onSubmit={onSubmit}>
       <_Contents>
-        <TitleBox />
+        <TitleBox>로그인</TitleBox>
         <_LoginInput
           label="로그인"
           onChange={onHandleChange}
