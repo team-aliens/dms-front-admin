@@ -194,6 +194,7 @@ const _EmailHintBox = styled.div`
   height: 70px;
   background-color: ${({ theme }) => theme.color.gray2};
   > p {
+    // 디자인 시스템 구축시 반영 예정
     line-height: 24px;
   }
 `;
