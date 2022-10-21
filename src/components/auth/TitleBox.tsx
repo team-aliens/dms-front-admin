@@ -18,9 +18,6 @@ export function TitleBox({ children, moreInfo }: TitleProps) {
 
 const _TitleWrapper = styled.h1`
   width: 480px;
-  .textWrapper {
-    padding-bottom: 24px;
-  }
   > hr {
     width: 480px;
     height: 1px;
