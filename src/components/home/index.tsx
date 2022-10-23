@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StudentList } from './studentList';
+import { StudentList } from './studentList/StudentList';
 import { _FlexWrapper } from '../common/flexWrapper';
 import { DetailStudent } from './DetailStudent';
 

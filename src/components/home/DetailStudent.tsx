@@ -6,9 +6,11 @@ export function DetailStudent() {
 
   return (
     <div>
-      <_DetailStudentTitle fontSize="s" color="gray6">
-        학생 상세 확인
-      </_DetailStudentTitle>
+      <_DetailStudentTitleContainer>
+        <_DetailStudentTitle fontSize="s" color="gray6">
+          학생 상세 확인
+        </_DetailStudentTitle>
+      </_DetailStudentTitleContainer>
       <_DetailBox>
         <_StudentInfoWrapper>
           <div className="img">a</div>
@@ -123,6 +125,10 @@ export function DetailStudent() {
     </div>
   );
 }
+
+const _DetailStudentTitleContainer = styled.div`
+  margin-bottom: 43px;
+`;
 
 const _DetailStudentTitle = styled(Title)``;
 
