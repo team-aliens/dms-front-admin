@@ -23,6 +23,7 @@
     "@typescript-eslint/no-use-before-define": "warn",
     "react/jsx-pascal-case": [0, { "allowLeadingUnderscore": true }],
     "arrow-body-style": ["error", "as-needed"],
+    "no-confusing-arrow": ["error", { "allowParens": true, "onlyOneSimpleParam": true }],
     "import/extensions": [
       "error",
       "ignorePackages",
