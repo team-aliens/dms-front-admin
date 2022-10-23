@@ -5,20 +5,46 @@ import { StudentBox } from './StudentBox';
 
 const StudentData = {
   StudentList: [
-    { profile_image_url: '10대', room_number: 101 },
-    { profile_image_url: '20대', room_number: 201 },
-    { profile_image_url: '30대', room_number: 301 },
-    { profile_image_url: '40대', room_number: 401 },
+    {
+      id: 'a1',
+      name: 'aaa',
+      gcn: '1111',
+      room_number: 101,
+      profile_image_url: 'asd',
+    },
+    {
+      id: 'a1',
+      name: 'aaa',
+      gcn: '1111',
+      room_number: 201,
+      profile_image_url: 'asd',
+    },
+    {
+      id: 'a1',
+      name: 'aaa',
+      gcn: '1111',
+      room_number: 301,
+      profile_image_url: 'asd',
+    },
+    {
+      id: 'a1',
+      name: 'aaa',
+      gcn: '1111',
+      room_number: 401,
+      profile_image_url: 'asd',
+    },
   ],
 };
 
 export function StudentList() {
   const [selected, setSelected] = useState<boolean>(false);
+  const [cur, setCur] = useState<number>();
 
   const onClickSelectedButton = () => {};
 
-  const onStudentBoxClick = () => {
+  const onStudentBoxClick = (num: number) => {
     setSelected(true);
+    setCur(num);
   };
 
   return (
@@ -30,9 +56,12 @@ export function StudentList() {
           </Button>
         </_FilterWrapper>
         <_StudentListWrapper>
-          <StudentBox onClick={onStudentBoxClick} selected={selected} />
-          <StudentBox onClick={onStudentBoxClick} selected={selected} />
-          <StudentBox onClick={onStudentBoxClick} selected={selected} />
+          {StudentData.StudentList.map((data, index) => (
+            <StudentBox
+              onClick={() => onStudentBoxClick((index + 1) * 10)}
+              selected={(index + 1) * 10 === cur}
+            />
+          ))}
         </_StudentListWrapper>
       </div>
       <hr />
