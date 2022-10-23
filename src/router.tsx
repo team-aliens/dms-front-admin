@@ -2,7 +2,6 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
 import { HomePage } from './pages/homePage';
-import { LoginPage } from './pages/loginPage';
 
 export function Router() {
   return (

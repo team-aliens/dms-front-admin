@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { StudentList } from './studentList/StudentList';
-import { _FlexWrapper } from '../common/flexWrapper';
+import { _FlexWrapper } from '@/styles/flexWrapper';
 import { DetailStudent } from './DetailStudent';
 
 export function Home() {
