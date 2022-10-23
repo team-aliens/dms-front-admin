@@ -1,9 +1,14 @@
 import { Text } from 'aliens-design-system-front';
 import styled from 'styled-components';
 
-export function StudentBox() {
+interface SelectedProps {
+  onClick: () => void;
+  selected: boolean;
+}
+
+export function StudentBox({ selected, onClick }: SelectedProps) {
   return (
-    <_Wrapper>
+    <_Wrapper selected={selected} onClick={onClick}>
       <img src="" alt="" />
       <_StudentName fontSize="l" color="gray9">
         가나다
@@ -18,9 +23,10 @@ export function StudentBox() {
   );
 }
 
-const _Wrapper = styled.div`
+const _Wrapper = styled.div<{ selected: boolean }>`
   width: 530px;
   height: 70px;
+  background-color: ${({ selected, theme }) => (selected ? theme.color.primaryDarken2 : theme.color.gray1)};
   padding: 17px 40px 17px 36px;
   margin-top: 16px;
   display: flex;

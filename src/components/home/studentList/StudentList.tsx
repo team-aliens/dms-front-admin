@@ -1,28 +1,38 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Title } from 'aliens-design-system-front';
 import { StudentBox } from './StudentBox';
 
+const StudentData = {
+  StudentList: [
+    { profile_image_url: '10대', room_number: 101 },
+    { profile_image_url: '20대', room_number: 201 },
+    { profile_image_url: '30대', room_number: 301 },
+    { profile_image_url: '40대', room_number: 401 },
+  ],
+};
+
 export function StudentList() {
-  const onClick = () => {};
+  const [selected, setSelected] = useState<boolean>(false);
+
+  const onClickSelectedButton = () => {};
+
+  const onStudentBoxClick = () => {
+    setSelected(true);
+  };
 
   return (
     <_Wrapper>
       <div>
         <_FilterWrapper>
-          <Button
-            size="default"
-            disabled={false}
-            color="gray"
-            onClick={onClick}
-            type="outline"
-          >
+          <Button size="default" disabled={false} color="gray" onClick={onClickSelectedButton} type="outline">
             학번순
           </Button>
         </_FilterWrapper>
         <_StudentListWrapper>
-          <StudentBox />
-          <StudentBox />
-          <StudentBox />
+          <StudentBox onClick={onStudentBoxClick} selected={selected} />
+          <StudentBox onClick={onStudentBoxClick} selected={selected} />
+          <StudentBox onClick={onStudentBoxClick} selected={selected} />
         </_StudentListWrapper>
       </div>
       <hr />
