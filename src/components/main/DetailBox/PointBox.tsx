@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Text } from 'aliens-design-system-front';
 
 interface Props {
   pointType: 'BONUS' | 'MINUS';
@@ -8,8 +9,12 @@ interface Props {
 export function PointBox({ pointType, point }: Props) {
   return (
     <_Wrapper>
-      <_PointType>{pointType === 'BONUS' ? '상점' : '벌점'}</_PointType>
-      <_Point>4</_Point>
+      <_PointType fontSize="s" color="gray5">
+        {pointType === 'BONUS' ? '상점' : '벌점'}
+      </_PointType>
+      <_Point fontSize="l" color="gray9">
+        4
+      </_Point>
     </_Wrapper>
   );
 }
@@ -25,17 +30,11 @@ const _Wrapper = styled.div`
   align-items: center;
 `;
 
-const _PointType = styled.p`
+const _PointType = styled(Text)`
   padding-right: 24px;
   border-right: 1px solid ${({ theme }) => theme.color.gray3};
-  font-size: ${({ theme }) => theme.textFont.s.size}px;
-  font-weight: ${({ theme }) => theme.textFont.s.weight};
-  color: ${({ theme }) => theme.color.gray5};
 `;
 
-const _Point = styled.p`
+const _Point = styled(Text)`
   margin: 0 auto;
-  font-size: ${({ theme }) => theme.textFont.l.size}px;
-  font-weight: ${({ theme }) => theme.textFont.l.weight};
-  color: ${({ theme }) => theme.color.gray9};
 `;

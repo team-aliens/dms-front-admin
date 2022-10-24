@@ -98,7 +98,4 @@ const _MateList = styled.div`
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 8px;
-  > button {
-    font-weight: 600;
-  }
 `;

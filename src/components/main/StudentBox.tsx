@@ -15,7 +15,13 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
       isSelected={isSelected}
     >
       <img src={studentInfo.profile_image_url} />
-      <strong className="name">{studentInfo.name}</strong>
+      <Text
+        fontSize="l"
+        color={isSelected ? 'gray1' : 'gray9'}
+        className="name"
+      >
+        {studentInfo.name}
+      </Text>
       <Text className="gcn" fontSize="l" color={isSelected ? 'gray4' : 'gray6'}>
         {studentInfo.gcn}
       </Text>
@@ -53,14 +59,7 @@ const _Wrapper = styled.li<WrapperProps>`
       isSelected ? theme.color.primary : theme.color.gray5};
     border-radius: 50%;
   }
-
-  > strong {
-    font-size: ${({ theme }) => theme.textFont.l.size}px;
-    font-weight: ${({ theme }) => theme.textFont.l.weight};
-  }
   > .name {
-    color: ${({ theme, isSelected }) =>
-      isSelected ? theme.color.gray1 : theme.color.gray9};
     margin-left: 16px;
   }
   > .gcn {

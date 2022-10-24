@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Title } from 'aliens-design-system-front';
+import { Title, Text } from 'aliens-design-system-front';
 
 interface Props {
   name: string;
@@ -20,7 +20,9 @@ export function StudentInfo({ name, gcn, room_number }: Props) {
             {gcn}
           </Title>
         </_PersonalInfo>
-        <p className="roomNumber">{room_number}호</p>
+        <Text fontSize="l" color="gray6" className="roomNumber">
+          {room_number}호
+        </Text>
       </_Wrapper>
     </_StudnetInfo>
   );
@@ -40,9 +42,6 @@ const _Wrapper = styled.div`
   margin-top: 18px;
   > .roomNumber {
     margin-top: 20px;
-    font-size: ${({ theme }) => theme.textFont.l.size}px;
-    font-weight: ${({ theme }) => theme.textFont.l.weight};
-    color: ${({ theme }) => theme.color.gray6};
   }
 `;
 const _PersonalInfo = styled.div`
