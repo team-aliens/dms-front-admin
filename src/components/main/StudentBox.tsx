@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Text } from 'aliens-design-system-front';
 import { StudentInfo } from '@/apis/managers/response';
 
 interface Props {
@@ -15,8 +16,16 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
     >
       <img src={studentInfo.profile_image_url} />
       <strong className="name">{studentInfo.name}</strong>
-      <p className="gcn">{studentInfo.gcn}</p>
-      <p className="roomNumber">{studentInfo.room_number}호</p>
+      <Text className="gcn" fontSize="l" color={isSelected ? 'gray4' : 'gray6'}>
+        {studentInfo.gcn}
+      </Text>
+      <Text
+        fontSize="l"
+        color={isSelected ? 'gray4' : 'gray6'}
+        className="roomNumber"
+      >
+        {studentInfo.room_number}호
+      </Text>
     </_Wrapper>
   );
 }
@@ -45,8 +54,7 @@ const _Wrapper = styled.li<WrapperProps>`
     border-radius: 50%;
   }
 
-  > p,
-  strong {
+  > strong {
     font-size: ${({ theme }) => theme.textFont.l.size}px;
     font-weight: ${({ theme }) => theme.textFont.l.weight};
   }
@@ -56,13 +64,9 @@ const _Wrapper = styled.li<WrapperProps>`
     margin-left: 16px;
   }
   > .gcn {
-    color: ${({ theme, isSelected }) =>
-      isSelected ? theme.color.gray4 : theme.color.gray6};
-    margin-left: 12px;
+    margin-left: 16px;
   }
   > .roomNumber {
     margin-left: auto;
-    color: ${({ theme, isSelected }) =>
-      isSelected ? theme.color.gray4 : theme.color.gray6};
   }
 `;

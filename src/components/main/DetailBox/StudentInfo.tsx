@@ -1,15 +1,26 @@
 import styled from 'styled-components';
+import { Title } from 'aliens-design-system-front';
 
-export function StudentInfo() {
+interface Props {
+  name: string;
+  gcn: string;
+  room_number: number;
+}
+
+export function StudentInfo({ name, gcn, room_number }: Props) {
   return (
     <_StudnetInfo>
       <img />
       <_Wrapper>
         <_PersonalInfo>
-          <p className="name">가나다</p>
-          <p className="gcn">1101</p>
+          <Title fontSize="m" color="gray9">
+            {name}
+          </Title>
+          <Title fontSize="m" color="gray6" className="gcn">
+            {gcn}
+          </Title>
         </_PersonalInfo>
-        <p className="roomNumber">401호</p>
+        <p className="roomNumber">{room_number}호</p>
       </_Wrapper>
     </_StudnetInfo>
   );
@@ -36,15 +47,7 @@ const _Wrapper = styled.div`
 `;
 const _PersonalInfo = styled.div`
   display: flex;
-  > p {
-    font-size: ${({ theme }) => theme.titleFont.m.size}px;
-    font-weight: ${({ theme }) => theme.titleFont.m.weight};
-  }
-  > .name {
-    color: ${({ theme }) => theme.color.gray9};
-  }
   > .gcn {
-    color: ${({ theme }) => theme.color.gray6};
     margin-left: 20px;
   }
 `;

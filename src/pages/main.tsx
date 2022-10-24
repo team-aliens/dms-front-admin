@@ -22,11 +22,11 @@ export function Main() {
   const [studentDetail, setStudentDetail] =
     useState<GetStudentDetailResponse>();
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
-  useEffect(() => {
-    getStudentDetail(selectedStudentId)
-      .then((res) => setStudentDetail(res))
-      .catch((err) => {});
-  }, [selectedStudentId]);
+  // useEffect(() => {
+  //   getStudentDetail(selectedStudentId)
+  //     .then((res) => setStudentDetail(res))
+  //     .catch((err) => {});
+  // }, [selectedStudentId]);
   return (
     <_FlexWrapper>
       <NavigatorBar features={feature} />
