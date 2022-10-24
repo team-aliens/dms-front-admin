@@ -22,7 +22,11 @@ export const resetPassword = async (body: ResetPasswordRequest) => {
 };
 
 // 학생 검색 정렬 타입
-type SortType = 'GCN' | 'NAME';
+export type SortType = 'GCN' | 'NAME';
+export enum SortEnum {
+  GCN = '학번',
+  NAME = '이름',
+}
 
 export const searchStudentList = async (name: string, sort: SortType) => {
   const { data } = await instance.get<Promise<SearchStudentListResponse>>(
