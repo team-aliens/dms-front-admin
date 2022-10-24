@@ -23,7 +23,9 @@ export function Main() {
     useState<GetStudentDetailResponse>();
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   useEffect(() => {
-    getStudentDetail(selectedStudentId).then((res) => setStudentDetail(res));
+    getStudentDetail(selectedStudentId)
+      .then((res) => setStudentDetail(res))
+      .catch((err) => {});
   }, [selectedStudentId]);
   return (
     <_FlexWrapper>
