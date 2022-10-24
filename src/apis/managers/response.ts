@@ -2,7 +2,7 @@ export interface FindAccountIdResponse {
   email: string;
 }
 
-interface StudentInfo {
+export interface StudentInfo {
   id: string;
   name: string;
   gcn: string;
