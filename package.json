@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.26",
-    "aliens-design-system-front": "^0.4.5",
+    "aliens-design-system-front": "^0.4.7",
     "axios": "^1.1.3",
     "core-js": "^3.24.1",
     "react": "^18.2.0",
