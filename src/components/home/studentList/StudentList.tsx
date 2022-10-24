@@ -74,8 +74,7 @@ const _Wrapper = styled.div`
   > hr {
     width: 1px;
     height: 760px;
-    margin-left: 104px;
-    margin-right: 100px;
+    margin: 0 100px 0 104px;
     background-color: ${({ theme }) => theme.color.gray3};
   }
 `;
@@ -84,13 +83,10 @@ const _FilterWrapper = styled.div`
   width: 530px;
   display: flex;
   justify-content: flex-end;
+  margin-top: 170px;
   margin-bottom: 36px;
 `;
 
-const _StudentListWrapper = styled.div``;
-
-const _DetailStudentWrapper = styled.div``;
-
-const _DetailStudentTitle = styled(Title)`
-  margin-bottom: 43px;
+const _StudentListWrapper = styled.div`
+  overflow: scroll;
 `;

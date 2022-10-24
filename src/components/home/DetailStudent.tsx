@@ -5,7 +5,7 @@ export function DetailStudent() {
   const onClickStudent = () => {};
 
   return (
-    <div>
+    <_DetailStudentWrapper>
       <_DetailStudentTitleContainer>
         <_DetailStudentTitle fontSize="s" color="gray6">
           학생 상세 확인
@@ -82,49 +82,16 @@ export function DetailStudent() {
             >
               가나다
             </_SameRoomStudent>
-            <_SameRoomStudent
-              size="default"
-              disabled={false}
-              color="gray"
-              onClick={onClickStudent}
-              type="outline"
-            >
-              가나다
-            </_SameRoomStudent>
-            <_SameRoomStudent
-              size="default"
-              disabled={false}
-              color="gray"
-              onClick={onClickStudent}
-              type="outline"
-            >
-              가나다
-            </_SameRoomStudent>
-            <_SameRoomStudent
-              size="default"
-              disabled={false}
-              color="gray"
-              onClick={onClickStudent}
-              type="outline"
-            >
-              가나다
-            </_SameRoomStudent>
-
-            <_SameRoomStudent
-              size="default"
-              disabled={false}
-              color="gray"
-              onClick={onClickStudent}
-              type="outline"
-            >
-              가나다
-            </_SameRoomStudent>
           </_SameRoomStudentContainer>
         </_SameRoomStudentWrapper>
       </_DetailBox>
-    </div>
+    </_DetailStudentWrapper>
   );
 }
+
+const _DetailStudentWrapper = styled.div`
+  margin-top: 170px;
+`;
 
 const _DetailStudentTitleContainer = styled.div`
   margin-bottom: 43px;
@@ -134,7 +101,7 @@ const _DetailStudentTitle = styled(Title)``;
 
 const _DetailBox = styled.div`
   width: 476px;
-  height: 525px;
+  /* height: 525px; */
   padding: 60px;
   box-shadow: 0px 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
