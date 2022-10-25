@@ -8,4 +8,5 @@ const _Divider = styled.hr`
   width: 1px;
   height: 500px;
   background-color: ${({ theme }) => theme.color.gray3};
+  margin: 0 40px;
 `;

@@ -37,23 +37,22 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
             name={studentDetail.name}
             gcn={studentDetail.gcn}
             room_number={studentDetail.room_number}
+            profile_image_url={studentDetail.profile_image_url}
           />
           <_PointWrapper>
             <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
             <PointBox pointType="MINUS" point={studentDetail.minus_point} />
           </_PointWrapper>
-          <_Roomates>
-            <Text fontSize="s" color="gray6">
-              동일 호실 학생
-            </Text>
-            <_MateList>
-              {studentDetail.room_mates.map((item) => (
-                <Button type="outline" onClick={() => {}} color="gray">
-                  {item.name}
-                </Button>
-              ))}
-            </_MateList>
-          </_Roomates>
+          <_RoomMates fontSize="s" color="gray6">
+            동일 호실 학생
+          </_RoomMates>
+          <_MateList>
+            {studentDetail.room_mates.map((item) => (
+              <Button type="outline" onClick={() => {}} color="gray">
+                {item.name}
+              </Button>
+            ))}
+          </_MateList>
         </_DetailBox>
       ) : (
         <_NotSelected fontSize="l" color="gray5" display="block">
@@ -65,14 +64,14 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
 }
 
 const _Wrapper = styled.div`
-  margin: 10px 0 0 40px;
+  margin-top: 10px;
 `;
 
 const _DetailBox = styled.div`
   margin-top: 43px;
-  padding: 60px;
-  width: 476px;
-  height: 525px;
+  padding: 60px 40px;
+  width: 436px;
+  height: 485px;
   display: flex;
   flex-direction: column;
 `;
@@ -90,8 +89,8 @@ const _PointWrapper = styled.div`
     }
   }
 `;
-const _Roomates = styled.div`
-  margin-top: 60px;
+const _RoomMates = styled(Text)`
+  margin-top: 40px;
 `;
 const _MateList = styled.div`
   display: flex;

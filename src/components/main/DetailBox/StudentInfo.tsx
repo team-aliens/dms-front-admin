@@ -5,18 +5,24 @@ interface Props {
   name: string;
   gcn: string;
   room_number: number;
+  profile_image_url: string;
 }
 
-export function StudentInfo({ name, gcn, room_number }: Props) {
+export function StudentInfo({
+  name,
+  gcn,
+  room_number,
+  profile_image_url,
+}: Props) {
   return (
     <_StudnetInfo>
-      <img />
+      <img src={profile_image_url} alt="프로필" />
       <_Wrapper>
         <_PersonalInfo>
-          <Title fontSize="m" color="gray9">
+          <Title fontSize="s" color="gray9">
             {name}
           </Title>
-          <Title fontSize="m" color="gray6" className="gcn">
+          <Title fontSize="s" color="gray6" className="gcn">
             {gcn}
           </Title>
         </_PersonalInfo>
@@ -31,22 +37,22 @@ export function StudentInfo({ name, gcn, room_number }: Props) {
 const _StudnetInfo = styled.div`
   display: flex;
   > img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin-right: 24px;
     background-color: gray;
   }
 `;
 const _Wrapper = styled.div`
-  margin-top: 18px;
+  margin-top: 13px;
   > .roomNumber {
-    margin-top: 20px;
+    margin-top: 12px;
   }
 `;
 const _PersonalInfo = styled.div`
   display: flex;
   > .gcn {
-    margin-left: 20px;
+    margin-left: 16px;
   }
 `;

@@ -72,7 +72,7 @@ export function StudentList({
     }
   };
   return (
-    <_Wrapper>
+    <_Wrapper detailIsOpened={selectedStudentId !== ''}>
       <_Filter>
         <div />
         <Button type="outline" color="gray" onClick={onClick}>
@@ -92,9 +92,10 @@ export function StudentList({
   );
 }
 
-const _Wrapper = styled.div`
-  margin: 0 104px 0 230px;
-  width: 530px;
+const _Wrapper = styled.div<{
+  detailIsOpened: boolean;
+}>`
+  width: ${({ detailIsOpened }) => (detailIsOpened ? 514 : 770)}px;
 `;
 const _Filter = styled.section`
   display: flex;

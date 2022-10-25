@@ -47,5 +47,5 @@ export function Main() {
 
 const _Wrapper = styled.div`
   display: flex;
-  margin-top: 160px;
+  margin: 160px auto 0 auto;
 `;

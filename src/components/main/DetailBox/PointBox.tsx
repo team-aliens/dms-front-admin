@@ -25,16 +25,18 @@ const _Wrapper = styled.div`
   display: flex;
   background-color: ${({ theme }) => theme.color.gray2};
   border: 1px solid ${({ theme }) => theme.color.gray3};
-  padding: 8px 24px;
+  padding: 8px 0;
   border-radius: 4px;
   align-items: center;
 `;
 
 const _PointType = styled(Text)`
-  padding-right: 24px;
+  width: 50%;
   border-right: 1px solid ${({ theme }) => theme.color.gray3};
+  text-align: center;
 `;
 
 const _Point = styled(Text)`
-  margin: 0 auto;
+  width: 50%;
+  text-align: center;
 `;
