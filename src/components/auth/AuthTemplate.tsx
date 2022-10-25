@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-import { FindAccountId } from '@/components/auth/findAccount/FindAccountId';
 import { LogoBox } from '@/components/auth/LogoBox';
 
-export function FindAccountIdPage() {
+interface Props {
+  children: React.ReactNode;
+}
+
+export function AuthTemplate({ children }: Props) {
   return (
     <_Wrapper>
       <LogoBox />
-      <FindAccountId />
+      {children}
     </_Wrapper>
   );
 }
 
 const _Wrapper = styled.div`
   display: flex;
-  height: 100vh;
 `;

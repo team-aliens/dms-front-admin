@@ -3,7 +3,6 @@ import { NavigatorBar } from 'aliens-design-system-front';
 import { useEffect, useState } from 'react';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
-import { _FlexWrapper } from '@/styles/flexWrapper';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
 import { getStudentDetail } from '@/apis/managers';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
@@ -28,7 +27,7 @@ export function Main() {
   //     .catch((err) => {});
   // }, [selectedStudentId]);
   return (
-    <_FlexWrapper>
+    <_Flex>
       <NavigatorBar features={feature} />
       <_Wrapper>
         <StudentList
@@ -41,9 +40,13 @@ export function Main() {
           studentId={selectedStudentId}
         />
       </_Wrapper>
-    </_FlexWrapper>
+    </_Flex>
   );
 }
+
+const _Flex = styled.div`
+  display: flex;
+`;
 
 const _Wrapper = styled.div`
   display: flex;

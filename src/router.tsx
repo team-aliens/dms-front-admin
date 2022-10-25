@@ -2,7 +2,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from './pages/loginPage';
 import { FindAccountIdPage } from './pages/findAccountId';
 import { Main } from '@/pages/main';
-import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 export function Router() {
   return (

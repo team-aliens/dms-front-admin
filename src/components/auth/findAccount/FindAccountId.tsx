@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { Input, DropDown, Button, Title } from 'aliens-design-system-front';
 import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
-import { fadeInRight } from '../animation/fade';
+import { fadeInRight } from '../../animation/fade';
 import { Question } from './Question';
 
 const schools = ['학교이름1', '학교이름2', '학교이름3'];
 
-export function FindId() {
+export function FindAccountId() {
   const [nextStep, setNextStep] = useState<boolean>(false);
   const { onHandleChange, state: answerState } = useForm<{
     answer: string;
@@ -28,7 +28,7 @@ export function FindId() {
         <_TitleWrapper display="block">아이디 찾기</_TitleWrapper>
         <_DropDown
           width={480}
-          label={'학교 이름'}
+          label="학교 이름"
           placeholder="학교를 선택해주세요"
           value={sort}
           disable={false}
