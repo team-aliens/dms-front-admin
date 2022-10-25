@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { AxiosError } from 'axios';
-import { Steps } from '@/pages/auth/ResetPasswordPage';
+import { Steps } from '@/pages/ResetPasswordPage';
 import {
   checkEmailAuthCode,
   checkEmailDuplicate,

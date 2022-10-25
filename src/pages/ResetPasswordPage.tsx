@@ -1,12 +1,11 @@
 import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { LogoBox } from '@/components/auth/LogoBox';
-import { Reset } from '@/components/auth/Reset';
-import { _FlexWrapper } from '@/styles/flexWrapper';
-import { Certification } from '@/components/auth/Certification';
+import { Reset } from '@/components/auth/findAccount/Reset';
+import { Certification } from '@/components/auth/findAccount/Certification';
 import { useForm } from '@/hooks/useForm';
 import { ResetPasswordRequest } from '@/apis/managers/request';
 import { TitleBox } from '@/components/auth/TitleBox';
+import { AuthTemplate } from '@/components/auth/AuthTemplate';
 
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
@@ -23,8 +22,7 @@ export function ResetPasswordPage() {
     e.preventDefault();
   };
   return (
-    <_FlexWrapper>
-      <LogoBox />
+    <AuthTemplate>
       <_Wrapper>
         <form onSubmit={onSubmit}>
           <TitleBox
@@ -52,9 +50,13 @@ export function ResetPasswordPage() {
           )}
         </form>
       </_Wrapper>
-    </_FlexWrapper>
+    </AuthTemplate>
   );
 }
+
+const _FlexWrapper = styled.div`
+  display: flex;
+`;
 
 const _Wrapper = styled.div`
   width: 50%;
