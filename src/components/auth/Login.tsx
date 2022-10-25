@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { Input, CheckBox, Button, Text, Title } from 'aliens-design-system-front';
+import {
+  Input,
+  CheckBox,
+  Button,
+  Text,
+  Title,
+} from 'aliens-design-system-front';
 import { Link } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 
@@ -14,7 +20,7 @@ export function Login() {
 
   return (
     <_Wrapper>
-      <_TitleWrapper>로그인</_TitleWrapper>
+      <_Title>로그인</_Title>
       <_InputWrapper>
         <Input
           label="로그인"
@@ -25,7 +31,7 @@ export function Login() {
           name="id"
           value={state.id}
         />
-        <_PasswordInputWrapper>
+        <_PasswordWrapper>
           <Input
             label="비밀번호"
             onChange={onHandleChange}
@@ -35,7 +41,7 @@ export function Login() {
             name="password"
             value={state.password}
           />
-        </_PasswordInputWrapper>
+        </_PasswordWrapper>
         <_CheckInputWrapper>
           <CheckBox disabled={false} label="아이디 저장" />
         </_CheckInputWrapper>
@@ -64,7 +70,7 @@ export function Login() {
   );
 }
 
-const _TitleWrapper = styled(Title)`
+const _Title = styled(Title)`
   width: 480px;
   border-bottom: 1px solid ${({ theme }) => theme.color.primary};
   padding-bottom: 24px;
@@ -84,7 +90,7 @@ const _InputWrapper = styled.div`
   padding-top: 56px;
 `;
 
-const _PasswordInputWrapper = styled.div`
+const _PasswordWrapper = styled.div`
   padding-top: 40px;
 `;
 
