@@ -1,6 +1,12 @@
 import styled from 'styled-components';
-import { Button } from 'aliens-design-system-front';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Button, SearchBox } from 'aliens-design-system-front';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { SortType, SortEnum, searchStudentList } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
@@ -59,22 +65,22 @@ export function StudentList({
   }, [filter.sort, filter.name]);
 
   const onClick = () => {
-    if (filter.sort === 'GCN') {
-      setFilter({
-        ...filter,
-        sort: 'NAME',
-      });
-    } else {
-      setFilter({
-        ...filter,
-        sort: 'GCN',
-      });
-    }
+    const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
+    setFilter({
+      ...filter,
+      sort: value,
+    });
+  };
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilter({
+      ...filter,
+      name: e.target.value,
+    });
   };
   return (
     <_Wrapper detailIsOpened={selectedStudentId !== ''}>
       <_Filter>
-        <div />
+        <SearchBox value={filter.name} onChangeValue={onChangeName} />
         <Button type="outline" color="gray" onClick={onClick}>
           {SortEnum[filter.sort]}순
         </Button>
@@ -99,11 +105,6 @@ const _Wrapper = styled.div<{
 `;
 const _Filter = styled.section`
   display: flex;
-  > div {
-    width: 241px;
-    height: 40px;
-    background-color: ${({ theme }) => theme.color.gray5};
-  }
   > button {
     margin-left: auto;
   }
