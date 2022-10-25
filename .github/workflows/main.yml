@@ -33,6 +33,13 @@ jobs:
         with:
           node-version: 16
 
+      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      - name: Generate Environment Variables File for Production
+        env:
+          REACT_APP_DOMAIN: ${{ secrets.DMS_FRONT_DOMAIN }}
+        run: |
+          echo "DMS_FRONT_DOMAIN=$DMS_FRONT_DOMAIN" >> .env
+
       - name: Install packages
         run: yarn install
 

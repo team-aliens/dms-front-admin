@@ -1328,6 +1328,13 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
+"@types/recoil@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@types/recoil/-/recoil-0.0.9.tgz#a5efceda791ee2720418e232445bb34f4f2e4be9"
+  integrity sha512-dXKcvdzQbkFCcULgxhtc/3shoCNqsspRUY1KwIUYcAzgS0qY7+IxlcjRjq+9PizFnzKrHESllkbezqCMstPmQA==
+  dependencies:
+    recoil "*"
+
 "@types/retry@0.12.0":
   version "0.12.0"
   resolved "https://registry.npmjs.org/@types/retry/-/retry-0.12.0.tgz"
@@ -1696,14 +1703,15 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-aliens-design-system-front@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.3.8.tgz#f6e6b11636439704a03ca2704f442b33bd273788"
-  integrity sha512-2YRhXFutWPYZ9ysNehpMV6M2UUtlII70qHiATvxW1EiujHOcsD3qPf/k5QRZh6ANJnZ72yRBpaTb4KG9RFCszg==
+aliens-design-system-front@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.4.7.tgz#790f68d6fe8a42cc1fe86e1ccc88dbe7eb76e73c"
+  integrity sha512-+Dt09WjFQQ1MuFnEKdsgKWSffvTB0KK6/VCqa6WwoaygWKs3ak18YG9QqyMSip2nV88VaUExFGKJxcdP4MkiKg==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
     react-outside-click-handler "^1.3.0"
+    react-router-dom "^6.4.2"
     styled-components "^5.3.6"
 
 ansi-escapes@^4.3.0:
@@ -3965,6 +3973,11 @@ grapheme-splitter@^1.0.4:
   resolved "https://registry.npmjs.org/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz"
   integrity sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==
 
+hamt_plus@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hamt_plus/-/hamt_plus-1.0.2.tgz#e21c252968c7e33b20f6a1b094cd85787a265601"
+  integrity sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==
+
 handle-thing@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz"
@@ -5998,6 +6011,13 @@ rechoir@^0.7.0:
   integrity sha512-/njmZ8s1wVeR6pjTZ+0nCnv8SpZNRMT2D1RLOJQESlYFDBvwpTA4KWJpZ+sBJ4+vhjILRcK7JIFdGCdxEAAitg==
   dependencies:
     resolve "^1.9.0"
+
+recoil@*, recoil@^0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.7.6.tgz#75297ecd70bbfeeb72e861aa6141a86bb6dfcd5e"
+  integrity sha512-hsBEw7jFdpBCY/tu2GweiyaqHKxVj6EqF2/SfrglbKvJHhpN57SANWvPW+gE90i3Awi+A5gssOd3u+vWlT+g7g==
+  dependencies:
+    hamt_plus "1.0.2"
 
 reflect.ownkeys@^0.2.0:
   version "0.2.0"
