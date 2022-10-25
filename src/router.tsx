@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { LoginPage } from './pages/loginPage';
+import { LoginPage } from '@/pages/LoginPage';
 import { FindAccountIdPage } from './pages/findAccountId';
 import { Main } from '@/pages/main';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
