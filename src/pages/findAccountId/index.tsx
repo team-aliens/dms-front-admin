@@ -1,12 +1,12 @@
-import { FindId } from '@/components/auth/FindId';
+import { FindAccountId } from '@/components/auth/FindAccountId';
 import { LogoBox } from '@/components/auth/LogoBox';
 import styled from 'styled-components';
 
-export function FindIdPage() {
+export function FindAccountIdPage() {
   return (
     <_Wrapper>
       <LogoBox />
-      <FindId />
+      <FindAccountId />
     </_Wrapper>
   );
 }
