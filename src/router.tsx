@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
 import { FindAccountIdPage } from './pages/findAccountId';
-import { Main } from '@/pages/main';
+import { Main } from '@/pages/Main';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 export function Router() {

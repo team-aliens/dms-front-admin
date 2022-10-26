@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { NavigatorBar } from 'aliens-design-system-front';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
-import { getStudentDetail } from '@/apis/managers';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 
 const feature = {
