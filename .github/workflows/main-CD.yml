@@ -1,4 +1,4 @@
-  name: team-aliens-main-deploy
+    name: team-aliens-main-deploy
     
     on:
       push:
