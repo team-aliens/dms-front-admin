@@ -21,7 +21,11 @@
             uses: actions/setup-node@v1
             with:
               node-version: ${{ matrix.node-version }}
-            
+          - name: Generate Environment Variables File for Production
+            env:
+              REACT_APP_DOMAIN: ${{ secrets.DMS_FRONT_DOMAIN }}
+            run: |
+                echo "DMS_FRONT_DOMAIN=$DMS_FRONT_DOMAIN" >> .env
           - name: Npm install
             run: npm install
     
