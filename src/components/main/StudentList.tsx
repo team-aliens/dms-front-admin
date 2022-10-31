@@ -79,9 +79,18 @@ export function StudentList({
   };
   return (
     <_Wrapper detailIsOpened={selectedStudentId !== ''}>
-      <_Filter>
-        <SearchBox value={filter.name} onChangeValue={onChangeName} />
-        <Button type="outline" color="gray" onClick={onClick}>
+      <_Filter className={'filter'}>
+        <SearchBox
+          className="searchBox"
+          value={filter.name}
+          onChangeValue={onChangeName}
+        />
+        <Button
+          type="outline"
+          color="gray"
+          onClick={onClick}
+          className="filterButton"
+        >
           {SortEnum[filter.sort]}순
         </Button>
       </_Filter>
@@ -102,6 +111,7 @@ const _Wrapper = styled.div<{
   detailIsOpened: boolean;
 }>`
   width: ${({ detailIsOpened }) => (detailIsOpened ? 514 : 770)}px;
+  transition: width 0.7s ease-in-out;
 `;
 const _Filter = styled.section`
   display: flex;

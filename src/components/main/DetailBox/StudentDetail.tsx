@@ -27,7 +27,7 @@ const testValue: GetStudentDetailResponse = {
 
 export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
   return (
-    <_Wrapper>
+    <_Wrapper isSelected={studentId !== ''}>
       <Title fontSize="s" color="gray6">
         학생 상세 확인
       </Title>
@@ -63,8 +63,12 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
   );
 }
 
-const _Wrapper = styled.div`
+const _Wrapper = styled.div<{
+  isSelected: boolean;
+}>`
   margin-top: 10px;
+  width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
+  transition: width 0.7s ease-in-out;
 `;
 
 const _DetailBox = styled.div`

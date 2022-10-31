@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { NavigatorBar } from 'aliens-design-system-front';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const feature = {
   point_service: true,
@@ -34,10 +35,21 @@ export function Main() {
           selectedStudentId={selectedStudentId}
         />
         <Divider />
-        <StudentDetail
-          studentDetail={studentDetail}
-          studentId={selectedStudentId}
-        />
+        <OutsideClickHandler
+          onOutsideClick={(e: MouseEvent) => {
+            const className = (e.target as Element).className;
+            const isClickAbleElement =
+              className.includes('studentBox') ||
+              className.includes('filterButton') ||
+              className.includes('searchBox');
+            if (!isClickAbleElement) setSelectedStudentId('');
+          }}
+        >
+          <StudentDetail
+            studentDetail={studentDetail}
+            studentId={selectedStudentId}
+          />
+        </OutsideClickHandler>
       </_Wrapper>
     </_Flex>
   );
@@ -45,6 +57,7 @@ export function Main() {
 
 const _Flex = styled.div`
   display: flex;
+  overflow: hidden;
 `;
 
 const _Wrapper = styled.div`

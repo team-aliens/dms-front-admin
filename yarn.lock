@@ -1615,6 +1615,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-outside-click-handler@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-outside-click-handler/-/react-outside-click-handler-1.3.1.tgz#e4772ba550e1a548468203194d2615d8f06acdf9"
+  integrity sha512-0BNan5zIIDyO5k9LFSG+60ZxQ/0wf+LTF9BJx3oOUdOaJlZk6RCe52jRB75mlvLLJx2YLa61+NidOwBfptWMKw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^18.0.10":
   version "18.0.22"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.22.tgz"
@@ -2023,10 +2030,10 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-aliens-design-system-front@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/aliens-design-system-front/-/aliens-design-system-front-0.5.0.tgz"
-  integrity sha512-VNpHwtTAKc9aKLjTNXlp7mj7jGaZ8Q0rICXlF/FH+IrJh+vXAfBLB4nP8Obwn34k3X75k/5sAPdJNXz4ldQH+w==
+aliens-design-system-front@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/aliens-design-system-front/-/aliens-design-system-front-0.5.3.tgz#89683dba011cb97346329bcd666fe4c1ff9d988d"
+  integrity sha512-3N/R7DgcYxujXEsyu5SNvbhutd5UiHOW1YeT7q/Gbuef5IgluSehGDYncc1q4DrYiT0D7xmckCIR7Khd2AH0lQ==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
@@ -6858,7 +6865,7 @@ react-is@^18.0.0:
 
 react-outside-click-handler@^1.3.0:
   version "1.3.0"
-  resolved "https://registry.npmjs.org/react-outside-click-handler/-/react-outside-click-handler-1.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-outside-click-handler/-/react-outside-click-handler-1.3.0.tgz#3831d541ac059deecd38ec5423f81e80ad60e115"
   integrity sha512-Te/7zFU0oHpAnctl//pP3hEAeobfeHMyygHB8MnjP6sX5OR8KHT1G3jmLsV3U9RnIYo+Yn+peJYWu+D5tUS8qQ==
   dependencies:
     airbnb-prop-types "^2.15.0"

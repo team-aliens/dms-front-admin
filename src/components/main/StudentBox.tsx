@@ -13,6 +13,7 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
     <_Wrapper
       onClick={() => onClickStudent(studentInfo.id)}
       isSelected={isSelected}
+      className="studentBox"
     >
       <img src={studentInfo.profile_image_url} />
       <Text
