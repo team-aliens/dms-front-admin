@@ -8,7 +8,7 @@ export const NoticeList = () => {
       {Array(10)
         .fill(void 0)
         .map((item, index) => (
-          <Link to={`/notice/${index + 1}`}>
+          <Link to={`/notice/detail/${index + 1}`}>
             <NoticeItem key={index} />
           </Link>
         ))}

@@ -20,7 +20,7 @@ export const NoticeListPage = () => {
           <Button type="outline" color="gray" onClick={onClickChangeSort}>
             {sortType}순
           </Button>
-          <Link to="/write-notice">
+          <Link to="/notice/write">
             <Button type="outline" color="primary" onClick={() => {}}>
               공지 작성하기
             </Button>
