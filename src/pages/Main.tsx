@@ -1,21 +1,11 @@
 import styled from 'styled-components';
-import { NavigatorBar } from 'aliens-design-system-front';
 import { useState } from 'react';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 import OutsideClickHandler from 'react-outside-click-handler';
-
-const feature = {
-  point_service: true,
-  apply_service: true,
-  notice_service: true,
-  survey_service: true,
-  lost_service: true,
-  my_page: true,
-  meal_service: false,
-};
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 
 export function Main() {
   const [studentDetail, setStudentDetail] =
@@ -27,8 +17,7 @@ export function Main() {
   //     .catch((err) => {});
   // }, [selectedStudentId]);
   return (
-    <_Flex>
-      <NavigatorBar features={feature} />
+    <WithNavigatorBar>
       <_Wrapper>
         <StudentList
           setSelectedStudentId={setSelectedStudentId}
@@ -51,14 +40,9 @@ export function Main() {
           />
         </OutsideClickHandler>
       </_Wrapper>
-    </_Flex>
+    </WithNavigatorBar>
   );
 }
-
-const _Flex = styled.div`
-  display: flex;
-  overflow: hidden;
-`;
 
 const _Wrapper = styled.div`
   display: flex;
