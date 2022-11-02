@@ -44,11 +44,11 @@ export const NoticeListPage = () => {
     if (sortType === 'NEW') setSortType('OLD');
     else setSortType('NEW');
   };
-  // useEffect(() => {
-  //   getNoticeList(sortType).then((res) => {
-  //     setNoticeList(res.notices);
-  //   });
-  // }, [sortType]);
+  useEffect(() => {
+    getNoticeList(sortType).then((res) => {
+      setNoticeList(res.notices);
+    });
+  }, [sortType]);
   return (
     <WithNavigatorBar>
       <_Wrapper>
