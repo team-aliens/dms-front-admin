@@ -1,6 +1,6 @@
 import { NavigatorBar } from 'aliens-design-system-front';
 import styled from 'styled-components';
-import React from 'react';
+import { ReactNode } from 'react';
 
 const feature = {
   point_service: true,
@@ -13,7 +13,7 @@ const feature = {
 };
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const WithNavigatorBar = ({ children }: Props) => {
