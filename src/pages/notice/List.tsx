@@ -1,24 +1,60 @@
 import { Button } from 'aliens-design-system-front';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { NoticeList } from '@/components/notice/NoticeList';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { NoticeCardItem } from '@/apis/notice/response';
+import { getNoticeList, NoticeSortEnum, NoticeSortType } from '@/apis/notice';
+import { NoticeItem } from '@/components/notice/NoticeItem';
 
-type SortType = '최신' | '오래된';
+const date = new Date();
+
+const dummyData: NoticeCardItem[] = [
+  {
+    id: '1',
+    title: '제목입니다',
+    create_at: date,
+  },
+  {
+    id: '2',
+    title: '제목입니다',
+    create_at: date,
+  },
+  {
+    id: '3',
+    title: '제목입니다',
+    create_at: date,
+  },
+  {
+    id: '4',
+    title: '제목입니다',
+    create_at: date,
+  },
+  {
+    id: '5',
+    title: '제목입니다',
+    create_at: date,
+  },
+];
 
 export const NoticeListPage = () => {
-  const [sortType, setSortType] = useState<SortType>('최신');
+  const [noticeList, setNoticeList] = useState<NoticeCardItem[]>(dummyData);
+  const [sortType, setSortType] = useState<NoticeSortType>('NEW');
   const onClickChangeSort = () => {
-    if (sortType === '최신') setSortType('오래된');
-    else setSortType('최신');
+    if (sortType === 'NEW') setSortType('OLD');
+    else setSortType('NEW');
   };
+  // useEffect(() => {
+  //   getNoticeList(sortType).then((res) => {
+  //     setNoticeList(res.notices);
+  //   });
+  // }, [sortType]);
   return (
     <WithNavigatorBar>
       <_Wrapper>
         <_FilterSection>
           <Button type="outline" color="gray" onClick={onClickChangeSort}>
-            {sortType}순
+            {NoticeSortEnum[sortType]}순
           </Button>
           <Link to="/notice/write">
             <Button type="outline" color="primary" onClick={() => {}}>
@@ -26,7 +62,13 @@ export const NoticeListPage = () => {
             </Button>
           </Link>
         </_FilterSection>
-        <NoticeList />
+        <_List>
+          {noticeList.map((item) => (
+            <Link to={`/notice/detail/${item.id}`}>
+              <NoticeItem noticeItem={item} key={item.id} />
+            </Link>
+          ))}
+        </_List>
       </_Wrapper>
     </WithNavigatorBar>
   );
@@ -34,6 +76,7 @@ export const NoticeListPage = () => {
 
 const _Wrapper = styled.div`
   margin: 0 auto;
+  width: 1030px;
 `;
 
 const _FilterSection = styled.section`
@@ -42,4 +85,11 @@ const _FilterSection = styled.section`
   > a {
     margin-left: auto;
   }
+`;
+
+const _List = styled.ul`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px 0;
 `;

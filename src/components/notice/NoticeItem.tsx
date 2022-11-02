@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import { Text, Title } from 'aliens-design-system-front';
+import { NoticeCardItem } from '@/apis/notice/response';
 
-export const NoticeItem = () => {
+interface Props {
+  noticeItem: NoticeCardItem;
+}
+
+export const NoticeItem = ({ noticeItem }: Props) => {
   return (
     <_Wrapper>
-      <Title fontSize="xs">제목이 들어가요</Title>
+      <Title fontSize="xs">{noticeItem.title}</Title>
       <_Date fontSize="m" color="gray5">
-        2022/10/31
+        {noticeItem.create_at.toLocaleDateString()}
       </_Date>
     </_Wrapper>
   );
