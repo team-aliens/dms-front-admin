@@ -1,12 +1,44 @@
 import { TextArea, Button } from 'aliens-design-system-front';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import styled from 'styled-components';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import { WriteNoticeRequest } from '@/apis/notice/request';
+import { getNoticeDetail, patchNotice, writeNotice } from '@/apis/notice';
+import { useParams } from 'react-router-dom';
 
-export const WriteNotice = () => {
-  const [noticeContent, setNoticeContent] = useState();
+interface Props {
+  type?: 'write' | 'patch';
+}
+
+export const WriteNotice = ({ type = 'write' }: Props) => {
+  const { noticeId } = useParams();
+  const [noticeContent, setNoticeContent] = useState<WriteNoticeRequest>({
+    title: '',
+    content: '',
+  });
+  useEffect(() => {
+    type === 'patch' &&
+      getNoticeDetail(noticeId).then((res) =>
+        setNoticeContent({
+          title: res.title,
+          content: res.content,
+        }),
+      );
+  }, [type]);
+  const onChangeTextArea = (value: string, name: string) => {
+    setNoticeContent({
+      ...noticeContent,
+      [name]: value,
+    });
+  };
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const onClickWriteNotice = () => {
+    if (type === 'write') writeNotice(noticeContent).then(() => {});
+    else patchNotice(noticeContent, noticeId);
   };
   return (
     <WithNavigatorBar>
@@ -16,23 +48,26 @@ export const WriteNotice = () => {
           <TextArea
             limit={100}
             className="title"
-            onChange={() => {}}
-            value=""
+            onChange={onChangeTextArea}
+            value={noticeContent.title}
             placeholder="제목을 입력해주세요."
+            name="title"
           />
           <TextArea
             limit={1000}
             className="content"
-            onChange={() => {}}
-            value=""
+            onChange={onChangeTextArea}
+            value={noticeContent.content}
             placeholder="내용을 입력해주세요."
+            name="content"
           />
           <Button
             className="submitButton"
             type="contained"
-            onClick={() => {}}
+            onClick={onClickWriteNotice}
             color="primary"
             size="large"
+            disabled={!(noticeContent.title && noticeContent.content && true)}
           >
             게시하기
           </Button>
