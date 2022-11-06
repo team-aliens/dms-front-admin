@@ -49,6 +49,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: paths.appHtml,
       filename: 'index.html',
+      inject: true,
       templateParameters: env.raw,
     }), //html-webpack-plugin은 생성된 모든 번들을 자동으로 삽입하여 애플리케이션용 HTML 파일을 생성합니다.
     new webpack.DefinePlugin(env.stringified),
@@ -59,5 +60,5 @@ module.exports = {
     alias: {
       '@': paths.appSource,
     },
-  },  
+  },
 };

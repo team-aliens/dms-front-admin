@@ -21,6 +21,10 @@ export function Router() {
         <Route path="/notice">
           <Route index element={<NoticeListPage />} />
           <Route path="write" element={<WriteNotice />} />
+          <Route
+            path="write/:noticeId"
+            element={<WriteNotice type="patch" />}
+          />
           <Route path="detail/:noticeId" element={<NoticeDetail />} />
         </Route>
       </Routes>

@@ -13,16 +13,16 @@ export const writeNotice = async (body: WriteNoticeRequest) => {
 
 export const patchNotice = async (
   body: WriteNoticeRequest,
-  noticeId: number,
+  noticeId: string,
 ) => {
   await instance.patch(`${router}/${noticeId}`, body);
 };
 
-export const deleteNotice = async (noticeId: number) => {
+export const deleteNotice = async (noticeId: string) => {
   await instance.delete(`${router}/${noticeId}`);
 };
 
-export const getNoticeDetail = async (noticeId: number) => {
+export const getNoticeDetail = async (noticeId: string) => {
   const { data } = await instance.get<Promise<NoticeDetailResponse>>(
     `${router}/${noticeId}`,
   );
@@ -31,8 +31,14 @@ export const getNoticeDetail = async (noticeId: number) => {
 
 export type NoticeSortType = 'NEW' | 'OLD';
 
+export enum NoticeSortEnum {
+  NEW = '최신',
+  OLD = '오래된',
+}
+
 export const getNoticeList = async (order: NoticeSortType) => {
   const { data } = await instance.get<Promise<NoticeListResponse>>(
     `${router}?order=${order}`,
   );
+  return data;
 };

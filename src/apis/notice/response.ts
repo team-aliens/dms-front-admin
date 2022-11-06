@@ -4,7 +4,7 @@ export interface NoticeDetailResponse {
   create_at: Date;
 }
 
-interface NoticeCardItem {
+export interface NoticeCardItem {
   id: string;
   title: string;
   create_at: Date;
