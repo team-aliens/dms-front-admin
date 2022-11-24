@@ -39,68 +39,66 @@ export function Certification({
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { toastDispatch } = useToast();
   const [emailHint, setEmailHint] = useState('');
-  const onClickNextButton = useCallback(() => {
-    if (step === 'ACCOUNT_ID') {
-      checkEmailDuplicate(account_id)
-        .then((res) => {
-          setStep('EMAIL');
-          setEmailHint(res.email);
-          changeErrorMessage('account_id', '');
-        })
-        .catch((err: AxiosError) => {
-          if (err.response.status === 404) {
-            changeErrorMessage(
-              'account_id',
-              '일치하는 아이디가 존재하지 않습니다.',
-            );
-          }
-        });
-    } else if (step === 'EMAIL') {
-      postEmailAuthCode({
-        email,
-        type: 'PASSWORD',
+  const onClickCheckEmail = () => {
+    checkEmailDuplicate(account_id)
+      .then((res) => {
+        setStep('EMAIL');
+        setEmailHint(res.email);
+        changeErrorMessage('account_id', '');
       })
-        .then(() => {
-          setStep('AUTH_CODE');
-          changeErrorMessage('email', '');
-        })
-        .catch((err: AxiosError) => {
-          if (err.response.status === 404) {
-            changeErrorMessage(
-              'email',
-              '입력하신 이메일이 아이디 정보와 일치하지 않습니다.',
-            );
-          }
-        });
-    } else {
-      checkEmailAuthCode(email, auth_code, 'PASSWORD')
-        .then(() => {
-          setStep('RESET');
-          changeErrorMessage('auth_code', '');
-          toastDispatch({
-            actionType: 'APPEND_TOAST',
-            toastType: 'SUCCESS',
-            message: '인증에 성공했습니다.',
-          });
-        })
-        .catch((err: AxiosError) => {
-          changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
-        });
+      .catch((err: AxiosError) => {
+        if (err.response.status === 404) {
+          changeErrorMessage(
+            'account_id',
+            '일치하는 아이디가 존재하지 않습니다.',
+          );
+        }
+      });
+  };
+  const onClickPostEmailAuthCode = (type?: 'resend') => {
+    if (!email) {
+      changeErrorMessage('email', '이메일을 입력해 주세요.');
+      return;
     }
-  }, [step, setStep, account_id, email, auth_code]);
-  const onClickReSendAuthCode = () => {
     postEmailAuthCode({
       email,
       type: 'PASSWORD',
     })
       .then(() => {
+        if (type === 'resend') {
+          toastDispatch({
+            actionType: 'APPEND_TOAST',
+            toastType: 'INFORMATION',
+            message: `${emailHint}으로 인증코드가 재전송 되었습니다.`,
+          });
+          return;
+        }
+        setStep('AUTH_CODE');
+        changeErrorMessage('email', '');
+      })
+      .catch((err: AxiosError) => {
+        if (err.response.status === 404) {
+          changeErrorMessage(
+            'email',
+            '입력하신 이메일이 아이디 정보와 일치하지 않습니다.',
+          );
+        }
+      });
+  };
+  const onClickCheckEmailAuthCode = () => {
+    checkEmailAuthCode(email, auth_code, 'PASSWORD')
+      .then(() => {
+        setStep('RESET');
+        changeErrorMessage('auth_code', '');
         toastDispatch({
           actionType: 'APPEND_TOAST',
-          toastType: 'INFORMATION',
-          message: `${emailHint}으로 인증코드가 재전송 되었습니다.`,
+          toastType: 'SUCCESS',
+          message: '인증에 성공했습니다.',
         });
       })
-      .catch((err: AxiosError) => {});
+      .catch((err: AxiosError) => {
+        changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
+      });
   };
   return (
     <>
@@ -149,9 +147,11 @@ export function Certification({
             errorMsg={errorMessages?.auth_code}
           />
           <_ReSendAuthCodeWrapper>
-            <_ResendQuestion>인증번호가 발송되지 않았나요?</_ResendQuestion>
+            <_ResendQuestion fontSize="s" color="gray6">
+              인증번호가 발송되지 않았나요?
+            </_ResendQuestion>
             <Button
-              onClick={onClickReSendAuthCode}
+              onClick={() => onClickPostEmailAuthCode('resend')}
               color="gray"
               type="underline"
               clickType="button"
@@ -163,7 +163,11 @@ export function Certification({
         </_AuthCodeArea>
       )}
       <_NextButton
-        onClick={onClickNextButton}
+        onClick={() => {
+          if (step === 'ACCOUNT_ID') onClickCheckEmail();
+          else if (step === 'EMAIL') onClickPostEmailAuthCode();
+          else onClickCheckEmailAuthCode();
+        }}
         size="default"
         color="primary"
         type="contained"
