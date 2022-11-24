@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
-import { FindAccountIdPage } from './pages/findAccountId';
+import { FindAccountIdPage } from './pages/FindAccountId';
 import { Main } from '@/pages/Main';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { NoticeListPage } from '@/pages/notice/List';

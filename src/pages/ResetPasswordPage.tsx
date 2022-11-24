@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Reset } from '@/components/auth/findAccount/Reset';
+import { Reset } from '@/components/auth/reset/Reset';
 import { Certification } from '@/components/auth/findAccount/Certification';
 import { useForm } from '@/hooks/useForm';
 import { ResetPasswordRequest } from '@/apis/managers/request';

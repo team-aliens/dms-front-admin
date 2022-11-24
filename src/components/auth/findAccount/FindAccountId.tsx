@@ -4,7 +4,7 @@ import { Input, DropDown, Button, Title } from 'aliens-design-system-front';
 import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
 import { fadeInRight } from '../../animation/fade';
-import { Question } from './Question';
+import { Question } from '../reset/Question';
 import { SchoolInformation } from '@/apis/schools/response';
 import { useQuery } from 'react-query';
 import { queryKeys } from '@/utils/queryKeys';
