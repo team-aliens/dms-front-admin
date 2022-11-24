@@ -8,13 +8,13 @@ import { LoginRequest } from '@/apis/auth/request';
 import { login } from '@/apis/auth';
 import { useToast } from '@/hooks/useToast';
 import { useErrorMessage } from '@/hooks/useErrorMessage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const errorTypes = ['account_id', 'password'] as const;
 
 export function Login() {
   const savedAccountId = localStorage.getItem('account_id');
-
+  const navigate = useNavigate();
   const { toastDispatch } = useToast();
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
@@ -36,6 +36,7 @@ export function Login() {
         });
         localStorage.setItem('access_token', res.access_token);
         if (autoSave) localStorage.setItem('refresh_token', res.refresh_token);
+        navigate('/');
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 404) {
