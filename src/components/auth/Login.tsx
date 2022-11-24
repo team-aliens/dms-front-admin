@@ -8,6 +8,7 @@ import { LoginRequest } from '@/apis/auth/request';
 import { login } from '@/apis/auth';
 import { useToast } from '@/hooks/useToast';
 import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { Link } from 'react-router-dom';
 
 const errorTypes = ['account_id', 'password'] as const;
 
@@ -90,9 +91,13 @@ export function Login() {
           로그인
         </_LoginButton>
         <_FindAccountArea>
-          <Text fontSize="s">아이디 찾기</Text>
+          <Link to="/find-account-id">
+            <Text fontSize="s">아이디 찾기</Text>
+          </Link>
           <Text fontSize="s">|</Text>
-          <Text fontSize="s">비밀번호 변경</Text>
+          <Link to="/reset">
+            <Text fontSize="s">비밀번호 변경</Text>
+          </Link>
         </_FindAccountArea>
       </_Contents>
     </_Wrapper>
