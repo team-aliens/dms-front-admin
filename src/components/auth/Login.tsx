@@ -23,11 +23,11 @@ export function Login() {
   });
   const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
 
-  const onClickLogin = async () => {
+  const onClickLogin = () => {
     if (autoSave) localStorage.setItem('account_id', loginState.account_id);
     else localStorage.removeItem('account_id');
 
-    await login(loginState)
+    login(loginState)
       .then((res) => {
         toastDispatch({
           actionType: 'APPEND_TOAST',
