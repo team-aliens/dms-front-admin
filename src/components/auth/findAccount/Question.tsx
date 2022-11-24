@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import { Text } from 'aliens-design-system-front';
 
-export const Question = () => {
+interface Props {
+  question: string;
+}
+
+export const Question = ({ question }: Props) => {
   return (
     <_QuestionWrapper>
       <_QuestionTitle display="block" fontSize="s">
         학교 인증 질문
       </_QuestionTitle>
       <Text fontSize="m" color="gray6">
-        학교 학생 수는 몇 명인가요?
+        {question}
       </Text>
     </_QuestionWrapper>
   );

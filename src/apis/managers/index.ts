@@ -9,9 +9,9 @@ import { ResetPasswordRequest } from './request';
 const router = '/managers';
 
 // 아이디 찾기
-export const findAccountId = async (schoolId: string) => {
+export const findAccountId = async (schoolId: string, answer: string) => {
   const { data } = await instance.get<Promise<FindAccountIdResponse>>(
-    `${router}/account-id/${schoolId}`,
+    `${router}/account-id/${schoolId}?answer=${answer}`,
   );
   return data;
 };
