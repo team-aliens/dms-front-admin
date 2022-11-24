@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, SearchBox } from 'aliens-design-system-front';
+import { Button, SearchBox, Sort } from 'aliens-design-system-front';
 import {
   ChangeEvent,
   Dispatch,
@@ -55,7 +55,7 @@ export function StudentList({
   useEffect(() => {
     debounce(
       () =>
-        searchStudentList('', 'GCN')
+        searchStudentList(filter.name, filter.sort)
           .then((res) => {
             setStudentList(res.students);
           })
@@ -64,14 +64,14 @@ export function StudentList({
     );
   }, [filter.sort, filter.name]);
 
-  const onClick = () => {
+  const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
     setFilter({
       ...filter,
       sort: value,
     });
   };
-  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeSearchName = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter({
       ...filter,
       name: e.target.value,
@@ -79,16 +79,17 @@ export function StudentList({
   };
   return (
     <_Wrapper detailIsOpened={selectedStudentId !== ''}>
-      <_Filter className={'filter'}>
+      <_Filter className="filter">
         <SearchBox
           className="searchBox"
           value={filter.name}
-          onChangeValue={onChangeName}
+          onChangeValue={onChangeSearchName}
         />
         <Button
           type="outline"
           color="gray"
-          onClick={onClick}
+          onClick={onChangeSortType}
+          Icon={<Sort size={18} />}
           className="filterButton"
         >
           {SortEnum[filter.sort]}순
@@ -117,6 +118,9 @@ const _Filter = styled.section`
   display: flex;
   > button {
     margin-left: auto;
+    > svg > path {
+      fill: ${({ theme }) => theme.color.gray6};
+    }
   }
 `;
 const _StudentList = styled.ul`

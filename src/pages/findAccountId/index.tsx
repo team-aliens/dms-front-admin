@@ -1,17 +1,17 @@
-import styled from 'styled-components';
 import { FindAccountId } from '@/components/auth/findAccount/FindAccountId';
-import { LogoBox } from '@/components/auth/LogoBox';
+import { AuthTemplate } from '@/components/auth/AuthTemplate';
+import { useQuery } from 'react-query';
+import { getSchoolList } from '@/apis/schools';
+import { queryKeys } from '@/utils/queryKeys';
 
 export function FindAccountIdPage() {
+  const { data: schoolList } = useQuery(
+    [queryKeys.학교리스트조회],
+    getSchoolList,
+  );
   return (
-    <_Wrapper>
-      <LogoBox />
-      <FindAccountId />
-    </_Wrapper>
+    <AuthTemplate>
+      {schoolList && <FindAccountId schools={schoolList.schools} />}
+    </AuthTemplate>
   );
 }
-
-const _Wrapper = styled.div`
-  display: flex;
-  height: 100vh;
-`;
