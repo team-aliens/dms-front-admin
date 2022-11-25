@@ -2,19 +2,19 @@ import { Input, Text } from 'aliens-design-system-front';
 import styled from 'styled-components';
 import { ChangeEvent } from 'react';
 
-interface Props {
+interface PropsType {
   emailHint: string;
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   email: string;
   errorMessage: string;
 }
 
-export const Email = ({
+export function Email({
   emailHint,
   onChangeValue,
   email,
   errorMessage,
-}: Props) => {
+}: PropsType) {
   return (
     <>
       <_EmailHintBox>
@@ -37,7 +37,7 @@ export const Email = ({
       />
     </>
   );
-};
+}
 
 const _EmailHintBox = styled.div`
   margin: 16px 0 40px 0;

@@ -17,7 +17,7 @@ interface PropsType {
   children: ReactNode;
 }
 
-export const WithNavigatorBar = ({ children }: PropsType) => {
+export function WithNavigatorBar({ children }: PropsType) {
   const { pathname } = useLocation();
   return (
     <_Flex>
@@ -29,7 +29,7 @@ export const WithNavigatorBar = ({ children }: PropsType) => {
       {children}
     </_Flex>
   );
-};
+}
 
 const _Flex = styled.div`
   display: flex;

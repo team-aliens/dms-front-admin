@@ -8,20 +8,20 @@ import { ResetPasswordRequest } from './request';
 
 const router = '/managers';
 
-// 아이디 찾기
-export const findAccountId = async (schoolId: string, answer: string) => {
+/** 아이디 찾기 */
+export const findId = async (schoolId: string, answer: string) => {
   const { data } = await instance.get<Promise<FindAccountIdResponse>>(
     `${router}/account-id/${schoolId}?answer=${answer}`,
   );
   return data;
 };
 
-// 비밀번호 재설정
+/** 비밀번호 재설정 */
 export const resetPassword = async (body: ResetPasswordRequest) => {
   await instance.patch(`${router}/password/initialization`, body);
 };
 
-// 학생 검색 정렬 타입
+/** 학생 검색 정렬 타입 */
 export type SortType = 'GCN' | 'NAME';
 export enum SortEnum {
   GCN = '학번',

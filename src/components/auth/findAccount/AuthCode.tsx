@@ -2,19 +2,19 @@ import { Button, Input, Text } from 'aliens-design-system-front';
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
-interface Props {
+interface PropsType {
   auth_code: string;
   errorMessage: string;
   onClickPostEmailAuthCode: (type?: 'resend') => void;
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const AuthCode = ({
+export function AuthCode({
   auth_code,
   errorMessage,
   onClickPostEmailAuthCode,
   onChangeValue,
-}: Props) => {
+}: PropsType) {
   return (
     <_AuthCodeArea>
       <_AuthCodeInput
@@ -43,7 +43,7 @@ export const AuthCode = ({
       </_ReSendAuthCodeWrapper>
     </_AuthCodeArea>
   );
-};
+}
 
 const _ResendQuestion = styled(Text)`
   margin-right: 12px;

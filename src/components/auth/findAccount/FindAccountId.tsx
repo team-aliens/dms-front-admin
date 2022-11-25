@@ -1,23 +1,25 @@
 import { FormEvent, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Input, DropDown, Button, Title } from 'aliens-design-system-front';
+import {
+  Input, DropDown, Button, Title,
+} from 'aliens-design-system-front';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
 import { fadeInRight } from '../../animation/fade';
 import { Question } from '../reset/Question';
 import { SchoolInformation } from '@/apis/schools/response';
-import { useQuery } from 'react-query';
 import { queryKeys } from '@/utils/queryKeys';
 import { getSchoolQuestion } from '@/apis/schools';
 import { useToast } from '@/hooks/useToast';
-import { useNavigate } from 'react-router-dom';
-import { findAccountId } from '@/apis/managers';
+import { findId } from '@/apis/managers';
 
-interface Props {
+interface PropsType {
   schools: SchoolInformation[];
 }
 
-export function FindAccountId({ schools }: Props) {
+export function FindAccountId({ schools }: PropsType) {
   const [nextStep, setNextStep] = useState<boolean>(false);
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
@@ -48,7 +50,7 @@ export function FindAccountId({ schools }: Props) {
   };
 
   const onClickAnswer = () => {
-    findAccountId(selectedId, answerState.answer)
+    findId(selectedId, answerState.answer)
       .then((res) => {
         toastDispatch({
           actionType: 'APPEND_TOAST',

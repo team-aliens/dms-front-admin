@@ -1,14 +1,10 @@
 import styled from 'styled-components';
-import { Input, Text, Button } from 'aliens-design-system-front';
+import { Input, Button } from 'aliens-design-system-front';
 import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useState,
+  ChangeEvent, Dispatch, SetStateAction, useState,
 } from 'react';
 import { AxiosError } from 'axios';
-import { Steps } from '@/pages/ResetPasswordPage';
+import { Steps } from '@/pages/ResetPwdPage';
 import {
   checkEmailAuthCode,
   checkEmailDuplicate,
@@ -19,7 +15,7 @@ import { useToast } from '@/hooks/useToast';
 import { Email } from '@/components/auth/findAccount/Email';
 import { AuthCode } from '@/components/auth/findAccount/AuthCode';
 
-interface Props {
+interface PropsType {
   account_id: string;
   auth_code: string;
   email: string;
@@ -37,7 +33,7 @@ export function Certification({
   onChangeValue,
   setStep,
   step,
-}: Props) {
+}: PropsType) {
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { toastDispatch } = useToast();
   const [emailHint, setEmailHint] = useState('');

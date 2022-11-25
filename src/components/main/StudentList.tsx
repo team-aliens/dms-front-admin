@@ -54,12 +54,11 @@ export function StudentList({
 
   useEffect(() => {
     debounce(
-      () =>
-        searchStudentList(filter.name, filter.sort)
-          .then((res) => {
-            setStudentList(res.students);
-          })
-          .catch(() => {}),
+      () => searchStudentList(filter.name, filter.sort)
+        .then((res) => {
+          setStudentList(res.students);
+        })
+        .catch(() => {}),
       500,
     );
   }, [filter.sort, filter.name]);
@@ -92,7 +91,8 @@ export function StudentList({
           Icon={<Sort size={18} />}
           className="filterButton"
         >
-          {SortEnum[filter.sort]}순
+          {SortEnum[filter.sort]}
+          순
         </Button>
       </_Filter>
       <_StudentList>
