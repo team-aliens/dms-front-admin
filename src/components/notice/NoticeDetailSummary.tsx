@@ -8,7 +8,7 @@ interface Props {
   createdDate: Date;
 }
 
-export const NoticeDetailSummary = ({ noticeId, createdDate }: Props) => {
+export function NoticeDetailSummary({ noticeId, createdDate }: Props) {
   const onClickDeleteNotice = () => {
     deleteNotice(noticeId);
   };
@@ -27,7 +27,7 @@ export const NoticeDetailSummary = ({ noticeId, createdDate }: Props) => {
       </Button>
     </_Wrapper>
   );
-};
+}
 
 const _Wrapper = styled.div`
   display: flex;

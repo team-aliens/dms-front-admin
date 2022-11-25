@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import styled from 'styled-components';
 import { Title, Text } from 'aliens-design-system-front';
-import { NoticeDetailSummary } from '@/components/notice/NoticeDetailSummary';
 import { useEffect, useState } from 'react';
+import { NoticeDetailSummary } from '@/components/notice/NoticeDetailSummary';
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { NoticeDetailResponse } from '@/apis/notice/response';
 import { getNoticeDetail } from '@/apis/notice';
 
-export const NoticeDetail = () => {
+export function NoticeDetail() {
   const [detail, setDetail] = useState<NoticeDetailResponse>({
     title: '',
     content: '',
@@ -34,7 +34,7 @@ export const NoticeDetail = () => {
       </_Wrapper>
     </WithNavigatorBar>
   );
-};
+}
 
 const _Wrapper = styled.div`
   width: 1030px;
