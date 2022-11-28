@@ -31,7 +31,7 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
       <Title fontSize="s" color="gray6">
         학생 상세 확인
       </Title>
-      {studentId ? (
+      {studentId && studentDetail ? (
         <_DetailBox>
           <StudentInfo
             name={studentDetail.name}

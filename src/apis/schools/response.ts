@@ -1,4 +1,4 @@
-interface SchoolInformation {
+export interface SchoolInformation {
   id: string;
   name: string;
   address: string;

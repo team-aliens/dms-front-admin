@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { ReactNode } from 'react';
 import { LogoBox } from '@/components/auth/LogoBox';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function AuthTemplate({ children }: Props) {

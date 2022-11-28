@@ -6,7 +6,7 @@ interface Props {
   noticeItem: NoticeCardItem;
 }
 
-export const NoticeItem = ({ noticeItem }: Props) => {
+export function NoticeItem({ noticeItem }: Props) {
   return (
     <_Wrapper>
       <Title fontSize="xs">{noticeItem.title}</Title>
@@ -15,7 +15,7 @@ export const NoticeItem = ({ noticeItem }: Props) => {
       </_Date>
     </_Wrapper>
   );
-};
+}
 
 const _Wrapper = styled.li`
   width: 100%;

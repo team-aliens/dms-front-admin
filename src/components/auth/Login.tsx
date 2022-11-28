@@ -1,7 +1,10 @@
 import styled from 'styled-components';
-import { Input, CheckBox, Button, Text } from 'aliens-design-system-front';
+import {
+  Input, CheckBox, Button, Text,
+} from 'aliens-design-system-front';
 import { AxiosError } from 'axios';
 import { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 import { TitleBox } from './TitleBox';
 import { LoginRequest } from '@/apis/auth/request';
@@ -13,7 +16,7 @@ const errorTypes = ['account_id', 'password'] as const;
 
 export function Login() {
   const savedAccountId = localStorage.getItem('account_id');
-
+  const navigate = useNavigate();
   const { toastDispatch } = useToast();
   const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
@@ -22,11 +25,11 @@ export function Login() {
   });
   const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
 
-  const onClickLogin = async () => {
+  const onClickLogin = () => {
     if (autoSave) localStorage.setItem('account_id', loginState.account_id);
     else localStorage.removeItem('account_id');
 
-    await login(loginState)
+    login(loginState)
       .then((res) => {
         toastDispatch({
           actionType: 'APPEND_TOAST',
@@ -35,6 +38,7 @@ export function Login() {
         });
         localStorage.setItem('access_token', res.access_token);
         if (autoSave) localStorage.setItem('refresh_token', res.refresh_token);
+        navigate('/');
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 404) {
@@ -90,9 +94,13 @@ export function Login() {
           로그인
         </_LoginButton>
         <_FindAccountArea>
-          <Text fontSize="s">아이디 찾기</Text>
+          <Link to="/find-account-id">
+            <Text fontSize="s">아이디 찾기</Text>
+          </Link>
           <Text fontSize="s">|</Text>
-          <Text fontSize="s">비밀번호 변경</Text>
+          <Link to="/reset">
+            <Text fontSize="s">비밀번호 변경</Text>
+          </Link>
         </_FindAccountArea>
       </_Contents>
     </_Wrapper>

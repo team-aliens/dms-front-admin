@@ -27,7 +27,8 @@ export function StudentInfo({
           </Title>
         </_PersonalInfo>
         <Text fontSize="l" color="gray6" className="roomNumber">
-          {room_number}호
+          {room_number}
+          호
         </Text>
       </_Wrapper>
     </_StudnetInfo>

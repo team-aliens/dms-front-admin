@@ -39,7 +39,6 @@ jobs:
           REACT_APP_DOMAIN: ${{ secrets.DMS_FRONT_DOMAIN }}
         run: |
           echo "DMS_FRONT_DOMAIN=$DMS_FRONT_DOMAIN" >> .env
-
       - name: Install packages
         run: yarn install
 

@@ -1,16 +1,16 @@
 import { TextArea, Button } from 'aliens-design-system-front';
-import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import styled from 'styled-components';
 import { FormEvent, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { WriteNoticeRequest } from '@/apis/notice/request';
 import { getNoticeDetail, patchNotice, writeNotice } from '@/apis/notice';
-import { useParams } from 'react-router-dom';
 
 interface Props {
   type?: 'write' | 'patch';
 }
 
-export const WriteNotice = ({ type = 'write' }: Props) => {
+export function WriteNotice({ type = 'write' }: Props) {
   const { noticeId } = useParams();
   const [noticeContent, setNoticeContent] = useState<WriteNoticeRequest>({
     title: '',
@@ -18,12 +18,10 @@ export const WriteNotice = ({ type = 'write' }: Props) => {
   });
   useEffect(() => {
     type === 'patch' &&
-      getNoticeDetail(noticeId).then((res) =>
-        setNoticeContent({
-          title: res.title,
-          content: res.content,
-        }),
-      );
+      getNoticeDetail(noticeId).then((res) => setNoticeContent({
+        title: res.title,
+        content: res.content,
+      }));
   }, [type]);
   const onChangeTextArea = (value: string, name: string) => {
     setNoticeContent({
@@ -75,7 +73,7 @@ export const WriteNotice = ({ type = 'write' }: Props) => {
       </_BackgroundColor>
     </WithNavigatorBar>
   );
-};
+}
 
 const _BackgroundColor = styled.div`
   width: 100vw;

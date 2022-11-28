@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-interface Props {
+interface PropsType {
   children: ReactNode;
 }
 
-export const WithNavigatorBar = ({ children }: Props) => {
+export function WithNavigatorBar({ children }: PropsType) {
   const { pathname } = useLocation();
   return (
     <_Flex>
@@ -19,7 +19,7 @@ export const WithNavigatorBar = ({ children }: Props) => {
       {children}
     </_Flex>
   );
-};
+}
 
 const _Flex = styled.div`
   display: flex;
