@@ -1,7 +1,4 @@
-import {
-  Arrow, Button, Title, Modal,
-} from 'aliens-design-system-front';
-import { useState } from 'react';
+import { Arrow, Title } from 'aliens-design-system-front';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, useQuery } from 'react-query';
