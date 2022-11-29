@@ -15,7 +15,7 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
       isSelected={isSelected}
       className="studentBox"
     >
-      <img src={studentInfo.profile_image_url} />
+      <img src={studentInfo.profile_image_url} alt="프로필" />
       <Text
         fontSize="l"
         color={isSelected ? 'gray1' : 'gray9'}

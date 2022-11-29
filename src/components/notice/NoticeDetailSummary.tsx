@@ -10,7 +10,7 @@ interface Props {
 
 export function NoticeDetailSummary({ noticeId, createdDate }: Props) {
   const onClickDeleteNotice = () => {
-    deleteNotice(noticeId);
+    deleteNotice(noticeId).then(() => {});
   };
   return (
     <_Wrapper>

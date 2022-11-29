@@ -39,7 +39,7 @@ export function Reset({ onChangeValue, resetPasswordState }: Props) {
     } else if (newPassword.length !== 0) {
       changeErrorMessage('newPassword', '비밀번호 형식이 올바르지 않습니다.');
     }
-  }, [newPassword, checkPassword]);
+  }, [newPassword, checkPassword, changeErrorMessage]);
   return (
     <_Wrapper>
       <_Contents>

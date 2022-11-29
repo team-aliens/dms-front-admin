@@ -22,7 +22,7 @@ export function WriteNotice({ type = 'write' }: Props) {
         title: res.title,
         content: res.content,
       }));
-  }, [type]);
+  }, [type, noticeId]);
   const onChangeTextArea = (value: string, name: string) => {
     setNoticeContent({
       ...noticeContent,
@@ -35,8 +35,11 @@ export function WriteNotice({ type = 'write' }: Props) {
   };
 
   const onClickWriteNotice = () => {
-    if (type === 'write') writeNotice(noticeContent).then(() => {});
-    else patchNotice(noticeContent, noticeId);
+    if (type === 'write') {
+      writeNotice(noticeContent)
+        .then(() => {})
+        .catch();
+    } else patchNotice(noticeContent, noticeId).then().catch();
   };
   return (
     <WithNavigatorBar>

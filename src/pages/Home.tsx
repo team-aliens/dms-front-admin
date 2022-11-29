@@ -16,7 +16,7 @@ export function Home() {
   useEffect(() => {
     getStudentDetail(selectedStudentId)
       .then((res) => setStudentDetail(res))
-      .catch((err) => {});
+      .catch(() => {});
   }, [selectedStudentId]);
 
   return (

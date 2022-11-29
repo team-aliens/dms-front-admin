@@ -61,7 +61,7 @@ export function StudentList({
         .catch(() => {}),
       500,
     );
-  }, [filter.sort, filter.name]);
+  }, [filter.sort, filter.name, debounce]);
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
