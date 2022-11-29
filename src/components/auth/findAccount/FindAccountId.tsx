@@ -33,7 +33,7 @@ export function FindAccountId({ schools }: PropsType) {
 
   const selectedId = useMemo(
     () => schools.filter((school) => school.name === selectedSchoolName)[0]?.id,
-    [selectedSchoolName],
+    [selectedSchoolName, schools],
   );
 
   const { data: question } = useQuery(

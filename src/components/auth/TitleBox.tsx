@@ -6,7 +6,7 @@ interface TitleProps {
   moreInfo?: string;
 }
 
-export function TitleBox({ children, moreInfo }: TitleProps) {
+export function TitleBox({ children, moreInfo = '' }: TitleProps) {
   return (
     <_TitleWrapper>
       <Title fontSize="l">{children}</Title>

@@ -42,9 +42,11 @@ export function NoticeListPage() {
   const [sortType, setSortType] = useState<NoticeSortType>('NEW');
 
   useEffect(() => {
-    getNoticeList(sortType).then((res) => {
-      setNoticeList(res.notices);
-    });
+    getNoticeList(sortType)
+      .then((res) => {
+        setNoticeList(res.notices);
+      })
+      .catch();
   }, [sortType]);
 
   return (
@@ -56,7 +58,8 @@ export function NoticeListPage() {
             color="gray"
             onClick={() => setSortType(sortType === 'NEW' ? 'OLD' : 'NEW')}
           >
-            {NoticeSortEnum[sortType]}순
+            {NoticeSortEnum[sortType]}
+            순
           </Button>
           <Link to="/notice/write">
             <Button type="outline" color="primary">

@@ -13,7 +13,7 @@ export function PointBox({ pointType, point }: Props) {
         {pointType === 'BONUS' ? '상점' : '벌점'}
       </_PointType>
       <_Point fontSize="l" color="gray9">
-        4
+        {point}
       </_Point>
     </_Wrapper>
   );

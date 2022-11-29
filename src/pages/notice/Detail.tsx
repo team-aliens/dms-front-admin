@@ -15,8 +15,10 @@ export function NoticeDetail() {
   });
   const { noticeId } = useParams();
   useEffect(() => {
-    getNoticeDetail(noticeId).then((res) => setDetail(res));
-  }, []);
+    getNoticeDetail(noticeId)
+      .then((res) => setDetail(res))
+      .catch();
+  }, [noticeId]);
   return (
     <WithNavigatorBar>
       <_Wrapper>

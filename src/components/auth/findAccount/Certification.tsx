@@ -94,7 +94,7 @@ export function Certification({
           message: '인증에 성공했습니다.',
         });
       })
-      .catch((err: AxiosError) => {
+      .catch(() => {
         changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
       });
   };

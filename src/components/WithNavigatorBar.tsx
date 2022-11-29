@@ -7,20 +7,20 @@ interface PropsType {
   children: ReactNode;
 }
 
-export function WithNavigatorBar({ children }: Props) {
+export function WithNavigatorBar({ children }: PropsType) {
   const { pathname } = useLocation();
   return (
-    <_Flex>
+    <_Wrapper>
       <NavigatorBar
         Link={Link}
         navList={['홈', '신청', '공지', '설문', '분실문', '마이페이지']}
         pathname={pathname}
       />
       {children}
-    </_Flex>
+    </_Wrapper>
   );
 }
 
-const _Flex = styled.div`
+const _Wrapper = styled.div`
   display: flex;
 `;

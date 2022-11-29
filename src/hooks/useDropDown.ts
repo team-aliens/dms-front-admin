@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 export const useDropDown = <T>(initalState: T) => {
   const [sort, setSort] = useState<T>(initalState);

@@ -81,12 +81,6 @@ const _Description = styled(Text)`
   border-bottom: 1px solid ${({ theme }) => theme.color.primary};
 `;
 
-const _BreadCrumb = styled.div`
-  height: 22px;
-  width: 100px;
-  background-color: ${({ theme }) => theme.color.gray6};
-`;
-
 const _Input = styled(Input)`
   margin-top: 40px;
 `;

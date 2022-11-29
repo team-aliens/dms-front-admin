@@ -15,8 +15,8 @@ export function Router() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/find-account-id" element={<FindAccountIdPage />} />
-        <Route path="/reset" element={<ResetPasswordPage />} />
+        <Route path="/find-account-id" element={<FindIdPage />} />
+        <Route path="/reset" element={<ResetPwdPage />} />
         <Route path="/my-page">
           <Route index element={<MyPage />} />
           <Route path="change-pwd" element={<ChangePwd />} />

@@ -12,7 +12,7 @@ export const useErrorMessage = <T extends string>(errorTypes: readonly T[]) => {
         [i]: '',
       });
     });
-  }, [errorTypes]);
+  }, [errorTypes, errorMessages]);
   const changeErrorMessage = (errorType: keyof ErrorState, message: string) => {
     setErrorMessages({
       ...errorMessages,

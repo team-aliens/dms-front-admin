@@ -9,8 +9,14 @@ import { AuthTemplate } from '@/components/auth/AuthTemplate';
 
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
-const requiredMsg = {
-  reset: '비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.',
+const requireArray = ['RESET'];
+
+type RequiredMsg = {
+  [keys in typeof requireArray[number]]: string;
+};
+
+const requiredMsg: RequiredMsg = {
+  RESET: '비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.',
 };
 
 export function ResetPwdPage() {
@@ -27,7 +33,6 @@ export function ResetPwdPage() {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-
   return (
     <AuthTemplate>
       <_Wrapper>
