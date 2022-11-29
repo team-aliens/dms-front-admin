@@ -3,9 +3,15 @@ import { Button, Title } from 'aliens-design-system-front';
 
 interface PropsType {
   openNewQuestionModal: () => void;
+  question: string;
+  answer: string;
 }
 
-export function Confirmation({ openNewQuestionModal }: PropsType) {
+export function Confirmation({
+  openNewQuestionModal,
+  question,
+  answer,
+}: PropsType) {
   return (
     <_Wrapper>
       <_PatchQuetion>
@@ -17,13 +23,13 @@ export function Confirmation({ openNewQuestionModal }: PropsType) {
         확인 질문
       </Title>
       <_ConfirmationQuestion display="block" color="gray6" fontSize="xs">
-        우리 학교 학생 수는?
+        {question}
       </_ConfirmationQuestion>
       <Title fontSize="s" display="block">
         답변
       </Title>
       <_Answer color="gray6" fontSize="xs" display="block">
-        456명
+        {answer}
       </_Answer>
     </_Wrapper>
   );

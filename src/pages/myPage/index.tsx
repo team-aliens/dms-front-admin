@@ -1,45 +1,55 @@
 import {
-  Arrow, Button, Title, Modal, Input,
+  Arrow, Button, Title, Modal,
 } from 'aliens-design-system-front';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useMutation, useQuery } from 'react-query';
 import { Confirmation } from '@/components/myPage/Confirmation';
 import { Verification } from '@/components/myPage/Verification';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useForm } from '@/hooks/useForm';
-
-interface NewQuestionType {
-  question: string;
-  answer: string;
-}
+import { getMyProfile } from '@/apis/managers';
+import { queryKeys } from '@/utils/queryKeys';
+import { useModal } from '@/hooks/useModal';
+import { ChangeQnA } from '@/components/modals/ChangeQnA';
+import { changeSchoolQnA, reIssueSchoolCode } from '@/apis/schools';
+import { LogOutModal } from '@/components/modals/LogOut';
+import { ChangeSchoolQnARequest } from '@/apis/schools/request';
 
 export function MyPage() {
-  const [newQuestionModalState, setNewQuestionModalState] =
-    useState<boolean>(false);
-  const [logoutModalState, setLogoutModalState] = useState<boolean>(false);
-  const openNewQuestionModal = () => setNewQuestionModalState(true);
-  const closeNewQuestionModal = () => setNewQuestionModalState(false);
-  const openLogoutModal = () => setLogoutModalState(true);
-  const closeLogoutModal = () => setLogoutModalState(false);
-
-  const { onHandleChange, state: newQuestionState } = useForm<NewQuestionType>({
-    question: '',
-    answer: '',
-  });
-  const { question, answer } = newQuestionState;
-
+  const { modalState, selectModal, closeModal } = useModal();
+  const openNewQuestionModal = () => selectModal('NEW_QNA');
+  const openLogoutModal = () => selectModal('LOGOUT');
+  const getNewCode = useMutation(
+    [queryKeys.인증코드새로발급받기],
+    reIssueSchoolCode,
+  );
+  const { onHandleChange: onChange, state: qnaState } =
+    useForm<ChangeSchoolQnARequest>({
+      question: '',
+      answer: '',
+    });
+  const { answer, question } = qnaState;
+  const { data: myProfileData } = useQuery(
+    [queryKeys.마이페이지확인],
+    getMyProfile,
+  );
+  const changeQnA = useMutation([queryKeys.확인질문수정하기], () => changeSchoolQnA(qnaState));
   return (
     <>
       <WithNavigatorBar>
         <_Wrapper>
           <_School display="block" fontSize="l">
-            미림여자정보과학고등학교
+            {myProfileData?.school_name}
           </_School>
-          <_B>
+          <_CardWrapper>
             <div>
-              <Verification />
-              <_A>
+              <Verification
+                onClickNewCode={getNewCode.mutate}
+                code={myProfileData?.code}
+              />
+              <_OptionBtn>
                 <_PasswordChange to="change-pwd">
                   <Title display="block" fontSize="xs">
                     비밀번호 변경
@@ -54,65 +64,47 @@ export function MyPage() {
                 >
                   로그아웃
                 </_Logout>
-              </_A>
+              </_OptionBtn>
             </div>
-            <Confirmation openNewQuestionModal={openNewQuestionModal} />
-          </_B>
+            <Confirmation
+              openNewQuestionModal={openNewQuestionModal}
+              question={myProfileData?.question}
+              answer={myProfileData?.answer}
+            />
+          </_CardWrapper>
         </_Wrapper>
       </WithNavigatorBar>
-      {newQuestionModalState && (
-        <Modal
-          close={closeNewQuestionModal}
-          buttonList={[<Button type="contained">저장</Button>]}
-          header="새 확인 질문과 답변을 입력해주세요."
-          inputList={[
-            <Input
-              name="question"
-              value={question}
-              onChange={onHandleChange}
-              placeholder="질문"
-            />,
-            <Input
-              name="answer"
-              value={answer}
-              onChange={onHandleChange}
-              placeholder="답변"
-            />,
-          ]}
+      {modalState.selectedModal === 'NEW_QNA' && (
+        <ChangeQnA
+          close={closeModal}
+          question={question}
+          onChange={onChange}
+          answer={answer}
+          onClick={changeQnA.mutate}
         />
       )}
-      {logoutModalState && (
-        <Modal
-          close={closeLogoutModal}
-          header="로그아웃 재확인"
-          content="로그아웃 하시겠습니까?"
-          buttonList={[
-            <Button onClick={closeLogoutModal} type="outline" color="gray">
-              취소
-            </Button>,
-            <Button type="contained" color="error">
-              확인
-            </Button>,
-          ]}
-        />
+      {modalState.selectedModal === 'LOGOUT' && (
+        <LogOutModal closeModal={closeModal} />
       )}
     </>
   );
 }
 
-const _B = styled.div`
+const _CardWrapper = styled.div`
   display: flex;
-  height: 280px;
+  margin-left: auto;
 `;
 
-const _A = styled.div`
+const _OptionBtn = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 30px;
+  > div:last-of-type {
+    margin-left: auto;
+  }
 `;
 
 const _Wrapper = styled.div`
-  margin: 160px 0px 0px 80px;
+  margin: 160px 0 0 80px;
 `;
 
 const _School = styled(Title)`
@@ -124,7 +116,7 @@ const _PasswordChange = styled(Link)`
   display: flex;
   align-items: center;
   padding-left: 24px;
-  box-shadow: 0px 1px 20px rgba(204, 204, 204, 0.24);
+  box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
   > div {
     margin-right: 60px;
@@ -133,7 +125,7 @@ const _PasswordChange = styled(Link)`
 
 const _Logout = styled(Title)`
   width: 250px;
-  box-shadow: 0px 1px 20px rgba(204, 204, 204, 0.24);
+  box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
   padding: 24px 21px;
   cursor: pointer;

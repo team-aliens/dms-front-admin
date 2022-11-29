@@ -1,11 +1,16 @@
 import { Button, Title } from 'aliens-design-system-front';
 import styled from 'styled-components';
 
-export function Verification() {
+interface PropsType {
+  onClickNewCode: () => void;
+  code: string;
+}
+
+export function Verification({ onClickNewCode, code }: PropsType) {
   return (
     <_Wrapper>
       <_IssueBtn>
-        <Button type="contained" color="gray">
+        <Button type="contained" color="gray" onClick={onClickNewCode}>
           새로 발급하기
         </Button>
       </_IssueBtn>
@@ -13,7 +18,7 @@ export function Verification() {
         확인코드
       </Title>
       <_VerificationCode display="block" fontSize="l" color="gray6">
-        a1s2d3f4
+        {code}
       </_VerificationCode>
     </_Wrapper>
   );
