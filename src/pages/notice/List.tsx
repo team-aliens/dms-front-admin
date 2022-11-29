@@ -1,8 +1,8 @@
 import { Button } from 'aliens-design-system-front';
-import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { NoticeCardItem } from '@/apis/notice/response';
 import { getNoticeList, NoticeSortEnum, NoticeSortType } from '@/apis/notice';
 import { NoticeItem } from '@/components/notice/NoticeItem';
@@ -37,27 +37,29 @@ const dummyData: NoticeCardItem[] = [
   },
 ];
 
-export const NoticeListPage = () => {
+export function NoticeListPage() {
   const [noticeList, setNoticeList] = useState<NoticeCardItem[]>(dummyData);
   const [sortType, setSortType] = useState<NoticeSortType>('NEW');
-  const onClickChangeSort = () => {
-    if (sortType === 'NEW') setSortType('OLD');
-    else setSortType('NEW');
-  };
+
   useEffect(() => {
     getNoticeList(sortType).then((res) => {
       setNoticeList(res.notices);
     });
   }, [sortType]);
+
   return (
     <WithNavigatorBar>
       <_Wrapper>
         <_FilterSection>
-          <Button type="outline" color="gray" onClick={onClickChangeSort}>
+          <Button
+            type="outline"
+            color="gray"
+            onClick={() => setSortType(sortType === 'NEW' ? 'OLD' : 'NEW')}
+          >
             {NoticeSortEnum[sortType]}순
           </Button>
           <Link to="/notice/write">
-            <Button type="outline" color="primary" onClick={() => {}}>
+            <Button type="outline" color="primary">
               공지 작성하기
             </Button>
           </Link>
@@ -72,7 +74,7 @@ export const NoticeListPage = () => {
       </_Wrapper>
     </WithNavigatorBar>
   );
-};
+}
 
 const _Wrapper = styled.div`
   margin: 0 auto;

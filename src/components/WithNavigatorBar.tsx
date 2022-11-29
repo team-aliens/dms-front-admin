@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-interface Props {
+interface PropsType {
   children: ReactNode;
 }
 

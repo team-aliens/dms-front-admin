@@ -1,42 +1,87 @@
-import { useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Input, DropDown, Button, Title } from 'aliens-design-system-front';
+import {
+  Input, DropDown, Button, Title,
+} from 'aliens-design-system-front';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 import { useDropDown } from '@/hooks/useDropDown';
 import { fadeInRight } from '../../animation/fade';
-import { Question } from './Question';
+import { Question } from '../reset/Question';
+import { SchoolInformation } from '@/apis/schools/response';
+import { queryKeys } from '@/utils/queryKeys';
+import { getSchoolQuestion } from '@/apis/schools';
+import { useToast } from '@/hooks/useToast';
+import { findId } from '@/apis/managers';
 
-const schools = ['학교이름1', '학교이름2', '학교이름3'];
+interface PropsType {
+  schools: SchoolInformation[];
+}
 
-export function FindAccountId() {
+export function FindAccountId({ schools }: PropsType) {
   const [nextStep, setNextStep] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { toastDispatch } = useToast();
   const { onHandleChange, state: answerState } = useForm<{
     answer: string;
   }>({
     answer: '',
   });
+  const { onDropDownChange, sort: selectedSchoolName } =
+    useDropDown<string>('');
 
-  const { onDropDownChange, sort } = useDropDown<string>('');
+  const selectedId = useMemo(
+    () => schools.filter((school) => school.name === selectedSchoolName)[0]?.id,
+    [selectedSchoolName],
+  );
 
-  const onClickShowQNA = () => setNextStep(!nextStep);
+  const { data: question } = useQuery(
+    [queryKeys.학교확인질문확인, selectedId, nextStep],
+    () => selectedId !== undefined && nextStep && getSchoolQuestion(selectedId),
+  );
 
-  const onClickAnswer = () => {};
+  const onClickShowQNA = () => {
+    setNextStep(true);
+  };
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  const onClickAnswer = () => {
+    findId(selectedId, answerState.answer)
+      .then((res) => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'SUCCESS',
+          message: `${res.email}으로 아이디가 발송되었습니다.`,
+        });
+        navigate('/login');
+      })
+      .catch(() => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'ERROR',
+          message: '학교 인증 질문과 답변이 일치하지 않습니다.',
+        });
+      });
+  };
   return (
     <_Wrapper>
-      <div>
+      <form onSubmit={onSubmit}>
         <_TitleWrapper display="block">아이디 찾기</_TitleWrapper>
         <_DropDown
           width={480}
           label="학교 이름"
           placeholder="학교를 선택해주세요"
-          value={sort}
+          value={selectedSchoolName}
           disable={false}
           onChange={onDropDownChange}
-          items={schools}
+          items={schools.map((i) => i.name)}
         />
         <_QNA nextStep={nextStep}>
-          <Question />
+          <Question question={question?.question} />
           <Input
             label="답변"
             placeholder="답변을 작성해주세요."
@@ -57,7 +102,7 @@ export function FindAccountId() {
             다음
           </Button>
         </_BtnWrapper>
-      </div>
+      </form>
     </_Wrapper>
   );
 }

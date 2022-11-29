@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Reset } from '@/components/auth/findAccount/Reset';
+import { Reset } from '@/components/auth/reset/Reset';
 import { Certification } from '@/components/auth/findAccount/Certification';
 import { useForm } from '@/hooks/useForm';
 import { ResetPasswordRequest } from '@/apis/managers/request';
@@ -9,8 +9,13 @@ import { AuthTemplate } from '@/components/auth/AuthTemplate';
 
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
-export function ResetPasswordPage() {
+const requiredMsg = {
+  reset: '비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.',
+};
+
+export function ResetPwdPage() {
   const [step, setStep] = useState<Steps>('ACCOUNT_ID');
+
   const { state: resetPasswordState, onHandleChange } =
     useForm<ResetPasswordRequest>({
       account_id: '',
@@ -18,22 +23,22 @@ export function ResetPasswordPage() {
       email: '',
       new_password: '',
     });
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
   return (
     <AuthTemplate>
       <_Wrapper>
         <form onSubmit={onSubmit}>
-          <TitleBox
-            moreInfo={
-              step === 'RESET' &&
-              '비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.'
-            }
-          >
-            비밀번호 재설정
-          </TitleBox>
-          {step !== 'RESET' ? (
+          <TitleBox moreInfo={requiredMsg[step]}>비밀번호 재설정</TitleBox>
+          {step === 'RESET' ? (
+            <Reset
+              onChangeValue={onHandleChange}
+              resetPasswordState={resetPasswordState}
+            />
+          ) : (
             <Certification
               onChangeValue={onHandleChange}
               account_id={resetPasswordState.account_id}
@@ -42,21 +47,12 @@ export function ResetPasswordPage() {
               step={step}
               setStep={setStep}
             />
-          ) : (
-            <Reset
-              onChangeValue={onHandleChange}
-              resetPasswordState={resetPasswordState}
-            />
           )}
         </form>
       </_Wrapper>
     </AuthTemplate>
   );
 }
-
-const _FlexWrapper = styled.div`
-  display: flex;
-`;
 
 const _Wrapper = styled.div`
   width: 50%;

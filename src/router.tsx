@@ -1,8 +1,8 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
-import { FindAccountIdPage } from './pages/findAccountId';
-import { Main } from '@/pages/Main';
-import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { FindIdPage } from './pages/FindId';
+import { Home } from '@/pages/Home';
+import { ResetPwdPage } from './pages/ResetPwdPage';
 import { NoticeListPage } from '@/pages/notice/List';
 import { NoticeDetail } from '@/pages/notice/Detail';
 import { WriteNotice } from '@/pages/notice/Write';
@@ -13,7 +13,7 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/find-account-id" element={<FindAccountIdPage />} />
         <Route path="/reset" element={<ResetPasswordPage />} />

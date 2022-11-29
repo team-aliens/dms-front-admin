@@ -1,21 +1,24 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
-import OutsideClickHandler from 'react-outside-click-handler';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
+import { getStudentDetail } from '@/apis/managers';
 
-export function Main() {
+export function Home() {
   const [studentDetail, setStudentDetail] =
     useState<GetStudentDetailResponse>();
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
-  // useEffect(() => {
-  //   getStudentDetail(selectedStudentId)
-  //     .then((res) => setStudentDetail(res))
-  //     .catch((err) => {});
-  // }, [selectedStudentId]);
+
+  useEffect(() => {
+    getStudentDetail(selectedStudentId)
+      .then((res) => setStudentDetail(res))
+      .catch((err) => {});
+  }, [selectedStudentId]);
+
   return (
     <WithNavigatorBar>
       <_Wrapper>
@@ -26,7 +29,7 @@ export function Main() {
         <Divider />
         <OutsideClickHandler
           onOutsideClick={(e: MouseEvent) => {
-            const className = (e.target as Element).className;
+            const { className } = e.target as Element;
             const isClickAbleElement =
               className.includes('studentBox') ||
               className.includes('filterButton') ||

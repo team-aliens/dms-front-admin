@@ -8,7 +8,7 @@ export const getSchoolList = async () => {
   return data;
 };
 
-// 학교 확인 질문
+/** 학교 확인 질문 */
 export const getSchoolQuestion = async (schoolId: string) => {
   const { data } = await instance.get<Promise<SchoolQuestionResponse>>(
     `${router}/question/${schoolId}`,
@@ -16,7 +16,7 @@ export const getSchoolQuestion = async (schoolId: string) => {
   return data;
 };
 
-// 학교 확인 질문 답변
+/** 학교 확인 질문 답변 */
 export const answerSchoolQuestion = async (
   schoolId: string,
   answer: string,
