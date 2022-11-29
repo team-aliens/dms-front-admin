@@ -1,6 +1,7 @@
 import { instance } from '../axios';
 import {
   FindAccountIdResponse,
+  GetMyProfileResponse,
   GetStudentDetailResponse,
   SearchStudentListResponse,
 } from './response';
@@ -44,4 +45,11 @@ export const getStudentDetail = async (student_id: string) => {
 
 export const deleteStudent = async (student_id: string) => {
   await instance.delete(`${router}/students/${student_id}`);
+};
+
+export const getMyProfile = async () => {
+  const { data } = await instance.get<GetMyProfileResponse>(
+    `${router}/profile`,
+  );
+  return data;
 };

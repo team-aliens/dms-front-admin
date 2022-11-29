@@ -29,3 +29,11 @@ export interface GetStudentDetailResponse {
   minus_point: number;
   room_mates: RoomMatesInfo[];
 }
+
+export interface GetMyProfileResponse {
+  school_id: string;
+  school_name: string;
+  code: string;
+  question: string;
+  answer: string;
+}

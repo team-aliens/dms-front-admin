@@ -6,8 +6,9 @@ type IsUseAbleFeature = {
 
 export interface AuthorizationResponse {
   access_token: string;
-  expired_at: Date;
+  access_token_expired_at: Date;
   refresh_token: string;
+  refresh_token_expired_at: Date;
   features: IsUseAbleFeature;
 }
 

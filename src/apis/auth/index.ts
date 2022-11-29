@@ -17,6 +17,20 @@ export const login = async (body: LoginRequest) => {
   return data;
 };
 
+export const reIssueToken = async () => {
+  const refresh_token = localStorage.getItem('refresh_token');
+  const { data } = await instance.put<AuthorizationResponse>(
+    `${router}/reissue`,
+    null,
+    {
+      headers: {
+        'REFRESH-TOKEN': refresh_token,
+      },
+    },
+  );
+  return data;
+};
+
 /** 이메일 인증번호 보내기 */
 export const postEmailAuthCode = async (body: PostEmailAuthCodeRequest) => {
   await instance.post(`${router}/code`, body);
