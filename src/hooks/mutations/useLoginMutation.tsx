@@ -1,38 +1,24 @@
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useToast } from '@/hooks/useToast';
 import { login } from '@/apis/auth';
-import { useObj } from '@/hooks/useObj';
-import { useForm } from '@/hooks/useForm';
 import { LoginRequest } from '@/apis/auth/request';
+import { useToast } from '@/hooks/useToast';
 
-interface Props {}
+interface PropsType {
+  loginState: LoginRequest;
+  autoSave: boolean;
+  changeErrorMessage: (type: string, message: string) => void;
+}
 
-const errorTypes = ['account_id', 'password'] as const;
-
-export const useLogin = () => {
-  const savedAccountId = localStorage.getItem('account_id');
-
-  const navigate = useNavigate();
-
+export const useLoginMutation = ({
+  loginState,
+  autoSave,
+  changeErrorMessage,
+}: PropsType) => {
   const { toastDispatch } = useToast();
-
-  const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
-
-  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
-    useObj(errorTypes);
-
-  const { onHandleChange, state: loginState } = useForm<LoginRequest>({
-    account_id: savedAccountId || '',
-    password: '',
-  });
-
-  const onChangeAutoSaveStatus = (status: boolean) => {
-    setAutoSave(status);
-  };
-  const loginMutation = useMutation(() => login(loginState), {
+  const navigate = useNavigate();
+  return useMutation(() => login(loginState), {
     onSuccess: (res) => {
       toastDispatch({
         actionType: 'APPEND_TOAST',
@@ -56,15 +42,4 @@ export const useLogin = () => {
         : localStorage.removeItem('account_id');
     },
   });
-  const onClickLogin = () => {
-    loginMutation.mutate();
-  };
-  return {
-    onClickLogin,
-    onChangeAutoSaveStatus,
-    onHandleChange,
-    autoSave,
-    loginState,
-    errorMessages,
-  };
 };
