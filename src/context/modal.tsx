@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  Dispatch,
-  FunctionComponent,
-  useReducer,
-} from 'react';
+import React, { createContext, Dispatch, useReducer } from 'react';
 
 export type SelectedModalType = 'DELETE_NOTICE' | 'NEW_QNA' | 'LOGOUT' | '';
 
