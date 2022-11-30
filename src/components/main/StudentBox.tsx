@@ -17,17 +17,17 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
     >
       <img src={studentInfo.profile_image_url} alt="프로필" />
       <Text
-        fontSize="l"
-        color={isSelected ? 'gray1' : 'gray9'}
+        size="bodyL"
+        color={isSelected ? 'gray1' : 'gray10'}
         className="name"
       >
         {studentInfo.name}
       </Text>
-      <Text className="gcn" fontSize="l" color={isSelected ? 'gray4' : 'gray6'}>
+      <Text className="gcn" size="bodyL" color={isSelected ? 'gray4' : 'gray6'}>
         {studentInfo.gcn}
       </Text>
       <Text
-        fontSize="l"
+        size="bodyL"
         color={isSelected ? 'gray4' : 'gray6'}
         className="roomNumber"
       >

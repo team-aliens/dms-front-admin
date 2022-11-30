@@ -8,10 +8,10 @@ interface PropsType {
 export function Question({ question }: PropsType) {
   return (
     <_QuestionWrapper>
-      <_QuestionTitle display="block" fontSize="s">
+      <_QuestionTitle display="block" size="bodyS">
         학교 인증 질문
       </_QuestionTitle>
-      <Text fontSize="m" color="gray6">
+      <Text size="bodyM" color="gray6">
         {question}
       </Text>
     </_QuestionWrapper>

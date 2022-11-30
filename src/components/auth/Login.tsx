@@ -95,11 +95,17 @@ export function Login() {
         </_LoginButton>
         <_FindAccountArea>
           <Link to="/find-account-id">
-            <Text fontSize="s">아이디 찾기</Text>
+            <Text size="bodyL" color="gray6">
+              아이디 찾기
+            </Text>
           </Link>
-          <Text fontSize="s">|</Text>
+          <Text size="bodyL" color="gray6">
+            |
+          </Text>
           <Link to="/reset">
-            <Text fontSize="s">비밀번호 변경</Text>
+            <Text size="bodyL" color="gray6">
+              비밀번호 변경
+            </Text>
           </Link>
         </_FindAccountArea>
       </_Contents>

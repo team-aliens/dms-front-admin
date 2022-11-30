@@ -14,8 +14,8 @@ export function NoticeDetailSummary({ noticeId, createdDate }: Props) {
   };
   return (
     <_Wrapper>
-      <Text fontSize="m" color="gray5" display="inline-block">
-        {createdDate.toLocaleDateString()}
+      <Text size="bodyM" color="gray5" display="inline-block">
+        {createdDate?.toLocaleDateString()}
       </Text>
       <Link to={`/notice/write/${noticeId}`}>
         <Button type="outline" onClick={() => {}} color="primary">

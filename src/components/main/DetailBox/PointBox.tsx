@@ -9,10 +9,10 @@ interface Props {
 export function PointBox({ pointType, point }: Props) {
   return (
     <_Wrapper>
-      <_PointType fontSize="s" color="gray5">
+      <_PointType size="bodyS" color="gray6">
         {pointType === 'BONUS' ? '상점' : '벌점'}
       </_PointType>
-      <_Point fontSize="l" color="gray9">
+      <_Point size="bodyL" color="gray10">
         {point}
       </_Point>
     </_Wrapper>

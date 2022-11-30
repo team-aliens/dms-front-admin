@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Title } from 'aliens-design-system-front';
+import styled, { css } from 'styled-components';
+import { Text } from 'aliens-design-system-front';
 
 interface TitleProps {
   children: React.ReactNode;
@@ -9,7 +9,9 @@ interface TitleProps {
 export function TitleBox({ children, moreInfo = '' }: TitleProps) {
   return (
     <_TitleWrapper>
-      <Title fontSize="l">{children}</Title>
+      <Text size="headlineM" color="gray10">
+        {children}
+      </Text>
       {moreInfo && <_Requirements>{moreInfo}</_Requirements>}
       <hr />
     </_TitleWrapper>
@@ -26,8 +28,9 @@ const _TitleWrapper = styled.h1`
 `;
 
 const _Requirements = styled.p`
-  font-size: ${({ theme }) => theme.textFont.xs.size}px;
-  font-weight: ${({ theme }) => theme.textFont.xs.weight};
+  ${({ theme }) => css`
+    ${theme.captionM}
+  `};
   color: ${({ theme }) => theme.color.gray5};
   margin: 8px 0 20px 0;
 `;

@@ -1,4 +1,4 @@
-import { Arrow, Title } from 'aliens-design-system-front';
+import { Arrow, Text } from 'aliens-design-system-front';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, useQuery } from 'react-query';
@@ -37,7 +37,7 @@ export function MyPage() {
     <>
       <WithNavigatorBar>
         <_Wrapper>
-          <_School display="block" fontSize="l">
+          <_School display="block" size="headlineM">
             {myProfileData?.school_name}
           </_School>
           <_CardWrapper>
@@ -48,15 +48,15 @@ export function MyPage() {
               />
               <_OptionBtn>
                 <_PasswordChange to="change-pwd">
-                  <Title display="block" fontSize="xs">
+                  <Text display="block" size="titleS">
                     비밀번호 변경
-                  </Title>
+                  </Text>
                   <Arrow size={24} direction="right" />
                 </_PasswordChange>
                 <_Logout
                   onClick={openLogoutModal}
                   display="block"
-                  fontSize="xs"
+                  size="titleS"
                   color="error"
                 >
                   로그아웃
@@ -104,7 +104,7 @@ const _Wrapper = styled.div`
   margin: 160px 0 0 80px;
 `;
 
-const _School = styled(Title)`
+const _School = styled(Text)`
   margin-bottom: 60px;
 `;
 
@@ -120,7 +120,7 @@ const _PasswordChange = styled(Link)`
   }
 `;
 
-const _Logout = styled(Title)`
+const _Logout = styled(Text)`
   width: 250px;
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;

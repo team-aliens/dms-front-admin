@@ -1,7 +1,7 @@
 import { FormEvent, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
-  Input, DropDown, Button, Title,
+  Input, DropDown, Button, Text,
 } from 'aliens-design-system-front';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -118,7 +118,7 @@ const _BtnWrapper = styled.div`
   margin-top: 40px;
 `;
 
-const _TitleWrapper = styled(Title)`
+const _TitleWrapper = styled(Text)`
   border-bottom: 1px solid ${({ theme }) => theme.color.primary};
   padding-bottom: 24px;
 `;
