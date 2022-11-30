@@ -4,4 +4,7 @@ export const queryKeys = {
   마이페이지확인: 'getMyProfile',
   인증코드새로발급받기: 'getNewCode',
   확인질문수정하기: 'changeSchoolQnA',
+  공지사항리스트조회: 'getNoticeList',
+  공지사항상세보기: 'getNoticeDetail',
+  로그인: 'login',
 };

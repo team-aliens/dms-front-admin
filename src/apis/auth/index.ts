@@ -10,7 +10,7 @@ const router = '/auth';
 
 /** 로그인 */
 export const login = async (body: LoginRequest) => {
-  const { data } = await instance.post<Promise<AuthorizationResponse>>(
+  const { data } = await instance.post<AuthorizationResponse>(
     `${router}/tokens`,
     body,
   );
