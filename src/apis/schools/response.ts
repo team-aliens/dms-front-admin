@@ -11,3 +11,7 @@ export interface SchoolListResponse {
 export interface SchoolQuestionResponse {
   question: string;
 }
+
+export interface ReIssueSchoolCodeResponse {
+  code: string;
+}
