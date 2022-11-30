@@ -10,7 +10,7 @@ import {
   checkEmailDuplicate,
   postEmailAuthCode,
 } from '@/apis/auth';
-import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { useObj } from '@/hooks/useObj';
 import { useToast } from '@/hooks/useToast';
 import { Email } from '@/components/auth/findAccount/Email';
 import { AuthCode } from '@/components/auth/findAccount/AuthCode';
@@ -34,7 +34,8 @@ export function Certification({
   setStep,
   step,
 }: PropsType) {
-  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
+    useObj(errorTypes);
   const { toastDispatch } = useToast();
   const [emailHint, setEmailHint] = useState('');
   const checkEmail = () => {

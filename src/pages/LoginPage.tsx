@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import { Login } from '@/components/auth/Login';
 import { AuthTemplate } from '@/components/auth/AuthTemplate';
 import { useToast } from '@/hooks/useToast';
-import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { useObj } from '@/hooks/useObj';
 import { useForm } from '@/hooks/useForm';
 import { LoginRequest } from '@/apis/auth/request';
 import { login } from '@/apis/auth';
@@ -17,7 +17,8 @@ export function LoginPage() {
   const savedAccountId = localStorage.getItem('account_id');
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
-  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
+  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
+    useObj(errorTypes);
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
     account_id: savedAccountId || '',
     password: '',
