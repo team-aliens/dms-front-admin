@@ -17,14 +17,13 @@ export const login = async (body: LoginRequest) => {
   return data;
 };
 
-export const reIssueToken = async () => {
-  const refresh_token = localStorage.getItem('refresh_token');
+export const reIssueToken = async (refreshToken: string) => {
   const { data } = await instance.put<AuthorizationResponse>(
     `${router}/reissue`,
     null,
     {
       headers: {
-        'REFRESH-TOKEN': refresh_token,
+        'REFRESH-TOKEN': refreshToken,
       },
     },
   );
@@ -47,21 +46,6 @@ export const checkEmailAuthCode = async (
   );
 };
 
-/** 토큰 재발급 */
-export const tokenRefresh = async () => {
-  const refreshToken = localStorage.getItem('refresh_token');
-  const { data } = await instance.post<Promise<AuthorizationResponse>>(
-    `${router}/reissue`,
-    null,
-    {
-      headers: {
-        'refresh-token': refreshToken,
-      },
-    },
-  );
-  return data;
-};
-
 /** 이메일 검증 */
 export const verificationEmail = async (account_id: string, email: string) => {
   await instance.get(`${router}/email?account_id=${account_id}&email=${email}`);
@@ -69,7 +53,7 @@ export const verificationEmail = async (account_id: string, email: string) => {
 
 /** 아이디 존재 여부 확인(비밀번호 재설정) */
 export const checkEmailDuplicate = async (account_id: string) => {
-  const { data } = await instance.get<Promise<EmailDuplicateCheckResponse>>(
+  const { data } = await instance.get<EmailDuplicateCheckResponse>(
     `${router}/account-id?account_id=${account_id}`,
   );
   return data;
