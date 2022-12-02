@@ -6,7 +6,7 @@ import { ResetPasswordRequest } from '@/apis/managers/request';
 import { useToast } from '@/hooks/useToast';
 import { LoginRequest } from '@/apis/auth/request';
 import { checkEmailDuplicate, login } from '@/apis/auth';
-import { useCookie } from '@/hooks/useCookie';
+import { setCookie } from '@/utils/cookies';
 
 interface PropsType {
   resetPwdState: ResetPasswordRequest;
@@ -41,7 +41,6 @@ export const useLoginMutation = ({
 }: LoginPropsType) => {
   const { toastDispatch } = useToast();
   const navigate = useNavigate();
-  const { setCookie } = useCookie();
 
   return useMutation(() => login(loginState), {
     onSuccess: (res) => {
@@ -50,14 +49,15 @@ export const useLoginMutation = ({
         toastType: 'SUCCESS',
         message: '로그인이 완료되었습니다.',
       });
-
+      const accessExpired = new Date(res.access_token_expired_at);
       setCookie('access_token', res.access_token, {
-        expires: res.access_token_expired_at,
+        expires: accessExpired,
       });
 
       if (autoSave) {
+        const refreshExpired = new Date(res.refresh_token_expired_at);
         setCookie('refresh_token', res.refresh_token, {
-          expires: res.refresh_token_expired_at,
+          expires: refreshExpired,
         });
       }
       navigate('/');
