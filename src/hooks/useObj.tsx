@@ -1,11 +1,9 @@
 import { useState } from 'react';
 
-export const useObj = <T extends string>(errorTypes: readonly T[]) => {
-  type ObjState = {
-    [keys in typeof errorTypes[number]]: string;
-  };
-  const [obj, setObj] = useState<ObjState>();
-  const changeObjectValue = (errorType: keyof ObjState, message: string) => {
+export const useObj = <T extends object>(initialState: T) => {
+  const [obj, setObj] = useState<T>(initialState);
+
+  const changeObjectValue = (errorType: keyof T, message: string) => {
     setObj({
       ...obj,
       [errorType]: message,

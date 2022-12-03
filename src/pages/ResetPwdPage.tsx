@@ -17,7 +17,12 @@ import { useToast } from '@/hooks/useToast';
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
 const requireArray = ['RESET'];
-const errorTypes = ['account_id', 'auth_code', 'email'] as const;
+
+interface ErrorPropsType {
+  account_id: string;
+  auth_code: string;
+  email: string;
+}
 
 type RequiredMsg = {
   [keys in typeof requireArray[number]]: string;
@@ -43,7 +48,11 @@ export function ResetPwdPage() {
 
   const resetPwd = useResetPwdMutation({ resetPwdState });
   const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
-    useObj(errorTypes);
+    useObj<ErrorPropsType>({
+      account_id: '',
+      auth_code: '',
+      email: '',
+    });
 
   const postEmail = usePostEmailAuthCodeMutation({
     email,

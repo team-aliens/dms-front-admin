@@ -11,7 +11,9 @@ interface Props {
   onClickResetPwd: () => void;
 }
 
-const errorTypes = ['newPassword'] as const;
+interface ErrorPropsType {
+  newPassword: string;
+}
 
 export function Reset({
   onChangeValue,
@@ -19,7 +21,9 @@ export function Reset({
   onClickResetPwd,
 }: Props) {
   const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
-    useObj(errorTypes);
+    useObj<ErrorPropsType>({
+      newPassword: '',
+    });
   const [checkPassword, setCheckPassword] = useState('');
   const { new_password: newPassword } = resetPasswordState;
   useEffect(() => {

@@ -6,7 +6,10 @@ import { useForm } from '@/hooks/useForm';
 import { LoginRequest } from '@/apis/auth/request';
 import { useLoginMutation } from '@/hooks/useAuth';
 
-const errorTypes = ['account_id', 'password'] as const;
+interface ErrorPropsType {
+  account_id: string;
+  password: string;
+}
 
 const savedAccountId = localStorage.getItem('account_id');
 
@@ -17,7 +20,10 @@ export function LoginPage() {
   };
 
   const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
-    useObj(errorTypes);
+    useObj<ErrorPropsType>({
+      account_id: '',
+      password: '',
+    });
 
   const { onHandleChange, state: loginState } = useForm<LoginRequest>({
     account_id: savedAccountId || '',
