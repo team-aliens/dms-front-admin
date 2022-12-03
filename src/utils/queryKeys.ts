@@ -7,4 +7,6 @@ export const queryKeys = {
   공지사항리스트조회: 'getNoticeList',
   공지사항상세보기: 'getNoticeDetail',
   로그인: 'login',
+  아이디존재여부확인: 'checkEmailDuplicate',
+  학생리스트조회: 'searchStudentList',
 };

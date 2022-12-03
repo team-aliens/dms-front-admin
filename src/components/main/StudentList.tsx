@@ -1,87 +1,39 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from 'aliens-design-system-front';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
-import { SortType, SortEnum, searchStudentList } from '@/apis/managers';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
-import { useDebounce } from '@/hooks/useDebounce';
-
-interface FilterState {
-  name: string;
-  sort: SortType;
-}
 
 interface Props {
   selectedStudentId: string;
   setSelectedStudentId: Dispatch<SetStateAction<string>>;
+  studentList: StudentInfo[];
+  name: string;
+  sort: 'GCN' | 'NAME';
+  onChangeSearchName: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeSortType: () => void;
 }
 
 export function StudentList({
   selectedStudentId,
   setSelectedStudentId,
+  studentList,
+  name,
+  sort,
+  onChangeSearchName,
+  onChangeSortType,
 }: Props) {
-  const { debounce } = useDebounce();
-  const [filter, setFilter] = useState<FilterState>({
-    name: '',
-    sort: 'GCN',
-  });
-  const [studentList, setStudentList] = useState<StudentInfo[]>([
-    {
-      id: '9c4f2fd8-4311-11ed-b878-0242ac120002',
-      name: '김범진',
-      gcn: '2206',
-      room_number: 414,
-      profile_image_url: 'https://~~',
-    },
-    {
-      id: '7c4f2fd8-4311-11ed-b878-0242ac120002',
-      name: '이준서',
-      gcn: '2117',
-      room_number: 413,
-      profile_image_url: 'https://~~',
-    },
-  ]);
   const onClickStudent = (id: string) => {
-    if (selectedStudentId === id) setSelectedStudentId('');
-    else setSelectedStudentId(id);
+    setSelectedStudentId((prevId) => (prevId === id ? '' : id));
   };
 
-  useEffect(() => {
-    debounce(
-      () => searchStudentList(filter.name, filter.sort)
-        .then((res) => {
-          setStudentList(res.students);
-        })
-        .catch(() => {}),
-      500,
-    );
-  }, [filter.sort, filter.name, debounce]);
-
-  const onChangeSortType = () => {
-    const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
-    setFilter({
-      ...filter,
-      sort: value,
-    });
-  };
-  const onChangeSearchName = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilter({
-      ...filter,
-      name: e.target.value,
-    });
-  };
   return (
     <_Wrapper detailIsOpened={selectedStudentId !== ''}>
       <_Filter className="filter">
         <SearchBox
           className="searchBox"
-          value={filter.name}
+          value={name}
           onChangeValue={onChangeSearchName}
         />
         <Button
@@ -91,7 +43,7 @@ export function StudentList({
           Icon={<Sort size={18} />}
           className="filterButton"
         >
-          {SortEnum[filter.sort]}
+          {SortEnum[sort]}
           순
         </Button>
       </_Filter>
