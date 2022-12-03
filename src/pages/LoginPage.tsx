@@ -4,7 +4,7 @@ import { AuthTemplate } from '@/components/auth/AuthTemplate';
 import { useObj } from '@/hooks/useObj';
 import { useForm } from '@/hooks/useForm';
 import { LoginRequest } from '@/apis/auth/request';
-import { useLoginMutation } from '@/hooks/useLoginMutation';
+import { useLoginMutation } from '@/hooks/useAuth';
 
 const errorTypes = ['account_id', 'password'] as const;
 

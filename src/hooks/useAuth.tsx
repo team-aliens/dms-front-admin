@@ -1,11 +1,12 @@
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { useRef } from 'react';
 import { resetPassword } from '@/apis/managers';
 import { ResetPasswordRequest } from '@/apis/managers/request';
 import { useToast } from '@/hooks/useToast';
 import { LoginRequest } from '@/apis/auth/request';
-import { checkEmailDuplicate, login } from '@/apis/auth';
+import { login, postEmailAuthCode } from '@/apis/auth';
 import { setCookie } from '@/utils/cookies';
 
 interface PropsType {
@@ -77,10 +78,34 @@ export const useLoginMutation = ({
   });
 };
 
-interface CheckEmailDuplicatePropsType {
-  accountId: string;
+interface PostEmailAuthCodePropsType {
+  email: string;
 }
 
-export const useCheckEmailDuplicate = ({
-  accountId,
-}: CheckEmailDuplicatePropsType) => useMutation(() => checkEmailDuplicate(accountId));
+export const usePostEmailAuthCodeMutation = ({
+  email,
+}: PostEmailAuthCodePropsType) => {
+  const { toastDispatch } = useToast();
+
+  const requestType = useRef<string>('');
+  return useMutation(
+    () => postEmailAuthCode({
+      email,
+      type: 'PASSWORD',
+    }),
+    {
+      onMutate: (type?: 'RESEND') => {
+        if (type === 'RESEND') requestType.current = type;
+      },
+      onSuccess: () => {
+        if (requestType.current === 'RESEND') {
+          toastDispatch({
+            actionType: 'APPEND_TOAST',
+            toastType: 'INFORMATION',
+            message: `${email}으로 인증코드가 재전송 되었습니다.`,
+          });
+        }
+      },
+    },
+  );
+};
