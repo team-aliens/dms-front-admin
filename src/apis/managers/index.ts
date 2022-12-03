@@ -30,8 +30,8 @@ export enum SortEnum {
 }
 
 export const searchStudentList = async (name: string, sort: SortType) => {
-  const { data } = await instance.get<Promise<SearchStudentListResponse>>(
-    `${router}/students&name=${name}&sort=${sort}`,
+  const { data } = await instance.get<SearchStudentListResponse>(
+    `${router}/students?name=${name}&sort=${sort}`,
   );
   return data;
 };

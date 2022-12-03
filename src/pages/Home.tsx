@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import { ChangeEvent, useEffect, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { useQuery } from 'react-query';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { getStudentDetail, searchStudentList, SortType } from '@/apis/managers';
-import { queryKeys } from '@/utils/queryKeys';
+import { getStudentDetail, SortType } from '@/apis/managers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useObj } from '@/hooks/useObj';
+import { useSearchStudents } from '@/hooks/useMangersApis';
 
 interface FilterState {
   name: string;
@@ -22,6 +21,7 @@ export function Home() {
 
   const [studentDetail, setStudentDetail] =
     useState<GetStudentDetailResponse>();
+
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
     sort: 'GCN',
@@ -38,10 +38,10 @@ export function Home() {
     debounce(() => setDebouncedName(e.target.value), 200);
   };
 
-  const { data: studentList } = useQuery(
-    [queryKeys.학생리스트조회, debouncedName, filter.sort],
-    () => searchStudentList(debouncedName, filter.sort),
-  );
+  const { data: studentList } = useSearchStudents({
+    name: debouncedName,
+    sort: filter.sort,
+  });
 
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
 
