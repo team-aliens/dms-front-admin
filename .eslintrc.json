@@ -28,7 +28,6 @@
     "@typescript-eslint/no-floating-promises": "off",
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": "off",
-    "max-len": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
