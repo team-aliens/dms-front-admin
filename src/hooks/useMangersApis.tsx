@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { findId, searchStudentList } from '@/apis/managers';
+import { findId, searchStudentList, SortType } from '@/apis/managers';
 import { useToast } from '@/hooks/useToast';
 import { queryKeys } from '@/utils/queryKeys';
 
@@ -34,7 +34,7 @@ export const useFindId = ({ selectedId, answer }: PropsType) => {
 
 interface SearchStudentPropsType {
   name: string;
-  sort: 'GCN' | 'NAME';
+  sort: SortType;
 }
 
 export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery([queryKeys.학생리스트조회, name, sort], () => searchStudentList(name, sort));
