@@ -42,7 +42,7 @@ interface SearchStudentPropsType {
   sort: SortType;
 }
 
-export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery(['asd', name, sort], () => searchStudentList(name, sort));
+export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery(['studentList', name, sort], () => searchStudentList(name, sort));
 
 export const useStudentDetail = (id: string) => useQuery(
   [queryKeys.학생상세정보, id],
