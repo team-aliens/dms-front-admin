@@ -8,7 +8,7 @@ interface Props {
   profile_image_url: string;
 }
 
-export function StudentInfo({
+export function StudentProfile({
   name,
   gcn,
   room_number,

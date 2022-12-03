@@ -9,4 +9,5 @@ export const queryKeys = {
   로그인: 'login',
   아이디존재여부확인: 'checkEmailDuplicate',
   학생리스트조회: 'searchStudentList',
+  학생상세정보: 'getStudentDetail',
 };

@@ -1,31 +1,15 @@
 import styled from 'styled-components';
 import { Button, Text } from 'aliens-design-system-front';
-import { StudentInfo } from '@/components/main/DetailBox/StudentInfo';
+import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 
 interface Props {
-  studentDetail?: GetStudentDetailResponse;
+  studentDetail: GetStudentDetailResponse;
   studentId: string;
 }
 
-const testValue: GetStudentDetailResponse = {
-  name: '김범진',
-  gcn: '2111',
-  profile_image_url: 'https://~~',
-  bonus_point: 1,
-  minus_point: 999,
-  room_number: 201,
-  room_mates: [
-    {
-      id: '9c4f2fd8-4311-11ed-b878-0242ac120002',
-      name: '김민성',
-      profile_image_url: 'https://~~',
-    },
-  ],
-};
-
-export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
+export function StudentDetail({ studentDetail, studentId }: Props) {
   return (
     <_Wrapper isSelected={studentId !== ''}>
       <Text size="headLineL" color="gray6">
@@ -33,7 +17,7 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
       </Text>
       {studentId && studentDetail ? (
         <_DetailBox>
-          <StudentInfo
+          <StudentProfile
             name={studentDetail.name}
             gcn={studentDetail.gcn}
             room_number={studentDetail.room_number}

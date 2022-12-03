@@ -1,15 +1,14 @@
 import styled from 'styled-components';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
-import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { getStudentDetail, SortType } from '@/apis/managers';
+import { SortType } from '@/apis/managers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useObj } from '@/hooks/useObj';
-import { useSearchStudents } from '@/hooks/useMangersApis';
+import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 
 interface FilterState {
   name: string;
@@ -19,14 +18,19 @@ interface FilterState {
 export function Home() {
   const { debounce } = useDebounce();
 
-  const [studentDetail, setStudentDetail] =
-    useState<GetStudentDetailResponse>();
-
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
     sort: 'GCN',
   });
   const [debouncedName, setDebouncedName] = useState(filter.name);
+
+  const { data: studentList } = useSearchStudents({
+    name: debouncedName,
+    sort: filter.sort,
+  });
+  const [selectedStudentId, setSelectedStudentId] = useState<string>('');
+
+  const { data: studentDetail } = useStudentDetail(selectedStudentId);
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
@@ -37,19 +41,6 @@ export function Home() {
     changeObjectValue('name', e.target.value);
     debounce(() => setDebouncedName(e.target.value), 200);
   };
-
-  const { data: studentList } = useSearchStudents({
-    name: debouncedName,
-    sort: filter.sort,
-  });
-
-  const [selectedStudentId, setSelectedStudentId] = useState<string>('');
-
-  useEffect(() => {
-    getStudentDetail(selectedStudentId)
-      .then((res) => setStudentDetail(res))
-      .catch(() => {});
-  }, [selectedStudentId]);
 
   return (
     <WithNavigatorBar>

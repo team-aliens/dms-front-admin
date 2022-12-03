@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { findId, searchStudentList, SortType } from '@/apis/managers';
+import {
+  findId,
+  getStudentDetail,
+  searchStudentList,
+  SortType,
+} from '@/apis/managers';
 import { useToast } from '@/hooks/useToast';
 import { queryKeys } from '@/utils/queryKeys';
 
@@ -37,4 +42,9 @@ interface SearchStudentPropsType {
   sort: SortType;
 }
 
-export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery([queryKeys.학생리스트조회, name, sort], () => searchStudentList(name, sort));
+export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery(['asd', name, sort], () => searchStudentList(name, sort));
+
+export const useStudentDetail = (id: string) => useQuery(
+  [queryKeys.학생상세정보, id],
+  () => id && getStudentDetail(id),
+);
