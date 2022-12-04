@@ -3,10 +3,10 @@ import { useState } from 'react';
 export const useObj = <T extends object>(initialState: T) => {
   const [obj, setObj] = useState<T>(initialState);
 
-  const changeObjectValue = (errorType: keyof T, message: string) => {
+  const changeObjectValue = (name: keyof T, value: string) => {
     setObj({
       ...obj,
-      [errorType]: message,
+      [name]: value,
     });
   };
   return {
