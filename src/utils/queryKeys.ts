@@ -10,4 +10,6 @@ export const queryKeys = {
   아이디존재여부확인: 'checkEmailDuplicate',
   학생리스트조회: 'studentList',
   학생상세정보: 'getStudentDetail',
+  공지상세보기: 'noticeDetail',
+  이메일인증코드확인: 'checkEmailAuthCode',
 };

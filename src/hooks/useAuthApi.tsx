@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { useRef } from 'react';
@@ -6,8 +6,14 @@ import { resetPassword } from '@/apis/managers';
 import { ResetPasswordRequest } from '@/apis/managers/request';
 import { useToast } from '@/hooks/useToast';
 import { LoginRequest } from '@/apis/auth/request';
-import { login, postEmailAuthCode } from '@/apis/auth';
+import {
+  checkEmailAuthCode,
+  checkEmailDuplicate,
+  login,
+  postEmailAuthCode,
+} from '@/apis/auth';
 import { setCookie } from '@/utils/cookies';
+import { queryKeys } from '@/utils/queryKeys';
 
 interface PropsType {
   resetPwdState: ResetPasswordRequest;
@@ -109,3 +115,39 @@ export const usePostEmailAuthCodeMutation = ({
     },
   );
 };
+
+export const useCheckEmailDuplicate = (accountId: string) => {
+  const { toastDispatch } = useToast();
+  return useQuery(
+    [queryKeys.아이디존재여부확인, accountId],
+    () => checkEmailDuplicate(accountId),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+      onError: () => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          message: '일치하는 아이디가 존재하지 않습니다.',
+          toastType: 'ERROR',
+        });
+      },
+    },
+  );
+};
+
+interface CheckEmailAuthCodePropsType {
+  email: string;
+  authCode: string;
+}
+
+export const useCheckEmailAuthCode = ({
+  email,
+  authCode,
+}: CheckEmailAuthCodePropsType) => useQuery(
+  [queryKeys.이메일인증코드확인, email, authCode],
+  () => checkEmailAuthCode(email, authCode, 'PASSWORD'),
+  {
+    refetchOnWindowFocus: false,
+    enabled: false,
+  },
+);

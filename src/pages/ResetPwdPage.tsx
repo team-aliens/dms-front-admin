@@ -1,4 +1,6 @@
-import { FormEvent, useCallback, useState } from 'react';
+import {
+  FormEvent, useCallback, useEffect, useState,
+} from 'react';
 import styled from 'styled-components';
 import { Reset } from '@/components/auth/reset/Reset';
 import { Certification } from '@/components/auth/findAccount/Certification';
@@ -7,12 +9,12 @@ import { ResetPasswordRequest } from '@/apis/managers/request';
 import { TitleBox } from '@/components/auth/TitleBox';
 import { AuthTemplate } from '@/components/auth/AuthTemplate';
 import {
+  useCheckEmailAuthCode,
+  useCheckEmailDuplicate,
   usePostEmailAuthCodeMutation,
   useResetPwdMutation,
-} from '@/hooks/useAuth';
-import { checkEmailAuthCode, checkEmailDuplicate } from '@/apis/auth';
+} from '@/hooks/useAuthApi';
 import { useObj } from '@/hooks/useObj';
-import { useToast } from '@/hooks/useToast';
 
 export type Steps = 'ACCOUNT_ID' | 'EMAIL' | 'AUTH_CODE' | 'RESET';
 
@@ -33,8 +35,6 @@ const requiredMsg: RequiredMsg = {
 };
 
 export function ResetPwdPage() {
-  const { toastDispatch } = useToast();
-
   const [step, setStep] = useState<Steps>('ACCOUNT_ID');
   const [emailHint, setEmailHint] = useState('');
   const { state: resetPwdState, onHandleChange } =
@@ -46,13 +46,40 @@ export function ResetPwdPage() {
     });
   const { email, account_id, auth_code } = resetPwdState;
 
-  const resetPwd = useResetPwdMutation({ resetPwdState });
   const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
     useObj<ErrorPropsType>({
       account_id: '',
       auth_code: '',
       email: '',
     });
+
+  const resetPwd = useResetPwdMutation({ resetPwdState });
+  const checkAuthCode = useCheckEmailAuthCode({
+    email,
+    authCode: auth_code,
+  });
+  const checkEmail = useCheckEmailDuplicate(account_id);
+
+  useEffect(() => {
+    if (checkAuthCode.isSuccess) {
+      setStep('RESET');
+      changeErrorMessage('auth_code', '');
+    }
+  }, [checkAuthCode.isSuccess, changeErrorMessage]);
+
+  useEffect(() => {
+    if (checkAuthCode.isError) {
+      changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
+    }
+  }, [checkAuthCode.isError, changeErrorMessage]);
+
+  useEffect(() => {
+    if (checkEmail.isSuccess) {
+      setStep('EMAIL');
+      setEmailHint(checkEmail.data.email);
+      changeErrorMessage('account_id', '');
+    }
+  }, [checkEmail.isSuccess, changeErrorMessage, checkEmail.data.email]);
 
   const postEmail = usePostEmailAuthCodeMutation({
     email,
@@ -79,38 +106,10 @@ export function ResetPwdPage() {
 
   const verificationBtn = useCallback(() => {
     if (step === 'ACCOUNT_ID') {
-      return checkEmailDuplicate(account_id)
-        .then((res) => {
-          setStep('EMAIL');
-          setEmailHint(res.email);
-          changeErrorMessage('account_id', '');
-        })
-        .catch(() => {
-          toastDispatch({
-            actionType: 'APPEND_TOAST',
-            message: '일치하는 아이디가 존재하지 않습니다.',
-            toastType: 'ERROR',
-          });
-        });
-    }
-    if (step === 'EMAIL') return postEmailCode();
-    return checkEmailAuthCode(email, auth_code, 'PASSWORD')
-      .then(() => {
-        setStep('RESET');
-        changeErrorMessage('auth_code', '');
-      })
-      .catch(() => {
-        changeErrorMessage('auth_code', '인증코드가 일치하지 않습니다.');
-      });
-  }, [
-    step,
-    account_id,
-    email,
-    auth_code,
-    changeErrorMessage,
-    postEmailCode,
-    toastDispatch,
-  ]);
+      return checkEmail.refetch();
+    } if (step === 'EMAIL') return postEmailCode();
+    return checkEmail.refetch();
+  }, [step, postEmailCode, checkEmail]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
