@@ -2,12 +2,12 @@ import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import {
   findId,
+  getMyProfile,
   getStudentDetail,
   searchStudentList,
   SortType,
 } from '@/apis/managers';
 import { useToast } from '@/hooks/useToast';
-import { queryKeys } from '@/utils/queryKeys';
 
 interface PropsType {
   selectedId: string;
@@ -44,7 +44,6 @@ interface SearchStudentPropsType {
 
 export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery(['studentList', name, sort], () => searchStudentList(name, sort));
 
-export const useStudentDetail = (id: string) => useQuery(
-  [queryKeys.학생상세정보, id],
-  () => id && getStudentDetail(id),
-);
+export const useStudentDetail = (id: string) => useQuery(['getStudentDetail', id], () => id && getStudentDetail(id));
+
+export const useMyProfileInfo = () => useQuery(['getMyProfile'], getMyProfile);
