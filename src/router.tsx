@@ -5,9 +5,10 @@ import { Home } from '@/pages/Home';
 import { ResetPwdPage } from './pages/ResetPwdPage';
 import { NoticeListPage } from '@/pages/notice/List';
 import { NoticeDetail } from '@/pages/notice/Detail';
-import { WriteNotice } from '@/pages/notice/Write';
+import { WriteNoticePage } from '@/pages/notice/Write';
 import { MyPage } from './pages/myPage';
 import { ChangePwd } from './pages/myPage/ChangePwd';
+import { PatchNoticePage } from '@/pages/notice/Patch';
 
 export function Router() {
   return (
@@ -23,11 +24,8 @@ export function Router() {
         </Route>
         <Route path="/notice">
           <Route index element={<NoticeListPage />} />
-          <Route path="write" element={<WriteNotice />} />
-          <Route
-            path="write/:noticeId"
-            element={<WriteNotice type="patch" />}
-          />
+          <Route path="write" element={<WriteNoticePage />} />
+          <Route path="write/:noticeId" element={<PatchNoticePage />} />
           <Route path="detail/:noticeId" element={<NoticeDetail />} />
         </Route>
       </Routes>

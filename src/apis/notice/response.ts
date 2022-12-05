@@ -13,3 +13,7 @@ export interface NoticeCardItem {
 export interface NoticeListResponse {
   notices: NoticeCardItem[];
 }
+
+export interface WriteNoticeResponse {
+  notice_id: string;
+}

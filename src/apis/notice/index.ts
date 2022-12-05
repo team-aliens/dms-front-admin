@@ -3,27 +3,27 @@ import { instance } from '@/apis/axios';
 import {
   NoticeDetailResponse,
   NoticeListResponse,
+  WriteNoticeResponse,
 } from '@/apis/notice/response';
 
 const router = '/notices';
 
-export const writeNotice = async (body: WriteNoticeRequest) => {
-  await instance.post(`${router}`, body);
-};
+export const writeNotice = async (body: WriteNoticeRequest) => instance.post<WriteNoticeResponse>(`${router}`, body);
 
 export const patchNotice = async (
   body: WriteNoticeRequest,
   noticeId: string,
-) => {
-  await instance.patch(`${router}/${noticeId}`, body);
-};
+) => instance.patch<WriteNoticeResponse>(
+  `${router}/${noticeId}`,
+  body,
+);
 
 export const deleteNotice = async (noticeId: string) => {
   await instance.delete(`${router}/${noticeId}`);
 };
 
 export const getNoticeDetail = async (noticeId: string) => {
-  const { data } = await instance.get<Promise<NoticeDetailResponse>>(
+  const { data } = await instance.get<NoticeDetailResponse>(
     `${router}/${noticeId}`,
   );
   return data;

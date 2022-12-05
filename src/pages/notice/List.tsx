@@ -1,53 +1,16 @@
 import { Button } from 'aliens-design-system-front';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { NoticeCardItem } from '@/apis/notice/response';
-import { getNoticeList, NoticeSortEnum, NoticeSortType } from '@/apis/notice';
+import { NoticeSortEnum, NoticeSortType } from '@/apis/notice';
 import { NoticeItem } from '@/components/notice/NoticeItem';
-
-const date = new Date();
-
-const dummyData: NoticeCardItem[] = [
-  {
-    id: '1',
-    title: '제목입니다',
-    create_at: date,
-  },
-  {
-    id: '2',
-    title: '제목입니다',
-    create_at: date,
-  },
-  {
-    id: '3',
-    title: '제목입니다',
-    create_at: date,
-  },
-  {
-    id: '4',
-    title: '제목입니다',
-    create_at: date,
-  },
-  {
-    id: '5',
-    title: '제목입니다',
-    create_at: date,
-  },
-];
+import { useNoticeList } from '@/hooks/useNoticeApi';
 
 export function NoticeListPage() {
-  const [noticeList, setNoticeList] = useState<NoticeCardItem[]>(dummyData);
   const [sortType, setSortType] = useState<NoticeSortType>('NEW');
 
-  useEffect(() => {
-    getNoticeList(sortType)
-      .then((res) => {
-        setNoticeList(res.notices);
-      })
-      .catch();
-  }, [sortType]);
+  const { data: noticeList } = useNoticeList(sortType);
 
   return (
     <WithNavigatorBar>
@@ -68,11 +31,12 @@ export function NoticeListPage() {
           </Link>
         </_FilterSection>
         <_List>
-          {noticeList.map((item) => (
-            <Link to={`/notice/detail/${item.id}`}>
-              <NoticeItem noticeItem={item} key={item.id} />
-            </Link>
-          ))}
+          {noticeList &&
+            noticeList.notices.map((item) => (
+              <Link to={`/notice/detail/${item.id}`} key={item.id}>
+                <NoticeItem noticeItem={item} key={item.id} />
+              </Link>
+            ))}
         </_List>
       </_Wrapper>
     </WithNavigatorBar>
