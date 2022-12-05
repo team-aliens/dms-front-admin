@@ -13,5 +13,5 @@ export const useForm = <T>(initialState: T) => {
     });
   };
 
-  return { onHandleChange, state };
+  return { onHandleChange, state, setState };
 };

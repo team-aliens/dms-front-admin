@@ -74,12 +74,12 @@ export function ResetPwdPage() {
   }, [checkAuthCode.isError, changeErrorMessage]);
 
   useEffect(() => {
-    if (checkEmail.isSuccess) {
+    if (checkEmail.isSuccess && checkEmail.data) {
       setStep('EMAIL');
       setEmailHint(checkEmail.data.email);
       changeErrorMessage('account_id', '');
     }
-  }, [checkEmail.isSuccess, changeErrorMessage, checkEmail.data.email]);
+  }, [checkEmail.isSuccess, checkEmail.data, changeErrorMessage]);
 
   const postEmail = usePostEmailAuthCodeMutation({
     email,
@@ -107,7 +107,8 @@ export function ResetPwdPage() {
   const verificationBtn = useCallback(() => {
     if (step === 'ACCOUNT_ID') {
       return checkEmail.refetch();
-    } if (step === 'EMAIL') return postEmailCode();
+    }
+    if (step === 'EMAIL') return postEmailCode();
     return checkEmail.refetch();
   }, [step, postEmailCode, checkEmail]);
 

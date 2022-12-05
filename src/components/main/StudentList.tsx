@@ -1,33 +1,29 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from 'aliens-design-system-front';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
 
 interface Props {
   selectedStudentId: string;
-  setSelectedStudentId: Dispatch<SetStateAction<string>>;
   studentList: StudentInfo[];
   name: string;
   sort: 'GCN' | 'NAME';
   onChangeSearchName: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeSortType: () => void;
+  onClickStudent: (id: string) => void;
 }
 
 export function StudentList({
   selectedStudentId,
-  setSelectedStudentId,
   studentList,
   name,
   sort,
   onChangeSearchName,
   onChangeSortType,
+  onClickStudent,
 }: Props) {
-  const onClickStudent = (id: string) => {
-    setSelectedStudentId((prevId) => (prevId === id ? '' : id));
-  };
-
   return (
     <_Wrapper detailIsOpened={selectedStudentId !== ''}>
       <_Filter className="filter">

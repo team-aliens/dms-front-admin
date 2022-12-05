@@ -23,11 +23,11 @@ export function Home() {
     sort: 'GCN',
   });
   const [debouncedName, setDebouncedName] = useState(filter.name);
-
   const { data: studentList } = useSearchStudents({
     name: debouncedName,
     sort: filter.sort,
   });
+
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
 
   const { data: studentDetail } = useStudentDetail(selectedStudentId);
@@ -41,18 +41,21 @@ export function Home() {
     changeObjectValue('name', e.target.value);
     debounce(() => setDebouncedName(e.target.value), 200);
   };
+  const onClickStudent = (id: string) => {
+    setSelectedStudentId((prevId) => (prevId === id ? '' : id));
+  };
 
   return (
     <WithNavigatorBar>
       <_Wrapper>
         <StudentList
           studentList={studentList?.students || []}
-          setSelectedStudentId={setSelectedStudentId}
           selectedStudentId={selectedStudentId}
           name={filter.name}
           sort={filter.sort}
           onChangeSearchName={onChangeSearchName}
           onChangeSortType={onChangeSortType}
+          onClickStudent={onClickStudent}
         />
         <Divider />
         <OutsideClickHandler
