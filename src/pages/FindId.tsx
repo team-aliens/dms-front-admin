@@ -6,7 +6,7 @@ import { useDropDown } from '@/hooks/useDropDown';
 import {
   useSchoolListQuery,
   useSchoolQuestionQuery,
-} from '@/hooks/useSchoolApis';
+} from '@/hooks/useSchoolsApi';
 import { useFindId } from '@/hooks/useMangersApis';
 
 export function FindIdPage() {
