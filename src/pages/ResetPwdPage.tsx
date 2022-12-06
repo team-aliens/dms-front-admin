@@ -91,7 +91,7 @@ export function ResetPwdPage() {
         changeErrorMessage('email', '이메일을 입력해 주세요.');
         return;
       }
-      if (type === 'resend') postEmail.mutate('RESEND', {});
+      if (type === 'resend') postEmail.mutate('RESEND');
       else {
         postEmail.mutate(undefined, {
           onSuccess: () => {
