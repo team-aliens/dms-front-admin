@@ -1,7 +1,7 @@
 export interface NoticeDetailResponse {
   title: string;
   content: string;
-  create_at: Date;
+  created_at: Date;
 }
 
 export interface NoticeCardItem {

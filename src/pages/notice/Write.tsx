@@ -3,6 +3,11 @@ import { useWriteNotice } from '@/hooks/useNoticeApi';
 import { WriteNotice } from '@/components/notice/WriteNoticeForm';
 import { useForm } from '@/hooks/useForm';
 
+const pathToKorean = {
+  notice: '공지 목록',
+  write: '공지 작성',
+};
+
 export function WriteNoticePage() {
   const { state: noticeContent, onHandleChange } = useForm<WriteNoticeRequest>({
     title: '',
@@ -16,6 +21,7 @@ export function WriteNoticePage() {
       content={noticeContent.content}
       onClick={writeNotice.mutate}
       onChange={onHandleChange}
+      pathToKorean={pathToKorean}
     />
   );
 }

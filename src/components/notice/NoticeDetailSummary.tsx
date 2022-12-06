@@ -1,6 +1,7 @@
 import { Text, Button } from 'aliens-design-system-front';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { dateToString } from '@/utils/translate';
 
 interface Props {
   noticeId: string;
@@ -16,7 +17,7 @@ export function NoticeDetailSummary({
   return (
     <_Wrapper>
       <Text size="bodyM" color="gray5" display="inline-block">
-        {createdDate?.toLocaleDateString()}
+        {dateToString(createdDate)}
       </Text>
       <Link to={`/notice/write/${noticeId}`}>
         <Button type="outline" onClick={() => {}} color="primary">

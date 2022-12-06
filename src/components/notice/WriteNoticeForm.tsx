@@ -2,16 +2,22 @@ import { TextArea, Button } from 'aliens-design-system-front';
 import styled from 'styled-components';
 import { ChangeEvent, FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
+import { BreadCrumbWrapper } from '@/components/BreadCrumb';
 
 interface Props {
   title: string;
   content: string;
   onClick: () => void;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  pathToKorean: unknown;
 }
 
 export function WriteNotice({
-  title, content, onClick, onChange,
+  title,
+  content,
+  onClick,
+  onChange,
+  pathToKorean,
 }: Props) {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +27,7 @@ export function WriteNotice({
     <WithNavigatorBar>
       <_BackgroundColor>
         <_Wrapper onSubmit={onSubmit}>
-          <_Path />
+          <BreadCrumbWrapper margin="86px 0 0 0" pathToKorean={pathToKorean} />
           <TextArea
             limit={100}
             className="title"
@@ -72,11 +78,4 @@ const _Wrapper = styled.form`
   > .submitButton {
     margin-top: 60px;
   }
-`;
-
-const _Path = styled.div`
-  height: 22px;
-  width: 180px;
-  background-color: ${({ theme }) => theme.color.gray5};
-  margin-top: 86px;
 `;

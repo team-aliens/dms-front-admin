@@ -5,6 +5,11 @@ import { useNoticeDetail, usePatchNotice } from '@/hooks/useNoticeApi';
 import { useForm } from '@/hooks/useForm';
 import { WriteNotice } from '@/components/notice/WriteNoticeForm';
 
+const pathToKorean = {
+  notice: '공지 목록',
+  write: '공지 수정',
+};
+
 export function PatchNoticePage() {
   const { noticeId } = useParams();
   const noticeDetail = useNoticeDetail(noticeId);
@@ -32,6 +37,7 @@ export function PatchNoticePage() {
       content={noticeContent.content}
       onClick={patchNotice.mutate}
       onChange={onHandleChange}
+      pathToKorean={pathToKorean}
     />
   );
 }

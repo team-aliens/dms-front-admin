@@ -6,6 +6,11 @@ import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useModal } from '@/hooks/useModal';
 import { DeleteNoticeConfirm } from '@/components/modals/DeleteNoticeConfirm';
 import { useDeleteNotice, useNoticeDetail } from '@/hooks/useNoticeApi';
+import { BreadCrumbWrapper } from '@/components/BreadCrumb';
+
+const pathToKorean = {
+  notice: '공지 목록',
+};
 
 export function NoticeDetail() {
   const { noticeId } = useParams();
@@ -18,7 +23,6 @@ export function NoticeDetail() {
   const onClickDeleteNotice = () => {
     selectModal('DELETE_NOTICE');
   };
-
   return (
     <>
       {modalState.selectedModal === 'DELETE_NOTICE' && (
@@ -29,13 +33,16 @@ export function NoticeDetail() {
       )}
       <WithNavigatorBar>
         <_Wrapper>
-          <_Path />
+          <BreadCrumbWrapper
+            margin="86px 0 0 0"
+            pathToKorean={pathToKorean}
+          />
           <_Title size="titleM" color="gray10" display="inline-block">
             {detail?.title}
           </_Title>
           <NoticeDetailSummary
             onClickDeleteNotice={onClickDeleteNotice}
-            createdDate={detail?.create_at}
+            createdDate={detail?.created_at}
             noticeId={noticeId}
           />
           <_Content color="gray7" size="bodyM" display="inline-block">
@@ -50,13 +57,6 @@ export function NoticeDetail() {
 const _Wrapper = styled.div`
   width: 1030px;
   margin: 0 auto;
-`;
-
-const _Path = styled.div`
-  height: 22px;
-  width: 180px;
-  background-color: ${({ theme }) => theme.color.gray5};
-  margin-top: 86px;
 `;
 
 const _Title = styled(Text)`
