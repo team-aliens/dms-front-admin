@@ -79,7 +79,7 @@ export function ResetPwdPage() {
       setEmailHint(checkEmail.data.email);
       changeErrorMessage('account_id', '');
     }
-  }, [checkEmail.isSuccess, checkEmail.data, changeErrorMessage]);
+  }, [checkEmail.isSuccess, checkEmail.data]);
 
   const postEmail = usePostEmailAuthCodeMutation({
     email,
