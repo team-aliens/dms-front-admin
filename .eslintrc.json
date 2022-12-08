@@ -30,6 +30,7 @@
     "max-len": "off",
     "react-hooks/exhaustive-deps" : "off",
     "@typescript-eslint/no-unused-expressions": "off",
+    "consistent-return" : "off",
     "import/extensions": [
       "error",
       "ignorePackages",

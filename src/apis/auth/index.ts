@@ -23,7 +23,7 @@ export const reIssueToken = async (refreshToken: string) => {
     null,
     {
       headers: {
-        'REFRESH-TOKEN': refreshToken,
+        'refresh-token': `${refreshToken}`,
       },
     },
   );
