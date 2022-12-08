@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { Input, Button } from 'aliens-design-system-front';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 import { Steps } from '@/pages/ResetPwdPage';
 import { Email } from '@/components/auth/findAccount/Email';
 import { AuthCode } from '@/components/auth/findAccount/AuthCode';
-import { ResetPasswordRequest } from '@/apis/managers/request';
 
 interface PropsType {
   account_id: string;

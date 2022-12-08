@@ -1,21 +1,11 @@
-import {
-  ChangeEvent, FormEvent, useMemo, useState,
-} from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import {
   Input, DropDown, Button, Text,
 } from 'aliens-design-system-front';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from '@/hooks/useForm';
-import { useDropDown } from '@/hooks/useDropDown';
 import { fadeInRight } from '../../animation/fade';
 import { Question } from '../reset/Question';
 import { SchoolInformation } from '@/apis/schools/response';
-import { queryKeys } from '@/utils/queryKeys';
-import { getSchoolQuestion } from '@/apis/schools';
-import { useToast } from '@/hooks/useToast';
-import { findId } from '@/apis/managers';
 
 interface PropsType {
   schools: SchoolInformation[];
