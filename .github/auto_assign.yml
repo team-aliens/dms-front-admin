@@ -1,0 +1,8 @@
+addReviewers: true
+
+addAssignees: author
+
+reviewers:
+  - @team-aliens/front-end
+
+numberOfReviewers: 0
