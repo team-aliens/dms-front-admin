@@ -3,6 +3,7 @@ addReviewers: true
 addAssignees: author
 
 reviewers:
-  - @team-aliens/front-end
+  - KOVELO2005
+  - paperdeer
 
 numberOfReviewers: 0
