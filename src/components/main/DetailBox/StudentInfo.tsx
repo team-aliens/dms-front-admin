@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Title, Text } from 'aliens-design-system-front';
+import { Text } from 'aliens-design-system-front';
 
 interface Props {
   name: string;
@@ -8,34 +8,34 @@ interface Props {
   profile_image_url: string;
 }
 
-export function StudentInfo({
+export function StudentProfile({
   name,
   gcn,
   room_number,
   profile_image_url,
 }: Props) {
   return (
-    <_StudnetInfo>
+    <_StudentInfo>
       <img src={profile_image_url} alt="프로필" />
       <_Wrapper>
         <_PersonalInfo>
-          <Title fontSize="s" color="gray9">
+          <Text size="headlineS" color="gray10">
             {name}
-          </Title>
-          <Title fontSize="s" color="gray6" className="gcn">
+          </Text>
+          <Text size="headlineS" color="gray6" className="gcn">
             {gcn}
-          </Title>
+          </Text>
         </_PersonalInfo>
-        <Text fontSize="l" color="gray6" className="roomNumber">
+        <Text size="bodyL" color="gray6" className="roomNumber">
           {room_number}
           호
         </Text>
       </_Wrapper>
-    </_StudnetInfo>
+    </_StudentInfo>
   );
 }
 
-const _StudnetInfo = styled.div`
+const _StudentInfo = styled.div`
   display: flex;
   > img {
     width: 100px;

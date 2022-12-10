@@ -28,7 +28,7 @@ export function AuthCode({
         errorMsg={errorMessage}
       />
       <_ReSendAuthCodeWrapper>
-        <_ResendQuestion fontSize="s" color="gray6">
+        <_ResendQuestion size="captionM" color="gray6">
           인증번호가 발송되지 않았나요?
         </_ResendQuestion>
         <Button

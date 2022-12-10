@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text, Title } from 'aliens-design-system-front';
+import { Text } from 'aliens-design-system-front';
 import { NoticeCardItem } from '@/apis/notice/response';
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 export function NoticeItem({ noticeItem }: Props) {
   return (
     <_Wrapper>
-      <Title fontSize="xs">{noticeItem.title}</Title>
-      <_Date fontSize="m" color="gray5">
-        {noticeItem.create_at.toLocaleDateString()}
+      <Text size="bodyL">{noticeItem?.title}</Text>
+      <_Date size="bodyM" color="gray5">
+        {noticeItem?.create_at?.toDateString()}
       </_Date>
     </_Wrapper>
   );

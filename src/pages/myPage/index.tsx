@@ -1,62 +1,64 @@
-import { Arrow, Title } from 'aliens-design-system-front';
+import { Arrow, Text } from 'aliens-design-system-front';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useMutation, useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
 import { Confirmation } from '@/components/myPage/Confirmation';
 import { Verification } from '@/components/myPage/Verification';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useForm } from '@/hooks/useForm';
-import { getMyProfile } from '@/apis/managers';
-import { queryKeys } from '@/utils/queryKeys';
 import { useModal } from '@/hooks/useModal';
 import { ChangeQnA } from '@/components/modals/ChangeQnA';
-import { changeSchoolQnA, reIssueSchoolCode } from '@/apis/schools';
 import { LogOutModal } from '@/components/modals/LogOut';
 import { ChangeSchoolQnARequest } from '@/apis/schools/request';
+import { useChangeQnA, useReissueSchoolCode } from '@/hooks/useSchoolsApi';
+import { useMyProfileInfo } from '@/hooks/useMangersApis';
 
 export function MyPage() {
   const { modalState, selectModal, closeModal } = useModal();
   const openNewQuestionModal = () => selectModal('NEW_QNA');
   const openLogoutModal = () => selectModal('LOGOUT');
-  const getNewCode = useMutation(
-    [queryKeys.인증코드새로발급받기],
-    reIssueSchoolCode,
-  );
+
   const { onHandleChange: onChange, state: qnaState } =
     useForm<ChangeSchoolQnARequest>({
       question: '',
       answer: '',
     });
   const { answer, question } = qnaState;
-  const { data: myProfileData } = useQuery(
-    [queryKeys.마이페이지확인],
-    getMyProfile,
-  );
-  const changeQnA = useMutation([queryKeys.확인질문수정하기], () => changeSchoolQnA(qnaState));
+
+  const { data: myProfileData } = useMyProfileInfo();
+  const changeQnA = useChangeQnA(qnaState);
+  const getNewCode = useReissueSchoolCode();
+
+  const [code, setCode] = useState('');
+  useEffect(() => {
+    setCode(myProfileData?.code);
+  }, [myProfileData]);
+
+  useEffect(() => {
+    if (getNewCode.data) setCode(getNewCode.data?.code);
+  }, [getNewCode.isSuccess, getNewCode.data]);
+
   return (
     <>
       <WithNavigatorBar>
         <_Wrapper>
-          <_School display="block" fontSize="l">
+          <_School display="block" size="headlineM">
             {myProfileData?.school_name}
           </_School>
           <_CardWrapper>
             <div>
-              <Verification
-                onClickNewCode={getNewCode.mutate}
-                code={myProfileData?.code}
-              />
+              <Verification onClickNewCode={getNewCode.mutate} code={code} />
               <_OptionBtn>
                 <_PasswordChange to="change-pwd">
-                  <Title display="block" fontSize="xs">
+                  <Text display="block" size="titleS">
                     비밀번호 변경
-                  </Title>
+                  </Text>
                   <Arrow size={24} direction="right" />
                 </_PasswordChange>
                 <_Logout
                   onClick={openLogoutModal}
                   display="block"
-                  fontSize="xs"
+                  size="titleS"
                   color="error"
                 >
                   로그아웃
@@ -95,16 +97,13 @@ const _CardWrapper = styled.div`
 const _OptionBtn = styled.div`
   display: flex;
   margin-top: 30px;
-  > div:last-of-type {
-    margin-left: auto;
-  }
 `;
 
 const _Wrapper = styled.div`
   margin: 160px 0 0 80px;
 `;
 
-const _School = styled(Title)`
+const _School = styled(Text)`
   margin-bottom: 60px;
 `;
 
@@ -120,10 +119,11 @@ const _PasswordChange = styled(Link)`
   }
 `;
 
-const _Logout = styled(Title)`
+const _Logout = styled(Text)`
   width: 250px;
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
   padding: 24px 21px;
   cursor: pointer;
+  margin-left: auto;
 `;

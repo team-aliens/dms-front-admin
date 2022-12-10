@@ -1,21 +1,23 @@
 import { Text, Button } from 'aliens-design-system-front';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { deleteNotice } from '@/apis/notice';
+import { dateToString } from '@/utils/translate';
 
 interface Props {
   noticeId: string;
   createdDate: Date;
+  onClickDeleteNotice: () => void;
 }
 
-export function NoticeDetailSummary({ noticeId, createdDate }: Props) {
-  const onClickDeleteNotice = () => {
-    deleteNotice(noticeId).then(() => {});
-  };
+export function NoticeDetailSummary({
+  noticeId,
+  createdDate,
+  onClickDeleteNotice,
+}: Props) {
   return (
     <_Wrapper>
-      <Text fontSize="m" color="gray5" display="inline-block">
-        {createdDate.toLocaleDateString()}
+      <Text size="bodyM" color="gray5" display="inline-block">
+        {dateToString(createdDate)}
       </Text>
       <Link to={`/notice/write/${noticeId}`}>
         <Button type="outline" onClick={() => {}} color="primary">

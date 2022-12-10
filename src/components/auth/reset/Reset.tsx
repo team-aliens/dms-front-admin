@@ -1,37 +1,30 @@
 import styled from 'styled-components';
 import { Input, Button } from 'aliens-design-system-front';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useErrorMessage } from '@/hooks/useErrorMessage';
+import { useObj } from '@/hooks/useObj';
 import { checkPasswordReg } from '@/utils/regs';
-import { resetPassword } from '@/apis/managers';
 import { ResetPasswordRequest } from '@/apis/managers/request';
-import { useToast } from '@/hooks/useToast';
 
 interface Props {
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   resetPasswordState: ResetPasswordRequest;
+  onClickResetPwd: () => void;
 }
 
-const errorTypes = ['newPassword'] as const;
+interface ErrorPropsType {
+  newPassword: string;
+}
 
-export function Reset({ onChangeValue, resetPasswordState }: Props) {
-  const { errorMessages, changeErrorMessage } = useErrorMessage(errorTypes);
-  const { toastDispatch } = useToast();
-  const navigate = useNavigate();
+export function Reset({
+  onChangeValue,
+  resetPasswordState,
+  onClickResetPwd,
+}: Props) {
+  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
+    useObj<ErrorPropsType>({
+      newPassword: '',
+    });
   const [checkPassword, setCheckPassword] = useState('');
-  const onClickResetPassword = () => {
-    resetPassword(resetPasswordState)
-      .then(() => {
-        toastDispatch({
-          actionType: 'APPEND_TOAST',
-          toastType: 'SUCCESS',
-          message: '비밀번호가 변경되었습니다.',
-        });
-        navigate('/');
-      })
-      .catch(() => {});
-  };
   const { new_password: newPassword } = resetPasswordState;
   useEffect(() => {
     if (checkPasswordReg(newPassword) || !newPassword) {
@@ -72,7 +65,7 @@ export function Reset({ onChangeValue, resetPasswordState }: Props) {
           size="default"
           color="primary"
           type="contained"
-          onClick={onClickResetPassword}
+          onClick={onClickResetPwd}
           disabled={
             !checkPasswordReg(newPassword) || newPassword !== checkPassword
           }

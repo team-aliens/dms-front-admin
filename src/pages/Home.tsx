@@ -1,30 +1,61 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
 import { StudentDetail } from '@/components/main/DetailBox/StudentDetail';
-import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { getStudentDetail } from '@/apis/managers';
+import { SortType } from '@/apis/managers';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useObj } from '@/hooks/useObj';
+import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
+
+interface FilterState {
+  name: string;
+  sort: SortType;
+}
 
 export function Home() {
-  const [studentDetail, setStudentDetail] =
-    useState<GetStudentDetailResponse>();
+  const { debounce } = useDebounce();
+
+  const { obj: filter, changeObjectValue } = useObj<FilterState>({
+    name: '',
+    sort: 'GCN',
+  });
+  const [debouncedName, setDebouncedName] = useState(filter.name);
+  const { data: studentList } = useSearchStudents({
+    name: debouncedName,
+    sort: filter.sort,
+  });
+
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
 
-  useEffect(() => {
-    getStudentDetail(selectedStudentId)
-      .then((res) => setStudentDetail(res))
-      .catch(() => {});
-  }, [selectedStudentId]);
+  const { data: studentDetail } = useStudentDetail(selectedStudentId);
+
+  const onChangeSortType = () => {
+    const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
+    changeObjectValue('sort', value);
+  };
+
+  const onChangeSearchName = (e: ChangeEvent<HTMLInputElement>) => {
+    changeObjectValue('name', e.target.value);
+    debounce(() => setDebouncedName(e.target.value), 200);
+  };
+  const onClickStudent = (id: string) => {
+    setSelectedStudentId((prevId) => (prevId === id ? '' : id));
+  };
 
   return (
     <WithNavigatorBar>
       <_Wrapper>
         <StudentList
-          setSelectedStudentId={setSelectedStudentId}
+          studentList={studentList?.students || []}
           selectedStudentId={selectedStudentId}
+          name={filter.name}
+          sort={filter.sort}
+          onChangeSearchName={onChangeSearchName}
+          onChangeSortType={onChangeSortType}
+          onClickStudent={onClickStudent}
         />
         <Divider />
         <OutsideClickHandler

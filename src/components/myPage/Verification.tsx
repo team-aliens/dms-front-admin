@@ -1,4 +1,4 @@
-import { Button, Title } from 'aliens-design-system-front';
+import { Button, Text } from 'aliens-design-system-front';
 import styled from 'styled-components';
 
 interface PropsType {
@@ -14,17 +14,17 @@ export function Verification({ onClickNewCode, code }: PropsType) {
           새로 발급하기
         </Button>
       </_IssueBtn>
-      <Title display="block" fontSize="s">
+      <Text display="block" size="titleL">
         확인코드
-      </Title>
-      <_VerificationCode display="block" fontSize="l" color="gray6">
+      </Text>
+      <_VerificationCode display="block" size="headlineM" color="gray6">
         {code}
       </_VerificationCode>
     </_Wrapper>
   );
 }
 
-const _VerificationCode = styled(Title)`
+const _VerificationCode = styled(Text)`
   margin-top: 24px;
 `;
 

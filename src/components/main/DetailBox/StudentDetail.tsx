@@ -1,39 +1,23 @@
 import styled from 'styled-components';
-import { Button, Text, Title } from 'aliens-design-system-front';
-import { StudentInfo } from '@/components/main/DetailBox/StudentInfo';
+import { Button, Text } from 'aliens-design-system-front';
+import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 
 interface Props {
-  studentDetail?: GetStudentDetailResponse;
+  studentDetail: GetStudentDetailResponse;
   studentId: string;
 }
 
-const testValue: GetStudentDetailResponse = {
-  name: '김범진',
-  gcn: '2111',
-  profile_image_url: 'https://~~',
-  bonus_point: 1,
-  minus_point: 999,
-  room_number: 201,
-  room_mates: [
-    {
-      id: '9c4f2fd8-4311-11ed-b878-0242ac120002',
-      name: '김민성',
-      profile_image_url: 'https://~~',
-    },
-  ],
-};
-
-export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
+export function StudentDetail({ studentDetail, studentId }: Props) {
   return (
     <_Wrapper isSelected={studentId !== ''}>
-      <Title fontSize="s" color="gray6">
+      <Text size="headLineL" color="gray6">
         학생 상세 확인
-      </Title>
+      </Text>
       {studentId && studentDetail ? (
         <_DetailBox>
-          <StudentInfo
+          <StudentProfile
             name={studentDetail.name}
             gcn={studentDetail.gcn}
             room_number={studentDetail.room_number}
@@ -43,7 +27,7 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
             <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
             <PointBox pointType="MINUS" point={studentDetail.minus_point} />
           </_PointWrapper>
-          <_RoomMates fontSize="s" color="gray6">
+          <_RoomMates size="bodyS" color="gray6">
             동일 호실 학생
           </_RoomMates>
           <_MateList>
@@ -55,7 +39,7 @@ export function StudentDetail({ studentDetail = testValue, studentId }: Props) {
           </_MateList>
         </_DetailBox>
       ) : (
-        <_NotSelected fontSize="l" color="gray5" display="block">
+        <_NotSelected size="bodyL" color="gray5" display="block">
           학생 목록에서 선택하여 상세 내용을 확인하세요.
         </_NotSelected>
       )}

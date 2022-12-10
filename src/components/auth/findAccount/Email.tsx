@@ -18,10 +18,10 @@ export function Email({
   return (
     <>
       <_EmailHintBox>
-        <Text fontSize="s" display="block">
+        <Text size="bodyS" display="block">
           아이디와 일치하는 이메일입니다.
         </Text>
-        <Text fontSize="s" color="primary">
+        <Text size="bodyS" color="primary">
           {emailHint}
         </Text>
       </_EmailHintBox>
