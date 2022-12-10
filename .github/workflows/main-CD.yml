@@ -23,9 +23,9 @@
               node-version: ${{ matrix.node-version }}
           - name: Generate Environment Variables File for Production
             env:
-              REACT_APP_DOMAIN: ${{ secrets.SERVER_URL }}
+              APP_PUBLIC_URL: ${{ secrets.SERVER_URL }}
             run: |
-                echo "SERVER_URL=$SERVER_URL" >> .env
+                echo "APP_PUBLIC_URL=$APP_PUBLIC_URL" >> .env
           - name: Npm install
             run: npm install
     
