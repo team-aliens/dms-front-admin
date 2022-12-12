@@ -7,9 +7,14 @@ import { GetStudentDetailResponse } from '@/apis/managers/response';
 interface Props {
   studentDetail: GetStudentDetailResponse;
   studentId: string;
+  onClickStudent: (id) => void;
 }
 
-export function StudentDetail({ studentDetail, studentId }: Props) {
+export function StudentDetail({
+  studentDetail,
+  studentId,
+  onClickStudent,
+}: Props) {
   return (
     <_Wrapper isSelected={studentId !== ''}>
       <Text size="headLineL" color="gray6">
@@ -32,7 +37,11 @@ export function StudentDetail({ studentDetail, studentId }: Props) {
           </_RoomMates>
           <_MateList>
             {studentDetail.room_mates.map((item) => (
-              <Button type="outline" onClick={() => {}} color="gray">
+              <Button
+                type="outline"
+                onClick={() => onClickStudent(item.id)}
+                color="gray"
+              >
                 {item.name}
               </Button>
             ))}

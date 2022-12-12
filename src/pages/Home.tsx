@@ -71,6 +71,7 @@ export function Home() {
           <StudentDetail
             studentDetail={studentDetail}
             studentId={selectedStudentId}
+            onClickStudent={onClickStudent}
           />
         </OutsideClickHandler>
       </_Wrapper>
