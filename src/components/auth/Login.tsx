@@ -35,7 +35,8 @@ export function Login({
     <_Wrapper onSubmit={onSubmit}>
       <_Contents>
         <TitleBox>로그인</TitleBox>
-        <_LoginInput
+        <Input
+          margin={['top', 56]}
           label="로그인"
           onChange={onChange}
           placeholder="아이디를 입력해주세요"
@@ -45,7 +46,8 @@ export function Login({
           value={loginState.account_id}
           errorMsg={errorMessage?.account_id}
         />
-        <_PasswordInput
+        <Input
+          margin={['top', 40]}
           label="비밀번호"
           onChange={onChange}
           placeholder="비밀번호를 입력해주세요"
@@ -55,13 +57,15 @@ export function Login({
           value={loginState.password}
           errorMsg={errorMessage?.password}
         />
-        <_AutoLoginCheckBox
+        <CheckBox
           disabled={false}
           label="아이디 저장"
           status={autoSave}
           checkSetState={onChangeAutoSaveStatus}
+          margin={['top', 62]}
         />
-        <_LoginButton
+        <Button
+          margin={['top', 38]}
           kind="contained"
           disabled={disabled}
           color="primary"
@@ -69,7 +73,7 @@ export function Login({
           onClick={onClickLogin}
         >
           로그인
-        </_LoginButton>
+        </Button>
         <_FindAccountArea>
           <Link to="/find-account-id">
             <Text size="bodyL" color="gray6">
@@ -99,22 +103,6 @@ const _Wrapper = styled.form`
 
 const _Contents = styled.div`
   margin: 0 auto;
-`;
-
-const _LoginInput = styled(Input)`
-  margin-top: 56px;
-`;
-
-const _PasswordInput = styled(Input)`
-  margin-top: 40px;
-`;
-
-const _AutoLoginCheckBox = styled(CheckBox)`
-  margin-top: 62px;
-`;
-
-const _LoginButton = styled(Button)`
-  margin-top: 38px;
 `;
 
 const _FindAccountArea = styled.div`
