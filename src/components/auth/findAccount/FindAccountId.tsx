@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import {
   Input, DropDown, Button, Text,
-} from 'aliens-design-system-front';
+} from '@team-aliens/design-system';
 import { fadeInRight } from '../../animation/fade';
 import { Question } from '../reset/Question';
 import { SchoolInformation } from '@/apis/schools/response';
@@ -58,7 +58,7 @@ export function FindAccountId({
         </_QNA>
         <_BtnWrapper>
           <Button
-            type="contained"
+            kind="contained"
             color="primary"
             size="default"
             onClick={onClick}

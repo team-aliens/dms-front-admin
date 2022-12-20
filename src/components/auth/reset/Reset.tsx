@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useObj } from '@/hooks/useObj';
 import { checkPasswordReg } from '@/utils/regs';
@@ -64,7 +64,7 @@ export function Reset({
         <_SubmitPassword
           size="default"
           color="primary"
-          type="contained"
+          kind="contained"
           onClick={onClickResetPwd}
           disabled={
             !checkPasswordReg(newPassword) || newPassword !== checkPassword

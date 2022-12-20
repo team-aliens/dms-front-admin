@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 import { NoticeDetailSummary } from '@/components/notice/NoticeDetailSummary';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useModal } from '@/hooks/useModal';
@@ -33,10 +33,7 @@ export function NoticeDetail() {
       )}
       <WithNavigatorBar>
         <_Wrapper>
-          <BreadCrumbWrapper
-            margin="86px 0 0 0"
-            pathToKorean={pathToKorean}
-          />
+          <BreadCrumbWrapper margin="86px 0 0 0" pathToKorean={pathToKorean} />
           <_Title size="titleM" color="gray10" display="inline-block">
             {detail?.title}
           </_Title>

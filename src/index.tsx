@@ -1,4 +1,4 @@
-import { StyledProvider } from 'aliens-design-system-front';
+import { StyledProvider } from '@team-aliens/design-system';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

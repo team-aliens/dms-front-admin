@@ -1,4 +1,4 @@
-import { Button, Modal } from 'aliens-design-system-front';
+import { Button, Modal } from '@team-aliens/design-system';
 
 interface PropsType {
   closeModal: () => void;
@@ -8,13 +8,13 @@ export function LogOutModal({ closeModal }: PropsType) {
   return (
     <Modal
       close={closeModal}
-      header="로그아웃 재확인"
+      title="로그아웃 재확인"
       content="로그아웃 하시겠습니까?"
       buttonList={[
-        <Button onClick={closeModal} type="outline" color="gray">
+        <Button onClick={closeModal} kind="outline" color="gray">
           취소
         </Button>,
-        <Button type="contained" color="error">
+        <Button kind="contained" color="error">
           확인
         </Button>,
       ]}

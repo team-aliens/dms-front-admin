@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useForm } from '@/hooks/useForm';
@@ -53,10 +53,7 @@ export function ChangePwd() {
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <BreadCrumbWrapper
-          margin="86px 0 0 80px"
-          pathToKorean={pathToKorean}
-        />
+        <BreadCrumbWrapper margin="86px 0 0 80px" pathToKorean={pathToKorean} />
         <_InputsWrapper onSubmit={onSubmit}>
           <TitleBox moreInfo="비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.">
             비밀번호 변경
@@ -86,7 +83,7 @@ export function ChangePwd() {
             type="password"
           />
           <_Button
-            type="contained"
+            kind="contained"
             color="primary"
             onClick={change}
             disabled={!(current_password && new_password && reCheckPassword)}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Text } from 'aliens-design-system-front';
+import { Button, Text } from '@team-aliens/design-system';
 import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
@@ -17,7 +17,7 @@ export function StudentDetail({
 }: Props) {
   return (
     <_Wrapper isSelected={studentId !== ''}>
-      <Text size="headLineL" color="gray6">
+      <Text size="headlineL" color="gray6">
         학생 상세 확인
       </Text>
       {studentId && studentDetail ? (
@@ -38,7 +38,7 @@ export function StudentDetail({
           <_MateList>
             {studentDetail.room_mates.map((item) => (
               <Button
-                type="outline"
+                kind="outline"
                 onClick={() => onClickStudent(item.id)}
                 color="gray"
               >

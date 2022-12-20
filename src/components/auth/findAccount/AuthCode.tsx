@@ -1,4 +1,4 @@
-import { Button, Input, Text } from 'aliens-design-system-front';
+import { Button, Input, Text } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
@@ -34,7 +34,7 @@ export function AuthCode({
         <Button
           onClick={() => onClickPostEmailAuthCode('resend')}
           color="gray"
-          type="underline"
+          kind="underline"
           clickType="button"
           size="default"
         >

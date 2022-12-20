@@ -1,4 +1,4 @@
-import { Button } from 'aliens-design-system-front';
+import { Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ export function NoticeListPage() {
       <_Wrapper>
         <_FilterSection>
           <Button
-            type="outline"
+            kind="outline"
             color="gray"
             onClick={() => setSortType(sortType === 'NEW' ? 'OLD' : 'NEW')}
           >
@@ -25,7 +25,7 @@ export function NoticeListPage() {
             순
           </Button>
           <Link to="/notice/write">
-            <Button type="outline" color="primary">
+            <Button kind="outline" color="primary">
               공지 작성하기
             </Button>
           </Link>

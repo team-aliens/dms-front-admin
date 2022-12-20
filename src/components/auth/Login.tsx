@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import {
   Input, CheckBox, Button, Text,
-} from 'aliens-design-system-front';
-import { ChangeEvent, FormEvent } from 'react';
+} from '@team-aliens/design-system';
+import {
+  ChangeEvent, Dispatch, FormEvent, SetStateAction,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { TitleBox } from './TitleBox';
 import { LoginRequest } from '@/apis/auth/request';
@@ -14,7 +16,7 @@ interface PropsType {
   loginState: LoginRequest;
   errorMessage: LoginRequest;
   autoSave: boolean;
-  onChangeAutoSaveStatus: (status: boolean) => void;
+  onChangeAutoSaveStatus: Dispatch<SetStateAction<boolean>>;
 }
 
 export function Login({
@@ -56,11 +58,11 @@ export function Login({
         <_AutoLoginCheckBox
           disabled={false}
           label="아이디 저장"
-          isChecked={autoSave}
-          onChangeIsChecked={onChangeAutoSaveStatus}
+          status={autoSave}
+          checkSetState={onChangeAutoSaveStatus}
         />
         <_LoginButton
-          type="contained"
+          kind="contained"
           disabled={disabled}
           color="primary"
           size="medium"

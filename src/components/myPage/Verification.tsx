@@ -1,4 +1,4 @@
-import { Button, Text } from 'aliens-design-system-front';
+import { Button, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
 
 interface PropsType {
@@ -10,7 +10,7 @@ export function Verification({ onClickNewCode, code }: PropsType) {
   return (
     <_Wrapper>
       <_IssueBtn>
-        <Button type="contained" color="gray" onClick={onClickNewCode}>
+        <Button kind="contained" color="gray" onClick={onClickNewCode}>
           새로 발급하기
         </Button>
       </_IssueBtn>

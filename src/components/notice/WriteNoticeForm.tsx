@@ -1,4 +1,4 @@
-import { TextArea, Button } from 'aliens-design-system-front';
+import { TextArea, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent, FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
@@ -9,7 +9,7 @@ interface Props {
   content: string;
   onClick: () => void;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  pathToKorean: unknown;
+  pathToKorean: { [key: string]: string };
 }
 
 export function WriteNotice({
@@ -46,7 +46,7 @@ export function WriteNotice({
           />
           <Button
             className="submitButton"
-            type="contained"
+            kind="contained"
             onClick={onClick}
             color="primary"
             size="large"

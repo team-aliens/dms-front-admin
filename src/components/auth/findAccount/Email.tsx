@@ -1,4 +1,4 @@
-import { Input, Text } from 'aliens-design-system-front';
+import { Input, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent } from 'react';
 

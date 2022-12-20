@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 import { NoticeCardItem } from '@/apis/notice/response';
 
 interface Props {

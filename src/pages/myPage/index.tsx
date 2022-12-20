@@ -1,4 +1,4 @@
-import { Arrow, Text } from 'aliens-design-system-front';
+import { Arrow, Text } from '@team-aliens/design-system';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 import { Steps } from '@/pages/ResetPwdPage';
 import { Email } from '@/components/auth/findAccount/Email';
@@ -64,7 +64,7 @@ export function Certification({
         onClick={onClick}
         size="default"
         color="primary"
-        type="contained"
+        kind="contained"
       >
         인증
       </_NextButton>

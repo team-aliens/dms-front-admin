@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Text } from 'aliens-design-system-front';
+import { Button, Text } from '@team-aliens/design-system';
 
 interface PropsType {
   openNewQuestionModal: () => void;
@@ -15,7 +15,7 @@ export function Confirmation({
   return (
     <_Wrapper>
       <_PatchQuestion>
-        <Button type="contained" color="gray" onClick={openNewQuestionModal}>
+        <Button kind="contained" color="gray" onClick={openNewQuestionModal}>
           질문과 답변 변경하기
         </Button>
       </_PatchQuestion>
