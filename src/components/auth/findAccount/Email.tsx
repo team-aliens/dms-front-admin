@@ -25,7 +25,8 @@ export function Email({
           {emailHint}
         </Text>
       </_EmailHintBox>
-      <_EmailInput
+      <Input
+        margin={['bottom', 40]}
         label="이메일"
         placeholder="이메일을 입력해주세요"
         onChange={onChangeValue}
@@ -45,8 +46,4 @@ const _EmailHintBox = styled.div`
   width: 480px;
   height: 70px;
   background-color: ${({ theme }) => theme.color.gray2};
-`;
-
-const _EmailInput = styled(Input)`
-  margin-bottom: 40px;
 `;

@@ -21,6 +21,7 @@ export function TitleBox({ children, moreInfo = '' }: TitleProps) {
 const _TitleWrapper = styled.h1`
   width: 480px;
   > hr {
+    margin-top: 23px;
     width: 480px;
     height: 1px;
     background-color: ${({ theme }) => theme.color.primary};

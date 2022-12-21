@@ -22,26 +22,18 @@ export function Confirmation({
       <Text display="block" size="titleL">
         확인 질문
       </Text>
-      <_ConfirmationQuestion display="block" color="gray6" size="titleS">
+      <Text display="block" color="gray6" size="titleS" margin={[16, 0, 40, 0]}>
         {question}
-      </_ConfirmationQuestion>
+      </Text>
       <Text size="titleL" display="block">
         답변
       </Text>
-      <_Answer color="gray6" size="titleS" display="block">
+      <Text color="gray6" size="titleS" display="block" margin={['top', 16]}>
         {answer}
-      </_Answer>
+      </Text>
     </_Wrapper>
   );
 }
-
-const _ConfirmationQuestion = styled(Text)`
-  margin: 16px 0 40px 0;
-`;
-
-const _Answer = styled(Text)`
-  margin-top: 16px;
-`;
 
 const _Wrapper = styled.div`
   width: 500px;

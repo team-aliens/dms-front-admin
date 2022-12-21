@@ -10,9 +10,9 @@ export function NoticeItem({ noticeItem }: Props) {
   return (
     <_Wrapper>
       <Text size="bodyL">{noticeItem?.title}</Text>
-      <_Date size="bodyM" color="gray5">
+      <Text size="bodyM" color="gray5" margin={['left', 'auto']}>
         {noticeItem?.create_at?.toDateString()}
-      </_Date>
+      </Text>
     </_Wrapper>
   );
 }
@@ -27,8 +27,4 @@ const _Wrapper = styled.li`
   display: flex;
   align-items: center;
   cursor: pointer;
-`;
-
-const _Date = styled(Text)`
-  margin-left: auto;
 `;

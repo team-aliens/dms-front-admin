@@ -17,7 +17,8 @@ export function AuthCode({
 }: PropsType) {
   return (
     <_AuthCodeArea>
-      <_AuthCodeInput
+      <Input
+        margin={['bottom', 40]}
         label="인증코드"
         name="auth_code"
         onChange={onChangeValue}
@@ -28,9 +29,9 @@ export function AuthCode({
         errorMsg={errorMessage}
       />
       <_ReSendAuthCodeWrapper>
-        <_ResendQuestion size="captionM" color="gray6">
+        <Text size="captionM" color="gray6" margin={['right', 12]}>
           인증번호가 발송되지 않았나요?
-        </_ResendQuestion>
+        </Text>
         <Button
           onClick={() => onClickPostEmailAuthCode('resend')}
           color="gray"
@@ -45,10 +46,6 @@ export function AuthCode({
   );
 }
 
-const _ResendQuestion = styled(Text)`
-  margin-right: 12px;
-`;
-
 const _AuthCodeArea = styled.div`
   position: relative;
   margin-top: 60px;
@@ -62,8 +59,4 @@ const _ReSendAuthCodeWrapper = styled.div`
   > button {
     padding: 0;
   }
-`;
-
-const _AuthCodeInput = styled(Input)`
-  margin-bottom: 40px;
 `;

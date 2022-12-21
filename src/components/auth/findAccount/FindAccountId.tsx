@@ -1,11 +1,10 @@
 import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
-import {
-  Input, DropDown, Button, Text,
-} from '@team-aliens/design-system';
+import { Input, DropDown, Button } from '@team-aliens/design-system';
 import { fadeInRight } from '../../animation/fade';
 import { Question } from '../reset/Question';
 import { SchoolInformation } from '@/apis/schools/response';
+import { TitleBox } from '@/components/auth/TitleBox';
 
 interface PropsType {
   schools: SchoolInformation[];
@@ -34,8 +33,9 @@ export function FindAccountId({
   return (
     <_Wrapper>
       <form onSubmit={onSubmit}>
-        <_TitleWrapper display="block">아이디 찾기</_TitleWrapper>
-        <_DropDown
+        <TitleBox>아이디 찾기</TitleBox>
+        <DropDown
+          margin={['top', 56]}
           width={480}
           label="학교 이름"
           placeholder="학교를 선택해주세요"
@@ -80,15 +80,6 @@ const _BtnWrapper = styled.div`
   display: flex;
   justify-content: end;
   margin-top: 40px;
-`;
-
-const _TitleWrapper = styled(Text)`
-  border-bottom: 1px solid ${({ theme }) => theme.color.primary};
-  padding-bottom: 24px;
-`;
-
-const _DropDown = styled(DropDown)`
-  margin-top: 56px;
 `;
 
 const _Wrapper = styled.div`

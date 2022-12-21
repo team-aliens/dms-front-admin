@@ -22,11 +22,11 @@ export function StudentProfile({
           <Text size="headlineS" color="gray10">
             {name}
           </Text>
-          <Text size="headlineS" color="gray6" className="gcn">
+          <Text size="headlineS" color="gray6" margin={['left', 16]}>
             {gcn}
           </Text>
         </_PersonalInfo>
-        <Text size="bodyL" color="gray6" className="roomNumber">
+        <Text size="bodyL" color="gray6" margin={['top', 12]}>
           {room_number}
           호
         </Text>
@@ -47,13 +47,7 @@ const _StudentInfo = styled.div`
 `;
 const _Wrapper = styled.div`
   margin-top: 13px;
-  > .roomNumber {
-    margin-top: 12px;
-  }
 `;
 const _PersonalInfo = styled.div`
   display: flex;
-  > .gcn {
-    margin-left: 16px;
-  }
 `;

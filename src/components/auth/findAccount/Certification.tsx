@@ -34,7 +34,8 @@ export function Certification({
 }: PropsType) {
   return (
     <>
-      <_AccountIdInput
+      <Input
+        margin={[56, 0, 40, 0]}
         label="아이디"
         placeholder="id를 입력해주세요."
         onChange={onChangeValue}
@@ -60,23 +61,15 @@ export function Certification({
           onChangeValue={onChangeValue}
         />
       )}
-      <_NextButton
+      <Button
+        margin={['left', 'auto']}
         onClick={onClick}
         size="default"
         color="primary"
         kind="contained"
       >
         인증
-      </_NextButton>
+      </Button>
     </>
   );
 }
-
-const _AccountIdInput = styled(Input)`
-  margin-top: 56px;
-  margin-bottom: 40px;
-`;
-
-const _NextButton = styled(Button)`
-  margin-left: auto;
-`;
