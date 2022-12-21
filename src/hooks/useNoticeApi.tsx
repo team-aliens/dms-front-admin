@@ -1,6 +1,5 @@
-import { useMutation, useQuery, UseQueryOptions } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { queryKeys } from '@/utils/queryKeys';
 import {
   deleteNotice,
   getNoticeDetail,

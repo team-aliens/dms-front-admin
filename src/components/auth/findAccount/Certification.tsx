@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Input, Button } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 import { Steps } from '@/pages/ResetPwdPage';
