@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useForm } from '@/hooks/useForm';
@@ -53,15 +53,13 @@ export function ChangePwd() {
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <BreadCrumbWrapper
-          margin="86px 0 0 80px"
-          pathToKorean={pathToKorean}
-        />
+        <BreadCrumbWrapper margin="86px 0 0 80px" pathToKorean={pathToKorean} />
         <_InputsWrapper onSubmit={onSubmit}>
           <TitleBox moreInfo="비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.">
             비밀번호 변경
           </TitleBox>
-          <_Input
+          <Input
+            margin={['top', 40]}
             value={current_password}
             onChange={onHandleChange}
             name="current_password"
@@ -69,7 +67,8 @@ export function ChangePwd() {
             label="기존 비밀번호 입력"
             type="password"
           />
-          <_Input
+          <Input
+            margin={['top', 40]}
             value={new_password}
             onChange={onHandleChange}
             name="new_password"
@@ -77,7 +76,8 @@ export function ChangePwd() {
             label="새 비밀번호 입력"
             type="password"
           />
-          <_Input
+          <Input
+            margin={['top', 40]}
             value={reCheckPassword}
             onChange={onHandleChange}
             name="reCheckPassword"
@@ -85,14 +85,18 @@ export function ChangePwd() {
             label="새 비밀번호 확인"
             type="password"
           />
-          <_Button
-            type="contained"
+          <Button
+            margin={[
+              ['top', 40],
+              ['left', 'auto'],
+            ]}
+            kind="contained"
             color="primary"
             onClick={change}
             disabled={!(current_password && new_password && reCheckPassword)}
           >
             완료
-          </_Button>
+          </Button>
         </_InputsWrapper>
       </_Wrapper>
     </WithNavigatorBar>
@@ -107,13 +111,4 @@ const _Wrapper = styled.div`
 
 const _InputsWrapper = styled.form`
   margin: 92px auto 0 auto;
-`;
-
-const _Input = styled(Input)`
-  margin-top: 40px;
-`;
-
-const _Button = styled(Button)`
-  margin-left: auto;
-  margin-top: 40px;
 `;

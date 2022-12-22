@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
 
 interface Props {
@@ -19,17 +19,21 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
       <Text
         size="bodyL"
         color={isSelected ? 'gray1' : 'gray10'}
-        className="name"
+        margin={['left', 16]}
       >
         {studentInfo.name}
       </Text>
-      <Text className="gcn" size="bodyL" color={isSelected ? 'gray4' : 'gray6'}>
+      <Text
+        margin={['left', 16]}
+        size="bodyL"
+        color={isSelected ? 'gray4' : 'gray6'}
+      >
         {studentInfo.gcn}
       </Text>
       <Text
         size="bodyL"
         color={isSelected ? 'gray4' : 'gray6'}
-        className="roomNumber"
+        margin={['left', 'auto']}
       >
         {studentInfo.room_number}
         호
@@ -58,14 +62,5 @@ const _Wrapper = styled.li<WrapperProps>`
     height: 36px;
     background-color: ${({ theme, isSelected }) => (isSelected ? theme.color.primary : theme.color.gray5)};
     border-radius: 50%;
-  }
-  > .name {
-    margin-left: 16px;
-  }
-  > .gcn {
-    margin-left: 16px;
-  }
-  > .roomNumber {
-    margin-left: auto;
   }
 `;

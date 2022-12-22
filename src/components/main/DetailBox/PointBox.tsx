@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 
 interface Props {
   pointType: 'BONUS' | 'MINUS';

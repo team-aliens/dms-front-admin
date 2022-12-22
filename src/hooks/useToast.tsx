@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import {
   toastDispatchContext,
   toastStateContext,
-} from 'aliens-design-system-front';
+} from '@team-aliens/design-system';
 
 export const useToast = () => {
   const toastState = useContext(toastStateContext);

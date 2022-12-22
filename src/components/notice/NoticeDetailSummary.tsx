@@ -1,4 +1,4 @@
-import { Text, Button } from 'aliens-design-system-front';
+import { Text, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { dateToString } from '@/utils/translate';
@@ -20,11 +20,11 @@ export function NoticeDetailSummary({
         {dateToString(createdDate)}
       </Text>
       <Link to={`/notice/write/${noticeId}`}>
-        <Button type="outline" onClick={() => {}} color="primary">
+        <Button kind="outline" onClick={() => {}} color="primary">
           수정하기
         </Button>
       </Link>
-      <Button type="outline" onClick={onClickDeleteNotice} color="error">
+      <Button kind="outline" onClick={onClickDeleteNotice} color="error">
         삭제하기
       </Button>
     </_Wrapper>

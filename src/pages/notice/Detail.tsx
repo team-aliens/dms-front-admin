@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 import { NoticeDetailSummary } from '@/components/notice/NoticeDetailSummary';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useModal } from '@/hooks/useModal';
@@ -33,21 +33,28 @@ export function NoticeDetail() {
       )}
       <WithNavigatorBar>
         <_Wrapper>
-          <BreadCrumbWrapper
-            margin="86px 0 0 0"
-            pathToKorean={pathToKorean}
-          />
-          <_Title size="titleM" color="gray10" display="inline-block">
+          <BreadCrumbWrapper margin="86px 0 0 0" pathToKorean={pathToKorean} />
+          <Text
+            size="titleM"
+            color="gray10"
+            display="inline-block"
+            margin={['top', 52]}
+          >
             {detail?.title}
-          </_Title>
+          </Text>
           <NoticeDetailSummary
             onClickDeleteNotice={onClickDeleteNotice}
             createdDate={detail?.created_at}
             noticeId={noticeId}
           />
-          <_Content color="gray7" size="bodyM" display="inline-block">
+          <Text
+            color="gray7"
+            size="bodyM"
+            display="inline-block"
+            margin={['top', 40]}
+          >
             {detail?.content}
-          </_Content>
+          </Text>
         </_Wrapper>
       </WithNavigatorBar>
     </>
@@ -57,12 +64,4 @@ export function NoticeDetail() {
 const _Wrapper = styled.div`
   width: 1030px;
   margin: 0 auto;
-`;
-
-const _Title = styled(Text)`
-  margin-top: 52px;
-`;
-
-const _Content = styled(Text)`
-  margin-top: 40px;
 `;

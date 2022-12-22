@@ -1,4 +1,4 @@
-import { Arrow, Text } from 'aliens-design-system-front';
+import { Arrow, Text } from '@team-aliens/design-system';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
@@ -42,9 +42,9 @@ export function MyPage() {
     <>
       <WithNavigatorBar>
         <_Wrapper>
-          <_School display="block" size="headlineM">
+          <Text display="block" size="headlineM" margin={['bottom', 60]}>
             {myProfileData?.school_name}
-          </_School>
+          </Text>
           <_CardWrapper>
             <div>
               <Verification onClickNewCode={getNewCode.mutate} code={code} />
@@ -56,6 +56,7 @@ export function MyPage() {
                   <Arrow size={24} direction="right" />
                 </_PasswordChange>
                 <_Logout
+                  margin={['left', 'auto']}
                   onClick={openLogoutModal}
                   display="block"
                   size="titleS"
@@ -103,10 +104,6 @@ const _Wrapper = styled.div`
   margin: 160px 0 0 80px;
 `;
 
-const _School = styled(Text)`
-  margin-bottom: 60px;
-`;
-
 const _PasswordChange = styled(Link)`
   width: 233px;
   display: flex;
@@ -125,5 +122,4 @@ const _Logout = styled(Text)`
   border-radius: 4px;
   padding: 24px 21px;
   cursor: pointer;
-  margin-left: auto;
 `;

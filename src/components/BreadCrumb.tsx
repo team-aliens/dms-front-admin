@@ -1,17 +1,17 @@
-import { BreadCrumb } from 'aliens-design-system-front';
-import { useLocation } from 'react-router-dom';
+import { BreadCrumb } from '@team-aliens/design-system';
 import styled from 'styled-components';
 
 interface PropsType {
   margin: string;
-  pathToKorean: unknown;
+  pathToKorean: {
+    [key: string]: string;
+  };
 }
 
 export function BreadCrumbWrapper({ margin, pathToKorean }: PropsType) {
-  const { pathname } = useLocation();
   return (
     <_BreadCrumbWrapper margin={margin}>
-      <BreadCrumb pathToKorean={pathToKorean} pathname={pathname} />
+      <BreadCrumb pathToKorean={pathToKorean} />
     </_BreadCrumbWrapper>
   );
 }

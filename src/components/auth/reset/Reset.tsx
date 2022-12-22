@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useObj } from '@/hooks/useObj';
 import { checkPasswordReg } from '@/utils/regs';
@@ -36,7 +36,8 @@ export function Reset({
   return (
     <_Wrapper>
       <_Contents>
-        <_NewPassword
+        <Input
+          margin={['top', 56]}
           label="새 비밀번호 입력"
           placeholder="새로운 비밀번호를 입력해주세요."
           width={480}
@@ -46,7 +47,8 @@ export function Reset({
           value={newPassword}
           errorMsg={errorMessages?.newPassword}
         />
-        <_RePassword
+        <Input
+          margin={['top', 40]}
           label="새 비밀번호 확인"
           placeholder="새로운 비밀번호를 다시 확인해주세요."
           width={480}
@@ -61,17 +63,21 @@ export function Reset({
             '비밀번호가 일치하지 않습니다.'
           }
         />
-        <_SubmitPassword
+        <Button
+          margin={[
+            ['top', 40],
+            ['left', 'auto'],
+          ]}
           size="default"
           color="primary"
-          type="contained"
+          kind="contained"
           onClick={onClickResetPwd}
           disabled={
             !checkPasswordReg(newPassword) || newPassword !== checkPassword
           }
         >
           완료
-        </_SubmitPassword>
+        </Button>
       </_Contents>
     </_Wrapper>
   );
@@ -87,17 +93,4 @@ const _Wrapper = styled.div`
 
 const _Contents = styled.div`
   margin: 0 auto;
-`;
-
-const _NewPassword = styled(Input)`
-  margin-top: 56px;
-`;
-
-const _RePassword = styled(Input)`
-  margin-top: 40px;
-`;
-
-const _SubmitPassword = styled(Button)`
-  margin-left: auto;
-  margin-top: 40px;
 `;

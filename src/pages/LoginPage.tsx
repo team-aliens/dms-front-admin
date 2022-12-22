@@ -15,9 +15,7 @@ const savedAccountId = localStorage.getItem('account_id');
 
 export function LoginPage() {
   const [autoSave, setAutoSave] = useState<boolean>(savedAccountId && true);
-  const onChangeAutoSaveStatus = (status: boolean) => {
-    setAutoSave(status);
-  };
+  const onChangeAutoLogin = (status: boolean) => setAutoSave(status);
 
   const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
     useObj<ErrorPropsType>({
@@ -40,7 +38,7 @@ export function LoginPage() {
     <AuthTemplate>
       <Login
         onClickLogin={() => loginMutation.mutate()}
-        onChangeAutoSaveStatus={onChangeAutoSaveStatus}
+        onChangeAutoSaveStatus={onChangeAutoLogin}
         onChange={onHandleChange}
         autoSave={autoSave}
         loginState={loginState}

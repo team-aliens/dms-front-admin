@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Text } from 'aliens-design-system-front';
+import { Button, Text } from '@team-aliens/design-system';
 import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
@@ -17,7 +17,7 @@ export function StudentDetail({
 }: Props) {
   return (
     <_Wrapper isSelected={studentId !== ''}>
-      <Text size="headLineL" color="gray6">
+      <Text size="titleL" color="gray6">
         학생 상세 확인
       </Text>
       {studentId && studentDetail ? (
@@ -32,13 +32,13 @@ export function StudentDetail({
             <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
             <PointBox pointType="MINUS" point={studentDetail.minus_point} />
           </_PointWrapper>
-          <_RoomMates size="bodyS" color="gray6">
+          <Text size="bodyS" color="gray6" margin={['top', 40]}>
             동일 호실 학생
-          </_RoomMates>
+          </Text>
           <_MateList>
             {studentDetail.room_mates.map((item) => (
               <Button
-                type="outline"
+                kind="outline"
                 onClick={() => onClickStudent(item.id)}
                 color="gray"
               >
@@ -48,7 +48,12 @@ export function StudentDetail({
           </_MateList>
         </_DetailBox>
       ) : (
-        <_NotSelected size="bodyL" color="gray5" display="block">
+        <_NotSelected
+          size="bodyL"
+          color="gray5"
+          display="block"
+          margin={['top', 40]}
+        >
           학생 목록에서 선택하여 상세 내용을 확인하세요.
         </_NotSelected>
       )}
@@ -74,7 +79,6 @@ const _DetailBox = styled.div`
 `;
 const _NotSelected = styled(Text)`
   width: 180px;
-  margin-top: 40px;
 `;
 
 const _PointWrapper = styled.div`
@@ -86,9 +90,7 @@ const _PointWrapper = styled.div`
     }
   }
 `;
-const _RoomMates = styled(Text)`
-  margin-top: 40px;
-`;
+
 const _MateList = styled.div`
   display: flex;
   gap: 12px;

@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { Input, Button } from 'aliens-design-system-front';
+import { Input, Button } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 import { Steps } from '@/pages/ResetPwdPage';
 import { Email } from '@/components/auth/findAccount/Email';
@@ -34,7 +33,8 @@ export function Certification({
 }: PropsType) {
   return (
     <>
-      <_AccountIdInput
+      <Input
+        margin={[56, 0, 40, 0]}
         label="아이디"
         placeholder="id를 입력해주세요."
         onChange={onChangeValue}
@@ -60,23 +60,15 @@ export function Certification({
           onChangeValue={onChangeValue}
         />
       )}
-      <_NextButton
+      <Button
+        margin={['left', 'auto']}
         onClick={onClick}
         size="default"
         color="primary"
-        type="contained"
+        kind="contained"
       >
         인증
-      </_NextButton>
+      </Button>
     </>
   );
 }
-
-const _AccountIdInput = styled(Input)`
-  margin-top: 56px;
-  margin-bottom: 40px;
-`;
-
-const _NextButton = styled(Button)`
-  margin-left: auto;
-`;

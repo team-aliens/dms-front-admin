@@ -22,6 +22,7 @@ export function Home() {
     name: '',
     sort: 'GCN',
   });
+
   const [debouncedName, setDebouncedName] = useState(filter.name);
   const { data: studentList } = useSearchStudents({
     name: debouncedName,

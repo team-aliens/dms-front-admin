@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 
 interface PropsType {
   question: string;
@@ -8,9 +8,9 @@ interface PropsType {
 export function Question({ question }: PropsType) {
   return (
     <_QuestionWrapper>
-      <_QuestionTitle display="block" size="bodyS">
+      <Text display="block" size="bodyS" margin={['bottom', 8]}>
         학교 인증 질문
-      </_QuestionTitle>
+      </Text>
       <Text size="bodyM" color="gray6">
         {question}
       </Text>
@@ -23,8 +23,4 @@ const _QuestionWrapper = styled.div`
   padding: 12px 16px;
   height: 70px;
   background-color: ${({ theme }) => theme.color.gray2};
-`;
-
-const _QuestionTitle = styled(Text)`
-  margin-bottom: 8px;
 `;

@@ -1,4 +1,4 @@
-import { Button, Input, Modal } from 'aliens-design-system-front';
+import { Button, Input, Modal } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 
 interface PropsType {
@@ -20,11 +20,11 @@ export function ChangeQnA({
     <Modal
       close={close}
       buttonList={[
-        <Button type="contained" onClick={onClick}>
+        <Button kind="contained" onClick={onClick}>
           저장
         </Button>,
       ]}
-      header="새 확인 질문과 답변을 입력해주세요."
+      title="새 확인 질문과 답변을 입력해주세요."
       inputList={[
         <Input
           name="question"

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, SearchBox, Sort } from 'aliens-design-system-front';
+import { Button, SearchBox, Sort } from '@team-aliens/design-system';
 import { ChangeEvent } from 'react';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
@@ -30,13 +30,13 @@ export function StudentList({
         <SearchBox
           className="searchBox"
           value={name}
-          onChangeValue={onChangeSearchName}
+          onChange={onChangeSearchName}
         />
         <Button
-          type="outline"
+          kind="outline"
           color="gray"
           onClick={onChangeSortType}
-          Icon={<Sort size={18} />}
+          Icon={Sort}
           className="filterButton"
         >
           {SortEnum[sort]}

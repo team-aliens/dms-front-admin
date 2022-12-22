@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Text } from 'aliens-design-system-front';
+import { Text } from '@team-aliens/design-system';
 
 interface TitleProps {
   children: React.ReactNode;
@@ -21,6 +21,7 @@ export function TitleBox({ children, moreInfo = '' }: TitleProps) {
 const _TitleWrapper = styled.h1`
   width: 480px;
   > hr {
+    margin-top: 23px;
     width: 480px;
     height: 1px;
     background-color: ${({ theme }) => theme.color.primary};
@@ -29,7 +30,7 @@ const _TitleWrapper = styled.h1`
 
 const _Requirements = styled.p`
   ${({ theme }) => css`
-    ${theme.captionM}
+    ${theme.font.captionM}
   `};
   color: ${({ theme }) => theme.color.gray5};
   margin: 8px 0 20px 0;
