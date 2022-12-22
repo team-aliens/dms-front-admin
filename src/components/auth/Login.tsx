@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import {
   Input, CheckBox, Button, Text,
 } from '@team-aliens/design-system';
-import {
-  ChangeEvent, Dispatch, FormEvent, SetStateAction,
-} from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { TitleBox } from './TitleBox';
 import { LoginRequest } from '@/apis/auth/request';
@@ -16,7 +14,7 @@ interface PropsType {
   loginState: LoginRequest;
   errorMessage: LoginRequest;
   autoSave: boolean;
-  onChangeAutoSaveStatus: Dispatch<SetStateAction<boolean>>;
+  onChangeAutoSaveStatus: (status: boolean) => void;
 }
 
 export function Login({
@@ -61,7 +59,7 @@ export function Login({
           disabled={false}
           label="아이디 저장"
           status={autoSave}
-          checkSetState={onChangeAutoSaveStatus}
+          onChange={onChangeAutoSaveStatus}
           margin={['top', 62]}
         />
         <Button
