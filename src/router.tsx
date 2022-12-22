@@ -9,6 +9,7 @@ import { WriteNoticePage } from '@/pages/notice/Write';
 import { MyPage } from './pages/myPage';
 import { ChangePwd } from './pages/myPage/ChangePwd';
 import { PatchNoticePage } from '@/pages/notice/Patch';
+import { StudyRoomList } from './pages/studyRoom/StudyRoomList';
 
 export function Router() {
   return (
@@ -27,6 +28,9 @@ export function Router() {
           <Route path="write" element={<WriteNoticePage />} />
           <Route path="write/:noticeId" element={<PatchNoticePage />} />
           <Route path="detail/:noticeId" element={<NoticeDetail />} />
+        </Route>
+        <Route path="/apply">
+          <Route index element={<StudyRoomList />} />
         </Route>
       </Routes>
     </BrowserRouter>
