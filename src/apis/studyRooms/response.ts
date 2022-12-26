@@ -12,7 +12,11 @@ export interface ApplicationTimeResponse {
   end_at: string;
 }
 
-interface SeatType {
+export interface CreateStudyRoomResponse {
+  study_room_id: string;
+}
+
+export interface SeatType {
   id: string;
   name: string;
   color: string;
