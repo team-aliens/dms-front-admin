@@ -66,4 +66,13 @@ export const useSeatTypeList = () => useQuery(['seatType'], async () => {
   return data;
 });
 
-export const useCreateSeatType = (body: CreatSeatTypeRequest) => useMutation(async () => instance.post(`${router}/types`, body));
+export const useCreateSeatType = (
+  body: CreatSeatTypeRequest,
+  options?: MutationOptions,
+) => useMutation(async () => instance.post(`${router}/types`, body), {
+  ...options,
+});
+
+export const useDeleteSeatType = (id: string, options?: MutationOptions) => useMutation(async () => instance.delete(`${router}/types/${id}`), {
+  ...options,
+});

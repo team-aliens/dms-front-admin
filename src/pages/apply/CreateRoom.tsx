@@ -7,7 +7,11 @@ import { StudyRoomEditer } from '@/components/apply/StudyRoomEditer';
 import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
 import { useModal } from '@/hooks/useModal';
 import { SeatSetting } from '@/components/apply/SeatSetting';
-import { useCreateStudyRoom, useSeatTypeList } from '@/apis/studyRooms';
+import {
+  useCreateStudyRoom,
+  useDeleteSeatType,
+  useSeatTypeList,
+} from '@/apis/studyRooms';
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 
@@ -16,28 +20,53 @@ const pathToKorean = {
 };
 
 export function CreateRoom() {
-  const [seatSetting, setSeatSetting] = useState(false);
+  const [seatSetting, setSeatSetting] = useState(true);
+  const [deleteId, setDeleteId] = useState('');
   const { selectModal, modalState, closeModal } = useModal();
+
   const {
     studyRoomState, onChangeGrade, onChangeInput, onChangeSex,
   } =
     useStudyRoom();
+
   const {
     name, floor, total_height_size, total_width_size, ...rest
   } =
     studyRoomState;
+
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
-  const { data: seatTypeList } = useSeatTypeList();
+
+  const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
+
   const createStudyRoom = useCreateStudyRoom(creatStudyRoomRequest);
+
+  const closeSeatSetting = () => {
+    setSeatSetting(false);
+  };
+
+  const deleteType = useDeleteSeatType(deleteId, {
+    onSuccess: () => refetchTypeList(),
+  });
+
+  const deleteSeatType = async (id: string) => {
+    await setDeleteId(id);
+    deleteType.mutate();
+  };
+
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
-        <AddSeatType closeModal={closeModal} />
+        <AddSeatType
+          closeModal={closeModal}
+          refetchTypeList={refetchTypeList}
+        />
       )}
       {seatSetting && (
         <SeatSetting
           selectModal={selectModal}
           seatTypeList={seatTypeList?.types || []}
+          deleteSeatType={deleteSeatType}
+          closeSeatSetting={closeSeatSetting}
         />
       )}
       <_Wrapper>

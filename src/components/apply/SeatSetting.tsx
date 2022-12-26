@@ -23,9 +23,16 @@ const seatStatus = ['AVAILABLE', 'UNAVAILABLE'].map((i: SeatStatusType) => seatS
 interface PropsType {
   seatTypeList: SeatType[];
   selectModal: (modal: SelectedModalType) => void;
+  deleteSeatType: (id: string) => void;
+  closeSeatSetting: () => void;
 }
 
-export function SeatSetting({ selectModal, seatTypeList }: PropsType) {
+export function SeatSetting({
+  selectModal,
+  seatTypeList,
+  deleteSeatType,
+  closeSeatSetting,
+}: PropsType) {
   const { studyRoomState, onChangeSeatSetting, confirmSetting } =
     useStudyRoom();
   const onChangeSeatStatus = (status: SeatStatusKorean) => {
@@ -89,7 +96,12 @@ export function SeatSetting({ selectModal, seatTypeList }: PropsType) {
               <Button color="primary" kind="text" margin={['left', 'auto']}>
                 {isSelected ? '취소' : '선택'}
               </Button>
-              <Button color="error" kind="text" margin={['left', 10]}>
+              <Button
+                color="error"
+                kind="text"
+                margin={['left', 10]}
+                onClick={() => deleteSeatType(item.id)}
+              >
                 삭제
               </Button>
             </_SeatTypeList>
@@ -97,7 +109,7 @@ export function SeatSetting({ selectModal, seatTypeList }: PropsType) {
         })}
       </ul>
       <_Buttons>
-        <Button kind="outline" color="error">
+        <Button kind="outline" color="error" onClick={closeSeatSetting}>
           취소
         </Button>
         <Button
@@ -118,7 +130,7 @@ const _Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  padding: 120px 44px 190px 44px;
+  padding: 120px 44px 30px 44px;
   top: 0;
   right: 0;
   width: 480px;
@@ -157,5 +169,5 @@ const _SeatTypeList = styled.li<{
 
 const _Buttons = styled.div`
   display: flex;
-  margin: auto 0 0 auto;
+  margin: 50px 0 0 auto;
 `;
