@@ -1,6 +1,11 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 
-export type SelectedModalType = 'DELETE_NOTICE' | 'NEW_QNA' | 'LOGOUT' | '';
+export type SelectedModalType =
+  | 'DELETE_NOTICE'
+  | 'NEW_QNA'
+  | 'LOGOUT'
+  | 'ADD_SEAT_TYPE'
+  | '';
 
 interface ModalState {
   selectedModal: SelectedModalType;
