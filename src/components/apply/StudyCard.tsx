@@ -1,24 +1,38 @@
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
+import { StudyRoomItem } from '@/apis/studyRooms/response';
+import { gradeTypeToKorean, sexTypeToKorean } from '@/utils/translate';
 
-export function StudyCard() {
+export function StudyCard({
+  floor,
+  name,
+  available_grade,
+  available_sex,
+  total_available_seat,
+  in_use_headcount,
+}: StudyRoomItem) {
   return (
     <_Wrapper>
       <_Info>
         <Text color="primary" size="bodyM">
-          2층
+          {floor}
+          층
         </Text>
         <Text color="gray8" size="bodyM" margin={['left', 14]}>
-          자습실 이름
+          {name}
         </Text>
       </_Info>
       <_Divider />
       <_Info>
         <Text color="primary" size="bodyM">
-          2학년 남녀
+          {gradeTypeToKorean(available_grade)}
+          {' '}
+          {sexTypeToKorean(available_sex)}
         </Text>
         <Text color="gray5" size="bodyM" margin={['left', 'auto']}>
-          0/15
+          {in_use_headcount}
+          /
+          {total_available_seat}
         </Text>
       </_Info>
     </_Wrapper>

@@ -1,16 +1,23 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { StudyListOptions } from '@/components/apply/ListOptions';
 import { StudyCard } from '@/components/apply/StudyCard';
+import { useStudyRoomList } from '@/apis/studyRooms';
 
 export function StudyRoomList() {
+  const { data: list } = useStudyRoomList();
   return (
     <WithNavigatorBar>
       <_Wrapper>
         <StudyListOptions />
         <_List>
-          <StudyCard />
-          <StudyCard />
+          {list?.study_rooms.map((i) => (
+            <Link to={`/apply/detail/${i.id}`}>
+              <StudyCard {...i} />
+            </Link>
+          ))}
+          {/* <StudyCard /> */}
         </_List>
       </_Wrapper>
     </WithNavigatorBar>
