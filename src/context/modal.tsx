@@ -5,6 +5,7 @@ export type SelectedModalType =
   | 'NEW_QNA'
   | 'LOGOUT'
   | 'ADD_SEAT_TYPE'
+  | 'APPLICATION_TIME'
   | '';
 
 interface ModalState {

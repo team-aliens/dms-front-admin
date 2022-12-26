@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../axios';
 import {
@@ -33,7 +33,12 @@ export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
   );
 };
 
-export const useSetApplicationTime = (body: SetApplicationTimeRequest) => useMutation(async () => instance.put(`${router}/available-time`, body));
+export const useSetApplicationTime = (
+  body: SetApplicationTimeRequest,
+  options?: MutationOptions,
+) => useMutation(async () => instance.put(`${router}/available-time`, body), {
+  ...options,
+});
 
 export const useDeleteStudyRoom = (studyRoomId: string) => useMutation(async () => instance.delete(`${router}/${studyRoomId}`));
 

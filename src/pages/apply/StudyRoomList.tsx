@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { StudyListOptions } from '@/components/apply/ListOptions';
 import { StudyCard } from '@/components/apply/StudyCard';
-import { useStudyRoomList } from '@/apis/studyRooms';
+import { useGetApplicationTime, useStudyRoomList } from '@/apis/studyRooms';
 
 export function StudyRoomList() {
   const { data: list } = useStudyRoomList();
+  const { data: applicationTime } = useGetApplicationTime();
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <StudyListOptions />
+        <StudyListOptions {...applicationTime} />
         <_List>
           {list?.study_rooms.map((i) => (
             <Link to={`/apply/detail/${i.id}`}>
