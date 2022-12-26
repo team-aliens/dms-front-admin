@@ -7,7 +7,7 @@ import { StudyRoomEditer } from '@/components/apply/StudyRoomEditer';
 import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
 import { useModal } from '@/hooks/useModal';
 import { SeatSetting } from '@/components/apply/SeatSetting';
-import { useCreateStudyRoom, useSeatType } from '@/apis/studyRooms';
+import { useCreateStudyRoom, useSeatTypeList } from '@/apis/studyRooms';
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 
@@ -27,7 +27,7 @@ export function CreateRoom() {
   } =
     studyRoomState;
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
-  const { data: seatTypeList } = useSeatType();
+  const { data: seatTypeList } = useSeatTypeList();
   const createStudyRoom = useCreateStudyRoom(creatStudyRoomRequest);
   return (
     <WithNavigatorBar>

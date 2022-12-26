@@ -22,7 +22,7 @@ export interface SeatType {
   color: string;
 }
 
-interface SeatPreview {
+export interface SeatPreview {
   id: string;
   width_location: number;
   height_location: number;

@@ -83,7 +83,9 @@ export function SeatSetting({ selectModal, seatTypeList }: PropsType) {
               }}
             >
               <div className="color" />
-              <Text margin={['left', 12]}>{item.name}</Text>
+              <Text margin={['left', 12]} size="captionM">
+                {item.name}
+              </Text>
               <Button color="primary" kind="text" margin={['left', 'auto']}>
                 {isSelected ? '취소' : '선택'}
               </Button>

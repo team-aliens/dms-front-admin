@@ -61,7 +61,7 @@ export const useStudyRoomList = () => useQuery(['studyRoomList'], async () => {
   return data;
 });
 
-export const useSeatType = () => useQuery(['seatType'], async () => {
+export const useSeatTypeList = () => useQuery(['seatType'], async () => {
   const { data } = await instance.get<SeatTypeResponse>(`${router}/types`);
   return data;
 });
