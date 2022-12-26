@@ -8,6 +8,7 @@ import {
 } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { SeatStatusType } from '@/apis/studyRooms/request';
 import {
   SeatStatusKorean,
@@ -46,82 +47,84 @@ export function SeatSetting({
     });
   };
   return (
-    <_Wrapper>
-      <Escape size={24} />
-      <Text color="gray10" size="titleL" margin={['top', 58]}>
-        자리 설정
-      </Text>
-      <DropDown
-        items={seatStatus}
-        placeholder="사용 가능"
-        onChange={onChangeSeatStatus}
-        label="자리 상태"
-        value={seatStatusToKorean(studyRoomState.seat?.status)}
-        margin={['top', 60]}
-      />
-      <Input
-        label="자리 번호"
-        type="number"
-        placeholder="ex) 12 (숫자만 입력)"
-        onChange={onChangeNumber}
-        name="number"
-        value={studyRoomState.seat?.number}
-        margin={['top', 22]}
-      />
-      <_SeatType>
-        <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
-          자리 종류
+    <OutsideClickHandler onOutsideClick={closeSeatSetting}>
+      <_Wrapper>
+        <Escape size={24} />
+        <Text color="gray10" size="titleL" margin={['top', 58]}>
+          자리 설정
         </Text>
-        <button type="button" onClick={() => selectModal('ADD_SEAT_TYPE')}>
-          <Add size={24} />
-        </button>
-      </_SeatType>
-      <ul>
-        {seatTypeList.map((item) => {
-          const isSelected = studyRoomState.seat?.type_id === item.id;
-          return (
-            <_SeatTypeList
-              color={item.color}
-              isSelected={isSelected}
-              onClick={() => {
-                onChangeSeatSetting({
-                  type_id: item.id,
-                });
-              }}
-            >
-              <div className="color" />
-              <Text margin={['left', 12]} size="captionM">
-                {item.name}
-              </Text>
-              <Button color="primary" kind="text" margin={['left', 'auto']}>
-                {isSelected ? '취소' : '선택'}
-              </Button>
-              <Button
-                color="error"
-                kind="text"
-                margin={['left', 10]}
-                onClick={() => deleteSeatType(item.id)}
+        <DropDown
+          items={seatStatus}
+          placeholder="사용 가능"
+          onChange={onChangeSeatStatus}
+          label="자리 상태"
+          value={seatStatusToKorean(studyRoomState.seat?.status)}
+          margin={['top', 60]}
+        />
+        <Input
+          label="자리 번호"
+          type="number"
+          placeholder="ex) 12 (숫자만 입력)"
+          onChange={onChangeNumber}
+          name="number"
+          value={studyRoomState.seat?.number}
+          margin={['top', 22]}
+        />
+        <_SeatType>
+          <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
+            자리 종류
+          </Text>
+          <button type="button" onClick={() => selectModal('ADD_SEAT_TYPE')}>
+            <Add size={24} />
+          </button>
+        </_SeatType>
+        <ul>
+          {seatTypeList.map((item) => {
+            const isSelected = studyRoomState.seat?.type_id === item.id;
+            return (
+              <_SeatTypeList
+                color={item.color}
+                isSelected={isSelected}
+                onClick={() => {
+                  onChangeSeatSetting({
+                    type_id: item.id,
+                  });
+                }}
               >
-                삭제
-              </Button>
-            </_SeatTypeList>
-          );
-        })}
-      </ul>
-      <_Buttons>
-        <Button kind="outline" color="error" onClick={closeSeatSetting}>
-          취소
-        </Button>
-        <Button
-          kind="contained"
-          color="primary"
-          onClick={confirmSetting}
-          margin={['left', 20]}
-        >
-          확인
-        </Button>
-      </_Buttons>
-    </_Wrapper>
+                <div className="color" />
+                <Text margin={['left', 12]} size="captionM">
+                  {item.name}
+                </Text>
+                <Button color="primary" kind="text" margin={['left', 'auto']}>
+                  {isSelected ? '취소' : '선택'}
+                </Button>
+                <Button
+                  color="error"
+                  kind="text"
+                  margin={['left', 10]}
+                  onClick={() => deleteSeatType(item.id)}
+                >
+                  삭제
+                </Button>
+              </_SeatTypeList>
+            );
+          })}
+        </ul>
+        <_Buttons>
+          <Button kind="outline" color="error" onClick={closeSeatSetting}>
+            취소
+          </Button>
+          <Button
+            kind="contained"
+            color="primary"
+            onClick={confirmSetting}
+            margin={['left', 20]}
+          >
+            확인
+          </Button>
+        </_Buttons>
+      </_Wrapper>
+    </OutsideClickHandler>
   );
 }
 
