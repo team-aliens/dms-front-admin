@@ -1,9 +1,9 @@
 import { NavigatorBar } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { ReactNode } from 'react';
+import React from 'react';
 
 interface PropsType {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export function WithNavigatorBar({ children }: PropsType) {

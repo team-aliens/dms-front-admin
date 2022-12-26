@@ -1388,10 +1388,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@team-aliens/design-system@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@team-aliens/design-system/-/design-system-1.2.4.tgz#d211f7260dc3165910267d5312f5de9a52380080"
-  integrity sha512-B94WcFRGBTjdYbLcxECaiJULcz2LayMg8vzantIT4rCNVeHhUkieNpVINRy8gpbVkoKvBPCnYfgYrwEJbmU7hg==
+"@team-aliens/design-system@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@team-aliens/design-system/-/design-system-1.2.6.tgz#82db584d4429ccbe8ae27096f652cfd8d183a61e"
+  integrity sha512-D/H5ktVBSXzXBEFJLhHiX8yXMqLZ+hB00xpeiMEVMzbnQfFTxosMMxjpoGW5rxzgLRIesVhpdTT8kz5yaR2y7A==
   dependencies:
     react-outside-click-handler "^1.3.0"
 
@@ -6904,6 +6904,11 @@ raw-body@2.5.1:
     http-errors "2.0.0"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-color-palette@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-color-palette/-/react-color-palette-6.2.0.tgz#aa3be88f6953d57502c00f4433692129ffbad3e7"
+  integrity sha512-9rIboaRJNoeF8aCI2f3J8wgMyhl74SnGmZLDjor3bKf0iDBhP2EBv0/jGmm0hrj6OackGCqtWl5ZvM89XUc3sg==
 
 react-cookie@^4.1.1:
   version "4.1.1"

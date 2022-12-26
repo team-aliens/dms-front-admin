@@ -1,5 +1,6 @@
 import { Button, MegaPhone, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export function StudyListOptions() {
   return (
@@ -13,9 +14,11 @@ export function StudyListOptions() {
           수정
         </Button>
       </_ApplyAbleTime>
-      <Button kind="outline" color="primary" margin={['left', 'auto']}>
-        자습실 생성
-      </Button>
+      <_CreateBtn to="/apply/create">
+        <Button kind="outline" color="primary">
+          자습실 생성
+        </Button>
+      </_CreateBtn>
     </_Wrapper>
   );
 }
@@ -33,4 +36,8 @@ const _ApplyAbleTime = styled.div`
   background-color: ${({ theme }) => theme.color.gray1};
   padding-left: 20px;
   box-shadow: 0 1px 20px rgba(238, 238, 238, 0.8);
+`;
+
+const _CreateBtn = styled(Link)`
+  margin-left: auto;
 `;

@@ -9,7 +9,8 @@ import { WriteNoticePage } from '@/pages/notice/Write';
 import { MyPage } from './pages/myPage';
 import { ChangePwd } from './pages/myPage/ChangePwd';
 import { PatchNoticePage } from '@/pages/notice/Patch';
-import { StudyRoomList } from './pages/studyRoom/StudyRoomList';
+import { StudyRoomList } from './pages/apply/StudyRoomList';
+import { CreateRoom } from '@/pages/apply/CreateRoom';
 
 export function Router() {
   return (
@@ -31,6 +32,7 @@ export function Router() {
         </Route>
         <Route path="/apply">
           <Route index element={<StudyRoomList />} />
+          <Route path="create" element={<CreateRoom />} />
         </Route>
       </Routes>
     </BrowserRouter>
