@@ -19,11 +19,7 @@ interface PropsType {
   endAt: string;
 }
 
-export function SetApplicationTimeModal({
-  close,
-  startAt,
-  endAt,
-}: PropsType) {
+export function SetApplicationTimeModal({ close, startAt, endAt }: PropsType) {
   const { refetch } = useGetApplicationTime();
   const { state, onHandleChange } = useForm<ApplicationTime>({
     startHour: startAt.slice(0, 2),
@@ -37,13 +33,13 @@ export function SetApplicationTimeModal({
       end_at: `${state.endHour}:${state.endMin}:00`,
     },
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        refetch();
+        close();
+      },
     },
   );
-  const setTime = () => {
-    setApplicationTime.mutate();
-    close();
-  };
+
   return (
     <Modal
       title="자습실 신청 시간 설정"
@@ -83,7 +79,7 @@ export function SetApplicationTimeModal({
           />
         </_Time>,
       ]}
-      buttonList={[<Button onClick={setTime}>저장</Button>]}
+      buttonList={[<Button onClick={setApplicationTime.mutate}>저장</Button>]}
     />
   );
 }
