@@ -6,6 +6,7 @@ export type SelectedModalType =
   | 'LOGOUT'
   | 'ADD_SEAT_TYPE'
   | 'APPLICATION_TIME'
+  | 'DELETE_STUDY_ROOM'
   | '';
 
 interface ModalState {

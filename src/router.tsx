@@ -11,6 +11,7 @@ import { ChangePwd } from './pages/myPage/ChangePwd';
 import { PatchNoticePage } from '@/pages/notice/Patch';
 import { StudyRoomList } from './pages/apply/StudyRoomList';
 import { CreateRoom } from '@/pages/apply/CreateRoom';
+import { StudyRoomDetail } from '@/pages/apply/Detail';
 
 export function Router() {
   return (
@@ -33,6 +34,7 @@ export function Router() {
         <Route path="/apply">
           <Route index element={<StudyRoomList />} />
           <Route path="create" element={<CreateRoom />} />
+          <Route path="detail/:id" element={<StudyRoomDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
