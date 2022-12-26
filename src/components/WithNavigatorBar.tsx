@@ -9,9 +9,7 @@ interface PropsType {
 export function WithNavigatorBar({ children }: PropsType) {
   return (
     <_Wrapper>
-      <NavigatorBar
-        navList={['홈', '신청', '공지', '설문', '분실문', '마이페이지']}
-      />
+      <NavigatorBar navList={['홈', '신청', '공지', '마이페이지']} />
       {children}
     </_Wrapper>
   );
