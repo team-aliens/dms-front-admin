@@ -52,7 +52,6 @@ export function CreateRoom() {
     await setDeleteId(id);
     deleteType.mutate();
   };
-
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (

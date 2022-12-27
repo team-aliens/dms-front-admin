@@ -46,11 +46,7 @@ export function CreateStudyRoomDetailOptions({
     <_Wrapper>
       <SegmentedBtn
         selectedArr={sex}
-        cur={
-          available_sex === 'ALL'
-            ? sexTypeToKorean(available_sex)
-            : available_sex
-        }
+        cur={sexTypeToKorean(available_sex)}
         onChange={onChangeSegmented}
       />
       <DropDown

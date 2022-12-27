@@ -48,7 +48,7 @@ const seatDefaultValue: SeatState = {
   available_grade: 0,
   seats: [],
   seat: {
-    status: 'AVAILABLE',
+    status: 'UNAVAILABLE',
     width_location: 0,
     height_location: 0,
     type_id: null,
