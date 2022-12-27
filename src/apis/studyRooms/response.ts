@@ -5,27 +5,29 @@ import {
   StudyRoom,
 } from '@/apis/studyRooms/request';
 
-export type SeatStatus = 'IN_USE' | SeatStatusType;
-
 export interface ApplicationTimeResponse {
   start_at: string;
   end_at: string;
 }
 
-interface SeatType {
+export interface CreateStudyRoomResponse {
+  study_room_id: string;
+}
+
+export interface SeatType {
   id: string;
   name: string;
   color: string;
 }
 
-interface SeatPreview {
-  id: string;
+export interface SeatPreview {
+  id?: string;
   width_location: number;
   height_location: number;
   number: number | null;
   type: SeatType | null;
-  status: SeatStatus;
-  student: {
+  status: SeatStatusType;
+  student?: {
     id: string;
     gcn: string;
     name: string;

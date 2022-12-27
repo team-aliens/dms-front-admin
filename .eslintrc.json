@@ -31,6 +31,8 @@
     "react-hooks/exhaustive-deps" : "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "consistent-return" : "off",
+    "react/jsx-props-no-spreading" : "off",
+    "@typescript-eslint/await-thenable" : "off",
     "import/extensions": [
       "error",
       "ignorePackages",

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { App } from './App';
 import { ModalProvider } from '@/context/modal';
+import { SeatSettingProvider } from '@/context/seatSetting';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,10 +21,12 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <StyledProvider>
     <ModalProvider>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools />
-      </QueryClientProvider>
+      <SeatSettingProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </SeatSettingProvider>
     </ModalProvider>
   </StyledProvider>,
 );

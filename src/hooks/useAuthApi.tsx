@@ -14,6 +14,7 @@ import {
 } from '@/apis/auth';
 import { setCookie } from '@/utils/cookies';
 import { queryKeys } from '@/utils/queryKeys';
+import { serviceObjectToNavList } from '@/utils/serviceObjectToNavList';
 
 interface PropsType {
   resetPwdState: ResetPasswordRequest;
@@ -56,6 +57,8 @@ export const useLoginMutation = ({
         toastType: 'SUCCESS',
         message: '로그인이 완료되었습니다.',
       });
+      const features = serviceObjectToNavList(res.features);
+      setCookie('service', features.toString());
       const accessExpired = new Date(res.access_token_expired_at);
       setCookie('access_token', res.access_token, {
         expires: accessExpired,

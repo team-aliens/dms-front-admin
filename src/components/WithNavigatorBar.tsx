@@ -1,17 +1,21 @@
 import { NavigatorBar } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { ReactNode } from 'react';
+import React, { useMemo } from 'react';
+import { getCookie } from '@/utils/cookies';
+import { ServiceToKorean } from '@/utils/translate';
 
 interface PropsType {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export function WithNavigatorBar({ children }: PropsType) {
+  const services: ServiceToKorean[] = useMemo(
+    () => (getCookie('service').split(',') as ServiceToKorean[]).filter((i) => i),
+    [getCookie('service'), getCookie('access_token')],
+  );
   return (
     <_Wrapper>
-      <NavigatorBar
-        navList={['홈', '신청', '공지', '설문', '분실문', '마이페이지']}
-      />
+      <NavigatorBar navList={services} />
       {children}
     </_Wrapper>
   );

@@ -36,7 +36,7 @@ export function StudentList({
           kind="outline"
           color="gray"
           onClick={onChangeSortType}
-          Icon={Sort}
+          Icon={<Sort />}
           className="filterButton"
         >
           {SortEnum[sort]}

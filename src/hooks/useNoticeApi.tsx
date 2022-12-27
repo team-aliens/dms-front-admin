@@ -11,7 +11,9 @@ import {
 import { useToast } from '@/hooks/useToast';
 import { WriteNoticeRequest } from '@/apis/notice/request';
 
-export const useNoticeList = (sortType: NoticeSortType) => useQuery(['getNoticeList', sortType], () => getNoticeList(sortType));
+export const useNoticeList = (sortType: NoticeSortType) => useQuery(['getNoticeList', sortType], () => getNoticeList(sortType), {
+  refetchOnWindowFocus: true,
+});
 
 export const useDeleteNotice = (noticeId: string) => {
   const navigate = useNavigate();
