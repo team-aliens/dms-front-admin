@@ -1,4 +1,5 @@
 import { GradeType, SeatStatusType, SexType } from '@/apis/studyRooms/request';
+import { Features } from '@/apis/auth/response';
 
 export const dateToString = (date: Date) => {
   const newDate = new Date(date);
@@ -84,5 +85,29 @@ export const seatStatusKoreanToEng = (
     case '사용 불가':
       return 'UNAVAILABLE';
     default:
+  }
+};
+
+export type ServiceToKorean = '홈' | '신청' | '공지' | '마이페이지';
+
+export interface ServiceObject {
+  service: ServiceToKorean | '';
+  index: number;
+}
+
+export const serviceToKorean = (service: Features): ServiceObject => {
+  switch (service) {
+    case 'apply_service':
+      return { service: '신청', index: 1 };
+    case 'point_service':
+      return { service: '홈', index: 0 };
+    case 'notice_service':
+      return { service: '공지', index: 2 };
+    case 'meal_service':
+    default:
+      return {
+        service: '',
+        index: -99,
+      };
   }
 };

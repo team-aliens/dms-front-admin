@@ -1,6 +1,10 @@
-type Features = 'notice_service' | 'menu_service';
+export type Features =
+  | 'notice_service'
+  | 'point_service'
+  | 'meal_service'
+  | 'apply_service';
 
-type IsUseAbleFeature = {
+export type IsUseAbleFeature = {
   [key in Features]: boolean;
 };
 
