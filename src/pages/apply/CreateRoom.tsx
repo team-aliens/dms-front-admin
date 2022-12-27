@@ -44,13 +44,15 @@ export function CreateRoom() {
 
   const createStudyRoom = useCreateStudyRoom({
     ...creatStudyRoomRequest,
-    seats: creatStudyRoomRequest.seats.map((i): Seat => ({
-      width_location: i.width_location,
-      height_location: i.height_location,
-      number: i.number,
-      status: i.status,
-      type_id: i.type.id,
-    })),
+    seats: creatStudyRoomRequest.seats.map(
+      (i): Seat => ({
+        width_location: i.width_location,
+        height_location: i.height_location,
+        number: i.number,
+        status: i.status,
+        type_id: i.type.id,
+      }),
+    ),
   });
 
   const closeSeatSetting = () => {
@@ -68,9 +70,15 @@ export function CreateRoom() {
 
   const onChangeSelectedPosition = (x: number, y: number) => {
     setSeatSetting(true);
+    const [alreadyUsedValue] = studyRoomState.seats.filter(
+      (i) => i.height_location === x && i.width_location === y,
+    );
     onChangeSeatSetting({
       width_location: x,
       height_location: y,
+      type: alreadyUsedValue?.type,
+      status: alreadyUsedValue?.status,
+      number: alreadyUsedValue?.number,
     });
   };
   return (

@@ -46,7 +46,7 @@ const seatInitialValue: PreviewSeat = {
   width_location: null,
   height_location: null,
   type: null,
-  number: 0,
+  number: null,
 };
 
 const seatDefaultValue: SeatState = {
