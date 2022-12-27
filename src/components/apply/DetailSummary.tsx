@@ -35,11 +35,7 @@ interface PropsType {
   selectModal: () => void;
 }
 
-export function StudyRoomDetailSummary({
-  detail,
-  id,
-  selectModal,
-}: PropsType) {
+export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
   return (
     <_Options>
       {detailOptions.map((option) => {
@@ -55,15 +51,15 @@ export function StudyRoomDetailSummary({
           </_Summary>
         );
       })}
-      <Link to={`/apply/${id}`}>
-        <Button color="primary" kind="rounded">
-          수정하기
-        </Button>
-      </Link>
+      {/* <Link to={`/apply/${id}`}> */}
+      {/*  <Button color="primary" kind="rounded"> */}
+      {/*    수정하기 */}
+      {/*  </Button> */}
+      {/* </Link> */}
       <Button
         color="error"
         kind="rounded"
-        margin={['left', 10]}
+        margin={['left', 'auto']}
         onClick={selectModal}
       >
         삭제하기
