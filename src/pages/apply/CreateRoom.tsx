@@ -77,7 +77,7 @@ export function CreateRoom() {
       width_location: x,
       height_location: y,
       type: alreadyUsedValue?.type,
-      status: alreadyUsedValue?.status,
+      status: alreadyUsedValue?.status || 'AVAILABLE',
       number: alreadyUsedValue?.number,
     });
   };
