@@ -97,7 +97,7 @@ export interface ServiceObject {
 
 export const serviceToKorean = (service: Features): ServiceObject => {
   switch (service) {
-    case 'apply_service':
+    case 'study_room_service':
       return { service: '신청', index: 1 };
     case 'point_service':
       return { service: '홈', index: 0 };
