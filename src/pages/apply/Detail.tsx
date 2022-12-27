@@ -1,4 +1,4 @@
-import { BreadCrumb } from '@team-aliens/design-system';
+import { BreadCrumb, StudyRoom } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
@@ -41,7 +41,7 @@ export function StudyRoomDetail() {
           selectModal={() => selectModal('DELETE_STUDY_ROOM')}
         />
         <_SeatDetails>
-          <StudyRoomEditer />
+          {detail && <StudyRoom {...detail} />}
           <section>
             <SeatTypeList seatTypes={typeList?.types || []} />
             <AppliedStudentList
