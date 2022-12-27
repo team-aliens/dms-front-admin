@@ -1,4 +1,4 @@
-export type SeatStatusType = 'AVAILABLE' | 'UNAVAILABLE' | 'EMPTY';
+export type SeatStatusType = 'AVAILABLE' | 'UNAVAILABLE' | 'EMPTY' | 'IN_USE';
 export type SexType = 'MALE' | 'FEMALE' | 'ALL';
 export type GradeType = 0 | 1 | 2 | 3;
 
@@ -6,7 +6,7 @@ export interface Seat {
   width_location: number;
   height_location: number;
   number: number | null;
-  type_id: string | null;
+  type_id: string;
   status: SeatStatusType;
 }
 

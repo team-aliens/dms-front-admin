@@ -80,14 +80,15 @@ export function SeatSetting({
         </_SeatType>
         <ul>
           {seatTypeList.map((item) => {
-            const isSelected = studyRoomState.seat?.type_id === item.id;
+            console.log(studyRoomState.seat);
+            const isSelected = studyRoomState.seat?.type?.id === item.id;
             return (
               <_SeatTypeList
                 color={item.color}
                 isSelected={isSelected}
                 onClick={() => {
                   onChangeSeatSetting({
-                    type_id: item.id,
+                    type: { ...item },
                   });
                 }}
               >

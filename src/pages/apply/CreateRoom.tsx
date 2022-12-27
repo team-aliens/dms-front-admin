@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { CreateStudyRoomOptions } from '@/components/apply/CreateOptions';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { StudyRoomEditer } from '@/components/apply/StudyRoomEditer';
 import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
 import { useModal } from '@/hooks/useModal';
 import { SeatSetting } from '@/components/apply/SeatSetting';
@@ -15,20 +14,24 @@ import {
 } from '@/apis/studyRooms';
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
+import { Seat } from '@/apis/studyRooms/request';
 
 const pathToKorean = {
   apply: '신청',
 };
 
 export function CreateRoom() {
-  const [seatSetting, setSeatSetting] = useState(true);
+  const [seatSetting, setSeatSetting] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const { selectModal, modalState, closeModal } = useModal();
 
   const {
-    studyRoomState, onChangeGrade, onChangeInput, onChangeSex,
-  } =
-    useStudyRoom();
+    studyRoomState,
+    onChangeGrade,
+    onChangeInput,
+    onChangeSex,
+    onChangeSeatSetting,
+  } = useStudyRoom();
 
   const {
     name, floor, total_height_size, total_width_size, ...rest
@@ -39,7 +42,16 @@ export function CreateRoom() {
 
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
-  const createStudyRoom = useCreateStudyRoom(creatStudyRoomRequest);
+  const createStudyRoom = useCreateStudyRoom({
+    ...creatStudyRoomRequest,
+    seats: creatStudyRoomRequest.seats.map((i): Seat => ({
+      width_location: i.width_location,
+      height_location: i.height_location,
+      number: i.number,
+      status: i.status,
+      type_id: i.type.id,
+    })),
+  });
 
   const closeSeatSetting = () => {
     setSeatSetting(false);
@@ -52,6 +64,14 @@ export function CreateRoom() {
   const deleteSeatType = async (id: string) => {
     await setDeleteId(id);
     deleteType.mutate();
+  };
+
+  const onChangeSelectedPosition = (x: number, y: number) => {
+    setSeatSetting(true);
+    onChangeSeatSetting({
+      width_location: x,
+      height_location: y,
+    });
   };
   return (
     <WithNavigatorBar>
@@ -83,15 +103,14 @@ export function CreateRoom() {
             {...rest}
             seats={studyRoomState.seats.map((i) => ({
               ...i,
-              type: i.type_id
-                ? {
-                  color: '',
-                  name: '',
-                  id: i.type_id,
-                }
-                : null,
               student: null,
             }))}
+            isEdit
+            selectedPosition={{
+              x: studyRoomState.seat.width_location,
+              y: studyRoomState.seat.height_location,
+            }}
+            onClickSeat={onChangeSelectedPosition}
             total_width_size={total_width_size}
             total_height_size={total_height_size}
           />

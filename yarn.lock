@@ -1393,10 +1393,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@team-aliens/design-system@^1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@team-aliens/design-system/-/design-system-1.2.12.tgz#1428ae9f74ed0f4c87e7fd340e8168b1ffa95fd7"
-  integrity sha512-owVtbPTOfB6+wuJp6KcHygw6mfCM6bQ6rpMOQ45nCSsIalv3kF/fQvyMH0g7XCNssgd1Rzgaypx5r1cKH7J+Lw==
+"@team-aliens/design-system@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@team-aliens/design-system/-/design-system-1.3.5.tgz#e93c5ce9e357b847fc89cd6b683b6e6ab46d8546"
+  integrity sha512-rUjO5y5KhtcxPYyuhmSmq7zQjUtFef2DzsCw7D8aR33BhWl2RdImfjE8Tsz74aLxSRQWEL9A1Ygko2pqIwXO6g==
   dependencies:
     react-outside-click-handler "^1.3.0"
 

@@ -1,12 +1,18 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
-import {
-  CreateStudyRoomRequest,
-  Seat,
-  StudyRoom,
-} from '@/apis/studyRooms/request';
+import { SeatStatusType, StudyRoom } from '@/apis/studyRooms/request';
+import { SeatPreview, SeatType } from '@/apis/studyRooms/response';
 
-interface SeatState extends CreateStudyRoomRequest {
-  seat: Seat;
+export interface PreviewSeat {
+  width_location: number;
+  height_location: number;
+  number: number | null;
+  type: SeatType | null;
+  status: SeatStatusType;
+}
+
+interface SeatState extends StudyRoom {
+  seats: SeatPreview[];
+  seat: PreviewSeat;
 }
 
 type SelectSeatAction = {
@@ -19,7 +25,7 @@ type SelectSeatAction = {
 
 type SetSeatAction = {
   type: 'SET_SEAT';
-  payload: Seat;
+  payload: PreviewSeat;
 };
 
 type CancelSetSeatAction = {
@@ -35,6 +41,14 @@ type SetStudyRoomOption = {
   payload: StudyRoom;
 };
 
+const seatInitialValue: PreviewSeat = {
+  status: 'AVAILABLE',
+  width_location: null,
+  height_location: null,
+  type: null,
+  number: 0,
+};
+
 const seatDefaultValue: SeatState = {
   floor: 0,
   name: '',
@@ -47,13 +61,7 @@ const seatDefaultValue: SeatState = {
   available_sex: 'ALL',
   available_grade: 0,
   seats: [],
-  seat: {
-    status: 'UNAVAILABLE',
-    width_location: 0,
-    height_location: 0,
-    type_id: null,
-    number: 0,
-  },
+  seat: seatInitialValue,
 };
 
 export const SeatSettingContext = createContext<SeatState>(seatDefaultValue);
@@ -85,25 +93,13 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
     case 'CANCEL_SET_SEAT':
       return {
         ...state,
-        seat: {
-          status: 'AVAILABLE',
-          width_location: 0,
-          height_location: 0,
-          type_id: null,
-          number: 0,
-        },
+        seat: seatInitialValue,
       };
     case 'CONFIRM_SET_SEAT':
       return {
         ...state,
         seats: state.seats.concat(state.seat),
-        seat: {
-          status: 'AVAILABLE',
-          width_location: 0,
-          height_location: 0,
-          type_id: null,
-          number: 0,
-        },
+        seat: seatInitialValue,
       };
     case 'SELECT_SEAT':
       return {

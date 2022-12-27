@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext } from 'react';
 import {
+  PreviewSeat,
   SeatSettingContext,
   SeatSettingDispatchContext,
 } from '@/context/seatSetting';
-import { Seat } from '@/apis/studyRooms/request';
 import {
   gradeKoreanToEng,
   GradeToKorean,
@@ -15,7 +15,7 @@ export const useStudyRoom = () => {
   const studyRoomState = useContext(SeatSettingContext);
   const dispatch = useContext(SeatSettingDispatchContext);
 
-  const onChangeSeatSetting = (state: Partial<Seat>) => {
+  const onChangeSeatSetting = (state: Partial<PreviewSeat>) => {
     dispatch({
       type: 'SET_SEAT',
       payload: {
