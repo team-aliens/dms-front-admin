@@ -42,9 +42,9 @@ export function AppliedStudentList({ studentList }: PropsType) {
               {item.type?.name}
             </Text>
             <Text size="captionM" color="gray10">
-              {item.student?.gcn || 2101}
+              {item.student?.gcn}
               {' '}
-              {item.student?.name || '강석현'}
+              {item.student?.name}
             </Text>
           </_Row>
         ))}
@@ -98,6 +98,9 @@ const _Row = styled.li<{
   > div {
     width: 60px;
     text-align: center;
+  }
+  > img {
+    border-radius: 50%;
   }
   > .typeName {
     color: ${({ color }) => color};

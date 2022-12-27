@@ -44,7 +44,11 @@ export function StudyRoomDetail() {
           <StudyRoomEditer />
           <section>
             <SeatTypeList seatTypes={typeList?.types || []} />
-            <AppliedStudentList studentList={detail?.seats || []} />
+            <AppliedStudentList
+              studentList={
+                detail?.seats.filter((item) => item.status === 'IN_USE') || []
+              }
+            />
           </section>
         </_SeatDetails>
       </_Wrapper>
