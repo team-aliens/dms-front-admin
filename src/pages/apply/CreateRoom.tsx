@@ -1,4 +1,5 @@
 import { BreadCrumb } from '@team-aliens/design-system';
+import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { CreateStudyRoomOptions } from '@/components/apply/CreateOptions';
@@ -78,7 +79,22 @@ export function CreateRoom() {
           total_height_size={total_height_size}
         />
         <_Body>
-          <StudyRoomEditer />
+          <StudyRoom
+            {...rest}
+            seats={studyRoomState.seats.map((i) => ({
+              ...i,
+              type: i.type_id
+                ? {
+                  color: '',
+                  name: '',
+                  id: i.type_id,
+                }
+                : null,
+              student: null,
+            }))}
+            total_width_size={total_width_size}
+            total_height_size={total_height_size}
+          />
           <CreateStudyRoomDetailOptions
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
@@ -93,7 +109,7 @@ export function CreateRoom() {
 }
 
 const _Wrapper = styled.section`
-  width: 1030px;
+  width: 1040px;
   margin: 0 auto;
   padding-top: 86px;
 `;
