@@ -13,6 +13,7 @@ import {
   CreatSeatTypeRequest,
   SetApplicationTimeRequest,
 } from '@/apis/studyRooms/request';
+import { useToast } from '@/hooks/useToast';
 
 const router = '/study-rooms';
 
@@ -40,7 +41,20 @@ export const useSetApplicationTime = (
   ...options,
 });
 
-export const useDeleteStudyRoom = (studyRoomId: string) => useMutation(async () => instance.delete(`${router}/${studyRoomId}`));
+export const useDeleteStudyRoom = (studyRoomId: string) => {
+  const navigate = useNavigate();
+  const { toastDispatch } = useToast();
+  return useMutation(async () => instance.delete(`${router}/${studyRoomId}`), {
+    onSuccess: () => {
+      navigate('/apply');
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '자습실이 삭제되었습니다.',
+      });
+    },
+  });
+};
 
 export const useStudyRoomDetail = (studyRoomId: string) => useQuery(['studyRoomDetail', studyRoomId], async () => {
   const { data } = await instance.get<StudyRoomDetailResponse>(
