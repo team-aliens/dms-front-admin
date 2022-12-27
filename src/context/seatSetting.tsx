@@ -98,7 +98,14 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
     case 'CONFIRM_SET_SEAT':
       return {
         ...state,
-        seats: state.seats.concat(state.seat),
+        seats: state.seats
+          .filter(
+            (i) => !(
+              i.height_location === state.seat.height_location &&
+                i.width_location === state.seat.width_location
+            ),
+          )
+          .concat(state.seat),
         seat: seatInitialValue,
       };
     case 'SELECT_SEAT':

@@ -80,7 +80,6 @@ export function SeatSetting({
         </_SeatType>
         <ul>
           {seatTypeList.map((item) => {
-            console.log(studyRoomState.seat);
             const isSelected = studyRoomState.seat?.type?.id === item.id;
             return (
               <_SeatTypeList
