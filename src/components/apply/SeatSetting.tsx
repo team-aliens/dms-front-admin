@@ -51,8 +51,10 @@ export function SeatSetting({
   return (
     <OutsideClickHandler onOutsideClick={closeSeatSetting}>
       <_Wrapper>
-        <Escape size={24} />
-        <Text color="gray10" size="titleL" margin={['top', 58]}>
+        <_EscapeWrapper onClick={closeSeatSetting}>
+          <Escape size={24} />
+        </_EscapeWrapper>
+        <Text color="gray10" size="titleL" margin={['top', 50]}>
           자리 설정
         </Text>
         <DropDown
@@ -63,15 +65,17 @@ export function SeatSetting({
           value={seatStatusToKorean(studyRoomState.seat?.status)}
           margin={['top', 60]}
         />
-        <Input
-          label="자리 번호"
-          type="number"
-          placeholder="ex) 12 (숫자만 입력)"
-          onChange={onChangeNumber}
-          name="number"
-          value={studyRoomState.seat?.number}
-          margin={['top', 22]}
-        />
+        {seatStatusToKorean(studyRoomState.seat?.status) === '사용 가능' && (
+          <Input
+            label="자리 번호"
+            type="number"
+            placeholder="ex) 12 (숫자만 입력)"
+            onChange={onChangeNumber}
+            name="number"
+            value={studyRoomState.seat?.number}
+            margin={['top', 22]}
+          />
+        )}
         {status === 'AVAILABLE' && (
           <>
             <_SeatType>
@@ -132,7 +136,8 @@ export function SeatSetting({
               !(
                 (status === 'AVAILABLE' && type && number && true) ||
                 (status === 'UNAVAILABLE' && number && !type)
-              )
+              ) &&
+              seatStatusToKorean(studyRoomState.seat?.status) !== '사용 불가'
             }
             kind="contained"
             color="primary"
@@ -147,18 +152,24 @@ export function SeatSetting({
   );
 }
 
+const _EscapeWrapper = styled.div`
+  height: 24px;
+  cursor: pointer;
+`;
+
 const _Wrapper = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  padding: 120px 44px 30px 44px;
+  padding: 40px 44px 30px 44px;
   top: 0;
   right: 0;
   width: 480px;
   height: 100%;
   z-index: 3;
   background-color: ${({ theme }) => theme.color.gray1};
+  box-shadow: 0px 2px 20px 4px rgba(0, 0, 0, 0.16);
 `;
 
 const _SeatType = styled.div`
@@ -175,6 +186,7 @@ const _SeatTypeList = styled.li<{
   height: 44px;
   border-radius: 10px;
   display: flex;
+  cursor: pointer;
   padding: 14px 0 14px 10px;
   align-items: center;
   background-color: ${({ isSelected, theme }) => isSelected && theme.color.gray2};

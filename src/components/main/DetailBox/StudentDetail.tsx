@@ -16,55 +16,67 @@ export function StudentDetail({
   onClickStudent,
 }: Props) {
   return (
-    <_Wrapper isSelected={studentId !== ''}>
-      <Text size="titleL" color="gray6">
-        학생 상세 확인
-      </Text>
-      {studentId && studentDetail ? (
-        <_DetailBox>
-          <StudentProfile
-            name={studentDetail.name}
-            gcn={studentDetail.gcn}
-            room_number={studentDetail.room_number}
-            profile_image_url={studentDetail.profile_image_url}
-          />
-          <_PointWrapper>
-            <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
-            <PointBox pointType="MINUS" point={studentDetail.minus_point} />
-          </_PointWrapper>
-          <Text size="bodyS" color="gray6" margin={['top', 40]}>
-            동일 호실 학생
-          </Text>
-          <_MateList>
-            {studentDetail.room_mates.map((item) => (
-              <Button
-                kind="outline"
-                onClick={() => onClickStudent(item.id)}
-                color="gray"
-              >
-                {item.name}
-              </Button>
-            ))}
-          </_MateList>
-        </_DetailBox>
-      ) : (
-        <_NotSelected
-          size="bodyL"
-          color="gray5"
-          display="block"
-          margin={['top', 40]}
-        >
-          학생 목록에서 선택하여 상세 내용을 확인하세요.
-        </_NotSelected>
-      )}
-    </_Wrapper>
+    <>
+      <_Wrapper isSelected={studentId !== ''}>
+        <Text size="titleL" color="gray6">
+          학생 상세 확인
+        </Text>
+        {studentId && studentDetail ? (
+          <_DetailBox>
+            <StudentProfile
+              name={studentDetail.name}
+              gcn={studentDetail.gcn}
+              room_number={studentDetail.room_number}
+              profile_image_url={studentDetail.profile_image_url}
+            />
+            <_PointWrapper>
+              <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
+              <PointBox pointType="MINUS" point={studentDetail.minus_point} />
+            </_PointWrapper>
+            <Text size="bodyS" color="gray6" margin={['top', 40]}>
+              동일 호실 학생
+            </Text>
+            <_MateList>
+              {studentDetail.room_mates.map((item) => (
+                <Button
+                  kind="outline"
+                  onClick={() => onClickStudent(item.id)}
+                  color="gray"
+                >
+                  {item.name}
+                </Button>
+              ))}
+            </_MateList>
+          </_DetailBox>
+        ) : (
+          <_NotSelected
+            size="bodyL"
+            color="gray5"
+            display="block"
+            margin={['top', 40]}
+          >
+            학생 목록에서 선택하여 상세 내용을 확인하세요.
+          </_NotSelected>
+        )}
+      </_Wrapper>
+      <_Padding isSelected={studentId !== ''} />
+    </>
   );
 }
+
+const _Padding = styled.div<{
+  isSelected: boolean;
+}>`
+  width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
+  transition: width 0.7s ease-in-out;
+`;
 
 const _Wrapper = styled.div<{
   isSelected: boolean;
 }>`
-  margin-top: 10px;
+  position: fixed;
+  top: 168px;
+  right: 80px;
   width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
   transition: width 0.7s ease-in-out;
 `;

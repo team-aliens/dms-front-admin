@@ -47,6 +47,8 @@ interface WrapperProps {
 }
 
 const _Wrapper = styled.li<WrapperProps>`
+  position: relative;
+  z-index: 20;
   width: 100%;
   height: 70px;
   background-color: ${({ theme, isSelected }) => (isSelected ? theme.color.primaryDarken2 : theme.color.gray1)};
@@ -56,7 +58,6 @@ const _Wrapper = styled.li<WrapperProps>`
   display: flex;
   align-items: center;
   cursor: pointer;
-
   > img {
     width: 36px;
     height: 36px;
