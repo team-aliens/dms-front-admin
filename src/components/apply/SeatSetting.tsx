@@ -36,9 +36,10 @@ export function SeatSetting({
 }: PropsType) {
   const { studyRoomState, onChangeSeatSetting, confirmSetting } =
     useStudyRoom();
-  const onChangeSeatStatus = (status: SeatStatusKorean) => {
+  const { status, type, number } = studyRoomState.seat;
+  const onChangeSeatStatus = (changingStatus: SeatStatusKorean) => {
     onChangeSeatSetting({
-      status: seatStatusKoreanToEng(status),
+      status: seatStatusKoreanToEng(changingStatus),
     });
   };
   const onChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +47,7 @@ export function SeatSetting({
       number: e.target.valueAsNumber,
     });
   };
+
   return (
     <OutsideClickHandler onOutsideClick={closeSeatSetting}>
       <_Wrapper>
@@ -70,51 +72,68 @@ export function SeatSetting({
           value={studyRoomState.seat?.number}
           margin={['top', 22]}
         />
-        <_SeatType>
-          <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
-            자리 종류
-          </Text>
-          <button type="button" onClick={() => selectModal('ADD_SEAT_TYPE')}>
-            <Add size={24} />
-          </button>
-        </_SeatType>
-        <ul>
-          {seatTypeList.map((item) => {
-            const isSelected = studyRoomState.seat?.type?.id === item.id;
-            return (
-              <_SeatTypeList
-                color={item.color}
-                isSelected={isSelected}
-                onClick={() => {
-                  onChangeSeatSetting({
-                    type: { ...item },
-                  });
-                }}
+        {status === 'AVAILABLE' && (
+          <>
+            <_SeatType>
+              <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
+                자리 종류
+              </Text>
+              <button
+                type="button"
+                onClick={() => selectModal('ADD_SEAT_TYPE')}
               >
-                <div className="color" />
-                <Text margin={['left', 12]} size="captionM">
-                  {item.name}
-                </Text>
-                <Button color="primary" kind="text" margin={['left', 'auto']}>
-                  {isSelected ? '취소' : '선택'}
-                </Button>
-                <Button
-                  color="error"
-                  kind="text"
-                  margin={['left', 10]}
-                  onClick={() => deleteSeatType(item.id)}
-                >
-                  삭제
-                </Button>
-              </_SeatTypeList>
-            );
-          })}
-        </ul>
+                <Add size={24} />
+              </button>
+            </_SeatType>
+            <ul>
+              {seatTypeList.map((item) => {
+                const isSelected = studyRoomState.seat?.type?.id === item.id;
+                return (
+                  <_SeatTypeList
+                    color={item.color}
+                    isSelected={isSelected}
+                    onClick={() => {
+                      onChangeSeatSetting({
+                        type: { ...item },
+                      });
+                    }}
+                  >
+                    <div className="color" />
+                    <Text margin={['left', 12]} size="captionM">
+                      {item.name}
+                    </Text>
+                    <Button
+                      color="primary"
+                      kind="text"
+                      margin={['left', 'auto']}
+                    >
+                      {isSelected ? '취소' : '선택'}
+                    </Button>
+                    <Button
+                      color="error"
+                      kind="text"
+                      margin={['left', 10]}
+                      onClick={() => deleteSeatType(item.id)}
+                    >
+                      삭제
+                    </Button>
+                  </_SeatTypeList>
+                );
+              })}
+            </ul>
+          </>
+        )}
         <_Buttons>
           <Button kind="outline" color="error" onClick={closeSeatSetting}>
             취소
           </Button>
           <Button
+            disabled={
+              !(
+                (status === 'AVAILABLE' && type && number && true) ||
+                (status === 'UNAVAILABLE' && number && !type)
+              )
+            }
             kind="contained"
             color="primary"
             onClick={confirmSetting}

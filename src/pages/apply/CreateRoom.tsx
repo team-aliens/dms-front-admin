@@ -15,6 +15,7 @@ import {
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
+import { SeatPreview } from '@/apis/studyRooms/response';
 
 const pathToKorean = {
   apply: '신청',
@@ -48,9 +49,9 @@ export function CreateRoom() {
       (i): Seat => ({
         width_location: i.width_location,
         height_location: i.height_location,
-        number: i.number,
+        number: i.number || null,
         status: i.status,
-        type_id: i.type.id,
+        type_id: i.type?.id || null,
       }),
     ),
   });
@@ -71,14 +72,14 @@ export function CreateRoom() {
   const onChangeSelectedPosition = (x: number, y: number) => {
     setSeatSetting(true);
     const [alreadyUsedValue] = studyRoomState.seats.filter(
-      (i) => i.height_location === x && i.width_location === y,
+      (i) => i.height_location === y && i.width_location === x,
     );
     onChangeSeatSetting({
       width_location: x,
       height_location: y,
-      type: alreadyUsedValue?.type,
+      type: alreadyUsedValue?.type || null,
       status: alreadyUsedValue?.status || 'AVAILABLE',
-      number: alreadyUsedValue?.number,
+      number: alreadyUsedValue?.number || null,
     });
   };
   return (
@@ -109,10 +110,12 @@ export function CreateRoom() {
         <_Body>
           <StudyRoom
             {...rest}
-            seats={studyRoomState.seats.map((i) => ({
-              ...i,
-              student: null,
-            }))}
+            seats={studyRoomState.seats.map(
+              (i): SeatPreview => ({
+                ...i,
+                student: null,
+              }),
+            )}
             isEdit
             selectedPosition={{
               x: studyRoomState.seat.width_location,

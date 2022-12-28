@@ -105,7 +105,9 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
                 i.width_location === state.seat.width_location
             ),
           )
-          .concat(state.seat),
+          .concat({
+            ...state.seat,
+          }),
         seat: seatInitialValue,
       };
     case 'SELECT_SEAT':

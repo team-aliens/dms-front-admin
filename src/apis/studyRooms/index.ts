@@ -14,6 +14,7 @@ import {
   SetApplicationTimeRequest,
 } from '@/apis/studyRooms/request';
 import { useToast } from '@/hooks/useToast';
+import { useModal } from '@/hooks/useModal';
 
 const router = '/study-rooms';
 
@@ -41,11 +42,16 @@ export const useSetApplicationTime = (
   ...options,
 });
 
-export const useDeleteStudyRoom = (studyRoomId: string) => {
+export const useDeleteStudyRoom = (
+  studyRoomId: string,
+  options?: MutationOptions,
+) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
+  const { closeModal } = useModal();
   return useMutation(async () => instance.delete(`${router}/${studyRoomId}`), {
     onSuccess: () => {
+      closeModal();
       navigate('/apply');
       toastDispatch({
         toastType: 'SUCCESS',
