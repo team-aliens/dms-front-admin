@@ -1,6 +1,10 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 import { SeatStatusType, StudyRoom } from '@/apis/studyRooms/request';
-import { SeatPreview, SeatType } from '@/apis/studyRooms/response';
+import {
+  SeatPreview,
+  SeatType,
+  StudyRoomDetailResponse,
+} from '@/apis/studyRooms/response';
 
 export interface PreviewSeat {
   width_location: number;
@@ -41,6 +45,11 @@ type SetStudyRoomOption = {
   payload: StudyRoom;
 };
 
+type InitialValueAction = {
+  type: 'INITIAL_VALUE';
+  payload?: StudyRoomDetailResponse;
+};
+
 const seatInitialValue: PreviewSeat = {
   status: 'AVAILABLE',
   width_location: null,
@@ -71,7 +80,8 @@ type ActionTypes =
   | SetStudyRoomOption
   | CancelSetSeatAction
   | SelectSeatAction
-  | ConfirmSetSeatAction;
+  | ConfirmSetSeatAction
+  | InitialValueAction;
 
 type StudyRoomSettingDispatch = Dispatch<ActionTypes>;
 
@@ -80,6 +90,17 @@ export const SeatSettingDispatchContext =
 
 const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
   switch (action.type) {
+    case 'INITIAL_VALUE':
+      if (action.payload) {
+        return {
+          ...state,
+          ...action.payload,
+        };
+      } else {
+        return {
+          ...seatDefaultValue,
+        };
+      }
     case 'SET_SEAT':
       return {
         ...state,

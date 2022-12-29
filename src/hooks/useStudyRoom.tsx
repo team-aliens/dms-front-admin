@@ -10,10 +10,20 @@ import {
   sexKoreanToEng,
   SexToKorean,
 } from '@/utils/translate';
+import { StudyRoomDetailResponse } from '@/apis/studyRooms/response';
 
 export const useStudyRoom = () => {
   const studyRoomState = useContext(SeatSettingContext);
   const dispatch = useContext(SeatSettingDispatchContext);
+
+  const initalValue = (state?: StudyRoomDetailResponse) => {
+    dispatch({
+      type: 'INITIAL_VALUE',
+      payload: state && {
+        ...state,
+      },
+    });
+  };
 
   const onChangeSeatSetting = (state: Partial<PreviewSeat>) => {
     dispatch({
@@ -64,5 +74,6 @@ export const useStudyRoom = () => {
     onChangeInput,
     onChangeSeatSetting,
     confirmSetting,
+    initalValue,
   };
 };

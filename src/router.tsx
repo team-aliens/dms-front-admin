@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
 import { FindIdPage } from './pages/FindId';
 import { Home } from '@/pages/Home';
@@ -12,6 +12,7 @@ import { PatchNoticePage } from '@/pages/notice/Patch';
 import { StudyRoomList } from './pages/apply/StudyRoomList';
 import { CreateRoom } from '@/pages/apply/CreateRoom';
 import { StudyRoomDetail } from '@/pages/apply/Detail';
+import { PatchRoom } from './pages/apply/PatchRoom';
 
 export let pathToKorean = {
   'notice': {
@@ -29,7 +30,12 @@ export let pathToKorean = {
   'apply': {
     index: '신청',
     create: '자습실 생성',
-    dynamic: '자습실 상세보기',
+    detail: {
+      index: '자습실 상세보기',
+      patch: {
+        dynamic: '자습실 수정하기',
+      },
+    },
   },
   'my-page': {
     'index': '마이페이지',
@@ -58,7 +64,8 @@ export function Router() {
         <Route path="/apply">
           <Route index element={<StudyRoomList />} />
           <Route path="create" element={<CreateRoom />} />
-          <Route path=":id" element={<StudyRoomDetail />} />
+          <Route path="detail/:id" element={<StudyRoomDetail />} />
+          <Route path="detail/patch/:id" element={<PatchRoom />} />
         </Route>
       </Routes>
     </BrowserRouter>

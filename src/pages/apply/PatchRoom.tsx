@@ -1,3 +1,5 @@
+import { usePatchStudyRoom, useStudyRoomDetail } from '@/apis/studyRooms';
+import { useParams } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
 import styled from 'styled-components';
@@ -18,7 +20,10 @@ import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
 
-export function CreateRoom() {
+export const PatchRoom = () => {
+  const { id } = useParams();
+  const { data: detail } = useStudyRoomDetail(id);
+
   const [seatSetting, setSeatSetting] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>('');
   const { selectModal, modalState, closeModal } = useModal();
@@ -32,6 +37,12 @@ export function CreateRoom() {
     initalValue,
   } = useStudyRoom();
 
+  useEffect(() => {
+    initalValue(detail);
+  }, [detail]);
+
+  console;
+
   const { name, floor, total_height_size, total_width_size, ...rest } =
     studyRoomState;
 
@@ -39,11 +50,7 @@ export function CreateRoom() {
 
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
-  useEffect(() => {
-    initalValue();
-  }, []);
-
-  const createStudyRoom = useCreateStudyRoom({
+  const patchStudyRoom = usePatchStudyRoom(id, {
     ...creatStudyRoomRequest,
     seats: creatStudyRoomRequest.seats.map(
       (i): Seat => ({
@@ -129,14 +136,15 @@ export function CreateRoom() {
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
-            createStudyRoom={createStudyRoom.mutate}
+            createStudyRoom={patchStudyRoom.mutate}
+            patch={true}
             {...rest}
           />
         </_Body>
       </_Wrapper>
     </WithNavigatorBar>
   );
-}
+};
 
 const _Wrapper = styled.section`
   width: 1040px;

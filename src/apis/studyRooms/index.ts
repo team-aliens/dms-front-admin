@@ -76,7 +76,23 @@ export const useStudyRoomDetail = (studyRoomId: string) =>
 export const usePatchStudyRoom = (
   studyRoomId: string,
   body: CreateStudyRoomRequest,
-) => useMutation(async () => instance.patch(`${router}/${studyRoomId}`, body));
+) => {
+  const navigate = useNavigate();
+  const { toastDispatch } = useToast();
+  return useMutation(
+    async () => instance.patch(`${router}/${studyRoomId}`, body),
+    {
+      onSuccess: () => {
+        navigate(`/apply/detail/${studyRoomId}`);
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '자습실이 수정되었습니다.',
+        });
+      },
+    },
+  );
+};
 
 export const useStudyRoomList = () =>
   useQuery(['studyRoomList'], async () => {

@@ -28,6 +28,7 @@ interface PropsType {
   available_sex: SexType;
   onChangeGrade: (grade: string & GradeType) => void;
   createStudyRoom: () => void;
+  patch?: boolean;
 }
 
 export function CreateStudyRoomDetailOptions({
@@ -41,6 +42,7 @@ export function CreateStudyRoomDetailOptions({
   available_grade,
   onChangeGrade,
   createStudyRoom,
+  patch,
 }: PropsType) {
   return (
     <_Wrapper>
@@ -104,7 +106,7 @@ export function CreateStudyRoomDetailOptions({
         ]}
         onClick={createStudyRoom}
       >
-        자습실 생성
+        {patch ? '자습실 수정' : '자습실 생성'}
       </Button>
     </_Wrapper>
   );

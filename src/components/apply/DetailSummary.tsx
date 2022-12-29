@@ -66,7 +66,7 @@ export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
           </_Summary>
         );
       })}
-      <Link to={`/apply/patch/${id}`}>
+      <Link to={`/apply/detail/patch/${id}`}>
         <Button color="primary" kind="rounded">
           수정하기
         </Button>
