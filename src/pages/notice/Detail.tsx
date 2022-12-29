@@ -6,11 +6,8 @@ import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useModal } from '@/hooks/useModal';
 import { DeleteNoticeConfirm } from '@/components/modals/DeleteNoticeConfirm';
 import { useDeleteNotice, useNoticeDetail } from '@/hooks/useNoticeApi';
-import { BreadCrumbWrapper } from '@/components/BreadCrumb';
-
-const pathToKorean = {
-  notice: '공지 목록',
-};
+import { BreadCrumb } from '@team-aliens/design-system';
+import { pathToKorean } from '@/router';
 
 export function NoticeDetail() {
   const { noticeId } = useParams();
@@ -33,12 +30,12 @@ export function NoticeDetail() {
       )}
       <WithNavigatorBar>
         <_Wrapper>
-          <BreadCrumbWrapper margin="86px 0 0 0" pathToKorean={pathToKorean} />
+          <BreadCrumb left={366} pathToKorean={pathToKorean} />
           <Text
             size="titleM"
             color="gray10"
             display="inline-block"
-            margin={['top', 52]}
+            margin={['top', 160]}
           >
             {detail?.title}
           </Text>

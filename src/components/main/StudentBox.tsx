@@ -4,16 +4,19 @@ import { StudentInfo } from '@/apis/managers/response';
 
 interface Props {
   studentInfo: StudentInfo;
-  onClickStudent: (id: string) => void;
+  onClickStudent: (
+    id: string,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+  ) => void;
   isSelected: boolean;
 }
 
 export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
   return (
     <_Wrapper
-      onClick={() => onClickStudent(studentInfo.id)}
       isSelected={isSelected}
       className="studentBox"
+      onClick={(e) => onClickStudent(studentInfo.id, e)}
     >
       <img src={studentInfo.profile_image_url} alt="프로필" />
       <Text
@@ -35,8 +38,7 @@ export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
         color={isSelected ? 'gray4' : 'gray6'}
         margin={['left', 'auto']}
       >
-        {studentInfo.room_number}
-        호
+        {studentInfo.room_number}호
       </Text>
     </_Wrapper>
   );
@@ -51,7 +53,8 @@ const _Wrapper = styled.li<WrapperProps>`
   z-index: 20;
   width: 100%;
   height: 70px;
-  background-color: ${({ theme, isSelected }) => (isSelected ? theme.color.primaryDarken2 : theme.color.gray1)};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.color.primaryDarken2 : theme.color.gray1};
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
   padding: 17px 40px 17px 36px;
@@ -61,7 +64,8 @@ const _Wrapper = styled.li<WrapperProps>`
   > img {
     width: 36px;
     height: 36px;
-    background-color: ${({ theme, isSelected }) => (isSelected ? theme.color.primary : theme.color.gray5)};
+    background-color: ${({ theme, isSelected }) =>
+      isSelected ? theme.color.primary : theme.color.gray5};
     border-radius: 50%;
   }
 `;

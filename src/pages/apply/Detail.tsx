@@ -10,14 +10,9 @@ import {
 import { StudyRoomDetailSummary } from '@/components/apply/DetailSummary';
 import { useModal } from '@/hooks/useModal';
 import { DeleteStudyRoom } from '@/components/modals/DeleteStudyRoom';
-import { StudyRoomEditer } from '@/components/apply/StudyRoomEditer';
 import { SeatTypeList } from '@/components/apply/SeatTypeList';
 import { AppliedStudentList } from '@/components/apply/AppliedStudentList';
-
-const pathToKorean = {
-  apply: '신청',
-  studyRoom: '자습실',
-};
+import { pathToKorean } from '@/router';
 
 export function StudyRoomDetail() {
   const { id } = useParams();

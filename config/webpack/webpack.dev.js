@@ -7,8 +7,6 @@ module.exports = {
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'static/js'),
-    filename: 'build.js',
-    publicPath: '/',
   },
   module: {
     rules: [

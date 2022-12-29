@@ -14,7 +14,7 @@ export function StudyRoomList() {
         <StudyListOptions {...applicationTime} />
         <_List>
           {list?.study_rooms.map((i) => (
-            <Link to={`/apply/detail/${i.id}`}>
+            <Link to={`/apply/${i.id}`}>
               <StudyCard {...i} />
             </Link>
           ))}

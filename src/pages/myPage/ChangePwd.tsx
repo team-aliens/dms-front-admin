@@ -7,16 +7,12 @@ import { ChangePasswordRequest } from '@/apis/users/request';
 import { TitleBox } from '@/components/auth/TitleBox';
 import { useChangePwd, useCheckPwd } from '@/hooks/useUsersApi';
 import { useToast } from '@/hooks/useToast';
-import { BreadCrumbWrapper } from '@/components/BreadCrumb';
+import { BreadCrumb } from '@team-aliens/design-system';
+import { pathToKorean } from '@/router';
 
 interface ChangePwdPropsType extends ChangePasswordRequest {
   reCheckPassword: string;
 }
-
-const pathToKorean = {
-  'my-page': '마이페이지',
-  'change-pwd': '비밀번호 변경',
-};
 
 export function ChangePwd() {
   const {
@@ -53,7 +49,7 @@ export function ChangePwd() {
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <BreadCrumbWrapper margin="86px 0 0 80px" pathToKorean={pathToKorean} />
+        <BreadCrumb pathToKorean={pathToKorean} />
         <_InputsWrapper onSubmit={onSubmit}>
           <TitleBox moreInfo="비밀번호는 영문, 숫자, 기호를 포함한 8~20자이어야 합니다.">
             비밀번호 변경
@@ -110,5 +106,5 @@ const _Wrapper = styled.div`
 `;
 
 const _InputsWrapper = styled.form`
-  margin: 92px auto 0 auto;
+  margin: 170px auto 0 auto;
 `;

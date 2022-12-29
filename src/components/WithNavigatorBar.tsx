@@ -12,9 +12,10 @@ interface PropsType {
 export function WithNavigatorBar({ children }: PropsType) {
   const location = useLocation();
   const services: ServiceToKorean[] = useMemo(
-    () => ((getCookie('service') || '').split(',') as ServiceToKorean[]).filter(
-      (i) => i,
-    ),
+    () =>
+      ((getCookie('service') || '').split(',') as ServiceToKorean[]).filter(
+        (i) => i,
+      ),
     [getCookie('service'), getCookie('access_token'), location],
   );
   return (

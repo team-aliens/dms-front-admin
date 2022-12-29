@@ -1,10 +1,8 @@
 import { GradeType, SeatStatusType, SexType } from '@/apis/studyRooms/request';
 import { Features } from '@/apis/auth/response';
 
-export const dateToString = (date: Date) => {
-  const newDate = new Date(date);
-  return `${newDate.getFullYear()}/${newDate.getMonth()}/${newDate.getDay()}`;
-};
+export const dateToString = (isoDate: string) =>
+  new Date(isoDate).toLocaleDateString().slice(0, -1).replace(/.\s/g, '/');
 
 export type SexToKorean = '남여 모두' | '남' | '여';
 

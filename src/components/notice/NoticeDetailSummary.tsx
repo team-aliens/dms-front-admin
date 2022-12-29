@@ -5,7 +5,7 @@ import { dateToString } from '@/utils/translate';
 
 interface Props {
   noticeId: string;
-  createdDate: Date;
+  createdDate: string;
   onClickDeleteNotice: () => void;
 }
 
@@ -19,7 +19,7 @@ export function NoticeDetailSummary({
       <Text size="bodyM" color="gray5" display="inline-block">
         {dateToString(createdDate)}
       </Text>
-      <Link to={`/notice/write/${noticeId}`}>
+      <Link to={`/notice/detail/patch/${noticeId}`}>
         <Button kind="outline" onClick={() => {}} color="primary">
           수정하기
         </Button>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
@@ -39,8 +39,7 @@ export function StudentList({
           Icon={<Sort />}
           className="filterButton"
         >
-          {SortEnum[sort]}
-          순
+          {SortEnum[sort]}순
         </Button>
       </_Filter>
       <_StudentList>

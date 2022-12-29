@@ -22,8 +22,8 @@ export function CreateStudyRoomOptions({
       <Input
         onChange={onChange}
         name="floor"
-        value={floor}
-        label="층 입력"
+        value={floor || ''}
+        label="층"
         width={160}
         placeholder="ex) 4"
         type="number"
@@ -40,7 +40,7 @@ export function CreateStudyRoomOptions({
       <Input
         onChange={onChange}
         name="total_width_size"
-        value={total_width_size}
+        value={total_width_size || ''}
         label="자습실 크기"
         width={160}
         type="number"
@@ -48,27 +48,26 @@ export function CreateStudyRoomOptions({
           ['left', 32],
           ['right', 10],
         ]}
-        placeholder="0"
+        placeholder="ex) 0"
       />
       <Close colorKey="gray5" size={18} />
       <Input
         onChange={onChange}
         name="total_height_size"
-        value={total_height_size}
+        value={total_height_size || ''}
         width={160}
         type="number"
         margin={[
           ['left', 10],
           ['top', 'auto'],
         ]}
-        placeholder="0"
+        placeholder="ex) 0"
       />
     </_Wrapper>
   );
 }
 
 const _Wrapper = styled.div`
-  margin-top: 32px;
   display: flex;
   > svg {
     margin-top: auto;

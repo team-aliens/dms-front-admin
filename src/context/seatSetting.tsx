@@ -100,10 +100,11 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
         ...state,
         seats: state.seats
           .filter(
-            (i) => !(
-              i.height_location === state.seat.height_location &&
-                i.width_location === state.seat.width_location
-            ),
+            (i) =>
+              !(
+                i.height_location === state.seat.height_location + 1 &&
+                i.width_location === state.seat.width_location + 1
+              ),
           )
           .concat({
             ...state.seat,

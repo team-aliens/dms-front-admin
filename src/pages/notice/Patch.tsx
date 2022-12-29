@@ -4,11 +4,7 @@ import { WriteNoticeRequest } from '@/apis/notice/request';
 import { useNoticeDetail, usePatchNotice } from '@/hooks/useNoticeApi';
 import { useForm } from '@/hooks/useForm';
 import { WriteNotice } from '@/components/notice/WriteNoticeForm';
-
-const pathToKorean = {
-  notice: '공지 목록',
-  write: '공지 수정',
-};
+import { pathToKorean } from '@/router';
 
 export function PatchNoticePage() {
   const { noticeId } = useParams();
@@ -25,9 +21,13 @@ export function PatchNoticePage() {
 
   useEffect(() => {
     if (noticeDetail && noticeDetail.isSuccess) {
-      setState(noticeDetail.data);
+      const { content, title } = noticeDetail.data;
+      setState({
+        title: title,
+        content: content,
+      });
     }
-  }, [noticeDetail.isSuccess, noticeDetail.data, noticeDetail, setState]);
+  }, [noticeDetail.isSuccess]);
 
   const patchNotice = usePatchNotice(noticeContent, noticeId);
 

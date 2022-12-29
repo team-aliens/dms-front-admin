@@ -3,11 +3,12 @@ import { Button, Text } from '@team-aliens/design-system';
 import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
+import { useEffect } from 'react';
 
 interface Props {
   studentDetail: GetStudentDetailResponse;
   studentId: string;
-  onClickStudent: (id) => void;
+  onClickStudent: (id: string) => void;
 }
 
 export function StudentDetail({

@@ -16,14 +16,11 @@ import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
-
-const pathToKorean = {
-  apply: '신청',
-};
+import { pathToKorean } from '@/router';
 
 export function CreateRoom() {
-  const [seatSetting, setSeatSetting] = useState(false);
-  const [deleteId, setDeleteId] = useState('');
+  const [seatSetting, setSeatSetting] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<string>('');
   const { selectModal, modalState, closeModal } = useModal();
 
   const {
@@ -34,9 +31,7 @@ export function CreateRoom() {
     onChangeSeatSetting,
   } = useStudyRoom();
 
-  const {
-    name, floor, total_height_size, total_width_size, ...rest
-  } =
+  const { name, floor, total_height_size, total_width_size, ...rest } =
     studyRoomState;
 
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
@@ -141,7 +136,7 @@ export function CreateRoom() {
 const _Wrapper = styled.section`
   width: 1040px;
   margin: 0 auto;
-  padding-top: 86px;
+  margin-top: 140px;
 `;
 
 const _Body = styled.div`

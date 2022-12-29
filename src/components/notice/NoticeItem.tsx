@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { NoticeCardItem } from '@/apis/notice/response';
+import { dateToString } from '@/utils/translate';
 
-interface Props {
+interface PropsType {
   noticeItem: NoticeCardItem;
 }
 
-export function NoticeItem({ noticeItem }: Props) {
+export function NoticeItem({ noticeItem }: PropsType) {
   return (
     <_Wrapper>
       <Text size="bodyL">{noticeItem?.title}</Text>
       <Text size="bodyM" color="gray5" margin={['left', 'auto']}>
-        {noticeItem?.create_at?.toDateString()}
+        {dateToString(noticeItem.created_at)}
       </Text>
     </_Wrapper>
   );

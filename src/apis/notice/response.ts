@@ -1,13 +1,13 @@
 export interface NoticeDetailResponse {
   title: string;
   content: string;
-  created_at: Date;
+  created_at: string;
 }
 
 export interface NoticeCardItem {
   id: string;
   title: string;
-  create_at: Date;
+  created_at: string;
 }
 
 export interface NoticeListResponse {

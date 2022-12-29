@@ -2,14 +2,15 @@ import { TextArea, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent, FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { BreadCrumbWrapper } from '@/components/BreadCrumb';
+import { BreadCrumb } from '@team-aliens/design-system';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   title: string;
   content: string;
   onClick: () => void;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  pathToKorean: { [key: string]: string };
+  pathToKorean: any;
 }
 
 export function WriteNotice({
@@ -22,14 +23,15 @@ export function WriteNotice({
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-
+  console.log(useLocation().pathname.split('/'));
   return (
     <WithNavigatorBar>
       <_BackgroundColor>
         <_Wrapper onSubmit={onSubmit}>
-          <BreadCrumbWrapper margin="86px 0 0 0" pathToKorean={pathToKorean} />
+          <BreadCrumb left={366} pathToKorean={pathToKorean} />
           <TextArea
             limit={100}
+            height={46}
             className="title"
             onChange={onChange}
             value={title}
@@ -38,6 +40,7 @@ export function WriteNotice({
           />
           <TextArea
             limit={1000}
+            height={240}
             className="content"
             onChange={onChange}
             value={content}
@@ -69,6 +72,7 @@ const _BackgroundColor = styled.div`
 const _Wrapper = styled.form`
   margin: 0 auto;
   width: 1030px;
+  margin-top: 160px;
   > .title {
     margin-top: 52px;
   }
