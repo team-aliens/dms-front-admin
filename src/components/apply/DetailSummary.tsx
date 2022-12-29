@@ -7,11 +7,26 @@ import { StudyRoomDetailResponse } from '@/apis/studyRooms/response';
 
 interface DetailOption {
   name: string;
-  value: 'total_available_seat' | 'available_sex' | 'available_grade';
-  func: (item: number | SexType | GradeType) => unknown;
+  value:
+    | 'total_available_seat'
+    | 'available_sex'
+    | 'available_grade'
+    | 'floor'
+    | 'name';
+  func: (item: number | SexType | GradeType | string) => unknown;
 }
 
 const detailOptions: DetailOption[] = [
+  {
+    name: '자습실 층',
+    value: 'floor',
+    func: (item: number) => item + '층',
+  },
+  {
+    name: '자습실 이름',
+    value: 'name',
+    func: (item: string) => item,
+  },
   {
     name: '이용 가능한 자리',
     value: 'total_available_seat',
@@ -51,15 +66,15 @@ export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
           </_Summary>
         );
       })}
-      {/* <Link to={`/apply/${id}`}> */}
-      {/*  <Button color="primary" kind="rounded"> */}
-      {/*    수정하기 */}
-      {/*  </Button> */}
-      {/* </Link> */}
+      <Link to={`/apply/patch/${id}`}>
+        <Button color="primary" kind="rounded">
+          수정하기
+        </Button>
+      </Link>
       <Button
         color="error"
         kind="rounded"
-        margin={['left', 'auto']}
+        margin={['left', 10]}
         onClick={selectModal}
       >
         삭제하기
