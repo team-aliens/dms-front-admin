@@ -48,6 +48,7 @@ export function StudentList({
             studentInfo={item}
             onClickStudent={onClickStudent}
             isSelected={selectedStudentId === item.id}
+            selectedStudentId={selectedStudentId}
           />
         ))}
       </_StudentList>
@@ -60,6 +61,7 @@ const _Wrapper = styled.div<{
 }>`
   width: ${({ detailIsOpened }) => (detailIsOpened ? 514 : 770)}px;
   transition: width 0.7s ease-in-out;
+  margin-left: 130px;
 `;
 const _Filter = styled.section`
   display: flex;

@@ -117,25 +117,27 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
         seat: seatInitialValue,
       };
     case 'CONFIRM_SET_SEAT':
+      const a = state.seats
+        .filter(
+          (i) =>
+            !(
+              (i.height_location === state.seat.height_location + 1 &&
+                i.width_location === state.seat.width_location + 1) ||
+              (i.status !== 'UNAVAILABLE' &&
+                state.seat.status !== 'UNAVAILABLE' &&
+                i.type.name === state.seat.type.name &&
+                i.number === state.seat.number)
+            ),
+        )
+        .concat({
+          ...state.seat,
+          width_location: state.seat.width_location + 1,
+          height_location: state.seat.height_location + 1,
+        });
+      console.log(state, a);
       return {
         ...state,
-        seats: state.seats
-          .filter(
-            (i) =>
-              !(
-                (i.number === state.seat.number &&
-                  i.type &&
-                  state.seat.type &&
-                  i.type.name === state.seat.type.name) &&
-                (i.height_location === state.seat.height_location + 1 &&
-                  i.width_location === state.seat.width_location + 1)
-              ),
-          )
-          .concat({
-            ...state.seat,
-            width_location: state.seat.width_location + 1,
-            height_location: state.seat.height_location + 1,
-          }),
+        seats: a,
         seat: seatInitialValue,
       };
     case 'SELECT_SEAT':

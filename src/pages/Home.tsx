@@ -43,15 +43,11 @@ export function Home() {
     debounce(() => setDebouncedName(e.target.value), 200);
   };
 
-  const onClickStudent = (id: string) => {
+  const onClickStudent = (id: string) =>
     setSelectedStudentId((prevId) => (prevId === id ? '' : id));
-  };
 
   return (
     <WithNavigatorBar>
-      <input
-        type={'number'}
-      />
       <_Wrapper>
         <StudentList
           studentList={studentList?.students || []}

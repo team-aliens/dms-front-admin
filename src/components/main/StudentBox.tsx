@@ -1,22 +1,32 @@
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   studentInfo: StudentInfo;
-  onClickStudent: (
-    id: string,
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-  ) => void;
+  onClickStudent: (id: string) => void;
   isSelected: boolean;
+  selectedStudentId: string;
 }
 
-export function StudentBox({ studentInfo, onClickStudent, isSelected }: Props) {
+export function StudentBox({
+  studentInfo,
+  onClickStudent,
+  isSelected,
+  selectedStudentId,
+}: Props) {
+  const ref = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    if (studentInfo.id === selectedStudentId)
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [selectedStudentId]);
   return (
     <_Wrapper
+      ref={ref}
       isSelected={isSelected}
       className="studentBox"
-      onClick={(e) => onClickStudent(studentInfo.id, e)}
+      onClick={() => onClickStudent(studentInfo.id)}
     >
       <img src={studentInfo.profile_image_url} alt="프로필" />
       <Text
@@ -54,7 +64,7 @@ const _Wrapper = styled.li<WrapperProps>`
   width: 100%;
   height: 70px;
   background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.color.primaryDarken2 : theme.color.gray1};
+    isSelected ? theme.color.primaryDarken1 : theme.color.gray1};
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
   padding: 17px 40px 17px 36px;

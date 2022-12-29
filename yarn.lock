@@ -1930,9 +1930,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@team-aliens/design-system@npm:^1.3.29":
-  version: 1.3.29
-  resolution: "@team-aliens/design-system@npm:1.3.29"
+"@team-aliens/design-system@npm:^1.3.32":
+  version: 1.3.32
+  resolution: "@team-aliens/design-system@npm:1.3.32"
   dependencies:
     react-outside-click-handler: ^1.3.0
   peerDependencies:
@@ -1940,7 +1940,7 @@ __metadata:
     react-dom: ">= 18"
     react-router-dom: ">= 6"
     styled-components: ">= 5"
-  checksum: b8225c5da1fba799cd765964c0de8aa65a038b2452ed34b57e79baefe5065a17e78fa9faaa7d14b801631770f9dfe934f5cf81fcc42c856787af80581285264d
+  checksum: 94420b42bf8854722435f9a602f08dab24320e2a8370ef300539566b7180ecaf73ee7209f954aa42d2c036ca55a30914dd9ee5ec982f13fbb6cae076637103a4
   languageName: node
   linkType: hard
 
@@ -4647,7 +4647,7 @@ __metadata:
     "@babel/preset-react": ^7.17.12
     "@babel/preset-typescript": ^7.17.12
     "@babel/runtime-corejs3": ^7.18.9
-    "@team-aliens/design-system": ^1.3.29
+    "@team-aliens/design-system": ^1.3.32
     "@types/jest": ^29.2.0
     "@types/react": ^18.0.10
     "@types/react-color": ^3.0.6

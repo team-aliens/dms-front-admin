@@ -3,7 +3,6 @@ import { Button, Text } from '@team-aliens/design-system';
 import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
 import { PointBox } from '@/components/main/DetailBox/PointBox';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
-import { useEffect } from 'react';
 
 interface Props {
   studentDetail: GetStudentDetailResponse;
@@ -68,7 +67,7 @@ export function StudentDetail({
 const _Padding = styled.div<{
   isSelected: boolean;
 }>`
-  width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
+  width: ${({ isSelected }) => (isSelected ? 686 : 430)}px;
   transition: width 0.7s ease-in-out;
 `;
 
