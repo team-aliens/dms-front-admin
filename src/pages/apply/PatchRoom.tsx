@@ -53,7 +53,7 @@ export const PatchRoom = () => {
         width_location: i.width_location,
         height_location: i.height_location,
         number: i.number || null,
-        status: i.status,
+        status: i.status === 'IN_USE' ? 'AVAILABLE' : i.status,
         type_id: i.type?.id || null,
       }),
     ),
@@ -77,6 +77,7 @@ export const PatchRoom = () => {
     const [alreadyUsedValue] = studyRoomState.seats.filter(
       (i) => i.height_location === y + 1 && i.width_location === x + 1,
     );
+    console.log(alreadyUsedValue);
     onChangeSeatSetting({
       width_location: x,
       height_location: y,

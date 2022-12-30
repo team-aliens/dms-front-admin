@@ -68,6 +68,8 @@ export const seatStatusToKorean = (
   switch (status) {
     case 'AVAILABLE':
       return '사용 가능';
+    case 'EMPTY':
+      return '사용 가능';
     case 'UNAVAILABLE':
       return '사용 불가';
     default:

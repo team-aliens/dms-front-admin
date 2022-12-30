@@ -78,7 +78,7 @@ export function SeatSetting({
             margin={['top', 22]}
           />
         )}
-        {status === 'AVAILABLE' && (
+        {(status === 'AVAILABLE' || status === 'EMPTY') && (
           <>
             <_SeatType>
               <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
