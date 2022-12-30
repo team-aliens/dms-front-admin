@@ -7,7 +7,7 @@ import {
   Button,
 } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { SeatStatusType } from '@/apis/studyRooms/request';
 import {
@@ -19,8 +19,8 @@ import { SeatType } from '@/apis/studyRooms/response';
 import { SelectedModalType } from '@/context/modal';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 
-const seatStatus = ['AVAILABLE', 'UNAVAILABLE'].map((i: SeatStatusType) =>
-  seatStatusToKorean(i),
+const seatStatus = ['AVAILABLE', 'UNAVAILABLE', 'EMPTY'].map(
+  (i: SeatStatusType) => seatStatusToKorean(i),
 );
 
 interface PropsType {
@@ -78,7 +78,7 @@ export function SeatSetting({
             margin={['top', 22]}
           />
         )}
-        {(status === 'AVAILABLE' || status === 'EMPTY') && (
+        {status === 'AVAILABLE' && (
           <>
             <_SeatType>
               <Text color="gray6" size="bodyS" margin={['right', 'auto']}>
@@ -137,7 +137,8 @@ export function SeatSetting({
             disabled={
               !(
                 (status === 'AVAILABLE' && type && number && true) ||
-                (status === 'UNAVAILABLE' && number && !type)
+                (status === 'UNAVAILABLE' && number && !type) ||
+                (status === 'EMPTY' && number)
               ) &&
               seatStatusToKorean(studyRoomState.seat?.status) !== '사용 불가'
             }

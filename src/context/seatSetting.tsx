@@ -117,6 +117,7 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
         seat: seatInitialValue,
       };
     case 'CONFIRM_SET_SEAT':
+      console.log(state.seat);
       const a = state.seats
         .filter(
           (i) =>
@@ -135,6 +136,7 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
           width_location: state.seat.width_location + 1,
           height_location: state.seat.height_location + 1,
         });
+      console.log(a);
       return {
         ...state,
         seats: a,

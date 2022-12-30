@@ -60,7 +60,7 @@ export const gradeKoreanToEng = (grade: GradeToKorean): GradeType => {
   }
 };
 
-export type SeatStatusKorean = '사용 가능' | '사용 불가';
+export type SeatStatusKorean = '사용 가능' | '사용 불가' | '빈 좌석';
 
 export const seatStatusToKorean = (
   status: SeatStatusType,
@@ -68,10 +68,10 @@ export const seatStatusToKorean = (
   switch (status) {
     case 'AVAILABLE':
       return '사용 가능';
-    case 'EMPTY':
-      return '사용 가능';
     case 'UNAVAILABLE':
       return '사용 불가';
+    case 'EMPTY':
+      return '빈 좌석';
     default:
   }
 };
@@ -84,6 +84,8 @@ export const seatStatusKoreanToEng = (
       return 'AVAILABLE';
     case '사용 불가':
       return 'UNAVAILABLE';
+    case '빈 좌석':
+      return 'EMPTY';
     default:
   }
 };

@@ -77,7 +77,6 @@ export const PatchRoom = () => {
     const [alreadyUsedValue] = studyRoomState.seats.filter(
       (i) => i.height_location === y + 1 && i.width_location === x + 1,
     );
-    console.log(alreadyUsedValue);
     onChangeSeatSetting({
       width_location: x,
       height_location: y,
