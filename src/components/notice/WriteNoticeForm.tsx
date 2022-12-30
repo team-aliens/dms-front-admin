@@ -23,7 +23,6 @@ export function WriteNotice({
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-  console.log(useLocation().pathname.split('/'));
   return (
     <WithNavigatorBar>
       <_BackgroundColor>

@@ -124,6 +124,7 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
               (i.height_location === state.seat.height_location + 1 &&
                 i.width_location === state.seat.width_location + 1) ||
               (i.status !== 'UNAVAILABLE' &&
+                i.status !== 'EMPTY' &&
                 state.seat.status !== 'UNAVAILABLE' &&
                 i.type.name === state.seat.type.name &&
                 i.number === state.seat.number)
@@ -134,7 +135,6 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
           width_location: state.seat.width_location + 1,
           height_location: state.seat.height_location + 1,
         });
-      console.log(state, a);
       return {
         ...state,
         seats: a,

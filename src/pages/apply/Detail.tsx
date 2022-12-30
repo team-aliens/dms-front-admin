@@ -29,7 +29,7 @@ export function StudyRoomDetail() {
         />
       )}
       <_Wrapper>
-        <BreadCrumb pathToKorean={pathToKorean} />
+        <BreadCrumb left={351} pathToKorean={pathToKorean} />
         <StudyRoomDetailSummary
           detail={detail}
           id={id}
@@ -54,7 +54,7 @@ export function StudyRoomDetail() {
 const _Wrapper = styled.section`
   width: 1060px;
   margin: 0 auto;
-  padding-top: 86px;
+  padding: 110px 0 50px 0;
 `;
 
 const _SeatDetails = styled.div`

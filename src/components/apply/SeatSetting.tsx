@@ -7,7 +7,7 @@ import {
   Button,
 } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { SeatStatusType } from '@/apis/studyRooms/request';
 import {
@@ -19,7 +19,9 @@ import { SeatType } from '@/apis/studyRooms/response';
 import { SelectedModalType } from '@/context/modal';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 
-const seatStatus = ['AVAILABLE', 'UNAVAILABLE'].map((i: SeatStatusType) => seatStatusToKorean(i));
+const seatStatus = ['AVAILABLE', 'UNAVAILABLE'].map((i: SeatStatusType) =>
+  seatStatusToKorean(i),
+);
 
 interface PropsType {
   seatTypeList: SeatType[];
@@ -189,7 +191,8 @@ const _SeatTypeList = styled.li<{
   cursor: pointer;
   padding: 14px 0 14px 10px;
   align-items: center;
-  background-color: ${({ isSelected, theme }) => isSelected && theme.color.gray2};
+  background-color: ${({ isSelected, theme }) =>
+    isSelected && theme.color.gray2};
   > .color {
     width: 16px;
     height: 16px;

@@ -62,6 +62,7 @@ const _Wrapper = styled.div<{
   width: ${({ detailIsOpened }) => (detailIsOpened ? 514 : 770)}px;
   transition: width 0.7s ease-in-out;
   margin-left: 130px;
+  margin-bottom: 150px;
 `;
 const _Filter = styled.section`
   display: flex;

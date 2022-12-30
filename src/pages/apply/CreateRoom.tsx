@@ -142,6 +142,7 @@ const _Wrapper = styled.section`
   width: 1040px;
   margin: 0 auto;
   margin-top: 140px;
+  margin-bottom: 50px;
 `;
 
 const _Body = styled.div`

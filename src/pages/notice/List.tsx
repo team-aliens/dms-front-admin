@@ -21,8 +21,7 @@ export function NoticeListPage() {
             color="gray"
             onClick={() => setSortType(sortType === 'NEW' ? 'OLD' : 'NEW')}
           >
-            {NoticeSortEnum[sortType]}
-            순
+            {NoticeSortEnum[sortType]}순
           </Button>
           <Link to="/notice/write">
             <Button kind="outline" color="primary">
@@ -46,6 +45,7 @@ export function NoticeListPage() {
 const _Wrapper = styled.div`
   margin: 0 auto;
   width: 1030px;
+  margin-bottom: 150px;
 `;
 
 const _FilterSection = styled.section`

@@ -9,11 +9,7 @@ import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
 import { useModal } from '@/hooks/useModal';
 import { SeatSetting } from '@/components/apply/SeatSetting';
-import {
-  useCreateStudyRoom,
-  useDeleteSeatType,
-  useSeatTypeList,
-} from '@/apis/studyRooms';
+import { useDeleteSeatType, useSeatTypeList } from '@/apis/studyRooms';
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
@@ -79,7 +75,7 @@ export const PatchRoom = () => {
   const onChangeSelectedPosition = (x: number, y: number) => {
     setSeatSetting(true);
     const [alreadyUsedValue] = studyRoomState.seats.filter(
-      (i) => i.height_location === y && i.width_location === x,
+      (i) => i.height_location === y + 1 && i.width_location === x + 1,
     );
     onChangeSeatSetting({
       width_location: x,
@@ -150,6 +146,7 @@ const _Wrapper = styled.section`
   width: 1040px;
   margin: 0 auto;
   margin-top: 140px;
+  margin-bottom: 50px;
 `;
 
 const _Body = styled.div`
