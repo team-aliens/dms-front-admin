@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useReducer } from 'react';
+import { createContext, Dispatch, useReducer } from 'react';
 import { SeatStatusType, StudyRoom } from '@/apis/studyRooms/request';
 import {
   SeatPreview,
@@ -117,7 +117,6 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
         seat: seatInitialValue,
       };
     case 'CONFIRM_SET_SEAT':
-      console.log(state.seat);
       return {
         ...state,
         seats: state.seats
@@ -139,7 +138,6 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
             width_location: state.seat.width_location + 1,
             height_location: state.seat.height_location + 1,
           }),
-        seat: seatInitialValue,
       };
     case 'SELECT_SEAT':
       return {

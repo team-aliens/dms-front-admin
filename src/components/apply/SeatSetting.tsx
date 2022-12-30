@@ -144,10 +144,7 @@ export function SeatSetting({
             }
             kind="contained"
             color="primary"
-            onClick={() => {
-              closeSeatSetting();
-              confirmSetting();
-            }}
+            onClick={confirmSetting}
             margin={['left', 20]}
           >
             확인

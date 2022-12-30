@@ -37,14 +37,11 @@ export const PatchRoom = () => {
     initalValue(detail);
   }, [detail]);
 
-  console;
-
   const { name, floor, total_height_size, total_width_size, ...rest } =
     studyRoomState;
 
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
 
-  console.log(studyRoomState);
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
   const patchStudyRoom = usePatchStudyRoom(id, {
@@ -60,9 +57,7 @@ export const PatchRoom = () => {
     ),
   });
 
-  const closeSeatSetting = () => {
-    setSeatSetting(false);
-  };
+  const closeSeatSetting = () => setSeatSetting(false);
 
   const deleteType = useDeleteSeatType(deleteId, {
     onSuccess: () => refetchTypeList(),
@@ -86,6 +81,7 @@ export const PatchRoom = () => {
       number: alreadyUsedValue?.number || null,
     });
   };
+  console.log(studyRoomState.seat);
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
