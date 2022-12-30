@@ -44,6 +44,7 @@ export const PatchRoom = () => {
 
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
 
+  console.log(studyRoomState);
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
   const patchStudyRoom = usePatchStudyRoom(id, {
@@ -81,7 +82,7 @@ export const PatchRoom = () => {
       width_location: x,
       height_location: y,
       type: alreadyUsedValue?.type || null,
-      status: alreadyUsedValue?.status || 'AVAILABLE',
+      status: alreadyUsedValue?.status || 'EMPTY',
       number: alreadyUsedValue?.number || null,
     });
   };
@@ -102,7 +103,7 @@ export const PatchRoom = () => {
         />
       )}
       <_Wrapper>
-        <BreadCrumb pathToKorean={pathToKorean} />
+        <BreadCrumb left={351} pathToKorean={pathToKorean} />
         <CreateStudyRoomOptions
           onChange={onChangeInput}
           floor={floor}

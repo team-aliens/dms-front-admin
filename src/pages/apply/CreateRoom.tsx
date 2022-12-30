@@ -78,7 +78,7 @@ export function CreateRoom() {
       width_location: x,
       height_location: y,
       type: alreadyUsedValue?.type || null,
-      status: alreadyUsedValue?.status || 'AVAILABLE',
+      status: alreadyUsedValue?.status || 'EMPTY',
       number: alreadyUsedValue?.number || null,
     });
   };
@@ -99,7 +99,7 @@ export function CreateRoom() {
         />
       )}
       <_Wrapper>
-        <BreadCrumb pathToKorean={pathToKorean} />
+        <BreadCrumb left={351} pathToKorean={pathToKorean} />
         <CreateStudyRoomOptions
           onChange={onChangeInput}
           floor={floor}

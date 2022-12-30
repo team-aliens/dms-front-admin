@@ -136,15 +136,18 @@ export function SeatSetting({
           <Button
             disabled={
               !(
-                (status === 'AVAILABLE' && type && number && true) ||
+                (status === 'AVAILABLE' && type && number) ||
                 (status === 'UNAVAILABLE' && number && !type) ||
-                (status === 'EMPTY' && number)
+                status === 'EMPTY'
               ) &&
               seatStatusToKorean(studyRoomState.seat?.status) !== '사용 불가'
             }
             kind="contained"
             color="primary"
-            onClick={confirmSetting}
+            onClick={() => {
+              closeSeatSetting();
+              confirmSetting();
+            }}
             margin={['left', 20]}
           >
             확인
