@@ -32,7 +32,7 @@ export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
     async () => instance.post<CreateStudyRoomResponse>(router, body),
     {
       onSuccess: (response) =>
-        navigate(`/apply/${response.data.study_room_id}`),
+        navigate(`/apply/detail/${response.data.study_room_id}`),
     },
   );
 };

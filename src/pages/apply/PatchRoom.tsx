@@ -81,7 +81,7 @@ export const PatchRoom = () => {
       number: alreadyUsedValue?.number || null,
     });
   };
-  console.log(studyRoomState.seat);
+
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (

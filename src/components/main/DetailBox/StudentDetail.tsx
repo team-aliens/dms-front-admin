@@ -76,7 +76,6 @@ const _Wrapper = styled.div<{
 }>`
   position: fixed;
   top: 168px;
-  right: 80px;
   width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
   transition: width 0.7s ease-in-out;
 `;
