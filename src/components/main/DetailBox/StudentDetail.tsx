@@ -67,8 +67,11 @@ export function StudentDetail({
 const _Padding = styled.div<{
   isSelected: boolean;
 }>`
-  width: ${({ isSelected }) => (isSelected ? 686 : 430)}px;
+  width: ${({ isSelected }) => (isSelected ? 466 : 300)}px;
   transition: width 0.7s ease-in-out;
+  @media screen and (max-width: 1300px) {
+    display: none;
+  }
 `;
 
 const _Wrapper = styled.div<{
@@ -78,6 +81,9 @@ const _Wrapper = styled.div<{
   top: 168px;
   width: ${({ isSelected }) => (isSelected ? 436 : 180)}px;
   transition: width 0.7s ease-in-out;
+  @media screen and (max-width: 1300px) {
+    display: none;
+  }
 `;
 
 const _DetailBox = styled.div`

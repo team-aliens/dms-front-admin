@@ -59,11 +59,12 @@ export function StudentList({
 const _Wrapper = styled.div<{
   detailIsOpened: boolean;
 }>`
-  width: ${({ detailIsOpened }) => (detailIsOpened ? 514 : 770)}px;
+  width: ${({ detailIsOpened }) => (detailIsOpened ? 500 : 670)}px;
   transition: width 0.7s ease-in-out;
-  margin-left: 130px;
+  margin-left: 50px;
   margin-bottom: 150px;
 `;
+
 const _Filter = styled.section`
   display: flex;
   > button {
