@@ -29,7 +29,14 @@ export function AuthCode({
         errorMsg={errorMessage}
       />
       <_ReSendAuthCodeWrapper>
-        <Text size="captionM" color="gray6" margin={['right', 12]}>
+        <Text
+          size="captionM"
+          color="gray6"
+          margin={[
+            ['right', 12],
+            ['top', 16],
+          ]}
+        >
           인증번호가 발송되지 않았나요?
         </Text>
         <Button

@@ -84,7 +84,6 @@ export function ResetPwdPage() {
   const postEmail = usePostEmailAuthCodeMutation({
     email,
   });
-
   const postEmailCode = useCallback(
     (type?: 'resend') => {
       if (!email) {
@@ -109,7 +108,7 @@ export function ResetPwdPage() {
       return checkEmail.refetch();
     }
     if (step === 'EMAIL') return postEmailCode();
-    return checkEmail.refetch();
+    return checkAuthCode.refetch();
   }, [step, postEmailCode, checkEmail]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
