@@ -39,7 +39,8 @@ export function StudentList({
           Icon={<Sort />}
           className="filterButton"
         >
-          {SortEnum[sort]}순
+          {SortEnum[sort]}
+          순
         </Button>
       </_Filter>
       <_StudentList>
@@ -80,4 +81,7 @@ const _StudentList = styled.ul`
   flex-direction: column;
   gap: 16px 0;
   overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

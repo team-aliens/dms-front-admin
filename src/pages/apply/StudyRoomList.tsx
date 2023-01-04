@@ -18,7 +18,6 @@ export function StudyRoomList() {
               <StudyCard {...i} />
             </Link>
           ))}
-          {/* <StudyCard /> */}
         </_List>
       </_Wrapper>
     </WithNavigatorBar>
@@ -28,7 +27,7 @@ export function StudyRoomList() {
 const _Wrapper = styled.div`
   width: 990px;
   margin: 0 auto;
-  padding-top: 100px;
+  padding: 100px 0;
 `;
 
 const _List = styled.ul`

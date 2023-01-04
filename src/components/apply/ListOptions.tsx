@@ -59,7 +59,7 @@ const _Wrapper = styled.div`
 const _ApplyAbleTime = styled.div`
   display: flex;
   align-items: center;
-  width: 400px;
+  min-width: 400px;
   height: 50px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.color.gray1};
