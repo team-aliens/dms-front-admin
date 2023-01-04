@@ -46,7 +46,8 @@ instance.interceptors.response.use(
               expires: refreshExpired,
             });
 
-            if (config.headers) config.headers.Authorization = `Bearer ${res.access_token}`;
+            if (config.headers)
+              config.headers['Authorization'] = `Bearer ${res.access_token}`;
             return axios(config);
           });
         } else {
