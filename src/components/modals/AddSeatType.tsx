@@ -41,7 +41,7 @@ export function AddSeatType({ closeModal, refetchTypeList }: PropsType) {
         <Input
           onChange={onHandleChange}
           name="name"
-          placeholder="상태 이름을 입력해주세요."
+          placeholder="종류 이름을 입력해주세요."
           label="종류 이름"
           value={state.name}
         />,
