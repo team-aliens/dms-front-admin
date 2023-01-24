@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Button } from '@team-aliens/design-system';
+import { Input, Button, BreadCrumb } from '@team-aliens/design-system';
 import { FormEvent } from 'react';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useForm } from '@/hooks/useForm';
@@ -7,7 +7,6 @@ import { ChangePasswordRequest } from '@/apis/users/request';
 import { TitleBox } from '@/components/auth/TitleBox';
 import { useChangePwd, useCheckPwd } from '@/hooks/useUsersApi';
 import { useToast } from '@/hooks/useToast';
-import { BreadCrumb } from '@team-aliens/design-system';
 import { pathToKorean } from '@/router';
 
 interface ChangePwdPropsType extends ChangePasswordRequest {

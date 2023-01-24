@@ -8,7 +8,9 @@ interface PropsType {
 export function DeleteStudyRoom({ close, deleteStudyRoom }: PropsType) {
   return (
     <Modal
-      content={'삭제된 자습실은 복구가 불가능합니다.\n해당 자습실을 삭제하시겠습니까?'}
+      content={
+        '삭제된 자습실은 복구가 불가능합니다.\n해당 자습실을 삭제하시겠습니까?'
+      }
       buttonList={[
         <Button kind="outline" color="primary" onClick={close}>
           취소

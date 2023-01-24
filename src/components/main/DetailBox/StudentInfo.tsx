@@ -27,8 +27,7 @@ export function StudentProfile({
           </Text>
         </_PersonalInfo>
         <Text size="bodyL" color="gray6" margin={['top', 12]}>
-          {room_number}
-          호
+          {room_number}호
         </Text>
       </_Wrapper>
     </_StudentInfo>

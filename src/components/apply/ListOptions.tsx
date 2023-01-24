@@ -24,13 +24,7 @@ export function StudyListOptions({
           <MegaPhone fill={false} colorKey="primary" />
           <Text margin={['left', 20]} color="gray9" size="bodyS">
             {/* 자습실 신청 시간을 입력해주세요. */}
-            자습실 신청 시간은
-            {' '}
-            {start_at?.slice(0, 5)}
-            {' '}
-            ~
-            {' '}
-            {end_at?.slice(0, 5)}
+            자습실 신청 시간은 {start_at?.slice(0, 5)} ~ {end_at?.slice(0, 5)}
             까지 입니다.
           </Text>
           <Button

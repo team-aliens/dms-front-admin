@@ -42,8 +42,10 @@ interface SearchStudentPropsType {
   sort: SortType;
 }
 
-export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) => useQuery(['studentList', name, sort], () => searchStudentList(name, sort));
+export const useSearchStudents = ({ name, sort }: SearchStudentPropsType) =>
+  useQuery(['studentList', name, sort], () => searchStudentList(name, sort));
 
-export const useStudentDetail = (id: string) => useQuery(['getStudentDetail', id], () => id && getStudentDetail(id));
+export const useStudentDetail = (id: string) =>
+  useQuery(['getStudentDetail', id], () => id && getStudentDetail(id));
 
 export const useMyProfileInfo = () => useQuery(['getMyProfile'], getMyProfile);

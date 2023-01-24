@@ -1,6 +1,4 @@
-import {
-  FormEvent, useCallback, useEffect, useState,
-} from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Reset } from '@/components/auth/reset/Reset';
 import { Certification } from '@/components/auth/findAccount/Certification';
@@ -27,7 +25,7 @@ interface ErrorPropsType {
 }
 
 type RequiredMsg = {
-  [keys in typeof requireArray[number]]: string;
+  [keys in (typeof requireArray)[number]]: string;
 };
 
 const requiredMsg: RequiredMsg = {

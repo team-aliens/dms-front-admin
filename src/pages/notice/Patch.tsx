@@ -23,8 +23,8 @@ export function PatchNoticePage() {
     if (noticeDetail && noticeDetail.isSuccess) {
       const { content, title } = noticeDetail.data;
       setState({
-        title: title,
-        content: content,
+        title,
+        content,
       });
     }
   }, [noticeDetail.isSuccess]);

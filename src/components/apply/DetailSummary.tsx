@@ -20,7 +20,7 @@ const detailOptions: DetailOption[] = [
   {
     name: '자습실 층',
     value: 'floor',
-    func: (item: number) => item + '층',
+    func: (item: number) => `${item}층`,
   },
   {
     name: '자습실 이름',

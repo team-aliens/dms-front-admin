@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text } from '@team-aliens/design-system';
+import { Text, BreadCrumb } from '@team-aliens/design-system';
 import { NoticeDetailSummary } from '@/components/notice/NoticeDetailSummary';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { useModal } from '@/hooks/useModal';
 import { DeleteNoticeConfirm } from '@/components/modals/DeleteNoticeConfirm';
 import { useDeleteNotice, useNoticeDetail } from '@/hooks/useNoticeApi';
-import { BreadCrumb } from '@team-aliens/design-system';
 import { pathToKorean } from '@/router';
 
 export function NoticeDetail() {

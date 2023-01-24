@@ -98,10 +98,11 @@ export const usePostEmailAuthCodeMutation = ({
 
   const requestType = useRef<string>('');
   return useMutation(
-    () => postEmailAuthCode({
-      email,
-      type: 'PASSWORD',
-    }),
+    () =>
+      postEmailAuthCode({
+        email,
+        type: 'PASSWORD',
+      }),
     {
       onMutate: (type?: 'RESEND') => {
         if (type === 'RESEND') requestType.current = type;
@@ -146,11 +147,12 @@ interface CheckEmailAuthCodePropsType {
 export const useCheckEmailAuthCode = ({
   email,
   authCode,
-}: CheckEmailAuthCodePropsType) => useQuery(
-  [queryKeys.이메일인증코드확인, email, authCode],
-  () => checkEmailAuthCode(email, authCode, 'PASSWORD'),
-  {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  },
-);
+}: CheckEmailAuthCodePropsType) =>
+  useQuery(
+    [queryKeys.이메일인증코드확인, email, authCode],
+    () => checkEmailAuthCode(email, authCode, 'PASSWORD'),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+    },
+  );

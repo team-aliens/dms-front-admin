@@ -1,7 +1,7 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
-import { useEffect, useRef } from 'react';
 
 interface Props {
   studentInfo: StudentInfo;
@@ -63,6 +63,7 @@ const _Wrapper = styled.li<WrapperProps>`
   z-index: 20;
   width: 100%;
   height: 70px;
+
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.color.primaryDarken1 : theme.color.gray1};
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
