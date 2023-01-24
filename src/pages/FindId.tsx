@@ -22,9 +22,10 @@ export function FindIdPage() {
     useDropDown<string>('');
 
   const selectedId = useMemo(
-    () => schoolList?.schools?.filter(
-      (school) => school.name === selectedSchoolName,
-    )[0]?.id,
+    () =>
+      schoolList?.schools?.filter(
+        (school) => school.name === selectedSchoolName,
+      )[0]?.id,
     [selectedSchoolName, schoolList],
   );
 

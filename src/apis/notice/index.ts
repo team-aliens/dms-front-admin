@@ -8,15 +8,11 @@ import {
 
 const router = '/notices';
 
-export const writeNotice = async (body: WriteNoticeRequest) => instance.post<WriteNoticeResponse>(`${router}`, body);
+export const writeNotice = async (body: WriteNoticeRequest) =>
+  instance.post<WriteNoticeResponse>(`${router}`, body);
 
-export const patchNotice = async (
-  body: WriteNoticeRequest,
-  noticeId: string,
-) => instance.patch<WriteNoticeResponse>(
-  `${router}/${noticeId}`,
-  body,
-);
+export const patchNotice = async (body: WriteNoticeRequest, noticeId: string) =>
+  instance.patch<WriteNoticeResponse>(`${router}/${noticeId}`, body);
 
 export const deleteNotice = async (noticeId: string) => {
   await instance.delete(`${router}/${noticeId}`);

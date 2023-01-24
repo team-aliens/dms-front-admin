@@ -96,11 +96,11 @@ const setSeatReducer = (state: SeatState, action: ActionTypes): SeatState => {
           ...state,
           ...action.payload,
         };
-      } else {
-        return {
-          ...seatDefaultValue,
-        };
       }
+      return {
+        ...seatDefaultValue,
+      };
+
     case 'SET_SEAT':
       return {
         ...state,

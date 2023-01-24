@@ -15,8 +15,7 @@ export function StudyCard({
     <_Wrapper>
       <_Info>
         <Text color="primary" size="bodyM">
-          {floor}
-          층
+          {floor}층
         </Text>
         <Text color="gray8" size="bodyM" margin={['left', 14]}>
           {name}
@@ -25,14 +24,10 @@ export function StudyCard({
       <_Divider />
       <_Info>
         <Text color="primary" size="bodyM">
-          {gradeTypeToKorean(available_grade)}
-          {' '}
-          {sexTypeToKorean(available_sex)}
+          {gradeTypeToKorean(available_grade)} {sexTypeToKorean(available_sex)}
         </Text>
         <Text color="gray5" size="bodyM" margin={['left', 'auto']}>
-          {in_use_headcount}
-          /
-          {total_available_seat}
+          {in_use_headcount}/{total_available_seat}
         </Text>
       </_Info>
     </_Wrapper>

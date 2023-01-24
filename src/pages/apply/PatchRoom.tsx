@@ -1,15 +1,20 @@
-import { usePatchStudyRoom, useStudyRoomDetail } from '@/apis/studyRooms';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
-import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import {
+  usePatchStudyRoom,
+  useStudyRoomDetail,
+  useDeleteSeatType,
+  useSeatTypeList,
+} from '@/apis/studyRooms';
 import { CreateStudyRoomOptions } from '@/components/apply/CreateOptions';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
 import { useModal } from '@/hooks/useModal';
 import { SeatSetting } from '@/components/apply/SeatSetting';
-import { useDeleteSeatType, useSeatTypeList } from '@/apis/studyRooms';
+
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
@@ -63,8 +68,8 @@ export const PatchRoom = () => {
     onSuccess: () => refetchTypeList(),
   });
 
-  const deleteSeatType = async (id: string) => {
-    await setDeleteId(id);
+  const deleteSeatType = async (seatId: string) => {
+    await setDeleteId(seatId);
     deleteType.mutate();
   };
 
@@ -130,7 +135,7 @@ export const PatchRoom = () => {
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
             createStudyRoom={patchStudyRoom.mutate}
-            patch={true}
+            patch
             {...rest}
           />
         </_Body>

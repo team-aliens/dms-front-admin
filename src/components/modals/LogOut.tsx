@@ -14,7 +14,7 @@ export function LogOutModal({ closeModal }: PropsType) {
     'access_token',
   ]);
 
-  const logout = () => {  
+  const logout = () => {
     removeCookie('refresh_token');
     removeCookie('access_token');
     navigate('/login');

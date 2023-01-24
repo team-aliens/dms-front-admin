@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import {
-  Input, CheckBox, Button, Text,
-} from '@team-aliens/design-system';
+import { Input, CheckBox, Button, Text } from '@team-aliens/design-system';
 import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { TitleBox } from './TitleBox';

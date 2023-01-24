@@ -14,7 +14,7 @@ import { CreateRoom } from '@/pages/apply/CreateRoom';
 import { StudyRoomDetail } from '@/pages/apply/Detail';
 import { PatchRoom } from './pages/apply/PatchRoom';
 
-export let pathToKorean = {
+export const pathToKorean = {
   'notice': {
     index: '공지 목록',
     write: {

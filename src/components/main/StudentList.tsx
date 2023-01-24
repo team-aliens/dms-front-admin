@@ -39,8 +39,7 @@ export function StudentList({
           Icon={<Sort />}
           className="filterButton"
         >
-          {SortEnum[sort]}
-          순
+          {SortEnum[sort]}순
         </Button>
       </_Filter>
       <_StudentList>

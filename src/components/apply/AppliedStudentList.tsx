@@ -35,16 +35,13 @@ export function AppliedStudentList({ studentList }: PropsType) {
               height={60}
             />
             <Text size="captionM" color="gray10">
-              {item.number}
-              번
+              {item.number}번
             </Text>
             <Text size="captionM" color="gray10" className="typeName">
               {item.type?.name}
             </Text>
             <Text size="captionM" color="gray10">
-              {item.student?.gcn}
-              {' '}
-              {item.student?.name}
+              {item.student?.gcn} {item.student?.name}
             </Text>
           </_Row>
         ))}

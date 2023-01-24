@@ -1,6 +1,4 @@
-import {
-  Input, Modal, Button, Text, Arrow,
-} from '@team-aliens/design-system';
+import { Input, Modal, Button, Text, Arrow } from '@team-aliens/design-system';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { ChromePicker, ColorResult } from 'react-color';

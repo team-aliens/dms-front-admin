@@ -1,16 +1,15 @@
-import { TextArea, Button } from '@team-aliens/design-system';
+import { TextArea, Button, BreadCrumb } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent, FormEvent } from 'react';
-import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { BreadCrumb } from '@team-aliens/design-system';
 import { useLocation } from 'react-router-dom';
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 
 interface Props {
   title: string;
   content: string;
   onClick: () => void;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  pathToKorean: any;
+  pathToKorean: object;
 }
 
 export function WriteNotice({

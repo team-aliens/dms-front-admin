@@ -4,11 +4,12 @@ import { changePwd, checkPwd } from '@/apis/users';
 import { ChangePasswordRequest } from '@/apis/users/request';
 import { useToast } from '@/hooks/useToast';
 
-export const useCheckPwd = (password: string) => useQuery(['checkPwd', password], () => checkPwd(password), {
-  refetchOnWindowFocus: false,
-  enabled: false,
-  retry: false,
-});
+export const useCheckPwd = (password: string) =>
+  useQuery(['checkPwd', password], () => checkPwd(password), {
+    refetchOnWindowFocus: false,
+    enabled: false,
+    retry: false,
+  });
 
 export const useChangePwd = (body: ChangePasswordRequest) => {
   const { toastDispatch } = useToast();
