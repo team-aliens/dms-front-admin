@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "your_key=$your_key" >> .env
       - name: Install Dependencies
-        run: yarn --immutable --immutable-cache --check-cache
+        run: yarn install --immutable
 
       - name: Build Packages
         run: yarn build
