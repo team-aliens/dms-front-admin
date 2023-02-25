@@ -43,14 +43,14 @@ export function NoticeDetail() {
             createdDate={detail?.created_at}
             noticeId={noticeId}
           />
-          <Text
+          <_Content
             color="gray7"
             size="bodyM"
             display="inline-block"
             margin={['top', 40]}
           >
             {detail?.content}
-          </Text>
+          </_Content>
         </_Wrapper>
       </WithNavigatorBar>
     </>
@@ -60,4 +60,8 @@ export function NoticeDetail() {
 const _Wrapper = styled.div`
   width: 1030px;
   margin: 0 auto;
+`;
+
+const _Content = styled(Text)`
+  white-space: pre-line;
 `;
