@@ -7,6 +7,11 @@ export type SelectedModalType =
   | 'ADD_SEAT_TYPE'
   | 'APPLICATION_TIME'
   | 'DELETE_STUDY_ROOM'
+  | 'POINT_FILTER'
+  | 'DELETE_POINT_LIST'
+  | 'ADD_STUDY_ROOM_TIME'
+  | 'EDIT_STUDY_ROOM_TIME'
+  | 'DELETE_STUDY_ROOM_TIME'
   | '';
 
 interface ModalState {
