@@ -1,7 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Modal, Button, Input } from '@team-aliens/design-system';
-import styled from 'styled-components';
-import { useForm } from '@/hooks/useForm';
+import { Modal, Button } from '@team-aliens/design-system';
 
 interface PropsType {
   close: () => void;

@@ -1,12 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Modal, Button, Input } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useForm } from '@/hooks/useForm';
-import {
-  useGetApplicationTime,
-  useSetApplicationTime,
-} from '@/apis/studyRooms';
-import { IStudyRoomTime } from '@/pages/apply/StudyRoomList';
 
 export interface ApplicationTime {
   startHour: string;
