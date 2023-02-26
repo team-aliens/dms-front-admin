@@ -28,7 +28,8 @@ export function StudyRoomList() {
   const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
     [],
   );
-  const [current, setCurrent] = useState(0);
+  const [hover, setHover] = useState<boolean>(false);
+  const [current, setCurrent] = useState<number>(0);
   const [studyRoomTime] = useState<IStudyRoomTime>({
     startAt: '00:00',
     endAt: '00:00',
@@ -66,25 +67,30 @@ export function StudyRoomList() {
           {studyRoomTimeList.map((studyRomTime, idx) => {
             const { startHour, startMin, endHour, endMin } = studyRomTime;
             return (
-              <Button
-                onClick={() => setCurrent(idx)}
-                color={current === idx ? 'primary' : 'gray'}
-                kind={current === idx ? 'contained' : 'outline'}
+              <div
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
               >
-                {startHour}시 {startMin !== '00' && `${startMin}분`} ~ {endHour}
-                시 {endMin !== '00' && `${endMin}분`}
-                {current === idx && (
-                  <>
-                    <_Line />
-                    <_Border onClick={openEditStudyRoomTimeModal}>
-                      <Gear colorKey="gray1" size={18} />
-                    </_Border>
-                    <_Border onClick={openDeleteStudyRoomTimeModal}>
-                      <Trash colorKey="gray1" size={18} />
-                    </_Border>
-                  </>
-                )}
-              </Button>
+                <Button
+                  onClick={() => setCurrent(idx)}
+                  color={current === idx ? 'primary' : 'gray'}
+                  kind={current === idx ? 'contained' : 'outline'}
+                >
+                  {startHour}시 {startMin !== '00' && `${startMin}분`} ~{' '}
+                  {endHour}시 {endMin !== '00' && `${endMin}분`}
+                  {hover && (
+                    <>
+                      <_Line />
+                      <_Border onClick={openEditStudyRoomTimeModal}>
+                        <Gear colorKey="gray1" size={18} />
+                      </_Border>
+                      <_Border onClick={openDeleteStudyRoomTimeModal}>
+                        <Trash colorKey="gray1" size={18} />
+                      </_Border>
+                    </>
+                  )}
+                </Button>
+              </div>
             );
           })}
         </_Buttons>
