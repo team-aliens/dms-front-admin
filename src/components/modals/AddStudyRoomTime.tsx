@@ -1,6 +1,7 @@
 import { Modal, Button, Input } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useForm } from '@/hooks/useForm';
+import { useToast } from '@/hooks/useToast';
 
 export interface ApplicationTime {
   startHour: string;
@@ -30,8 +31,16 @@ export function AddStudyRoomTimeModal({
     endHour: endAt.slice(0, 2),
     endMin: endAt.slice(3, 5),
   });
+  const { toastDispatch } = useToast();
 
   const Confirm = () => {
+    toastDispatch({
+      actionType: 'APPEND_TOAST',
+      toastType: 'SUCCESS',
+      message: `자습실 사용 시간이 ${
+        type === 'CREATE' ? '추가' : '수정'
+      }되었습니다.`,
+    });
     onClick(state);
     close();
   };
@@ -76,7 +85,15 @@ export function AddStudyRoomTimeModal({
         </_Time>,
       ]}
       buttonList={[
-        <Button onClick={Confirm}>
+        <Button
+          disabled={
+            !state.startMin ||
+            !state.startHour ||
+            !state.endMin ||
+            !state.endHour
+          }
+          onClick={Confirm}
+        >
           {type === 'CREATE' ? '생성' : '수정'}
         </Button>,
       ]}

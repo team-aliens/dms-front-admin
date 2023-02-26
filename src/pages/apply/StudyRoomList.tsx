@@ -29,7 +29,7 @@ export function StudyRoomList() {
     [],
   );
   const [current, setCurrent] = useState(0);
-  const [studyRoomTime, setStudyRoomTime] = useState<IStudyRoomTime>({
+  const [studyRoomTime] = useState<IStudyRoomTime>({
     startAt: '00:00',
     endAt: '00:00',
   });
@@ -63,17 +63,17 @@ export function StudyRoomList() {
             kind="outline"
             Icon={<Add />}
           />
-          {studyRoomTimeList.map((res, i) => {
-            const { startHour, startMin, endHour, endMin } = res;
+          {studyRoomTimeList.map((studyRomTime, idx) => {
+            const { startHour, startMin, endHour, endMin } = studyRomTime;
             return (
               <Button
-                onClick={() => setCurrent(i)}
-                color={current === i ? 'primary' : 'gray'}
-                kind={current === i ? 'contained' : 'outline'}
+                onClick={() => setCurrent(idx)}
+                color={current === idx ? 'primary' : 'gray'}
+                kind={current === idx ? 'contained' : 'outline'}
               >
                 {startHour}시 {startMin !== '00' && `${startMin}분`} ~ {endHour}
                 시 {endMin !== '00' && `${endMin}분`}
-                {current === i && (
+                {current === idx && (
                   <>
                     <_Line />
                     <_Border onClick={openEditStudyRoomTimeModal}>
