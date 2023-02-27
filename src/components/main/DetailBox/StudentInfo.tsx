@@ -4,7 +4,7 @@ import { Text } from '@team-aliens/design-system';
 interface Props {
   name: string;
   gcn: string;
-  room_number: number;
+  room_number: string;
   profile_image_url: string;
 }
 
