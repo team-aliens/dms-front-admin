@@ -20,6 +20,8 @@ interface RoomMatesInfo {
   profile_image_url: string;
 }
 
+export type GenderType = 'FEMALE' | 'MALE';
+
 export interface GetStudentDetailResponse {
   name: string;
   gcn: string;
@@ -28,6 +30,7 @@ export interface GetStudentDetailResponse {
   bonus_point: number;
   minus_point: number;
   room_mates: RoomMatesInfo[];
+  sex: GenderType;
 }
 
 export interface GetMyProfileResponse {
