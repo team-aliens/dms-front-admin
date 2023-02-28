@@ -10,7 +10,7 @@ interface Props {
   name: string;
   gcn: string;
   sex: GenderType;
-  room_number: number;
+  room_number: string;
   profile_image_url: string;
 }
 
