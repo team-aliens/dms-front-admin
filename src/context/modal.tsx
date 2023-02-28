@@ -12,6 +12,7 @@ export type SelectedModalType =
   | 'ADD_STUDY_ROOM_TIME'
   | 'EDIT_STUDY_ROOM_TIME'
   | 'DELETE_STUDY_ROOM_TIME'
+  | 'STUDENT_EXEL'
   | 'DELETE_STUDENT'
   | '';
 
