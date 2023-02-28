@@ -38,7 +38,7 @@ export function Home() {
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
     sort: 'GCN',
-    filterType: 'BONUS',
+    filterType: 'ALL',
   });
   const [limitPoint, setLimitPoint] = useState<LimitPoint>({
     startPoint: -100,
@@ -46,14 +46,14 @@ export function Home() {
   });
 
   const [debouncedName, setDebouncedName] = useState(filter.name);
-  const [selectedStudentId, setSelectedStudentId] = useState<string>('');
+  const [selectedStudentId, setSelectedStudentId] = useState<string[]>(['']);
   const [mode, setMode] = useState<Mode>({
     type: 'GENERAL',
     text: '상벌점 부여',
   });
   const [listViewType, setListViewType] = useState<ListViewType>('POINTS');
 
-  const { data: studentDetail } = useStudentDetail(selectedStudentId);
+  const { data: studentDetail } = useStudentDetail(selectedStudentId[0]);
 
   const { data: studentList } = useSearchStudents({
     name: debouncedName,
@@ -81,9 +81,22 @@ export function Home() {
     debounce(() => setDebouncedName(e.target.value), 200);
   };
 
-  const onClickStudent = (id: string) =>
-    setSelectedStudentId((prevId) => (prevId === id ? '' : id));
-
+  const onClickStudent = (id: string, modeType?: ModeType) => {
+    if (modeType === 'POINTS') {
+      if (selectedStudentId.includes(id)) {
+        setSelectedStudentId(
+          selectedStudentId.filter((element) => element !== id),
+        );
+      } else {
+        if (selectedStudentId[0] === '') selectedStudentId[0] = id;
+        else selectedStudentId[selectedStudentId.length] = id;
+        setSelectedStudentId([...selectedStudentId]);
+      }
+    } else {
+      selectedStudentId[0] = selectedStudentId[0] === id ? '' : id;
+      setSelectedStudentId([...selectedStudentId]);
+    }
+  };
   const ChangeMode = () => {
     switch (mode.type) {
       case 'GENERAL':
@@ -150,8 +163,9 @@ export function Home() {
                 const isClickAbleElement =
                   className.includes('studentBox') ||
                   className.includes('filterButton') ||
-                  className.includes('searchBox');
-                if (!isClickAbleElement) setSelectedStudentId('');
+                  className.includes('searchBox') ||
+                  className.includes('grantPoint');
+                if (!isClickAbleElement) setSelectedStudentId(['']);
               }}
             >
               <StudentDetail

@@ -8,9 +8,10 @@ import { PointBox } from './PointBox';
 import { ModeType } from '@/pages/Home';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { useModal } from '@/hooks/useModal';
+import { StudentDetailPointList } from './StudentDetailPoint';
 
 interface PropsType {
-  studentId: string;
+  studentId: string[];
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
   onClickStudent: (id: string) => void;
@@ -24,7 +25,7 @@ export function DetailBox({
   mode,
   studentId,
 }: PropsType) {
-  const { data: studentPointHistory } = useStudentPointHistory(studentId);
+  const { data: studentPointHistory } = useStudentPointHistory(studentId[0]);
   const { selectModal, closeModal, modalState } = useModal();
 
   return (
@@ -37,7 +38,7 @@ export function DetailBox({
       {mode === 'GENERAL' ? (
         <_DetailBox>
           <StudentProfile
-            student_id={studentId}
+            student_id={studentId[0]}
             name={studentDetail.name}
             gcn={studentDetail.gcn}
             sex={studentDetail.sex}
@@ -82,28 +83,11 @@ export function DetailBox({
         </_DetailBox>
       ) : (
         <_PointDetailBox>
-          <_StudentNameNumber>
-            <Text color="gray10" size="bodyL">
-              {studentDetail.name}
-            </Text>
-            <Text color="gray6" size="bodyS">
-              {studentDetail.gcn}
-            </Text>
-          </_StudentNameNumber>
-          <_PointItemList>
-            {studentPointHistory?.point_histories.slice(0, 4).map((history) => {
-              const { name, point_history_id, score, type } = history;
-              return (
-                <PointItem
-                  canDelete={false}
-                  name={name}
-                  point_history_id={point_history_id}
-                  score={score}
-                  type={type}
-                />
-              );
-            })}
-          </_PointItemList>
+          {studentId
+            .filter((item) => item !== '' && item !== undefined)
+            .map((id) => (
+              <StudentDetailPointList id={id} />
+            ))}
         </_PointDetailBox>
       )}
     </>
