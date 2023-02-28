@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
+import { ModeType } from '@/pages/Home';
 
 interface Props {
+  mode: ModeType;
   studentInfo: StudentInfo;
-  onClickStudent: (id: string) => void;
+  onClickStudent: (id: string, modeType?: ModeType) => void;
   isSelected: boolean;
-  selectedStudentId: string;
+  selectedStudentId: string[];
 }
 
 export function StudentBox({
@@ -15,10 +17,11 @@ export function StudentBox({
   onClickStudent,
   isSelected,
   selectedStudentId,
+  mode,
 }: Props) {
   const ref = useRef<HTMLLIElement>(null);
   useEffect(() => {
-    if (studentInfo.id === selectedStudentId)
+    if (selectedStudentId.includes(studentInfo.id))
       ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [selectedStudentId]);
   return (
@@ -26,10 +29,15 @@ export function StudentBox({
       ref={ref}
       isSelected={isSelected}
       className="studentBox"
-      onClick={() => onClickStudent(studentInfo.id)}
+      onClick={() => onClickStudent(studentInfo.id, mode)}
     >
-      <img src={studentInfo.profile_image_url} alt="프로필" />
+      <img
+        className="studentBox"
+        src={studentInfo.profile_image_url}
+        alt="프로필"
+      />
       <Text
+        className="studentBox"
         size="bodyL"
         color={isSelected ? 'gray1' : 'gray10'}
         margin={['left', 16]}
@@ -37,6 +45,7 @@ export function StudentBox({
         {studentInfo.name}
       </Text>
       <Text
+        className="studentBox"
         margin={['left', 16]}
         size="bodyL"
         color={isSelected ? 'gray4' : 'gray6'}
@@ -44,6 +53,7 @@ export function StudentBox({
         {studentInfo.gcn}
       </Text>
       <Text
+        className="studentBox"
         size="bodyL"
         color={isSelected ? 'gray4' : 'gray6'}
         margin={['left', 'auto']}
