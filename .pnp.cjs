@@ -34,7 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
-            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.3.42"],\
+            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0"],\
             ["@types/file-saver", "npm:2.0.5"],\
             ["@types/jest", "npm:29.2.6"],\
             ["@types/node", "npm:18.11.18"],\
@@ -7343,7 +7343,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
-            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.3.42"],\
+            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0"],\
             ["@types/file-saver", "npm:2.0.5"],\
             ["@types/jest", "npm:29.2.6"],\
             ["@types/node", "npm:18.11.18"],\

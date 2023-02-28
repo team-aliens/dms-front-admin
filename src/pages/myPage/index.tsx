@@ -76,7 +76,7 @@ export function MyPage() {
           </_CardWrapper>
           <_StudentIssuance onClick={openStudentExelModal}>
             <Text display="block" size="titleS">
-              학생 발급
+              학생 등록
             </Text>
             <Arrow size={24} direction="right" />
           </_StudentIssuance>
