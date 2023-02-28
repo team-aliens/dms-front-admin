@@ -60,7 +60,7 @@ interface WrapperProps {
 
 const _Wrapper = styled.li<WrapperProps>`
   position: relative;
-  z-index: 20;
+  z-index: 1;
   width: 100%;
   height: 70px;
 

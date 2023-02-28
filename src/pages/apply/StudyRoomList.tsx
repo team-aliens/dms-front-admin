@@ -57,7 +57,7 @@ export function StudyRoomList() {
     <WithNavigatorBar>
       <_Wrapper>
         <StudyListOptions {...applicationTime} />
-        <_Buttons>
+        {/* <_Buttons>
           <Button
             onClick={openAddStudyRoomTimeModal}
             color="gray"
@@ -68,7 +68,7 @@ export function StudyRoomList() {
             const { startHour, startMin, endHour, endMin } = studyRomTime;
             return (
               <div
-                onMouseEnter={() => setHover(true)}
+                onMouseEnter={() => current === idx && setHover(true)}
                 onMouseLeave={() => setHover(false)}
               >
                 <Button
@@ -78,7 +78,7 @@ export function StudyRoomList() {
                 >
                   {startHour}시 {startMin !== '00' && `${startMin}분`} ~{' '}
                   {endHour}시 {endMin !== '00' && `${endMin}분`}
-                  {hover && (
+                  {hover && current === idx && (
                     <>
                       <_Line />
                       <_Border onClick={openEditStudyRoomTimeModal}>
@@ -93,7 +93,7 @@ export function StudyRoomList() {
               </div>
             );
           })}
-        </_Buttons>
+        </_Buttons> */}
         <_List>
           {list?.study_rooms.map((i) => (
             <Link to={`/apply/detail/${i.id}`}>

@@ -1,16 +1,18 @@
 import styled from 'styled-components';
-import { Button, Text } from '@team-aliens/design-system';
-import { StudentProfile } from '@/components/main/DetailBox/StudentInfo';
-import { PointBox } from '@/components/main/DetailBox/PointBox';
+import { Text } from '@team-aliens/design-system';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
+import { ModeType } from '@/pages/Home';
+import { DetailBox } from './DetailBox';
 
 interface Props {
+  mode: ModeType;
   studentDetail: GetStudentDetailResponse;
   studentId: string;
   onClickStudent: (id: string) => void;
 }
 
 export function StudentDetail({
+  mode,
   studentDetail,
   studentId,
   onClickStudent,
@@ -18,46 +20,30 @@ export function StudentDetail({
   return (
     <>
       <_Wrapper isSelected={studentId !== ''}>
-        <Text size="titleL" color="gray6">
-          학생 상세 확인
-        </Text>
-        {studentId && studentDetail ? (
-          <_DetailBox>
-            <StudentProfile
-              name={studentDetail.name}
-              gcn={studentDetail.gcn}
-              room_number={studentDetail.room_number}
-              profile_image_url={studentDetail.profile_image_url}
+        <_ScrollArea>
+          <Text size="titleL" color="gray6">
+            {mode === 'GENERAL' ? '학생 상세 확인' : '학생 상/벌점'}
+          </Text>
+          {studentId && studentDetail ? (
+            <DetailBox
+              studentId={studentId}
+              mode={mode}
+              studentDetail={studentDetail}
+              onClickStudent={onClickStudent}
             />
-            <_PointWrapper>
-              <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
-              <PointBox pointType="MINUS" point={studentDetail.minus_point} />
-            </_PointWrapper>
-            <Text size="bodyS" color="gray6" margin={['top', 40]}>
-              동일 호실 학생
-            </Text>
-            <_MateList>
-              {studentDetail.room_mates.map((item) => (
-                <Button
-                  kind="outline"
-                  onClick={() => onClickStudent(item.id)}
-                  color="gray"
-                >
-                  {item.name}
-                </Button>
-              ))}
-            </_MateList>
-          </_DetailBox>
-        ) : (
-          <_NotSelected
-            size="bodyL"
-            color="gray5"
-            display="block"
-            margin={['top', 40]}
-          >
-            학생 목록에서 선택하여 상세 내용을 확인하세요.
-          </_NotSelected>
-        )}
+          ) : (
+            <_NotSelected
+              size="bodyL"
+              color="gray5"
+              display="block"
+              margin={['top', 40]}
+            >
+              {mode === 'GENERAL'
+                ? '학생 목록에서 선택하여 상세 내용을 확인하세요.'
+                : '학생 전체 상/벌점 내역은 학생 상세 확인해주세요.'}
+            </_NotSelected>
+          )}
+        </_ScrollArea>
       </_Wrapper>
       <_Padding isSelected={studentId !== ''} />
     </>
@@ -86,14 +72,26 @@ const _Wrapper = styled.div<{
   }
 `;
 
+const _ScrollArea = styled.div`
+  width: 600px;
+  height: 600px;
+  padding-bottom: 50px;
+  padding-left: 20px;
+  overflow: scroll;
+`;
+
 const _DetailBox = styled.div`
+  position: relative;
   margin-top: 43px;
   padding: 60px 40px;
   width: 436px;
-  height: 485px;
+  min-height: 485px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 1px 20px rgba(238, 238, 238, 0.8);
+  border-radius: 4px;
 `;
+
 const _NotSelected = styled(Text)`
   width: 180px;
 `;
@@ -113,4 +111,12 @@ const _MateList = styled.div`
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 8px;
+`;
+
+const _PointList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
 `;

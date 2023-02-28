@@ -6,6 +6,7 @@ import {
   SearchStudentListResponse,
 } from './response';
 import { ResetPasswordRequest } from './request';
+import { PointType } from '../points';
 
 const router = '/managers';
 
@@ -28,10 +29,20 @@ export enum SortEnum {
   GCN = '학번',
   NAME = '이름',
 }
+export enum GenderEnum {
+  FEMALE = '여',
+  MALE = '남',
+}
 
-export const searchStudentList = async (name: string, sort: SortType) => {
+export const searchStudentList = async (
+  name: string,
+  sort: SortType,
+  filter_type: PointType,
+  min_point: number,
+  max_point: number,
+) => {
   const { data } = await instance.get<SearchStudentListResponse>(
-    `${router}/students?name=${name}&sort=${sort}`,
+    `${router}/students?name=${name}&sort=${sort}&filter_type=${filter_type}&min_point=${min_point}&max_point=${max_point}`,
   );
   return data;
 };
