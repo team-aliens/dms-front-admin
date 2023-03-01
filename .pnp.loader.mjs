@@ -1769,6 +1769,13 @@ class VirtualFS extends ProxiedFS {
   }
 }
 
+<<<<<<< HEAD
+const [major, minor] = process.versions.node.split(`.`).map((value) => parseInt(value, 10));
+const HAS_CONSOLIDATED_HOOKS = major > 16 || major === 16 && minor >= 12;
+const HAS_UNFLAGGED_JSON_MODULES = major > 17 || major === 17 && minor >= 5 || major === 16 && minor >= 15;
+const HAS_JSON_IMPORT_ASSERTION_REQUIREMENT = major > 17 || major === 17 && minor >= 1 || major === 16 && minor > 14;
+const WATCH_MODE_MESSAGE_USES_ARRAYS = major > 19 || major === 19 && minor >= 2 || major === 18 && minor >= 13;
+=======
 const [major, minor] = process.versions.node
   .split(`.`)
   .map((value) => parseInt(value, 10));
@@ -1779,6 +1786,7 @@ const HAS_JSON_IMPORT_ASSERTION_REQUIREMENT =
   major > 17 || (major === 17 && minor >= 1) || (major === 16 && minor > 14);
 const WATCH_MODE_MESSAGE_USES_ARRAYS =
   major > 19 || (major === 19 && minor >= 2);
+>>>>>>> 72-point_option_modal
 
 const builtinModules = new Set(
   Module.builtinModules || Object.keys(process.binding(`natives`)),
@@ -2496,11 +2504,16 @@ async function resolve$1(originalSpecifier, context, nextResolve) {
   let allowLegacyResolve = false;
   if (dependencyNameMatch) {
     const [, dependencyName, subPath] = dependencyNameMatch;
+<<<<<<< HEAD
+    if (subPath === `` && dependencyName !== `pnpapi`) {
+      const resolved = pnpapi.resolveToUnqualified(`${dependencyName}/package.json`, issuer);
+=======
     if (subPath === ``) {
       const resolved = pnpapi.resolveToUnqualified(
         `${dependencyName}/package.json`,
         issuer,
       );
+>>>>>>> 72-point_option_modal
       if (resolved) {
         const content = await tryReadFile$1(resolved);
         if (content) {

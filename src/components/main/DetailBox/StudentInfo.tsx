@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { SeeMore, Text } from '@team-aliens/design-system';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { useState } from 'react';
 import { GenderType } from '@/apis/managers/response';
 import { GenderEnum } from '@/apis/managers';
@@ -45,9 +46,15 @@ export function StudentProfile({
             <SeeMore size={24} colorKey="gray5" />
           </_Icon>
           {openDeleteStudent && (
-            <_DeleteStudent onClick={openDeleteStudentModal}>
-              학생 삭제
-            </_DeleteStudent>
+            <OutsideClickHandler
+              onOutsideClick={() => {
+                setOpenDeleteStudent(false);
+              }}
+            >
+              <_DeleteStudent onClick={openDeleteStudentModal}>
+                학생 삭제
+              </_DeleteStudent>
+            </OutsideClickHandler>
           )}
         </_PersonalInfo>
         <_HStack>

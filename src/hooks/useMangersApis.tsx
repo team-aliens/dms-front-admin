@@ -70,7 +70,7 @@ export const useDeleteStudent = (student_id: string) => {
   return useMutation(() => deleteStudent(student_id), {
     onSuccess: () => {
       closeModal();
-      navigate('/');
+      navigate(0);
     },
   });
 };
