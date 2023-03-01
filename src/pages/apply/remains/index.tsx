@@ -9,6 +9,7 @@ import { useGetAllRemains, useGetExcelPrint } from '@/hooks/useRemainApi';
 import TimeModal from '@/components/apply/remains/timeModal';
 import { getAllRemain } from '@/apis/remains';
 import { queryClient } from '@/index';
+import { useModal } from '@/hooks/useModal';
 
 export default function RemainsLists() {
   const { data: allRemains } = useGetAllRemains();
@@ -16,6 +17,7 @@ export default function RemainsLists() {
   const { mutate: getAllRemainMutate } = useMutation(getAllRemain);
 
   const [remainKind, setRemainKind] = useState<'create' | 'edit'>('create');
+  const { selectModal, closeModal, modalState } = useModal();
   const [remainModal, setRemainModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [timeModal, setTimeModal] = useState(false);
