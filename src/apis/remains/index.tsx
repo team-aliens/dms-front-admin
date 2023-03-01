@@ -51,8 +51,8 @@ export const deleteRemain = async (path: string) => {
   await instance.delete(`${router}/options/${path}`);
 };
 
-export const excelPrint = () => {
-  instance
+export const excelPrint = async () => {
+  await instance
     .get(`${router}/status/file`, {
       responseType: 'blob',
     })
