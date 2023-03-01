@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { instance } from '@/apis/axios';
 import {
   createRemainBody,
@@ -51,15 +52,18 @@ export const deleteRemain = async (path: string) => {
 };
 
 export const excelPrint = () => {
-  instance.get(`${router}/status/file`).then((res) => {
-    const url = URL.createObjectURL(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      new Blob([res.data], { type: res.headers['content-type'] }),
-    );
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', '학생 잔류 신청 내역.xlsx');
-    document.body.appendChild(link);
-    link.click();
-  });
+  instance
+    .get(`${router}/status/file`, {
+      responseType: 'blob',
+    })
+    .then((res: AxiosResponse<Blob>) => {
+      const url = URL.createObjectURL(
+        new Blob([res.data], { type: res.headers['content-type'] }),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '학생 잔류 신청 내역.xlsx');
+      document.body.appendChild(link);
+      link.click();
+    });
 };
