@@ -1,52 +1,109 @@
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
+import { Dispatch, SetStateAction } from 'react';
 import { theme } from '@team-aliens/design-system/dist/styles/theme';
 import { PointType } from '@/apis/points';
 
 interface Props {
+  currentPointType: PointType;
+  setCurrentPointType: Dispatch<SetStateAction<PointType>>;
   pointType: PointType;
   point: number;
 }
 
-export function PointBox({ pointType, point }: Props) {
+export function PointBox({
+  currentPointType,
+  setCurrentPointType,
+  pointType,
+  point,
+}: Props) {
+  const isCurrent = pointType === currentPointType;
+  const onClick = () => {
+    if (isCurrent) setCurrentPointType('ALL');
+    else setCurrentPointType(pointType);
+  };
+
   return (
-    <_Wrapper color={pointType}>
-      <_PointType
-        size="bodyS"
-        color={pointType === 'BONUS' ? 'primary' : 'error'}
-      >
-        {pointType === 'BONUS' ? '상점' : '벌점'}
-      </_PointType>
-      <_Point size="bodyL" color={pointType === 'BONUS' ? 'primary' : 'error'}>
-        {point}
-      </_Point>
+    <_Wrapper
+      isCurrent={isCurrent || currentPointType === 'ALL'}
+      onClick={onClick}
+      color={pointType}
+    >
+      {pointType === 'BONUS' && (
+        <>
+          <_PointType
+            size="bodyS"
+            color={
+              currentPointType === 'BONUS' || currentPointType === 'ALL'
+                ? 'primary'
+                : 'gray3'
+            }
+          >
+            {pointType === 'BONUS' ? '상점' : '벌점'}
+          </_PointType>
+          <_Point
+            size="bodyL"
+            color={
+              currentPointType === 'BONUS' || currentPointType === 'ALL'
+                ? 'primary'
+                : 'gray3'
+            }
+          >
+            {point}
+          </_Point>
+        </>
+      )}
+      {pointType === 'MINUS' && (
+        <>
+          <_PointType
+            size="bodyS"
+            color={
+              currentPointType === 'MINUS' || currentPointType === 'ALL'
+                ? 'error'
+                : 'gray3'
+            }
+          >
+            {pointType === 'MINUS' ? '상점' : '벌점'}
+          </_PointType>
+          <_Point
+            size="bodyL"
+            color={
+              currentPointType === 'MINUS' || currentPointType === 'ALL'
+                ? 'error'
+                : 'gray3'
+            }
+          >
+            {point}
+          </_Point>
+        </>
+      )}
     </_Wrapper>
   );
 }
 
-const _Wrapper = styled.div<{ color?: PointType }>`
+const _Wrapper = styled.div<{ color?: PointType; isCurrent?: boolean }>`
   width: 172px;
   height: 47px;
   display: flex;
-  background-color: ${({ color }) => {
+  background-color: ${({ color, isCurrent }) => {
     switch (color) {
       case 'BONUS':
-        return theme.color.primaryLighten2;
+        return isCurrent ? theme.color.primaryLighten2 : theme.color.gray2;
       case 'MINUS':
-        return theme.color.errorLighten2;
+        return isCurrent ? theme.color.errorLighten2 : theme.color.gray2;
       default:
-        return theme.color.gray3;
+        return '';
     }
   }};
   border: 1px solid
-    ${({ color }) => {
+    ${({ color, isCurrent }) => {
       switch (color) {
         case 'BONUS':
-          return theme.color.primary;
+          return isCurrent ? theme.color.primary : theme.color.gray3;
         case 'MINUS':
-          return theme.color.error;
+          return isCurrent ? theme.color.error : theme.color.gray3;
         default:
-          return theme.color.gray2;
+          return '';
       }
     }};
   padding: 8px 0;

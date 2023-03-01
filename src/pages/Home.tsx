@@ -164,7 +164,8 @@ export function Home() {
                   className.includes('studentBox') ||
                   className.includes('filterButton') ||
                   className.includes('searchBox') ||
-                  className.includes('grantPoint');
+                  className.includes('grantPoint') ||
+                  className.includes('modalButton');
                 if (!isClickAbleElement) setSelectedStudentId(['']);
               }}
             >
