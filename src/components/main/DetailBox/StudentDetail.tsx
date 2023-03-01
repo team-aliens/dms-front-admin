@@ -45,7 +45,7 @@ export function StudentDetail({
           )}
         </_ScrollArea>
       </_Wrapper>
-      <_Padding isSelected={studentId[0] !== ''} />
+      <_Padding isSelected={!!studentId[0]} />
     </>
   );
 }

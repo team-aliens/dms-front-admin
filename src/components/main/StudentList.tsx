@@ -13,6 +13,7 @@ import { useCancelPointHistory } from '@/hooks/usePointsApi';
 import { FilterState, ModeType } from '@/pages/Home';
 import { PointEnum, PointType } from '@/apis/points';
 import { DeleteStudentModal } from '../modals/DeleteStudent';
+import { useDeleteStudent } from '@/hooks/useMangersApis';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -46,6 +47,7 @@ export function StudentList({
   const openPointFilterModal = () => selectModal('POINT_FILTER');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
+  const deleteStudent = useDeleteStudent(selectedStudentId[0]);
 
   const filterText = () => {
     if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
@@ -114,10 +116,7 @@ export function StudentList({
         />
       )}
       {modalState.selectedModal === 'DELETE_STUDENT' && (
-        <DeleteStudentModal
-          selectedStudentId={selectedStudentId[0]}
-          close={closeModal}
-        />
+        <DeleteStudentModal onClick={deleteStudent.mutate} close={closeModal} />
       )}
     </_Wrapper>
   );
