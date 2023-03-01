@@ -16,13 +16,13 @@ import { DeleteStudentModal } from '../modals/DeleteStudent';
 
 interface Props extends FilterState {
   mode: ModeType;
-  selectedStudentId: string;
+  selectedStudentId: string[];
   studentList: StudentInfo[];
   startPoint: number;
   endPoint: number;
   onChangeSearchName: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeSortType: () => void;
-  onClickStudent: (id: string) => void;
+  onClickStudent: (id: string, modeType?: ModeType) => void;
   onChangeFilterType: (type: PointType) => void;
   onChangeLimitPoint: (startPoint: number, endPoint: number) => void;
 }
@@ -55,8 +55,15 @@ export function StudentList({
     return `${PointEnum[filterType]} / ${startPoint}~${endPoint}점`;
   };
 
+  const pointListText = () => {
+    if (!selectedStudentId[0]) {
+      return '상/벌점 항목 보기';
+    }
+    return '상/벌점 부여';
+  };
+
   return (
-    <_Wrapper detailIsOpened={selectedStudentId !== ''}>
+    <_Wrapper detailIsOpened={!!selectedStudentId[0]}>
       <_Filter className="filter">
         <SearchBox
           className="searchBox"
@@ -67,7 +74,7 @@ export function StudentList({
           {mode === 'GENERAL' ? (
             <Button onClick={openPointFilterModal}>{filterText()}</Button>
           ) : (
-            <Button onClick={openPointOptionsModal}>상/벌점 항목 보기</Button>
+            <Button className="grantPoint">{pointListText()}</Button>
           )}
           <Button
             kind="outline"
@@ -83,9 +90,10 @@ export function StudentList({
       <_StudentList>
         {studentList.map((item) => (
           <StudentBox
+            mode={mode}
             studentInfo={item}
             onClickStudent={onClickStudent}
-            isSelected={selectedStudentId === item.id}
+            isSelected={selectedStudentId.includes(item.id)}
             selectedStudentId={selectedStudentId}
           />
         ))}
@@ -108,7 +116,7 @@ export function StudentList({
       )}
       {modalState.selectedModal === 'DELETE_STUDENT' && (
         <DeleteStudentModal
-          selectedStudentId={selectedStudentId}
+          selectedStudentId={selectedStudentId[0]}
           close={closeModal}
         />
       )}

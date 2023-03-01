@@ -12,11 +12,13 @@ import { LogOutModal } from '@/components/modals/LogOut';
 import { ChangeSchoolQnARequest } from '@/apis/schools/request';
 import { useChangeQnA, useReissueSchoolCode } from '@/hooks/useSchoolsApi';
 import { useMyProfileInfo } from '@/hooks/useMangersApis';
+import { StudentRegistrationExcel } from '@/components/modals/StudentRegistrationExcel';
 
 export function MyPage() {
   const { modalState, selectModal, closeModal } = useModal();
   const openNewQuestionModal = () => selectModal('NEW_QNA');
   const openLogoutModal = () => selectModal('LOGOUT');
+  const openStudentExelModal = () => selectModal('STUDENT_EXEL');
 
   const { onHandleChange: onChange, state: qnaState } =
     useForm<ChangeSchoolQnARequest>({
@@ -72,6 +74,12 @@ export function MyPage() {
               answer={myProfileData?.answer}
             />
           </_CardWrapper>
+          <_StudentIssuance onClick={openStudentExelModal}>
+            <Text display="block" size="titleS">
+              학생 등록
+            </Text>
+            <Arrow size={24} direction="right" />
+          </_StudentIssuance>
         </_Wrapper>
       </WithNavigatorBar>
       {modalState.selectedModal === 'NEW_QNA' && (
@@ -85,6 +93,9 @@ export function MyPage() {
       )}
       {modalState.selectedModal === 'LOGOUT' && (
         <LogOutModal closeModal={closeModal} />
+      )}
+      {modalState.selectedModal === 'STUDENT_EXEL' && (
+        <StudentRegistrationExcel closeModal={closeModal} />
       )}
     </>
   );
@@ -114,6 +125,19 @@ const _PasswordChange = styled(Link)`
   > div {
     margin-right: 60px;
   }
+`;
+
+const _StudentIssuance = styled.div`
+  width: 500px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 24px;
+  margin-top: 25px;
+  box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
+  border-radius: 4px;
 `;
 
 const _Logout = styled(Text)`

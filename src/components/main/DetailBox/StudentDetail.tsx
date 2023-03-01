@@ -7,7 +7,7 @@ import { DetailBox } from './DetailBox';
 interface Props {
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
-  studentId: string;
+  studentId: string[];
   onClickStudent: (id: string) => void;
 }
 
@@ -19,7 +19,7 @@ export function StudentDetail({
 }: Props) {
   return (
     <>
-      <_Wrapper isSelected={studentId !== ''}>
+      <_Wrapper isSelected={studentId[0] !== ''}>
         <_ScrollArea>
           <Text size="titleL" color="gray6">
             {mode === 'GENERAL' ? '학생 상세 확인' : '학생 상/벌점'}
@@ -45,7 +45,7 @@ export function StudentDetail({
           )}
         </_ScrollArea>
       </_Wrapper>
-      <_Padding isSelected={studentId !== ''} />
+      <_Padding isSelected={studentId[0] !== ''} />
     </>
   );
 }
