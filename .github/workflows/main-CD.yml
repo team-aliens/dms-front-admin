@@ -30,7 +30,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: DISABLE_ESLINT_PLUGIN=true yarn build build
+        run: DISABLE_ESLINT_PLUGIN=true yarn build
 
       - name: Cache node modulesa
         uses: actions/cache@v2
