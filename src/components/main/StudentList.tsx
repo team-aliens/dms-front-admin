@@ -44,6 +44,7 @@ export function StudentList({
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const openPointFilterModal = () => selectModal('POINT_FILTER');
+  const openPointOptionsModal = () => selectModal('POINT_OPTIONS');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
 
@@ -66,7 +67,7 @@ export function StudentList({
           {mode === 'GENERAL' ? (
             <Button onClick={openPointFilterModal}>{filterText()}</Button>
           ) : (
-            <Button>상/벌점 항목 보기</Button>
+            <Button onClick={openPointOptionsModal}>상/벌점 항목 보기</Button>
           )}
           <Button
             kind="outline"

@@ -12,6 +12,9 @@ import { useObj } from '@/hooks/useObj';
 import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
+import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
+import { useModal } from '@/hooks/useModal';
+import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal copy';
 
 export interface FilterState {
   name: string;
@@ -34,6 +37,8 @@ interface Mode {
 
 export function Home() {
   const { debounce } = useDebounce();
+
+  const { modalState, closeModal } = useModal();
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -150,7 +155,8 @@ export function Home() {
                 const isClickAbleElement =
                   className.includes('studentBox') ||
                   className.includes('filterButton') ||
-                  className.includes('searchBox');
+                  className.includes('searchBox') ||
+                  className.includes('pointList');
                 if (!isClickAbleElement) setSelectedStudentId('');
               }}
             >

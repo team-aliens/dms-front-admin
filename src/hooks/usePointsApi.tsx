@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   cancelPointHistory,
   getAllPointHistory,
+  getAllPoints,
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
@@ -20,6 +21,15 @@ export const useStudentPointHistory = (student_id: string) =>
   useQuery(
     ['getStudentPointHistory', student_id],
     () => getStudentPointHistory(student_id),
+    {
+      refetchOnWindowFocus: true,
+    },
+  );
+
+  export const usePointOptionList = () =>
+  useQuery(
+    ['usePointList'],
+    () => getAllPoints(),
     {
       refetchOnWindowFocus: true,
     },
