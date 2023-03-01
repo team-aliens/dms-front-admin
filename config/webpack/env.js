@@ -13,7 +13,7 @@ function getClientEnvironment(publicUrl) {
       },
       {
         PUBLIC_URL: publicUrl,
-      }
+      },
     );
   const stringified = {
     'process.env': Object.keys(raw).reduce((env, key) => {

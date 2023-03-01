@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
-export const useForm = <T>(initalState: T) => {
-  const [state, setState] = useState<T>(initalState);
+export const useForm = <T>(initialState: T) => {
+  const [state, setState] = useState<T>(initialState);
 
   const onHandleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -13,5 +13,5 @@ export const useForm = <T>(initalState: T) => {
     });
   };
 
-  return { onHandleChange, state };
+  return { onHandleChange, state, setState };
 };

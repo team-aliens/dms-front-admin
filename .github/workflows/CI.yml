@@ -1,47 +1,61 @@
-name: DMS-Front-CI
+name: node.js CI
 
 on:
   push:
     branches:
-      - 'feature/**' # git-flow에서 push할 branch 명시
+      - 'feature/**'
       - 'hotfixes'
       - 'release/**'
       - 'main'
       - 'develop'
   pull_request:
     branches:
-      - 'main' # git-flow에서 pr을 날릴 branch 명시
+      - 'main'
       - 'develop'
       - 'release/**'
 
-# 반복 삭제
 concurrency:
-  # 그룹을 pr의 head_ref로 정의
   group: ${{ github.workflow }}-${{ github.ref }}
-  # 해당 pr에서 새로운 워크플로우가 실행될 경우, 이전에 워크플로우가 있다면 이전 워크플로우를 취소하도록 한다.
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - name: github action checkout
-        uses: actions/checkout@v3
+    strategy:
+      matrix:
+        node-version: [16]
 
-      - name: use Node 16
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
-      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
         env:
-          REACT_APP_DOMAIN: ${{ secrets.DMS_FRONT_DOMAIN }}
+          REACT_APP_DOMAIN: ${{ secrets.your_key }}
         run: |
-          echo "DMS_FRONT_DOMAIN=$DMS_FRONT_DOMAIN" >> .env
+          echo "your_key=$your_key" >> .env
+      - name: Install Dependencies
+        run: yarn install --immutable
 
-      - name: Install packages
-        run: yarn install
-
-      - name: Build packages
+      - name: Build Packages
         run: yarn build
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Lint
+        run: yarn lint

@@ -1,5 +1,5 @@
 import 'styled-components';
-import { theme } from 'aliens-design-system-front/dist/styles/theme';
+import { theme } from '@team-aliens/design-system/dist/styles/theme';
 
 type CustomTheme = typeof theme;
 

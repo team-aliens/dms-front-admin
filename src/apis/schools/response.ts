@@ -1,4 +1,4 @@
-interface SchoolInformation {
+export interface SchoolInformation {
   id: string;
   name: string;
   address: string;
@@ -10,4 +10,8 @@ export interface SchoolListResponse {
 
 export interface SchoolQuestionResponse {
   question: string;
+}
+
+export interface ReIssueSchoolCodeResponse {
+  code: string;
 }

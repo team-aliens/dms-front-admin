@@ -1,14 +1,18 @@
-type Features = 'notice_service' | 'menu_service';
+export type Features =
+  | 'notice_service'
+  | 'point_service'
+  | 'meal_service'
+  | 'study_room_service';
 
-type IsUseAbleFeature = {
+export type IsUseAbleFeature = {
   [key in Features]: boolean;
 };
 
-// 로그인, 토큰 재발급시 response
 export interface AuthorizationResponse {
   access_token: string;
-  expired_at: Date;
+  access_token_expired_at: Date;
   refresh_token: string;
+  refresh_token_expired_at: Date;
   features: IsUseAbleFeature;
 }
 

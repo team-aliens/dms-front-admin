@@ -1,14 +1,17 @@
 ---
-name: Bug
-about: 버그를 입력해주세요
+name: Bug report
+about: 버그 발생 관련 이슈 발행
 title: ''
-labels: "\U0001F47Ebug"
+labels: bug
 assignees: ''
-
 ---
 
-## Describe
+## 버그 설명 <!-- 발생한 버그에 대한 간단한 설명 작성 -->
 
-## How
+## 버그 발생 단계 <!-- 필요할 경우 스크린샷 등 첨부 -->
 
-## Additional
+## 예상 동작 <!-- 필요할 경우 스크린샷 등 첨부 -->
+
+## 진행 사항 <!-- 할 일 목록을 만들고 진행 사항 표시 -->
+
+- [ ] todo1

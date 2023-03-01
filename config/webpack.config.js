@@ -9,5 +9,5 @@ const productionConfig = require('./webpack/webpack.prod');
 module.exports = (_env, argv) =>
   merge(
     common,
-    argv.mode === 'development' ? developmentConfig : productionConfig
+    argv.mode === 'development' ? developmentConfig : productionConfig,
   );

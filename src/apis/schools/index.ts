@@ -1,5 +1,10 @@
 import { instance } from '../axios';
-import { SchoolListResponse, SchoolQuestionResponse } from './response';
+import {
+  ReIssueSchoolCodeResponse,
+  SchoolListResponse,
+  SchoolQuestionResponse,
+} from './response';
+import { ChangeSchoolQnARequest } from '@/apis/schools/request';
 
 const router = '/schools';
 
@@ -8,7 +13,7 @@ export const getSchoolList = async () => {
   return data;
 };
 
-// 학교 확인 질문
+/** 학교 확인 질문 */
 export const getSchoolQuestion = async (schoolId: string) => {
   const { data } = await instance.get<Promise<SchoolQuestionResponse>>(
     `${router}/question/${schoolId}`,
@@ -16,10 +21,21 @@ export const getSchoolQuestion = async (schoolId: string) => {
   return data;
 };
 
-// 학교 확인 질문 답변
+/** 학교 확인 질문 답변 */
 export const answerSchoolQuestion = async (
   schoolId: string,
   answer: string,
 ) => {
   await instance.get(`${router}/answer/${schoolId}?answer=${answer}`);
+};
+
+export const reIssueSchoolCode = async () => {
+  const { data } = await instance.patch<ReIssueSchoolCodeResponse>(
+    `${router}/code`,
+  );
+  return data;
+};
+
+export const changeSchoolQnA = async (body: ChangeSchoolQnARequest) => {
+  await instance.patch(`${router}/question`, body);
 };
