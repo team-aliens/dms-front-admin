@@ -1,30 +1,24 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { CreateStudyRoomOptions } from '@/components/apply/study/CreateOptions';
+import { WithNavigatorBar } from '@/components/WithNavigatorBar';
+import { CreateStudyRoomDetailOptions } from '@/components/apply/study/DetailOptions';
+import { useModal } from '@/hooks/useModal';
+import { SeatSetting } from '@/components/apply/study/SeatSetting';
 import {
-  usePatchStudyRoom,
-  useStudyRoomDetail,
+  useCreateStudyRoom,
   useDeleteSeatType,
   useSeatTypeList,
 } from '@/apis/studyRooms';
-import { CreateStudyRoomOptions } from '@/components/apply/CreateOptions';
-import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { CreateStudyRoomDetailOptions } from '@/components/apply/DetailOptions';
-import { useModal } from '@/hooks/useModal';
-import { SeatSetting } from '@/components/apply/SeatSetting';
-
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
 
-export const PatchRoom = () => {
-  const { id } = useParams();
-  const { data: detail } = useStudyRoomDetail(id);
-
+export function CreateRoom() {
   const [seatSetting, setSeatSetting] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>('');
   const { selectModal, modalState, closeModal } = useModal();
@@ -38,10 +32,6 @@ export const PatchRoom = () => {
     initalValue,
   } = useStudyRoom();
 
-  useEffect(() => {
-    initalValue(detail);
-  }, [detail]);
-
   const { name, floor, total_height_size, total_width_size, ...rest } =
     studyRoomState;
 
@@ -49,27 +39,33 @@ export const PatchRoom = () => {
 
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
-  const patchStudyRoom = usePatchStudyRoom(id, {
+  useEffect(() => {
+    initalValue();
+  }, []);
+
+  const createStudyRoom = useCreateStudyRoom({
     ...creatStudyRoomRequest,
     seats: creatStudyRoomRequest.seats.map(
       (i): Seat => ({
         width_location: i.width_location,
         height_location: i.height_location,
         number: i.number || null,
-        status: i.status === 'IN_USE' ? 'AVAILABLE' : i.status,
+        status: i.status,
         type_id: i.type?.id || null,
       }),
     ),
   });
 
-  const closeSeatSetting = () => setSeatSetting(false);
+  const closeSeatSetting = () => {
+    setSeatSetting(false);
+  };
 
   const deleteType = useDeleteSeatType(deleteId, {
     onSuccess: () => refetchTypeList(),
   });
 
-  const deleteSeatType = async (seatId: string) => {
-    await setDeleteId(seatId);
+  const deleteSeatType = async (id: string) => {
+    await setDeleteId(id);
     deleteType.mutate();
   };
 
@@ -86,7 +82,6 @@ export const PatchRoom = () => {
       number: alreadyUsedValue?.number || null,
     });
   };
-
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
@@ -134,15 +129,14 @@ export const PatchRoom = () => {
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
-            createStudyRoom={patchStudyRoom.mutate}
-            patch
+            createStudyRoom={createStudyRoom.mutate}
             {...rest}
           />
         </_Body>
       </_Wrapper>
     </WithNavigatorBar>
   );
-};
+}
 
 const _Wrapper = styled.section`
   width: 1040px;

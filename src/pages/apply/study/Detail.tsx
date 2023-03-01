@@ -7,11 +7,11 @@ import {
   useSeatTypeList,
   useStudyRoomDetail,
 } from '@/apis/studyRooms';
-import { StudyRoomDetailSummary } from '@/components/apply/DetailSummary';
+import { StudyRoomDetailSummary } from '@/components/apply/study/DetailSummary';
 import { useModal } from '@/hooks/useModal';
 import { DeleteStudyRoom } from '@/components/modals/DeleteStudyRoom';
-import { SeatTypeList } from '@/components/apply/SeatTypeList';
-import { AppliedStudentList } from '@/components/apply/AppliedStudentList';
+import { SeatTypeList } from '@/components/apply/study/SeatTypeList';
+import { AppliedStudentList } from '@/components/apply/study/AppliedStudentList';
 import { pathToKorean } from '@/router';
 
 export function StudyRoomDetail() {

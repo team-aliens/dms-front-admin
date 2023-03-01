@@ -9,10 +9,12 @@ import { WriteNoticePage } from '@/pages/notice/Write';
 import { MyPage } from './pages/myPage';
 import { ChangePwd } from './pages/myPage/ChangePwd';
 import { PatchNoticePage } from '@/pages/notice/Patch';
-import { StudyRoomList } from './pages/apply/StudyRoomList';
-import { CreateRoom } from '@/pages/apply/CreateRoom';
-import { StudyRoomDetail } from '@/pages/apply/Detail';
-import { PatchRoom } from './pages/apply/PatchRoom';
+import { StudyRoomList } from './pages/apply/study/StudyRoomList';
+import { CreateRoom } from '@/pages/apply/study/CreateRoom';
+import { StudyRoomDetail } from '@/pages/apply/study/Detail';
+import { PatchRoom } from './pages/apply/study/PatchRoom';
+import Index from '@/pages/apply';
+import RemainsLists from '@/pages/apply/remains';
 
 export const pathToKorean = {
   'notice': {
@@ -62,10 +64,16 @@ export function Router() {
           <Route path="detail/:noticeId" element={<NoticeDetail />} />
         </Route>
         <Route path="/apply">
-          <Route index element={<StudyRoomList />} />
-          <Route path="create" element={<CreateRoom />} />
-          <Route path="detail/:id" element={<StudyRoomDetail />} />
-          <Route path="detail/patch/:id" element={<PatchRoom />} />
+          <Route index element={<Index />} />
+          <Route path="study">
+            <Route index element={<StudyRoomList />} />
+            <Route path="create" element={<CreateRoom />} />
+            <Route path="detail/:id" element={<StudyRoomDetail />} />
+            <Route path="detail/patch/:id" element={<PatchRoom />} />
+          </Route>
+          <Route path="remains">
+            <Route index element={<RemainsLists />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

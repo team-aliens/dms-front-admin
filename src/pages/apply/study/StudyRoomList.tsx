@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Add, Button, Gear, Trash } from '@team-aliens/design-system';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
-import { StudyListOptions } from '@/components/apply/ListOptions';
-import { StudyCard } from '@/components/apply/StudyCard';
+import { StudyListOptions } from '@/components/apply/study/ListOptions';
+import { StudyCard } from '@/components/apply/study/StudyCard';
 import { useGetApplicationTime, useStudyRoomList } from '@/apis/studyRooms';
 import { useModal } from '@/hooks/useModal';
 import {
@@ -57,7 +57,7 @@ export function StudyRoomList() {
     <WithNavigatorBar>
       <_Wrapper>
         <StudyListOptions {...applicationTime} />
-        {/* <_Buttons>
+        <_Buttons>
           <Button
             onClick={openAddStudyRoomTimeModal}
             color="gray"
@@ -93,7 +93,7 @@ export function StudyRoomList() {
               </div>
             );
           })}
-        </_Buttons> */}
+        </_Buttons>
         <_List>
           {list?.study_rooms.map((i) => (
             <Link to={`/apply/detail/${i.id}`}>
