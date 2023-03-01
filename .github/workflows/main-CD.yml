@@ -48,7 +48,7 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://dms-web-production
+            build s3://dms-admin-production.com
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
