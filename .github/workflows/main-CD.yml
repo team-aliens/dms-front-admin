@@ -48,13 +48,10 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://team-aliens-admin.dsm-dms.com
+            build s3://dms-web-production
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_IAM_MANAGER_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: CloudFront Cache invalidation
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.ADMIN_CLOUD_FRONT_DISTRIBUTION_ID }} --paths "/*"
