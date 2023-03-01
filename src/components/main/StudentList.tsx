@@ -45,6 +45,7 @@ export function StudentList({
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const openPointFilterModal = () => selectModal('POINT_FILTER');
+  const openPointOptionsModal = () => selectModal('POINT_OPTIONS');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
   const deleteStudent = useDeleteStudent(selectedStudentId[0]);

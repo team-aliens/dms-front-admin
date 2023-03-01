@@ -14,6 +14,8 @@ export type SelectedModalType =
   | 'DELETE_STUDY_ROOM_TIME'
   | 'STUDENT_EXEL'
   | 'DELETE_STUDENT'
+  | 'POINT_OPTIONS'
+  | 'GIVE_POINT'
   | '';
 
 interface ModalState {
