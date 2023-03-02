@@ -82,7 +82,8 @@ export default function RemainsLists() {
                 <Text
                   color="gray6"
                   onClick={() =>
-                    onEdit(remain.id, remain.title, remain.description)}
+                    onEdit(remain.id, remain.title, remain.description)
+                  }
                 >
                   항목 수정
                 </Text>

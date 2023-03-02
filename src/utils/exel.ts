@@ -23,11 +23,18 @@ export const download = async () => {
     },
   }));
 
-  worksheet.getRow(1).fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'FFE400' },
-  };
+  for (let i = 1; i < 8; i++) {
+    worksheet.getCell(1, i).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFE400' },
+    };
+  }
+  // worksheet.getRow(1).fill = {
+  //   type: 'pattern',
+  //   pattern: 'solid',
+  //   fgColor: { argb: 'FFE400' },
+  // };
 
   worksheet.getRow(1).border = {
     top: { style: 'double', color: { argb: '949494' } },

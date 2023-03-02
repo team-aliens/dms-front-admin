@@ -4,7 +4,7 @@
   "scripts": {
     "test": "jest",
     "dev": "env-cmd webpack serve --mode development --config ./config/webpack.config.js",
-    "build": "env-cmd webpack --mode production --progress --config ./config/webpack.config.js",
+    "build": "env-cmd --silent webpack --mode production --progress --config ./config/webpack.config.js",
     "prepare": "husky install",
     "lint": "npx eslint --ext .tsx --ext .ts .",
     "lint:fix": "npx eslint --ext .tsx --ext .ts . --fix"
@@ -77,5 +77,5 @@
       "yarn prettier --write ."
     ]
   },
-  "packageManager": "yarn@3.3.1"
+  "packageManager": "yarn@3.4.1"
 }

@@ -19,7 +19,9 @@ export function PointList() {
 
   return (
     <_Wrapper>
-      <Button margin={['left', 'auto']}>상/벌점 항목 보기</Button>
+      <Button margin={['left', 'auto']} className="pointList">
+        상/벌점 항목 보기
+      </Button>
       <_Display>
         <Text margin={['bottom', 10]} color="gray6" size="titleL">
           전체 학생 상/벌점

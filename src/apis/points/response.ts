@@ -24,3 +24,18 @@ export interface StudentPointHistoryType {
   score: number;
   name: string;
 }
+
+export interface AllPointsOptionResponse {
+  point_options: AllPointsOptionType[];
+}
+
+export interface AllPointsOptionType {
+  point_option_id: string;
+  type: PointType;
+  score: number;
+  name: string;
+}
+
+export interface SearchPointOptionsRequest {
+  point_option_name: string;
+}

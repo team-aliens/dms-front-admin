@@ -12,10 +12,12 @@ export const uploadFile = async (file: FormData) => {
   return data;
 };
 
-export const studentAccountIssuance = async (file: FormData) => {
+export const studentAccountIssuance = async (file: FileList[0]) => {
+  const reqeustFile = new FormData();
+  reqeustFile.append('file', file);
   const { data } = await instance.post<AxiosResponse>(
     `${router}/verified-student`,
-    file,
+    reqeustFile,
   );
   return data;
 };

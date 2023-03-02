@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Text } from '@team-aliens/design-system';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
@@ -9,6 +9,7 @@ import { ModeType } from '@/pages/Home';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { useModal } from '@/hooks/useModal';
 import { StudentDetailPointList } from './StudentDetailPoint';
+import { PointType } from '@/apis/points';
 
 interface PropsType {
   studentId: string[];
@@ -27,6 +28,7 @@ export function DetailBox({
 }: PropsType) {
   const { data: studentPointHistory } = useStudentPointHistory(studentId[0]);
   const { selectModal, closeModal, modalState } = useModal();
+  const [currentPointType, setCurrentPointType] = useState<PointType>('ALL');
 
   return (
     <>
@@ -46,8 +48,18 @@ export function DetailBox({
             profile_image_url={studentDetail.profile_image_url}
           />
           <_PointWrapper>
-            <PointBox pointType="BONUS" point={studentDetail.bonus_point} />
-            <PointBox pointType="MINUS" point={studentDetail.minus_point} />
+            <PointBox
+              currentPointType={currentPointType}
+              setCurrentPointType={setCurrentPointType}
+              pointType="BONUS"
+              point={studentDetail.bonus_point}
+            />
+            <PointBox
+              currentPointType={currentPointType}
+              setCurrentPointType={setCurrentPointType}
+              pointType="MINUS"
+              point={studentDetail.minus_point}
+            />
           </_PointWrapper>
           <Text size="bodyS" color="gray6" margin={['top', 40]}>
             동일 호실 학생
@@ -67,18 +79,24 @@ export function DetailBox({
             상/벌점
           </Text>
           <_PointList>
-            {studentPointHistory?.point_histories.map((history) => {
-              const { point_history_id, name, type, score } = history;
-              return (
-                <PointItem
-                  point_history_id={point_history_id}
-                  name={name}
-                  type={type}
-                  score={score}
-                  canDelete={canDelete}
-                />
-              );
-            })}
+            {studentPointHistory?.point_histories
+              .filter(
+                (history) =>
+                  history.type === currentPointType ||
+                  currentPointType === 'ALL',
+              )
+              .map((history) => {
+                const { point_history_id, name, type, score } = history;
+                return (
+                  <PointItem
+                    point_history_id={point_history_id}
+                    name={name}
+                    type={type}
+                    score={score}
+                    canDelete={canDelete}
+                  />
+                );
+              })}
           </_PointList>
         </_DetailBox>
       ) : (
