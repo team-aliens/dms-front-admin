@@ -53,19 +53,19 @@ export function PointItem({
         canClick ? onClick(point_history_id, name, score, type) : ''}
       OptionSelected={OptionSelected === point_history_id}
     >
-      <Text
-        margin={[0, 20]}
-        color={
-          canClick && OptionSelected === point_history_id
-            ? type === 'BONUS'
-              ? 'primary'
-              : 'error'
-            : 'gray6'
-        }
-        size="BtnM"
-      >
-        {name}
-      </Text>
+      {canClick && OptionSelected === point_history_id ? (
+        <Text
+          margin={[0, 20]}
+          color={type === 'BONUS' ? 'primary' : 'error'}
+          size="BtnM"
+        >
+          {name}
+        </Text>
+      ) : (
+        <Text margin={[0, 20]} color="gray6" size="BtnM">
+          {name}
+        </Text>
+      )}
       <_PointType
         margin={['left', 'auto']}
         color={type === 'BONUS' ? 'primary' : 'error'}
@@ -74,18 +74,15 @@ export function PointItem({
         {typeChanger()}
       </_PointType>
       <_Line />
-      <Text
-        margin={[0, 30]}
-        color={
-          canClick && OptionSelected === point_history_id
-            ? type === 'BONUS'
-              ? 'primary'
-              : 'error'
-            : 'gray6'
-        }
-      >
-        {score}
-      </Text>
+      {canClick && OptionSelected === point_history_id ? (
+        <Text margin={[0, 30]} color={type === 'BONUS' ? 'primary' : 'error'}>
+          {score}
+        </Text>
+      ) : (
+        <Text margin={[0, 30]} color="gray6">
+          {score}
+        </Text>
+      )}
       {canDelete && (
         <>
           <_Line />
@@ -156,12 +153,12 @@ const _Wrapper = styled.div<{
   height: 50px;
   background-color: ${({ theme }) => theme.color.gray2};
   border: 2px solid
-    ${({ theme, OptionSelected, type, canClick }) =>
-      canClick && OptionSelected
-        ? type === 'BONUS'
-          ? theme.color.primary
-          : theme.color.error
-        : theme.color.gray3};
+    ${({ OptionSelected, type, canClick }) => {
+      if (canClick && OptionSelected) {
+        if (type === 'BONUS') return '#3D8AFF';
+        return '#FF4646';
+      } return '#EEEEEE';
+    }};
   border-radius: 4px;
 `;
 
