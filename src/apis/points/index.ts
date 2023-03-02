@@ -1,7 +1,13 @@
-import { useModal } from '@/hooks/useModal';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useModal } from '@/hooks/useModal';
 import { instance } from '../axios';
-import { AllPointListResponse, AllPointsOptionResponse, StudentPointHistoryResponse } from './response';
+import {
+  AllPointListResponse,
+  AllPointsOptionResponse,
+  StudentPointHistoryResponse,
+} from './response';
+import { useToast } from '@/hooks/useToast';
 
 const router = '/points';
 
@@ -47,38 +53,61 @@ export const cancelPointHistory = async (point_history_id: string) => {
 //   return new Blob(data);
 // };
 
-export const useGivePointOption = (selectedPointOption: string, selectedStudentId: string) => {
+export const useGivePointOption = (
+  selectedPointOption: string,
+  selectedStudentId: string[],
+) => {
+  const navigate = useNavigate();
+  const { closeModal } = useModal();
+  const { toastDispatch } = useToast();
+
   const body = {
-    "point_option_id": selectedPointOption,
-    "student_id_list": selectedStudentId
-  }
-  return useMutation(
-    async () => instance.post(`${router}/history`, body),
-    {},
-  );
+    point_option_id: selectedPointOption,
+    student_id_list: selectedStudentId,
+  };
+  return useMutation(async () => instance.post(`${router}/history`, body), {
+    onSuccess: () => {
+      closeModal();
+      navigate(0);
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점이 부여되었습니다.',
+      });
+    },
+  });
 };
 
-export const useAddPointOption = (score: number, name: string, type: string) => {
-  const types = (type === "상점" ? "BONUS" : "MINUS")
+export const useAddPointOption = (
+  score: number,
+  name: string,
+  type: string,
+) => {
+  const types = type === '상점' ? 'BONUS' : 'MINUS';
   const body = {
-    "type": types,
-    "score": score,
-    "name": name
-  }
-  return useMutation(
-    async () => instance.post(`${router}/options`, body),
-    {},
-  );
+    type: types,
+    score,
+    name,
+  };
+  const { closeModal } = useModal();
+  return useMutation(async () => instance.post(`${router}/options`, body), {
+    onSuccess: () => closeModal(),
+  });
 };
 
-export const useEditPointOption = (id: string, score: number, name: string, type: string) => {
-  const types = (type === "상점" ? "BONUS" : "MINUS")
-  const { closeModal } = useModal()
+export const useEditPointOption = (
+  id: string,
+  score: number,
+  name: string,
+  type: string,
+) => {
+  const types = type === '상점' ? 'BONUS' : 'MINUS';
+  const { closeModal } = useModal();
   const body = {
-    "type": types,
-    "score": Number(score),
-    "name": name
-  }
+    type: types,
+    score: Number(score),
+    name,
+  };
   return useMutation(
     async () => instance.patch(`${router}/options/${id}`, body),
     { onSuccess: () => closeModal() },

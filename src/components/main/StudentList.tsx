@@ -14,6 +14,8 @@ import { FilterState, ModeType } from '@/pages/Home';
 import { PointEnum, PointType } from '@/apis/points';
 import { DeleteStudentModal } from '../modals/DeleteStudent';
 import { useDeleteStudent } from '@/hooks/useMangersApis';
+import { GivePointOptionsModal } from '../modals/GivePointOptionsModal';
+import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal copy';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -45,7 +47,6 @@ export function StudentList({
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const openPointFilterModal = () => selectModal('POINT_FILTER');
-  const openPointOptionsModal = () => selectModal('POINT_OPTIONS');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
   const deleteStudent = useDeleteStudent(selectedStudentId[0]);
@@ -76,7 +77,15 @@ export function StudentList({
           {mode === 'GENERAL' ? (
             <Button onClick={openPointFilterModal}>{filterText()}</Button>
           ) : (
-            <Button className="grantPoint">{pointListText()}</Button>
+            <Button
+              className="grantPoint"
+              onClick={() =>
+                !selectedStudentId[0]
+                  ? selectModal('POINT_OPTIONS')
+                  : selectModal('GIVE_POINT')}
+            >
+              {pointListText()}
+            </Button>
           )}
           <Button
             kind="outline"
@@ -118,6 +127,15 @@ export function StudentList({
       )}
       {modalState.selectedModal === 'DELETE_STUDENT' && (
         <DeleteStudentModal onClick={deleteStudent.mutate} close={closeModal} />
+      )}
+      {modalState.selectedModal === 'POINT_OPTIONS' && (
+        <ViewPointOptionsModal close={closeModal} />
+      )}
+      {modalState.selectedModal === 'GIVE_POINT' && (
+        <GivePointOptionsModal
+          selectedStudentId={selectedStudentId}
+          close={closeModal}
+        />
       )}
     </_Wrapper>
   );

@@ -9,17 +9,25 @@ import {
   useCancelPointHistory,
 } from '@/hooks/usePointsApi';
 import { PointHistroyIdAtom } from '@/utils/atoms';
+import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal copy';
 
 export function PointList() {
-  const { modalState, closeModal } = useModal();
+  const { modalState, closeModal, selectModal } = useModal();
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const { data } = useAllPointHistory('ALL');
   const cancelPoint = useCancelPointHistory(pointHistoryId);
+  const openPointOptionModal = () => selectModal('POINT_OPTIONS');
   // const { data: excel } = useDownLoadExcelFile();
 
   return (
     <_Wrapper>
-      <Button margin={['left', 'auto']} className="pointList">상/벌점 항목 보기</Button>
+      <Button
+        margin={['left', 'auto']}
+        className="pointList"
+        onClick={openPointOptionModal}
+      >
+        상/벌점 항목 보기
+      </Button>
       <_Display>
         <Text margin={['bottom', 10]} color="gray6" size="titleL">
           전체 학생 상/벌점
@@ -63,6 +71,9 @@ export function PointList() {
           onClick={cancelPoint.mutate}
           closeModal={closeModal}
         />
+      )}
+      {modalState.selectedModal === 'POINT_OPTIONS' && (
+        <ViewPointOptionsModal close={closeModal} />
       )}
     </_Wrapper>
   );
