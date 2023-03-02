@@ -44,16 +44,26 @@ export function PointItem({
     }
   };
 
-  const PointOption = {
-    id: point_history_id,
-    name: name,
-    score: score,
-    type: type
-  }
-
   return (
-    <_Wrapper canClick={canClick} type={type} onClick={() => canClick ? onClick(point_history_id, name, score, type) : ""} OptionSelected={OptionSelected === point_history_id}>
-      <Text margin={[0, 20]} color={canClick && OptionSelected === point_history_id ? type === 'BONUS' ? "primary" : "error" : "gray6"} size="BtnM">
+    <_Wrapper
+      className="grantPoint"
+      canClick={canClick}
+      type={type}
+      onClick={() =>
+        canClick ? onClick(point_history_id, name, score, type) : ''}
+      OptionSelected={OptionSelected === point_history_id}
+    >
+      <Text
+        margin={[0, 20]}
+        color={
+          canClick && OptionSelected === point_history_id
+            ? type === 'BONUS'
+              ? 'primary'
+              : 'error'
+            : 'gray6'
+        }
+        size="BtnM"
+      >
         {name}
       </Text>
       <_PointType
@@ -64,7 +74,18 @@ export function PointItem({
         {typeChanger()}
       </_PointType>
       <_Line />
-      <Text margin={[0, 30]} color={canClick && OptionSelected === point_history_id ? type === 'BONUS' ? "primary" : "error" : "gray6"}>{score}</Text>
+      <Text
+        margin={[0, 30]}
+        color={
+          canClick && OptionSelected === point_history_id
+            ? type === 'BONUS'
+              ? 'primary'
+              : 'error'
+            : 'gray6'
+        }
+      >
+        {score}
+      </Text>
       {canDelete && (
         <>
           <_Line />
@@ -123,14 +144,24 @@ export function AllPointItem({
   );
 }
 
-const _Wrapper = styled.div<{ canClick?: boolean, OptionSelected?: boolean, type: string, }>`
+const _Wrapper = styled.div<{
+  canClick?: boolean;
+  OptionSelected?: boolean;
+  type: string;
+}>`
   display: flex;
-  cursor: ${({ canClick }) => canClick ? "pointer" : "default"};
+  cursor: ${({ canClick }) => (canClick ? 'pointer' : 'default')};
   align-items: center;
   width: 100%;
   height: 50px;
   background-color: ${({ theme }) => theme.color.gray2};
-  border: 2px solid ${({ theme, OptionSelected, type, canClick }) => canClick && OptionSelected ? type === 'BONUS' ? theme.color.primary : theme.color.error : theme.color.gray3};
+  border: 2px solid
+    ${({ theme, OptionSelected, type, canClick }) =>
+      canClick && OptionSelected
+        ? type === 'BONUS'
+          ? theme.color.primary
+          : theme.color.error
+        : theme.color.gray3};
   border-radius: 4px;
 `;
 

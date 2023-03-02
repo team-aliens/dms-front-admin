@@ -36,7 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
-            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0"],\
+            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.5"],\
             ["@types/file-saver", "npm:2.0.5"],\
             ["@types/jest", "npm:29.2.6"],\
             ["@types/node", "npm:18.11.18"],\
@@ -3374,17 +3374,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@team-aliens/design-system", [\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/@team-aliens-design-system-npm-1.4.0-228ff24a68-883da1433f.zip/node_modules/@team-aliens/design-system/",\
+        ["npm:1.4.5", {\
+          "packageLocation": "./.yarn/cache/@team-aliens-design-system-npm-1.4.5-54ee31f62c-8ebd3c6272.zip/node_modules/@team-aliens/design-system/",\
           "packageDependencies": [\
-            ["@team-aliens/design-system", "npm:1.4.0"]\
+            ["@team-aliens/design-system", "npm:1.4.5"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0", {\
-          "packageLocation": "./.yarn/__virtual__/@team-aliens-design-system-virtual-2cae8ea5cf/0/cache/@team-aliens-design-system-npm-1.4.0-228ff24a68-883da1433f.zip/node_modules/@team-aliens/design-system/",\
+        ["virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.5", {\
+          "packageLocation": "./.yarn/__virtual__/@team-aliens-design-system-virtual-68585c4ba9/0/cache/@team-aliens-design-system-npm-1.4.5-54ee31f62c-8ebd3c6272.zip/node_modules/@team-aliens/design-system/",\
           "packageDependencies": [\
-            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0"],\
+            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.5"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-dom", "npm:18.0.10"],\
             ["@types/react-router-dom", null],\
@@ -7345,7 +7345,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
-            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.0"],\
+            ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.4.5"],\
             ["@types/file-saver", "npm:2.0.5"],\
             ["@types/jest", "npm:29.2.6"],\
             ["@types/node", "npm:18.11.18"],\
@@ -18958,16 +18958,11 @@ class ZipFS extends BasePortableFakeFS {
   }
   getBufferAndClose() {
     this.prepareClose();
-<<<<<<< HEAD
-    if (!this.lzSource)
-      throw new Error(`ZipFS was not created from a Buffer`);
+    if (!this.lzSource) throw new Error(`ZipFS was not created from a Buffer`);
     if (this.entries.size === 0) {
       this.discardAndClose();
       return makeEmptyArchive();
     }
-=======
-    if (!this.lzSource) throw new Error(`ZipFS was not created from a Buffer`);
->>>>>>> 72-point_option_modal
     try {
       this.libzip.source.keep(this.lzSource);
       if (this.libzip.close(this.zip) === -1)
@@ -26570,16 +26565,11 @@ function getPathForDisplay(p) {
   return npath.normalize(npath.fromPortablePath(p));
 }
 
-<<<<<<< HEAD
-const [major, minor] = process.versions.node.split(`.`).map((value) => parseInt(value, 10));
-const WATCH_MODE_MESSAGE_USES_ARRAYS = major > 19 || major === 19 && minor >= 2 || major === 18 && minor >= 13;
-=======
 const [major, minor] = process.versions.node
   .split(`.`)
   .map((value) => parseInt(value, 10));
 const WATCH_MODE_MESSAGE_USES_ARRAYS =
-  major > 19 || (major === 19 && minor >= 2);
->>>>>>> 72-point_option_modal
+  major > 19 || (major === 19 && minor >= 2) || (major === 18 && minor >= 13);
 
 const builtinModules = new Set(
   require$$0.Module.builtinModules || Object.keys(process.binding(`natives`)),
@@ -27726,189 +27716,189 @@ function packageImportsResolve({ name, base, conditions, readFileSyncFn }) {
 const flagSymbol = Symbol('arg flag');
 
 class ArgError extends Error {
-	constructor(msg, code) {
-		super(msg);
-		this.name = 'ArgError';
-		this.code = code;
+  constructor(msg, code) {
+    super(msg);
+    this.name = 'ArgError';
+    this.code = code;
 
-		Object.setPrototypeOf(this, ArgError.prototype);
-	}
+    Object.setPrototypeOf(this, ArgError.prototype);
+  }
 }
 
 function arg(
-	opts,
-	{
-		argv = process.argv.slice(2),
-		permissive = false,
-		stopAtPositional = false
-	} = {}
+  opts,
+  {
+    argv = process.argv.slice(2),
+    permissive = false,
+    stopAtPositional = false,
+  } = {},
 ) {
-	if (!opts) {
-		throw new ArgError(
-			'argument specification object is required',
-			'ARG_CONFIG_NO_SPEC'
-		);
-	}
+  if (!opts) {
+    throw new ArgError(
+      'argument specification object is required',
+      'ARG_CONFIG_NO_SPEC',
+    );
+  }
 
-	const result = { _: [] };
+  const result = { _: [] };
 
-	const aliases = {};
-	const handlers = {};
+  const aliases = {};
+  const handlers = {};
 
-	for (const key of Object.keys(opts)) {
-		if (!key) {
-			throw new ArgError(
-				'argument key cannot be an empty string',
-				'ARG_CONFIG_EMPTY_KEY'
-			);
-		}
+  for (const key of Object.keys(opts)) {
+    if (!key) {
+      throw new ArgError(
+        'argument key cannot be an empty string',
+        'ARG_CONFIG_EMPTY_KEY',
+      );
+    }
 
-		if (key[0] !== '-') {
-			throw new ArgError(
-				`argument key must start with '-' but found: '${key}'`,
-				'ARG_CONFIG_NONOPT_KEY'
-			);
-		}
+    if (key[0] !== '-') {
+      throw new ArgError(
+        `argument key must start with '-' but found: '${key}'`,
+        'ARG_CONFIG_NONOPT_KEY',
+      );
+    }
 
-		if (key.length === 1) {
-			throw new ArgError(
-				`argument key must have a name; singular '-' keys are not allowed: ${key}`,
-				'ARG_CONFIG_NONAME_KEY'
-			);
-		}
+    if (key.length === 1) {
+      throw new ArgError(
+        `argument key must have a name; singular '-' keys are not allowed: ${key}`,
+        'ARG_CONFIG_NONAME_KEY',
+      );
+    }
 
-		if (typeof opts[key] === 'string') {
-			aliases[key] = opts[key];
-			continue;
-		}
+    if (typeof opts[key] === 'string') {
+      aliases[key] = opts[key];
+      continue;
+    }
 
-		let type = opts[key];
-		let isFlag = false;
+    let type = opts[key];
+    let isFlag = false;
 
-		if (
-			Array.isArray(type) &&
-			type.length === 1 &&
-			typeof type[0] === 'function'
-		) {
-			const [fn] = type;
-			type = (value, name, prev = []) => {
-				prev.push(fn(value, name, prev[prev.length - 1]));
-				return prev;
-			};
-			isFlag = fn === Boolean || fn[flagSymbol] === true;
-		} else if (typeof type === 'function') {
-			isFlag = type === Boolean || type[flagSymbol] === true;
-		} else {
-			throw new ArgError(
-				`type missing or not a function or valid array type: ${key}`,
-				'ARG_CONFIG_VAD_TYPE'
-			);
-		}
+    if (
+      Array.isArray(type) &&
+      type.length === 1 &&
+      typeof type[0] === 'function'
+    ) {
+      const [fn] = type;
+      type = (value, name, prev = []) => {
+        prev.push(fn(value, name, prev[prev.length - 1]));
+        return prev;
+      };
+      isFlag = fn === Boolean || fn[flagSymbol] === true;
+    } else if (typeof type === 'function') {
+      isFlag = type === Boolean || type[flagSymbol] === true;
+    } else {
+      throw new ArgError(
+        `type missing or not a function or valid array type: ${key}`,
+        'ARG_CONFIG_VAD_TYPE',
+      );
+    }
 
-		if (key[1] !== '-' && key.length > 2) {
-			throw new ArgError(
-				`short argument keys (with a single hyphen) must have only one character: ${key}`,
-				'ARG_CONFIG_SHORTOPT_TOOLONG'
-			);
-		}
+    if (key[1] !== '-' && key.length > 2) {
+      throw new ArgError(
+        `short argument keys (with a single hyphen) must have only one character: ${key}`,
+        'ARG_CONFIG_SHORTOPT_TOOLONG',
+      );
+    }
 
-		handlers[key] = [type, isFlag];
-	}
+    handlers[key] = [type, isFlag];
+  }
 
-	for (let i = 0, len = argv.length; i < len; i++) {
-		const wholeArg = argv[i];
+  for (let i = 0, len = argv.length; i < len; i++) {
+    const wholeArg = argv[i];
 
-		if (stopAtPositional && result._.length > 0) {
-			result._ = result._.concat(argv.slice(i));
-			break;
-		}
+    if (stopAtPositional && result._.length > 0) {
+      result._ = result._.concat(argv.slice(i));
+      break;
+    }
 
-		if (wholeArg === '--') {
-			result._ = result._.concat(argv.slice(i + 1));
-			break;
-		}
+    if (wholeArg === '--') {
+      result._ = result._.concat(argv.slice(i + 1));
+      break;
+    }
 
-		if (wholeArg.length > 1 && wholeArg[0] === '-') {
-			/* eslint-disable operator-linebreak */
-			const separatedArguments =
-				wholeArg[1] === '-' || wholeArg.length === 2
-					? [wholeArg]
-					: wholeArg
-							.slice(1)
-							.split('')
-							.map((a) => `-${a}`);
-			/* eslint-enable operator-linebreak */
+    if (wholeArg.length > 1 && wholeArg[0] === '-') {
+      /* eslint-disable operator-linebreak */
+      const separatedArguments =
+        wholeArg[1] === '-' || wholeArg.length === 2
+          ? [wholeArg]
+          : wholeArg
+              .slice(1)
+              .split('')
+              .map((a) => `-${a}`);
+      /* eslint-enable operator-linebreak */
 
-			for (let j = 0; j < separatedArguments.length; j++) {
-				const arg = separatedArguments[j];
-				const [originalArgName, argStr] =
-					arg[1] === '-' ? arg.split(/=(.*)/, 2) : [arg, undefined];
+      for (let j = 0; j < separatedArguments.length; j++) {
+        const arg = separatedArguments[j];
+        const [originalArgName, argStr] =
+          arg[1] === '-' ? arg.split(/=(.*)/, 2) : [arg, undefined];
 
-				let argName = originalArgName;
-				while (argName in aliases) {
-					argName = aliases[argName];
-				}
+        let argName = originalArgName;
+        while (argName in aliases) {
+          argName = aliases[argName];
+        }
 
-				if (!(argName in handlers)) {
-					if (permissive) {
-						result._.push(arg);
-						continue;
-					} else {
-						throw new ArgError(
-							`unknown or unexpected option: ${originalArgName}`,
-							'ARG_UNKNOWN_OPTION'
-						);
-					}
-				}
+        if (!(argName in handlers)) {
+          if (permissive) {
+            result._.push(arg);
+            continue;
+          } else {
+            throw new ArgError(
+              `unknown or unexpected option: ${originalArgName}`,
+              'ARG_UNKNOWN_OPTION',
+            );
+          }
+        }
 
-				const [type, isFlag] = handlers[argName];
+        const [type, isFlag] = handlers[argName];
 
-				if (!isFlag && j + 1 < separatedArguments.length) {
-					throw new ArgError(
-						`option requires argument (but was followed by another short argument): ${originalArgName}`,
-						'ARG_MISSING_REQUIRED_SHORTARG'
-					);
-				}
+        if (!isFlag && j + 1 < separatedArguments.length) {
+          throw new ArgError(
+            `option requires argument (but was followed by another short argument): ${originalArgName}`,
+            'ARG_MISSING_REQUIRED_SHORTARG',
+          );
+        }
 
-				if (isFlag) {
-					result[argName] = type(true, argName, result[argName]);
-				} else if (argStr === undefined) {
-					if (
-						argv.length < i + 2 ||
-						(argv[i + 1].length > 1 &&
-							argv[i + 1][0] === '-' &&
-							!(
-								argv[i + 1].match(/^-?\d*(\.(?=\d))?\d*$/) &&
-								(type === Number ||
-									// eslint-disable-next-line no-undef
-									(typeof BigInt !== 'undefined' && type === BigInt))
-							))
-					) {
-						const extended =
-							originalArgName === argName ? '' : ` (alias for ${argName})`;
-						throw new ArgError(
-							`option requires argument: ${originalArgName}${extended}`,
-							'ARG_MISSING_REQUIRED_LONGARG'
-						);
-					}
+        if (isFlag) {
+          result[argName] = type(true, argName, result[argName]);
+        } else if (argStr === undefined) {
+          if (
+            argv.length < i + 2 ||
+            (argv[i + 1].length > 1 &&
+              argv[i + 1][0] === '-' &&
+              !(
+                argv[i + 1].match(/^-?\d*(\.(?=\d))?\d*$/) &&
+                (type === Number ||
+                  // eslint-disable-next-line no-undef
+                  (typeof BigInt !== 'undefined' && type === BigInt))
+              ))
+          ) {
+            const extended =
+              originalArgName === argName ? '' : ` (alias for ${argName})`;
+            throw new ArgError(
+              `option requires argument: ${originalArgName}${extended}`,
+              'ARG_MISSING_REQUIRED_LONGARG',
+            );
+          }
 
-					result[argName] = type(argv[i + 1], argName, result[argName]);
-					++i;
-				} else {
-					result[argName] = type(argStr, argName, result[argName]);
-				}
-			}
-		} else {
-			result._.push(wholeArg);
-		}
-	}
+          result[argName] = type(argv[i + 1], argName, result[argName]);
+          ++i;
+        } else {
+          result[argName] = type(argStr, argName, result[argName]);
+        }
+      }
+    } else {
+      result._.push(wholeArg);
+    }
+  }
 
-	return result;
+  return result;
 }
 
 arg.flag = (fn) => {
-	fn[flagSymbol] = true;
-	return fn;
+  fn[flagSymbol] = true;
+  return fn;
 };
 
 // Utility types
@@ -27951,28 +27941,31 @@ let options;
 function parseOptions() {
   if (!options) {
     options = {
-      "--conditions": [],
+      '--conditions': [],
       ...parseArgv(getNodeOptionsEnvArgv()),
-      ...parseArgv(process.execArgv)
+      ...parseArgv(process.execArgv),
     };
   }
 }
 function parseArgv(argv) {
   return arg_1(
     {
-      "--conditions": [String],
-      "-C": "--conditions"
+      '--conditions': [String],
+      '-C': '--conditions',
     },
     {
       argv,
-      permissive: true
-    }
+      permissive: true,
+    },
   );
 }
 function getNodeOptionsEnvArgv() {
   const errors = [];
-  const envArgv = ParseNodeOptionsEnvVar(process.env.NODE_OPTIONS || "", errors);
-  if (errors.length !== 0) ;
+  const envArgv = ParseNodeOptionsEnvVar(
+    process.env.NODE_OPTIONS || '',
+    errors,
+  );
+  if (errors.length !== 0);
   return envArgv;
 }
 function ParseNodeOptionsEnvVar(node_options, errors) {
@@ -27981,14 +27974,14 @@ function ParseNodeOptionsEnvVar(node_options, errors) {
   let will_start_new_arg = true;
   for (let index = 0; index < node_options.length; ++index) {
     let c = node_options[index];
-    if (c === "\\" && is_in_string) {
+    if (c === '\\' && is_in_string) {
       if (index + 1 === node_options.length) {
-        errors.push("invalid value for NODE_OPTIONS (invalid escape)\n");
+        errors.push('invalid value for NODE_OPTIONS (invalid escape)\n');
         return env_argv;
       } else {
         c = node_options[++index];
       }
-    } else if (c === " " && !is_in_string) {
+    } else if (c === ' ' && !is_in_string) {
       will_start_new_arg = true;
       continue;
     } else if (c === '"') {
@@ -28003,7 +27996,7 @@ function ParseNodeOptionsEnvVar(node_options, errors) {
     }
   }
   if (is_in_string) {
-    errors.push("invalid value for NODE_OPTIONS (unterminated string)\n");
+    errors.push('invalid value for NODE_OPTIONS (unterminated string)\n');
   }
   return env_argv;
 }
@@ -28156,15 +28149,7 @@ function makeApi(runtimeState, opts) {
     `default`,
     `node`,
     `require`,
-<<<<<<< HEAD
-    ...getOptionValue(`--conditions`)
-  ]);
-  function applyNodeExportsResolution(unqualifiedPath, conditions = defaultExportsConditions) {
-    const locator = findPackageLocator(ppath.join(unqualifiedPath, `internal.js`), {
-      resolveIgnored: true,
-      includeDiscardFromLookup: true
-    });
-=======
+    ...getOptionValue(`--conditions`),
   ]);
   function applyNodeExportsResolution(
     unqualifiedPath,
@@ -28177,7 +28162,6 @@ function makeApi(runtimeState, opts) {
         includeDiscardFromLookup: true,
       },
     );
->>>>>>> 72-point_option_modal
     if (locator === null) {
       throw makeError(
         ErrorCode.INTERNAL,
