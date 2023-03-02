@@ -63,7 +63,7 @@ export function PointBox({
                 : 'gray3'
             }
           >
-            {pointType === 'MINUS' ? '상점' : '벌점'}
+            {pointType === 'MINUS' ? '벌점' : '상점'}
           </_PointType>
           <_Point
             size="bodyL"

@@ -6,7 +6,7 @@ import { App } from './App';
 import { ModalProvider } from '@/context/modal';
 import { SeatSettingProvider } from '@/context/seatSetting';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       keepPreviousData: true,

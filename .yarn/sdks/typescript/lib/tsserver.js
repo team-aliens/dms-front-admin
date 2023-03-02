@@ -1,32 +1,19 @@
 #!/usr/bin/env node
 
-<<<<<<< HEAD
 const { existsSync } = require(`fs`);
 const { createRequire } = require(`module`);
 const { resolve } = require(`path`);
 
 const relPnpApiPath = '../../../../.pnp.cjs';
-=======
-const {existsSync} = require(`fs`);
-const {createRequire} = require(`module`);
-const {resolve} = require(`path`);
-
-const relPnpApiPath = "../../../../.pnp.cjs";
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
 
 const absPnpApiPath = resolve(__dirname, relPnpApiPath);
 const absRequire = createRequire(absPnpApiPath);
 
-<<<<<<< HEAD
 const moduleWrapper = (tsserver) => {
-=======
-const moduleWrapper = tsserver => {
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
   if (!process.versions.pnp) {
     return tsserver;
   }
 
-<<<<<<< HEAD
   const { isAbsolute } = require(`path`);
   const pnpApi = require(`pnpapi`);
 
@@ -39,18 +26,6 @@ const moduleWrapper = tsserver => {
       return `${locator.name}@${locator.reference}`;
     }),
   );
-=======
-  const {isAbsolute} = require(`path`);
-  const pnpApi = require(`pnpapi`);
-
-  const isVirtual = str => str.match(/\/(\$\$virtual|__virtual__)\//);
-  const isPortal = str => str.startsWith("portal:/");
-  const normalize = str => str.replace(/\\/g, `/`).replace(/^\/?/, `/`);
-
-  const dependencyTreeRoots = new Set(pnpApi.getDependencyTreeRoots().map(locator => {
-    return `${locator.name}@${locator.reference}`;
-  }));
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
 
   // VSCode sends the zip paths to TS using the "zip://" prefix, that TS
   // doesn't understand. This layer makes sure to remove the protocol
@@ -58,15 +33,11 @@ const moduleWrapper = tsserver => {
 
   function toEditorPath(str) {
     // We add the `zip:` prefix to both `.zip/` paths and virtual paths
-<<<<<<< HEAD
     if (
       isAbsolute(str) &&
       !str.match(/^\^?(zip:|\/zip\/)/) &&
       (str.match(/\.zip\//) || isVirtual(str))
     ) {
-=======
-    if (isAbsolute(str) && !str.match(/^\^?(zip:|\/zip\/)/) && (str.match(/\.zip\//) || isVirtual(str))) {
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
       // We also take the opportunity to turn virtual paths into physical ones;
       // this makes it much easier to work with workspaces that list peer
       // dependencies, since otherwise Ctrl+Click would bring us to the virtual
@@ -80,15 +51,11 @@ const moduleWrapper = tsserver => {
       const resolved = isVirtual(str) ? pnpApi.resolveVirtual(str) : str;
       if (resolved) {
         const locator = pnpApi.findPackageLocator(resolved);
-<<<<<<< HEAD
         if (
           locator &&
           (dependencyTreeRoots.has(`${locator.name}@${locator.reference}`) ||
             isPortal(locator.reference))
         ) {
-=======
-        if (locator && (dependencyTreeRoots.has(`${locator.name}@${locator.reference}`) || isPortal(locator.reference))) {
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
           str = resolved;
         }
       }
@@ -116,7 +83,6 @@ const moduleWrapper = tsserver => {
           // Before | ^/zip/c:/foo/bar.zip/package.json
           // After  | ^/zip//c:/foo/bar.zip/package.json
           //
-<<<<<<< HEAD
           case `vscode <1.61`:
             {
               str = `^zip:${str}`;
@@ -140,45 +106,20 @@ const moduleWrapper = tsserver => {
               str = `^/zip/${str}`;
             }
             break;
-=======
-          case `vscode <1.61`: {
-            str = `^zip:${str}`;
-          } break;
-
-          case `vscode <1.66`: {
-            str = `^/zip/${str}`;
-          } break;
-
-          case `vscode <1.68`: {
-            str = `^/zip${str}`;
-          } break;
-
-          case `vscode`: {
-            str = `^/zip/${str}`;
-          } break;
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
 
           // To make "go to definition" work,
           // We have to resolve the actual file system path from virtual path
           // and convert scheme to supported by [vim-rzip](https://github.com/lbrayner/vim-rzip)
-<<<<<<< HEAD
           case `coc-nvim`:
             {
               str = normalize(resolved).replace(/\.zip\//, `.zip::`);
               str = resolve(`zipfile:${str}`);
             }
             break;
-=======
-          case `coc-nvim`: {
-            str = normalize(resolved).replace(/\.zip\//, `.zip::`);
-            str = resolve(`zipfile:${str}`);
-          } break;
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
 
           // Support neovim native LSP and [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
           // We have to resolve the actual file system path from virtual path,
           // everything else is up to neovim
-<<<<<<< HEAD
           case `neovim`:
             {
               str = normalize(resolved).replace(/\.zip\//, `.zip::`);
@@ -191,16 +132,6 @@ const moduleWrapper = tsserver => {
               str = `zip:${str}`;
             }
             break;
-=======
-          case `neovim`: {
-            str = normalize(resolved).replace(/\.zip\//, `.zip::`);
-            str = `zipfile://${str}`;
-          } break;
-
-          default: {
-            str = `zip:${str}`;
-          } break;
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
         }
       }
     }
@@ -210,7 +141,6 @@ const moduleWrapper = tsserver => {
 
   function fromEditorPath(str) {
     switch (hostInfo) {
-<<<<<<< HEAD
       case `coc-nvim`:
         {
           str = str.replace(/\.zip::/, `.zip/`);
@@ -240,28 +170,6 @@ const moduleWrapper = tsserver => {
           );
         }
         break;
-=======
-      case `coc-nvim`: {
-        str = str.replace(/\.zip::/, `.zip/`);
-        // The path for coc-nvim is in format of /<pwd>/zipfile:/<pwd>/.yarn/...
-        // So in order to convert it back, we use .* to match all the thing
-        // before `zipfile:`
-        return process.platform === `win32`
-          ? str.replace(/^.*zipfile:\//, ``)
-          : str.replace(/^.*zipfile:/, ``);
-      } break;
-
-      case `neovim`: {
-        str = str.replace(/\.zip::/, `.zip/`);
-        // The path for neovim is in format of zipfile:///<pwd>/.yarn/...
-        return str.replace(/^zipfile:\/\//, ``);
-      } break;
-
-      case `vscode`:
-      default: {
-        return str.replace(/^\^?(zip:|\/zip(\/ts-nul-authority)?)\/+/, process.platform === `win32` ? `` : `/`)
-      } break;
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
     }
   }
 
@@ -273,14 +181,9 @@ const moduleWrapper = tsserver => {
   // TypeScript already does local loads and if this code is running the user trusts the workspace
   // https://github.com/microsoft/vscode/issues/45856
   const ConfiguredProject = tsserver.server.ConfiguredProject;
-<<<<<<< HEAD
   const { enablePluginsWithOptions: originalEnablePluginsWithOptions } =
     ConfiguredProject.prototype;
   ConfiguredProject.prototype.enablePluginsWithOptions = function () {
-=======
-  const {enablePluginsWithOptions: originalEnablePluginsWithOptions} = ConfiguredProject.prototype;
-  ConfiguredProject.prototype.enablePluginsWithOptions = function() {
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
     this.projectService.allowLocalPluginLoads = true;
     return originalEnablePluginsWithOptions.apply(this, arguments);
   };
@@ -290,12 +193,8 @@ const moduleWrapper = tsserver => {
   // like an absolute path of ours and normalize it.
 
   const Session = tsserver.server.Session;
-<<<<<<< HEAD
   const { onMessage: originalOnMessage, send: originalSend } =
     Session.prototype;
-=======
-  const {onMessage: originalOnMessage, send: originalSend} = Session.prototype;
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
   let hostInfo = `unknown`;
 
   Object.assign(Session.prototype, {
@@ -311,19 +210,12 @@ const moduleWrapper = tsserver => {
       ) {
         hostInfo = parsedMessage.arguments.hostInfo;
         if (hostInfo === `vscode` && process.env.VSCODE_IPC_HOOK) {
-<<<<<<< HEAD
           const [, major, minor] = (
             process.env.VSCODE_IPC_HOOK.match(
               // The RegExp from https://semver.org/ but without the caret at the start
               /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/,
             ) ?? []
           ).map(Number);
-=======
-          const [, major, minor] = (process.env.VSCODE_IPC_HOOK.match(
-            // The RegExp from https://semver.org/ but without the caret at the start
-            /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
-          ) ?? []).map(Number)
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
 
           if (major === 1) {
             if (minor < 61) {
@@ -337,7 +229,6 @@ const moduleWrapper = tsserver => {
         }
       }
 
-<<<<<<< HEAD
       const processedMessageJSON = JSON.stringify(
         parsedMessage,
         (key, value) => {
@@ -350,20 +241,10 @@ const moduleWrapper = tsserver => {
         isStringMessage
           ? processedMessageJSON
           : JSON.parse(processedMessageJSON),
-=======
-      const processedMessageJSON = JSON.stringify(parsedMessage, (key, value) => {
-        return typeof value === 'string' ? fromEditorPath(value) : value;
-      });
-
-      return originalOnMessage.call(
-        this,
-        isStringMessage ? processedMessageJSON : JSON.parse(processedMessageJSON)
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
       );
     },
 
     send(/** @type {any} */ msg) {
-<<<<<<< HEAD
       return originalSend.call(
         this,
         JSON.parse(
@@ -373,12 +254,6 @@ const moduleWrapper = tsserver => {
         ),
       );
     },
-=======
-      return originalSend.call(this, JSON.parse(JSON.stringify(msg, (key, value) => {
-        return typeof value === `string` ? toEditorPath(value) : value;
-      })));
-    }
->>>>>>> 1383a648b06e4ba7917421246e8463ba06d7bb87
   });
 
   return tsserver;

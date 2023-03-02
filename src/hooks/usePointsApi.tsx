@@ -26,14 +26,10 @@ export const useStudentPointHistory = (student_id: string) =>
     },
   );
 
-  export const usePointOptionList = () =>
-  useQuery(
-    ['usePointList'],
-    () => getAllPoints(),
-    {
-      refetchOnWindowFocus: true,
-    },
-  );
+export const usePointOptionList = () =>
+  useQuery(['usePointList'], () => getAllPoints(), {
+    refetchOnWindowFocus: true,
+  });
 
 export const useCancelPointHistory = (point_history_id: string) => {
   const navigate = useNavigate();

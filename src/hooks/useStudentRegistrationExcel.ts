@@ -19,7 +19,7 @@ export const useStudentAccountIssuance = (
       closeModal();
     },
     onError: (e: AxiosError<{ message: string }>) => {
-      if (e.response.data.message === 'Bas Excel Format') {
+      if (e.response.data.message === 'Bad Excel Format') {
         toastDispatch({
           actionType: 'APPEND_TOAST',
           toastType: 'ERROR',
