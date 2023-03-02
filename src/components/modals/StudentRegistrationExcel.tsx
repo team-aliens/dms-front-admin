@@ -1,6 +1,6 @@
 import { Button, Modal, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useStudentAccountIssuance } from '@/hooks/useStudentRegistrationExcel';
 import { download } from '@/utils/exel';
 
@@ -8,16 +8,12 @@ interface PropsType {
   closeModal: () => void;
 }
 
-let file = new FormData();
 export const StudentRegistrationExcel = ({ closeModal }: PropsType) => {
-  const studentAccount = useStudentAccountIssuance(file);
-  const [uploadedFile, setUplodaedFile] = useState<any>(null);
+  const [uploadedFile, setUplodaedFile] = useState(null);
+  const studentAccount = useStudentAccountIssuance(uploadedFile, closeModal);
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    file.append('file', e.target.files[0]);
-    setUplodaedFile(file.get('file'));
-    console.log(uploadedFile);
+    setUplodaedFile(e.target.files[0]);
   };
 
   return (
@@ -31,7 +27,6 @@ export const StudentRegistrationExcel = ({ closeModal }: PropsType) => {
         <Button
           onClick={() => {
             studentAccount.mutate();
-            closeModal();
           }}
         >
           확인
