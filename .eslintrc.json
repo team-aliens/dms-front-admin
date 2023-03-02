@@ -43,7 +43,6 @@
     "react/function-component-definition": "off",
     "curly": "off",
     "@typescript-eslint/dot-notation": "off",
-    "no-nested-ternary": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
