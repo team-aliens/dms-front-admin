@@ -47,6 +47,7 @@ export function StudentList({
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const openPointFilterModal = () => selectModal('POINT_FILTER');
+  const openPointOptionsModal = () => selectModal('POINT_OPTIONS');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
   const deleteStudent = useDeleteStudent(selectedStudentId[0]);
@@ -82,7 +83,8 @@ export function StudentList({
               onClick={() =>
                 !selectedStudentId[0]
                   ? selectModal('POINT_OPTIONS')
-                  : selectModal('GIVE_POINT')}
+                  : selectModal('GIVE_POINT')
+              }
             >
               {pointListText()}
             </Button>

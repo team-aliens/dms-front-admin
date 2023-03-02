@@ -44,13 +44,21 @@ export function PointItem({
     }
   };
 
+  const PointOption = {
+    id: point_history_id,
+    name: name,
+    score: score,
+    type: type,
+  };
+
   return (
     <_Wrapper
       className="grantPoint"
       canClick={canClick}
       type={type}
       onClick={() =>
-        canClick ? onClick(point_history_id, name, score, type) : ''}
+        canClick ? onClick(point_history_id, name, score, type) : ''
+      }
       OptionSelected={OptionSelected === point_history_id}
     >
       {canClick && OptionSelected === point_history_id ? (
@@ -157,7 +165,8 @@ const _Wrapper = styled.div<{
       if (canClick && OptionSelected) {
         if (type === 'BONUS') return '#3D8AFF';
         return '#FF4646';
-      } return '#EEEEEE';
+      }
+      return '#EEEEEE';
     }};
   border-radius: 4px;
 `;

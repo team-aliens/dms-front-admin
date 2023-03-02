@@ -56,7 +56,8 @@ export const useSearchStudents = ({
   max_point,
 }: SearchStudentPropsType) =>
   useQuery(['studentList', name, sort, filter_type, min_point, max_point], () =>
-    searchStudentList(name, sort, filter_type, min_point, max_point));
+    searchStudentList(name, sort, filter_type, min_point, max_point),
+  );
 
 export const useStudentDetail = (id: string) =>
   useQuery(['getStudentDetail', id], () => id && getStudentDetail(id));
