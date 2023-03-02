@@ -28,9 +28,13 @@ export function PointItem({
   const { selectModal } = useModal();
   const [pointHistoryId, setPointHistoryId] =
     useRecoilState(PointHistroyIdAtom);
-  const openDeletePointModal = () => {
+  const openCancelPointModal = () => {
     selectModal('DELETE_POINT_LIST');
     setPointHistoryId(point_history_id);
+  };
+
+  const openDeletePointModal = () => {
+    selectModal('DELETE_POINT_OPTION');
   };
 
   const typeChanger = () => {
@@ -68,7 +72,7 @@ export function PointItem({
       {canDelete && (
         <>
           <_Line />
-          <_Delete onClick={openDeletePointModal}>
+          <_Delete onClick={canDelete ? openDeletePointModal : openCancelPointModal}>
             <Trash colorKey="gray5" />
           </_Delete>
         </>
@@ -89,7 +93,7 @@ export function AllPointItem({
   const { selectModal, modalState, closeModal } = useModal();
   const [pointHistoryId, setPointHistoryId] =
     useRecoilState(PointHistroyIdAtom);
-  const openDeletePointModal = () => {
+  const openCancelPointModal = () => {
     selectModal('DELETE_POINT_LIST');
     setPointHistoryId(point_history_id);
   };
@@ -116,7 +120,7 @@ export function AllPointItem({
       <_Line />
       <Text margin={[0, 30]}>{point_score}</Text>
       <_Line />
-      <_Delete onClick={openDeletePointModal}>
+      <_Delete onClick={openCancelPointModal}>
         <Trash colorKey="gray5" />
       </_Delete>
     </_AllPointWrapper>

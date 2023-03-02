@@ -1,26 +1,22 @@
-import { useAddPointOption, useEditPointOption } from "@/apis/points";
+import { useAddPointOption, useDeletePointOption, useEditPointOption } from "@/apis/points";
 import { SearchPointOptionsRequest } from "@/apis/points/response";
 import { useDropDown } from "@/hooks/useDropDown";
 import { useForm } from "@/hooks/useForm";
+import { useModal } from "@/hooks/useModal";
 import { usePointOptionList } from "@/hooks/usePointsApi";
 import { Add, Arrow, Button, DropDown, Input, Modal, Search } from "@team-aliens/design-system";
 import { useState } from "react";
 import styled from "styled-components";
 import { PointItem } from "../main/DetailBox/PointItem";
+import { DeletePointListModal } from '../modals/DeletePointOption';
 
 interface PropsType {
-    selectedStudentId: string;
+    selectedStudentId?: string;
     close: () => void;
 }
 
-interface OptionClickPropsType {
-    id: string;
-    name: string
-    score: number;
-    type: string
-}
-
 export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
+    const { modalState, selectModal, closeModal } = useModal();
     const [newItem, setNewItem] = useState(true)
     const { onDropDownChange: AddChange, sort: AddState } = useDropDown<string>("")
     const { onDropDownChange: EditChange, sort: EditState } = useDropDown<string>("")
@@ -75,6 +71,7 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
 
     const addPointOptionAPI = useAddPointOption(score, name, AddState);
     const editPointOptionAPI = useEditPointOption(selectedPointOption, score_, name_, EditState);
+    const deletePointOptionAPI = useDeletePointOption(selectedPointOption);
 
     return (
         <Modal
@@ -84,6 +81,12 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
             buttonList={[
                 selectedPointOption ? <Button disabled={selectedPointOption ? !(editPointOption.score_ && editPointOption.name_ && EditState) : !(score && name && AddState)} onClick={selectedPointOption ? editPointOptionAPI.mutate : addPointOptionAPI.mutate}>수정</Button> : !newItem && <Button disabled={!(score && name && AddState)} onClick={addPointOptionAPI.mutate}>추가</Button>
             ]}>
+            {modalState.selectedModal === 'DELETE_POINT_OPTION' && (
+                <DeletePointListModal
+                    onClick={deletePointOptionAPI.mutate}
+                    closeModal={closeModal}
+                />
+            )}
             <_SearchWrapper>
                 <Search className="Search" />
                 <_SearchInput type="text" placeholder="ex) 봉사활동" name="point_option_name" value={pointOptionState.point_option_name} onChange={onHandleChange} />
@@ -173,7 +176,7 @@ const _Text = styled.div`
 
 const _PointOptionList = styled.div`
     overflow: scroll;
-    height: 261px;
+    height: 22vh;
     > div {
         margin-bottom: 9px;
     }
