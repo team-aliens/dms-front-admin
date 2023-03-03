@@ -166,10 +166,8 @@ const _TimeWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  > p {
+  > .day {
     margin: 0 8px;
-  }
-  .day {
   }
   > .to {
     margin: 0 32px;

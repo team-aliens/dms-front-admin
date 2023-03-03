@@ -25,9 +25,11 @@ export default function RemainModal({
   setRemainModal,
   kind,
 }: PropsType) {
-  const [title, setTitle] = useState<string>(kind === 'edit' ? initTitle : '');
+  const [title, setTitle] = useState<string>(
+    kind === 'create' ? '' : 'initTitle',
+  );
   const [content, setContent] = useState<string>(
-    kind === 'edit' ? initContent : '',
+    kind === 'create' ? '' : 'initContent',
   );
   const { mutate: mutateCreateRemain } = useCreateRemain({
     title,
@@ -54,6 +56,8 @@ export default function RemainModal({
     } else {
       mutateEditRemain();
     }
+    setTitle('');
+    setContent('');
     setRemainModal(false);
   };
   return (

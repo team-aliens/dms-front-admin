@@ -78,7 +78,7 @@ export default function RemainsLists() {
                 <Text color="error" onClick={() => onDelete(remain.id)}>
                   항목 삭제
                 </Text>
-                <Line />
+                <_Line />
                 <Text
                   color="gray6"
                   onClick={() =>
@@ -107,19 +107,6 @@ export default function RemainsLists() {
       />
       <TimeModal timeModal={timeModal} setTimeModal={setTimeModal} />
     </WithNavigatorBar>
-  );
-}
-function Line() {
-  return (
-    <svg
-      width="129"
-      height="2"
-      viewBox="0 0 129 2"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M0 1H128.484" stroke="#EEEEEE" />
-    </svg>
   );
 }
 const _Layout = styled.div`
@@ -161,6 +148,11 @@ const _ListWrapper = styled.div`
 const _Title = styled.p`
   font-weight: 700;
   font-size: 22px;
+`;
+const _Line = styled.div`
+  width: 129px;
+  height: 2px;
+  background-color: #eeeeee;
 `;
 const _Text = styled.p`
   width: 729px;
