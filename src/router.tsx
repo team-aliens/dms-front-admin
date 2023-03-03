@@ -15,6 +15,7 @@ import { StudyRoomDetail } from '@/pages/apply/study/Detail';
 import { PatchRoom } from './pages/apply/study/PatchRoom';
 import Index from '@/pages/apply';
 import RemainsLists from '@/pages/apply/remains';
+import { pagePath } from './utils/pagePath';
 
 export const pathToKorean = {
   'notice': {
@@ -49,21 +50,21 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/find-account-id" element={<FindIdPage />} />
-        <Route path="/reset" element={<ResetPwdPage />} />
-        <Route path="/my-page">
+        <Route path={pagePath.home} element={<Home />} />
+        <Route path={pagePath.login} element={<LoginPage />} />
+        <Route path={pagePath.findAccountId} element={<FindIdPage />} />
+        <Route path={pagePath.resetPassword} element={<ResetPwdPage />} />
+        <Route path={pagePath.myPage.main}>
           <Route index element={<MyPage />} />
           <Route path="change-pwd" element={<ChangePwd />} />
         </Route>
-        <Route path="/notice">
+        <Route path={pagePath.notice.list}>
           <Route index element={<NoticeListPage />} />
           <Route path="write" element={<WriteNoticePage />} />
           <Route path="detail/patch/:noticeId" element={<PatchNoticePage />} />
           <Route path="detail/:noticeId" element={<NoticeDetail />} />
         </Route>
-        <Route path="/apply">
+        <Route path={pagePath.apply.main}>
           <Route index element={<Index />} />
           <Route path="study">
             <Route index element={<StudyRoomList />} />

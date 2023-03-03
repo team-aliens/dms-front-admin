@@ -13,6 +13,7 @@ import { ChangeSchoolQnARequest } from '@/apis/schools/request';
 import { useChangeQnA, useReissueSchoolCode } from '@/hooks/useSchoolsApi';
 import { useMyProfileInfo } from '@/hooks/useMangersApis';
 import { StudentRegistrationExcel } from '@/components/modals/StudentRegistrationExcel';
+import { pagePath } from '@/utils/pagePath';
 
 export function MyPage() {
   const { modalState, selectModal, closeModal } = useModal();
@@ -51,7 +52,7 @@ export function MyPage() {
             <div>
               <Verification onClickNewCode={getNewCode.mutate} code={code} />
               <_OptionBtn>
-                <_PasswordChange to="change-pwd">
+                <_PasswordChange to={pagePath.myPage.changePwd}>
                   <Text display="block" size="titleS">
                     비밀번호 변경
                   </Text>
