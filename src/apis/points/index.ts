@@ -113,3 +113,7 @@ export const useEditPointOption = (
     { onSuccess: () => closeModal() },
   );
 };
+
+export const useDeletePointOption = (id: string) => {
+  return useMutation(async () => instance.delete(`${router}/options/${id}`));
+};
