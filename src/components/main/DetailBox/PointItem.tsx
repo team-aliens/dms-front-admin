@@ -9,6 +9,7 @@ import {
 import { PointHistroyIdAtom } from '@/utils/atoms';
 
 interface PropsType extends StudentPointHistoryType {
+  isDeleteListOption?: boolean;
   canDelete?: boolean;
   canClick?: boolean;
   onClick?: (id: string, name: string, score: number, type: string) => void;
@@ -16,6 +17,7 @@ interface PropsType extends StudentPointHistoryType {
 }
 
 export function PointItem({
+  isDeleteListOption = false,
   canDelete = false,
   canClick = false,
   onClick,
@@ -46,13 +48,6 @@ export function PointItem({
       default:
         return '';
     }
-  };
-
-  const PointOption = {
-    id: point_history_id,
-    name: name,
-    score: score,
-    type: type,
   };
 
   return (
@@ -99,7 +94,9 @@ export function PointItem({
         <>
           <_Line />
           <_Delete
-            onClick={canDelete ? openDeletePointModal : openCancelPointModal}
+            onClick={
+              isDeleteListOption ? openDeletePointModal : openCancelPointModal
+            }
           >
             <Trash colorKey="gray5" />
           </_Delete>

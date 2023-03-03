@@ -1,13 +1,23 @@
 import { useModal } from '@/hooks/useModal';
 import { Button, Modal } from '@team-aliens/design-system';
+import { Dispatch, SetStateAction } from 'react';
 
 interface PropsType {
+  setSelectedOption?: Dispatch<SetStateAction<string>>;
   closeModal: () => void;
   onClick: () => void;
 }
 
-export function DeletePointListModal({ closeModal, onClick }: PropsType) {
+export function DeletePointOptionModal({
+  closeModal,
+  onClick,
+  setSelectedOption,
+}: PropsType) {
   const { selectModal } = useModal();
+  const backToDeletePointOptionModal = () => {
+    selectModal('POINT_OPTIONS');
+    setSelectedOption('');
+  };
   const confirm = () => {
     onClick();
     closeModal();
@@ -19,10 +29,7 @@ export function DeletePointListModal({ closeModal, onClick }: PropsType) {
       content="상/벌점 항목을 삭제 하시겠습니까?"
       buttonList={[
         <Button
-          onClick={() => {
-            closeModal();
-            selectModal('DELETE_POINT_OPTION');
-          }}
+          onClick={backToDeletePointOptionModal}
           kind="outline"
           color="gray"
         >
