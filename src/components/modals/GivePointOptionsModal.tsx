@@ -99,7 +99,8 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
       <_PointOptionList className="grantPoint">
         {allPointOptions?.point_options
           .filter((options) =>
-            options.name.includes(pointOptionState.point_option_name))
+            options.name.includes(pointOptionState.point_option_name),
+          )
           .map((options) => {
             const { point_option_id, name, type, score } = options;
             return (

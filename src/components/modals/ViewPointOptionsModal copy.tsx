@@ -76,7 +76,8 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
     });
     EditChange(option_type);
     setSelectedPointOption((OptionId) =>
-      OptionId === option_id ? '' : option_id);
+      OptionId === option_id ? '' : option_id,
+    );
   };
 
   const { state: pointOptionState, onHandleChange } =
@@ -147,7 +148,8 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
       <_PointOptionList>
         {allPointOptions?.point_options
           .filter((options) =>
-            options.name.includes(pointOptionState.point_option_name))
+            options.name.includes(pointOptionState.point_option_name),
+          )
           .map((options) => {
             const { point_option_id, name, type, score } = options;
             return (
