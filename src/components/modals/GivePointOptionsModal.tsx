@@ -116,7 +116,11 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
             );
           })}
       </_PointOptionList>
-      <_AddImgWrapper onClick={newItemInput} newItem={newItem}>
+      <_AddImgWrapper
+        className="grantPoint"
+        onClick={newItemInput}
+        newItem={newItem}
+      >
         {newItem ? (
           <Add className="addImg" />
         ) : (
@@ -128,7 +132,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
           <_Text className="grantPoint">항목 닫기</_Text>
         )}
       </_AddImgWrapper>
-      <_AddInputBigWrapper>
+      <_AddInputBigWrapper className="grantPoint">
         {newItem ? (
           ''
         ) : (
@@ -143,7 +147,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
             onChange={onAddPointOption}
           />
         )}
-        <_AddInputSmallWrapper>
+        <_AddInputSmallWrapper className="grantPoint">
           {newItem ? (
             ''
           ) : (
@@ -190,16 +194,16 @@ const _SearchInput = styled.input`
   width: 202px;
   height: 40px;
   border-bottom: 1px solid #dddddd;
-  padding: 0px 0px 0px 30px;
+  margin: 0px 0px 0px 30px;
   font-size: 16px;
 `;
 
 const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
-  margin-top: 35px;
+  padding-top: 35px;
   cursor: pointer;
-  margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
+  padding-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;
     margin-right: 10px;
@@ -214,7 +218,7 @@ const _Text = styled.div`
 
 const _PointOptionList = styled.div`
   overflow: scroll;
-  height: 261px;
+  height: 22vh;
   > div {
     margin-bottom: 9px;
   }

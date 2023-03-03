@@ -9,7 +9,7 @@ import {
   useCancelPointHistory,
 } from '@/hooks/usePointsApi';
 import { PointHistroyIdAtom } from '@/utils/atoms';
-import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal copy';
+import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();
