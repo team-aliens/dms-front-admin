@@ -35,7 +35,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
             ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.3.42"],\
-            ["@types/jest", "npm:29.2.6"],\
+            ["@types/jest", "npm:29.4.0"],\
+            ["@types/mocha", "npm:10.0.1"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-color", "npm:3.0.6"],\
@@ -3711,10 +3712,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/jest", [\
-        ["npm:29.2.6", {\
-          "packageLocation": "./.yarn/cache/@types-jest-npm-29.2.6-6feedd29f5-90190ac830.zip/node_modules/@types/jest/",\
+        ["npm:29.4.0", {\
+          "packageLocation": "./.yarn/cache/@types-jest-npm-29.4.0-e28b79cadc-2376028236.zip/node_modules/@types/jest/",\
           "packageDependencies": [\
-            ["@types/jest", "npm:29.2.6"],\
+            ["@types/jest", "npm:29.4.0"],\
             ["expect", "npm:29.3.1"],\
             ["pretty-format", "npm:29.3.1"]\
           ],\
@@ -3763,6 +3764,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-minimatch-npm-5.1.2-aab9c394d3-0391a28286.zip/node_modules/@types/minimatch/",\
           "packageDependencies": [\
             ["@types/minimatch", "npm:5.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/mocha", [\
+        ["npm:10.0.1", {\
+          "packageLocation": "./.yarn/cache/@types-mocha-npm-10.0.1-7c94e9e170-224ea9fce7.zip/node_modules/@types/mocha/",\
+          "packageDependencies": [\
+            ["@types/mocha", "npm:10.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7482,7 +7492,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:7.18.6"],\
             ["@babel/runtime-corejs3", "npm:7.19.6"],\
             ["@team-aliens/design-system", "virtual:6825de12e882ebd74a2730adf114fab466d9edf0fa45f29149dccb4e22d695cfd020d03179e7f6c6a76ea6a1847cdf64506ba1efcc8aa9a034715d886d7d4563#npm:1.3.42"],\
-            ["@types/jest", "npm:29.2.6"],\
+            ["@types/jest", "npm:29.4.0"],\
+            ["@types/mocha", "npm:10.0.1"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-color", "npm:3.0.6"],\
