@@ -29,24 +29,19 @@ export const download = async () => {
       pattern: 'solid',
       fgColor: { argb: 'FFE400' },
     };
+
+    worksheet.getCell(1, i).border = {
+      top: { style: 'thin', color: { argb: '949494' } },
+      left: { style: 'thin', color: { argb: '949494' } },
+      bottom: { style: 'thin', color: { argb: '949494' } },
+      right: { style: 'thin', color: { argb: '949494' } },
+    };
+
+    worksheet.getCell(1, i).alignment = {
+      vertical: 'middle',
+      horizontal: 'center',
+    };
   }
-  // worksheet.getRow(1).fill = {
-  //   type: 'pattern',
-  //   pattern: 'solid',
-  //   fgColor: { argb: 'FFE400' },
-  // };
-
-  worksheet.getRow(1).border = {
-    top: { style: 'double', color: { argb: '949494' } },
-    left: { style: 'double', color: { argb: '949494' } },
-    bottom: { style: 'double', color: { argb: '949494' } },
-    right: { style: 'double', color: { argb: '949494' } },
-  };
-
-  worksheet.getRow(1).alignment = {
-    vertical: 'middle',
-    horizontal: 'center',
-  };
 
   worksheet.getColumn(4).width = 12;
   worksheet.getColumn(5).width = 10;

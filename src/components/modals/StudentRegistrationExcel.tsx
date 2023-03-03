@@ -2,7 +2,7 @@ import { Button, Modal, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useStudentAccountIssuance } from '@/hooks/useStudentRegistrationExcel';
-import { download } from '@/utils/exel';
+import { download } from '@/utils/excel';
 
 interface PropsType {
   closeModal: () => void;
