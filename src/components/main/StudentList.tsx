@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
-import { ChangeEvent } from 'react';
-import { useRecoilState } from 'recoil';
+import { ChangeEvent, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
@@ -11,11 +11,12 @@ import { DeletePointListModal } from '../modals/DeletePointList';
 import { PointHistroyIdAtom } from '@/utils/atoms';
 import { useCancelPointHistory } from '@/hooks/usePointsApi';
 import { FilterState, ModeType } from '@/pages/Home';
-import { PointEnum, PointType } from '@/apis/points';
+import { PointEnum, PointType, useDeletePointOption } from '@/apis/points';
 import { DeleteStudentModal } from '../modals/DeleteStudent';
 import { useDeleteStudent } from '@/hooks/useMangersApis';
 import { GivePointOptionsModal } from '../modals/GivePointOptionsModal';
-import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal copy';
+import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
+import { DeletePointOptionModal } from '../modals/DeletePointOption';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -47,10 +48,12 @@ export function StudentList({
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const openPointFilterModal = () => selectModal('POINT_FILTER');
-  const openPointOptionsModal = () => selectModal('POINT_OPTIONS');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
   const cancelPoint = useCancelPointHistory(pointHistoryId);
   const deleteStudent = useDeleteStudent(selectedStudentId[0]);
+
+  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+  const deletePointOptionAPI = useDeletePointOption(selectedPointOption);
 
   const filterText = () => {
     if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
@@ -131,12 +134,23 @@ export function StudentList({
         <DeleteStudentModal onClick={deleteStudent.mutate} close={closeModal} />
       )}
       {modalState.selectedModal === 'POINT_OPTIONS' && (
-        <ViewPointOptionsModal close={closeModal} />
+        <ViewPointOptionsModal
+          selectedPointOption={selectedPointOption}
+          setSelectedPointOption={setSelectedPointOption}
+          close={closeModal}
+        />
       )}
       {modalState.selectedModal === 'GIVE_POINT' && (
         <GivePointOptionsModal
           selectedStudentId={selectedStudentId}
           close={closeModal}
+        />
+      )}
+      {modalState.selectedModal === 'DELETE_POINT_OPTION' && (
+        <DeletePointOptionModal
+          setSelectedOption={setSelectedPointOption}
+          onClick={deletePointOptionAPI.mutate}
+          closeModal={closeModal}
         />
       )}
     </_Wrapper>

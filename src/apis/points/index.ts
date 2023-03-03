@@ -115,5 +115,11 @@ export const useEditPointOption = (
 };
 
 export const useDeletePointOption = (id: string) => {
-  return useMutation(async () => instance.delete(`${router}/options/${id}`));
+  const navigate = useNavigate();
+  return useMutation(
+    async () => await instance.delete(`${router}/options/${id}`),
+    {
+      onSuccess: () => navigate(0),
+    },
+  );
 };
