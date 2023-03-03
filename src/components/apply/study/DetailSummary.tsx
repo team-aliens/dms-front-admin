@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { gradeTypeToKorean, sexTypeToKorean } from '@/utils/translate';
 import { GradeType, SexType } from '@/apis/studyRooms/request';
 import { StudyRoomDetailResponse } from '@/apis/studyRooms/response';
+import { pagePath } from '@/utils/pagePath';
 
 interface DetailOption {
   name: string;
@@ -66,7 +67,7 @@ export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
           </_Summary>
         );
       })}
-      <Link to={`/apply/detail/patch/${id}`}>
+      <Link to={pagePath.apply.studyRoom.patch(id)}>
         <Button color="primary" kind="rounded">
           수정하기
         </Button>

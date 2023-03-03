@@ -14,7 +14,7 @@ import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
 import { useModal } from '@/hooks/useModal';
-import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal copy';
+import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal';
 
 export interface FilterState {
   name: string;

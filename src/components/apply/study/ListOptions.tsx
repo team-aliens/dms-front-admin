@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ApplicationTimeResponse } from '@/apis/studyRooms/response';
 import { useModal } from '@/hooks/useModal';
 import { SetApplicationTimeModal } from '@/components/modals/SetApplicationTime';
+import { pagePath } from '@/utils/pagePath';
 
 export function StudyListOptions({
   start_at,
@@ -36,7 +37,7 @@ export function StudyListOptions({
             수정
           </Button>
         </_ApplyAbleTime>
-        <_CreateBtn to="/apply/create">
+        <_CreateBtn to={pagePath.apply.studyRoom.create}>
           <Button kind="outline" color="primary">
             자습실 생성
           </Button>

@@ -7,24 +7,36 @@ import {
   Modal,
   Search,
 } from '@team-aliens/design-system';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
-import { useAddPointOption, useEditPointOption } from '@/apis/points';
+import {
+  useAddPointOption,
+  useDeletePointOption,
+  useEditPointOption,
+} from '@/apis/points';
 import { SearchPointOptionsRequest } from '@/apis/points/response';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { usePointOptionList } from '@/hooks/usePointsApi';
 import { PointItem } from '../main/DetailBox/PointItem';
+import { useModal } from '@/hooks/useModal';
+import { DeletePointOptionModal } from './DeletePointOption';
 
 interface PropsType {
-  selectedStudentId?: string;
+  selectedPointOption?: string;
+  setSelectedPointOption?: Dispatch<SetStateAction<string>>;
   close: () => void;
 }
 
 const MustTrue = true;
 
-export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
+export function ViewPointOptionsModal({
+  close,
+  selectedPointOption,
+  setSelectedPointOption,
+}: PropsType) {
   const [newItem, setNewItem] = useState(true);
+  const { closeModal, selectModal, modalState } = useModal();
   const { onDropDownChange: AddChange, sort: AddState } =
     useDropDown<string>('');
   const { onDropDownChange: EditChange, sort: EditState } =
@@ -57,7 +69,6 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
     });
   };
 
-  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
   const { data: allPointOptions } = usePointOptionList();
 
   const newItemInput = () => {
@@ -76,7 +87,8 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
     });
     EditChange(option_type);
     setSelectedPointOption((OptionId) =>
-      OptionId === option_id ? '' : option_id);
+      OptionId === option_id ? '' : option_id,
+    );
   };
 
   const { state: pointOptionState, onHandleChange } =
@@ -147,7 +159,8 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
       <_PointOptionList>
         {allPointOptions?.point_options
           .filter((options) =>
-            options.name.includes(pointOptionState.point_option_name))
+            options.name.includes(pointOptionState.point_option_name),
+          )
           .map((options) => {
             const { point_option_id, name, type, score } = options;
             return (
@@ -158,6 +171,7 @@ export function ViewPointOptionsModal({ close, selectedStudentId }: PropsType) {
                 score={score}
                 canDelete={MustTrue}
                 canClick={MustTrue}
+                isDeleteListOption={MustTrue}
                 onClick={onClickPointOption}
                 OptionSelected={selectedPointOption}
               />
@@ -307,7 +321,7 @@ const _Text = styled.div`
 
 const _PointOptionList = styled.div`
   overflow: scroll;
-  height: 261px;
+  height: 22vh;
   > div {
     margin-bottom: 9px;
   }

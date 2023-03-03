@@ -16,6 +16,7 @@ export type SelectedModalType =
   | 'DELETE_STUDENT'
   | 'POINT_OPTIONS'
   | 'GIVE_POINT'
+  | 'DELETE_POINT_OPTION'
   | '';
 
 interface ModalState {

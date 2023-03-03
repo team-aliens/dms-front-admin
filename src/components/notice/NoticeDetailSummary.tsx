@@ -2,6 +2,7 @@ import { Text, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { dateToString } from '@/utils/translate';
+import { pagePath } from '@/utils/pagePath';
 
 interface Props {
   noticeId: string;
@@ -19,7 +20,7 @@ export function NoticeDetailSummary({
       <Text size="bodyM" color="gray5" display="inline-block">
         {dateToString(createdDate)}
       </Text>
-      <Link to={`/notice/detail/patch/${noticeId}`}>
+      <Link to={pagePath.notice.patch(noticeId)}>
         <Button kind="outline" onClick={() => {}} color="primary">
           수정하기
         </Button>

@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { TitleBox } from './TitleBox';
 import { LoginRequest } from '@/apis/auth/request';
+import { pagePath } from '@/utils/pagePath';
 
 interface PropsType {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -71,7 +72,7 @@ export function Login({
           로그인
         </Button>
         <_FindAccountArea>
-          <Link to="/find-account-id">
+          <Link to={pagePath.findAccountId}>
             <Text size="bodyL" color="gray6">
               아이디 찾기
             </Text>
@@ -79,7 +80,7 @@ export function Login({
           <Text size="bodyL" color="gray6">
             |
           </Text>
-          <Link to="/reset">
+          <Link to={pagePath.resetPassword}>
             <Text size="bodyL" color="gray6">
               비밀번호 변경
             </Text>

@@ -12,6 +12,7 @@ import {
   ApplicationTime,
 } from '@/components/modals/AddStudyRoomTime';
 import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
+import { pagePath } from '@/utils/pagePath';
 
 export interface IStudyRoomTime {
   startAt: string;
@@ -96,7 +97,7 @@ export function StudyRoomList() {
         </_Buttons>
         <_List>
           {list?.study_rooms.map((i) => (
-            <Link to={`/apply/detail/${i.id}`}>
+            <Link to={pagePath.apply.studyRoom.deatail(i.id)}>
               <StudyCard {...i} />
             </Link>
           ))}

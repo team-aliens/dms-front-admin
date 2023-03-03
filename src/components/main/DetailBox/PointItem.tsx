@@ -9,6 +9,7 @@ import {
 import { PointHistroyIdAtom } from '@/utils/atoms';
 
 interface PropsType extends StudentPointHistoryType {
+  isDeleteListOption?: boolean;
   canDelete?: boolean;
   canClick?: boolean;
   onClick?: (id: string, name: string, score: number, type: string) => void;
@@ -16,6 +17,7 @@ interface PropsType extends StudentPointHistoryType {
 }
 
 export function PointItem({
+  isDeleteListOption = false,
   canDelete = false,
   canClick = false,
   onClick,
@@ -28,9 +30,13 @@ export function PointItem({
   const { selectModal } = useModal();
   const [pointHistoryId, setPointHistoryId] =
     useRecoilState(PointHistroyIdAtom);
-  const openDeletePointModal = () => {
+  const openCancelPointModal = () => {
     selectModal('DELETE_POINT_LIST');
     setPointHistoryId(point_history_id);
+  };
+
+  const openDeletePointModal = () => {
+    selectModal('DELETE_POINT_OPTION');
   };
 
   const typeChanger = () => {
@@ -42,13 +48,6 @@ export function PointItem({
       default:
         return '';
     }
-  };
-
-  const PointOption = {
-    id: point_history_id,
-    name: name,
-    score: score,
-    type: type,
   };
 
   return (
@@ -94,7 +93,11 @@ export function PointItem({
       {canDelete && (
         <>
           <_Line />
-          <_Delete onClick={openDeletePointModal}>
+          <_Delete
+            onClick={
+              isDeleteListOption ? openDeletePointModal : openCancelPointModal
+            }
+          >
             <Trash colorKey="gray5" />
           </_Delete>
         </>
@@ -115,7 +118,7 @@ export function AllPointItem({
   const { selectModal, modalState, closeModal } = useModal();
   const [pointHistoryId, setPointHistoryId] =
     useRecoilState(PointHistroyIdAtom);
-  const openDeletePointModal = () => {
+  const openCancelPointModal = () => {
     selectModal('DELETE_POINT_LIST');
     setPointHistoryId(point_history_id);
   };
@@ -142,7 +145,7 @@ export function AllPointItem({
       <_Line />
       <Text margin={[0, 30]}>{point_score}</Text>
       <_Line />
-      <_Delete onClick={openDeletePointModal}>
+      <_Delete onClick={openCancelPointModal}>
         <Trash colorKey="gray5" />
       </_Delete>
     </_AllPointWrapper>
