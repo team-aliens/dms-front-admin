@@ -8,6 +8,7 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useCreateRemain, useEditRemain } from '@/hooks/useRemainApi';
+import { useForm } from '@/hooks/useForm';
 
 interface PropsType {
   initTitle?: string;
@@ -25,11 +26,9 @@ export default function RemainModal({
   setRemainModal,
   kind,
 }: PropsType) {
-  const [title, setTitle] = useState<string>(
-    kind === 'create' ? '' : 'initTitle',
-  );
+  const [title, setTitle] = useState<string>(kind === 'edit' ? initTitle : '');
   const [content, setContent] = useState<string>(
-    kind === 'create' ? '' : 'initContent',
+    kind === 'edit' ? initContent : '',
   );
   const { mutate: mutateCreateRemain } = useCreateRemain({
     title,
@@ -39,10 +38,11 @@ export default function RemainModal({
     title,
     description: content,
   });
-
   useEffect(() => {
     setTitle(initTitle);
     setContent(initContent);
+    setTitle('');
+    setContent('');
   }, [initTitle, initContent]);
   const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -56,8 +56,6 @@ export default function RemainModal({
     } else {
       mutateEditRemain();
     }
-    setTitle('');
-    setContent('');
     setRemainModal(false);
   };
   return (
@@ -73,6 +71,7 @@ export default function RemainModal({
                 label="제목"
                 value={title}
                 placeholder="ex) 금요 외박"
+                type="text"
                 limit={30}
               />
               <_TextLength>({title.length}/30)</_TextLength>
@@ -84,8 +83,8 @@ export default function RemainModal({
                 name="내용"
                 value={content}
                 height={176}
+                limit={200}
               />
-              <_TextLength>({content.length}/200)</_TextLength>
             </_InputWrapper>,
           ]}
           buttonList={[
