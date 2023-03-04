@@ -60,7 +60,7 @@ export function StudyRoomList() {
       [type]: value,
     });
   };
-  const setApplicationTime = useSetApplicationTime(
+  const { mutate: setApplicationTime } = useSetApplicationTime(
     {
       start_at: `${globalApplicationTime.startHour}:${globalApplicationTime.startMin}:00`,
       end_at: `${globalApplicationTime.endHour}:${globalApplicationTime.endMin}:00`,
@@ -109,7 +109,7 @@ export function StudyRoomList() {
       <_Wrapper>
         <StudyListOptions
           onChangeDropdown={onChangeApplicationTime}
-          setApplicationTime={setApplicationTime.mutate}
+          setApplicationTime={setApplicationTime}
           startHour={globalApplicationTime.startHour}
           startMin={globalApplicationTime.startMin}
           endHour={globalApplicationTime.endHour}
@@ -162,7 +162,7 @@ export function StudyRoomList() {
       </_Wrapper>
       {modalState.selectedModal === 'ADD_STUDY_ROOM_TIME' && (
         <SetApplicationTimeModal
-          setApplicationTime={() => {}}
+          setApplicationTime={setApplicationTime}
           onChangeDropdown={onChangeApplicationTime}
           close={closeModal}
           startHour={globalApplicationTime.startHour}
