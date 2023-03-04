@@ -5,7 +5,11 @@ import { Add, Button, Gear, Trash } from '@team-aliens/design-system';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { StudyListOptions } from '@/components/apply/study/ListOptions';
 import { StudyCard } from '@/components/apply/study/StudyCard';
-import { useGetApplicationTime, useStudyRoomList } from '@/apis/studyRooms';
+import {
+  useGetApplicationTime,
+  useSetApplicationTime,
+  useStudyRoomList,
+} from '@/apis/studyRooms';
 import { useModal } from '@/hooks/useModal';
 import {
   AddStudyRoomTimeModal,
@@ -28,6 +32,35 @@ export function StudyRoomList() {
 
   const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
     [],
+  );
+  const { data: applicationTime, refetch } = useGetApplicationTime();
+  const [globalApplicationTime, onHandleChange] = useState<ApplicationTime>({
+    startHour: '00',
+    startMin: '00',
+    endHour: '00',
+    endMin: '00',
+  });
+
+  const onChangeApplicationTime = (
+    type: keyof ApplicationTime,
+    value: string,
+  ) => {
+    onHandleChange({
+      ...globalApplicationTime,
+      [type]: value,
+    });
+  };
+  const setApplicationTime = useSetApplicationTime(
+    {
+      start_at: `${globalApplicationTime.startHour}:${globalApplicationTime.startMin}:00`,
+      end_at: `${globalApplicationTime.endHour}:${globalApplicationTime.endMin}:00`,
+    },
+    {
+      onSuccess: () => {
+        close();
+        refetch();
+      },
+    },
   );
   const [hover, setHover] = useState<boolean>(false);
   const [current, setCurrent] = useState<number>(0);
@@ -53,11 +86,15 @@ export function StudyRoomList() {
   };
 
   const { data: list } = useStudyRoomList();
-  const { data: applicationTime } = useGetApplicationTime();
+
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <StudyListOptions {...applicationTime} />
+        <StudyListOptions
+          onChangeDropdown={onChangeApplicationTime}
+          setApplicationTime={setApplicationTime.mutate}
+          {...applicationTime}
+        />
         <_Buttons>
           <Button
             onClick={openAddStudyRoomTimeModal}

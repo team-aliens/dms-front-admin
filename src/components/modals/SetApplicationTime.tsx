@@ -1,44 +1,32 @@
-import { Modal, Button, Input } from '@team-aliens/design-system';
+import { Modal, Button, Input, DropDown } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useForm } from '@/hooks/useForm';
-import {
-  useGetApplicationTime,
-  useSetApplicationTime,
-} from '@/apis/studyRooms';
+import { ApplicationTime } from './AddStudyRoomTime';
 
-interface ApplicationTime {
-  startHour: string;
-  startMin: string;
-  endHour: string;
-  endMin: string;
-}
+const hourToArray = Array(24)
+  .fill(void 0)
+  .map((_, idx) => `${idx < 10 ? '0' + String(idx) : String(idx)}`);
+
+const minToArray = Array(60)
+  .fill(void 0)
+  .map((_, idx) => `${idx < 10 ? '0' + String(idx) : String(idx)}`);
 
 interface PropsType {
   close: () => void;
   startAt: string;
   endAt: string;
+  setApplicationTime: () => void;
+  onChangeDropdown: (type: keyof ApplicationTime, value: string) => void;
 }
 
-export function SetApplicationTimeModal({ close, startAt, endAt }: PropsType) {
-  const { refetch } = useGetApplicationTime();
-  const { state, onHandleChange } = useForm<ApplicationTime>({
-    startHour: startAt.slice(0, 2),
-    startMin: startAt.slice(3, 5),
-    endHour: endAt.slice(0, 2),
-    endMin: endAt.slice(3, 5),
-  });
-  const setApplicationTime = useSetApplicationTime(
-    {
-      start_at: `${state.startHour}:${state.startMin}:00`,
-      end_at: `${state.endHour}:${state.endMin}:00`,
-    },
-    {
-      onSuccess: () => {
-        refetch();
-        close();
-      },
-    },
-  );
+export function SetApplicationTimeModal({
+  close,
+  startAt,
+  endAt,
+  setApplicationTime,
+  onChangeDropdown,
+}: PropsType) {
+  const [startHour, startMin] = startAt.split(':');
+  const [endHour, endMin] = endAt.split(':');
 
   return (
     <Modal
@@ -46,40 +34,36 @@ export function SetApplicationTimeModal({ close, startAt, endAt }: PropsType) {
       close={close}
       inputList={[
         <_Time>
-          <Input
+          <DropDown
+            items={hourToArray}
+            placeholder="0"
+            onChange={(startHour) => onChangeDropdown('startHour', startHour)}
             width={80}
-            onChange={onHandleChange}
-            name="startHour"
-            value={state.startHour}
-            type="number"
           />
           <p>:</p>
-          <Input
+          <DropDown
+            items={minToArray}
+            placeholder="0"
+            onChange={(startMin) => onChangeDropdown('startMin', startMin)}
             width={80}
-            onChange={onHandleChange}
-            name="startMin"
-            value={state.startMin}
-            type="number"
           />
           <p className="to">~</p>
-          <Input
+          <DropDown
+            items={hourToArray}
+            placeholder="0"
+            onChange={(endHour) => onChangeDropdown('endHour', endHour)}
             width={80}
-            onChange={onHandleChange}
-            name="endHour"
-            value={state.endHour}
-            type="number"
           />
           <p>:</p>
-          <Input
+          <DropDown
+            items={minToArray}
+            placeholder="0"
+            onChange={(endMin) => onChangeDropdown('endMin', endMin)}
             width={80}
-            onChange={onHandleChange}
-            name="endMin"
-            value={state.endMin}
-            type="number"
           />
         </_Time>,
       ]}
-      buttonList={[<Button onClick={setApplicationTime.mutate}>저장</Button>]}
+      buttonList={[<Button onClick={setApplicationTime}>저장</Button>]}
     />
   );
 }

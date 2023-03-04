@@ -5,19 +5,30 @@ import { ApplicationTimeResponse } from '@/apis/studyRooms/response';
 import { useModal } from '@/hooks/useModal';
 import { SetApplicationTimeModal } from '@/components/modals/SetApplicationTime';
 import { pagePath } from '@/utils/pagePath';
+import { ApplicationTime } from '@/components/modals/AddStudyRoomTime';
+
+interface PropsType {
+  setApplicationTime: () => void;
+  onChangeDropdown: (type: keyof ApplicationTime, value: string) => void;
+}
 
 export function StudyListOptions({
   start_at,
   end_at,
-}: ApplicationTimeResponse) {
+  setApplicationTime,
+  onChangeDropdown,
+}: ApplicationTimeResponse & PropsType) {
   const { selectModal, modalState, closeModal } = useModal();
+
   return (
     <>
       {modalState.selectedModal === 'APPLICATION_TIME' && (
         <SetApplicationTimeModal
+          onChangeDropdown={onChangeDropdown}
           close={closeModal}
           startAt={start_at}
           endAt={end_at}
+          setApplicationTime={setApplicationTime}
         />
       )}
       <_Wrapper>
