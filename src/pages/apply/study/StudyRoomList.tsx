@@ -11,23 +11,24 @@ import {
   useStudyRoomList,
 } from '@/apis/studyRooms';
 import { useModal } from '@/hooks/useModal';
-import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
 import { pagePath } from '@/utils/pagePath';
 import {
   ApplicationTime,
   SetApplicationTimeModal,
 } from '@/components/modals/SetApplicationTime';
+import { useToast } from '@/hooks/useToast';
 
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
+  const { toastDispatch } = useToast();
   // const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
   // const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
   // const openDeleteStudyRoomTimeModal = () =>
   //   selectModal('DELETE_STUDY_ROOM_TIME');
 
-  const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
-    [],
-  );
+  // const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
+  //   [],
+  // );
   const { data: applicationTime, refetch } = useGetApplicationTime();
   const [globalApplicationTime, onHandleChange] = useState<ApplicationTime>({
     startHour: '00',
@@ -66,8 +67,20 @@ export function StudyRoomList() {
     },
     {
       onSuccess: () => {
-        close();
+        closeModal();
         refetch();
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '신청 시간 수정이 완료되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '수정할 신청 시간을 다시 확인 해 주세요.',
+        });
       },
     },
   );

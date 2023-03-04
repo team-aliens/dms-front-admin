@@ -1,6 +1,12 @@
 import { Modal, Button, Input, DropDown } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { ApplicationTime } from './AddStudyRoomTime';
+
+export interface ApplicationTime {
+  startHour: string;
+  startMin: string;
+  endHour: string;
+  endMin: string;
+}
 
 const hourToArray = Array(24)
   .fill(void 0)
@@ -12,22 +18,19 @@ const minToArray = Array(60)
 
 interface PropsType {
   close: () => void;
-  startAt: string;
-  endAt: string;
   setApplicationTime: () => void;
   onChangeDropdown: (type: keyof ApplicationTime, value: string) => void;
 }
 
 export function SetApplicationTimeModal({
   close,
-  startAt,
-  endAt,
+  startHour,
+  startMin,
+  endHour,
+  endMin,
   setApplicationTime,
   onChangeDropdown,
-}: PropsType) {
-  const [startHour, startMin] = startAt.split(':');
-  const [endHour, endMin] = endAt.split(':');
-
+}: PropsType & ApplicationTime) {
   return (
     <Modal
       title="자습실 신청 시간 설정"
@@ -39,6 +42,7 @@ export function SetApplicationTimeModal({
             placeholder="0"
             onChange={(startHour) => onChangeDropdown('startHour', startHour)}
             width={80}
+            value={startHour}
           />
           <p>:</p>
           <DropDown
@@ -46,6 +50,7 @@ export function SetApplicationTimeModal({
             placeholder="0"
             onChange={(startMin) => onChangeDropdown('startMin', startMin)}
             width={80}
+            value={startMin}
           />
           <p className="to">~</p>
           <DropDown
@@ -53,6 +58,7 @@ export function SetApplicationTimeModal({
             placeholder="0"
             onChange={(endHour) => onChangeDropdown('endHour', endHour)}
             width={80}
+            value={endHour}
           />
           <p>:</p>
           <DropDown
@@ -60,6 +66,7 @@ export function SetApplicationTimeModal({
             placeholder="0"
             onChange={(endMin) => onChangeDropdown('endMin', endMin)}
             width={80}
+            value={endMin}
           />
         </_Time>,
       ]}
