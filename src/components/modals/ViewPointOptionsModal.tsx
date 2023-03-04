@@ -305,7 +305,6 @@ const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
   margin-top: 35px;
-  cursor: pointer;
   margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;

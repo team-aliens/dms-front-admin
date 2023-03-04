@@ -60,6 +60,9 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
     selectedPointOption,
     selectedStudentId,
   );
+
+  const { isLoading } = givePointOptionAPI;
+
   const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort);
 
   return (
@@ -74,7 +77,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
           margin={newItem ? [-40, 0, 0, 0] : [0, 0, 0, 0]}
           disabled={
             newItem
-              ? !(selectedPointOption && selectedStudentId)
+              ? !(selectedPointOption && selectedStudentId && !isLoading)
               : !(scoreOption && nameOption && sort)
           }
           onClick={

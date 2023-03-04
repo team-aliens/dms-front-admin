@@ -64,6 +64,8 @@ export function MultiRangeSlider({
           <Text
             size="captionM"
             color={
+              (+res.replace('+', '') === 100 && +maxVal > 100) ||
+              (+res.replace('+', '') === -100 && +minVal < -100) ||
               +res.replace('+', '') === +minVal ||
               +res.replace('+', '') === +maxVal
                 ? 'gray8'
