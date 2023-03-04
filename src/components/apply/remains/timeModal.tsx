@@ -49,46 +49,52 @@ export default function TimeModal() {
     <Modal
       title="잔류 신청 시간 설정"
       inputList={[
-        <_TimeWrapper>
+        <_TimeWrapper key={'time'}>
           <Input
             onChange={onHandleChange}
             name={'startDay'}
             value={timeState.startDay}
+            key={'startDay'}
           />
           <p className="day">요일</p>
           <Input
             onChange={onHandleChange}
             name={'startHour'}
             value={timeState.startHour}
+            key={'startHour'}
           />
           <p className="day">:</p>
           <Input
             onChange={onHandleChange}
-            name={'endDay'}
+            name={'startMin'}
             value={timeState.startMin}
+            key={'startMin'}
           />
           <p className="to">~</p>
           <Input
             onChange={onHandleChange}
-            name={'endHour'}
-            value={timeState.endDay}
+            name={'endDay'}
+            value={timeState.startMin}
+            key={'endDay'}
           />
           <p className="day">요일</p>
           <Input
             onChange={onHandleChange}
             name={'endHour'}
-            value={timeState.endHour}
+            value={timeState.endDay}
+            key={'endHour'}
           />
           <p className="day">:</p>
           <Input
             onChange={onHandleChange}
             name={'endMin'}
             value={timeState.endMin}
+            key={'endMin'}
           />
         </_TimeWrapper>,
       ]}
       buttonList={[
-        <Button color="primary" onClick={onClick}>
+        <Button key={'okay'} color="primary" onClick={onClick}>
           확인
         </Button>,
       ]}

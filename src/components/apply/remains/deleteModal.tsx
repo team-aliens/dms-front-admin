@@ -17,10 +17,10 @@ export default function DeleteModal({ selectModalId }: PropsType) {
     <Modal
       content="잔류 항목을 삭제하시겠습니까?"
       buttonList={[
-        <Button kind="outline" color="gray" onClick={closeModal}>
+        <Button key={'cancel'} kind="outline" color="gray" onClick={closeModal}>
           취소
         </Button>,
-        <Button color="error" onClick={onClick}>
+        <Button key={'okay'} color="error" onClick={onClick}>
           확인
         </Button>,
       ]}

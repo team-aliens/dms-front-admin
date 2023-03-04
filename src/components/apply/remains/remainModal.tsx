@@ -43,16 +43,10 @@ export default function RemainModal({
   });
   useEffect(() => {
     setState((prev) => ({
-      title: '',
-      content: '',
+      title: kind === 'edit' ? initTitle : '',
+      content: kind === 'edit' ? initContent : '',
     }));
-  }, [kind]);
-  useEffect(() => {
-    setState((prev) => ({
-      title: initTitle,
-      content: initContent,
-    }));
-  }, [initTitle, initContent]);
+  }, [selectModalId]);
   const onClick = () => {
     if (kind === 'create') {
       mutateCreateRemain();
@@ -61,11 +55,18 @@ export default function RemainModal({
     }
     closeModal();
   };
+  const onCloseModal = () => {
+    setState({
+      title: '',
+      content: '',
+    });
+    closeModal();
+  };
   return (
     <Modal
       title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
       inputList={[
-        <_InputWrapper>
+        <_InputWrapper key={'title'}>
           <Input
             onChange={onHandleChange}
             name={'title'}
@@ -77,7 +78,7 @@ export default function RemainModal({
           />
           <_TextLength>({state.title.length}/30)</_TextLength>
         </_InputWrapper>,
-        <_InputWrapper>
+        <_InputWrapper key={'content'}>
           <_TextareaText>내용</_TextareaText>
           <TextArea
             onChange={onHandleChange}
@@ -89,11 +90,15 @@ export default function RemainModal({
         </_InputWrapper>,
       ]}
       buttonList={[
-        <Button disabled={!(state.title && state.content)} onClick={onClick}>
+        <Button
+          key={'add'}
+          disabled={!(state.title && state.content)}
+          onClick={onClick}
+        >
           추가
         </Button>,
       ]}
-      close={closeModal}
+      close={onCloseModal}
     />
   );
 }
