@@ -17,16 +17,19 @@ export default function RemainsLists() {
   const { mutate: getAllRemainMutate } = useMutation(getAllRemain);
 
   const [remainKind, setRemainKind] = useState<'create' | 'edit'>('create');
-  const [isRemainModal, setIsRemainModal] = useState(false);
-  const [isDeleteModal, setIsDeleteModal] = useState(false);
-  const [isTimeModal, setIsTimeModal] = useState(false);
+  const { selectModal, closeModal, modalState } = useModal();
   const [onMenuModal, setOnMenuModal] = useState<{ id; isCheck: boolean }>({
     id: '',
     isCheck: false,
   });
   const [selectModalId, setSelectModalId] = useState<string>('');
-  const [selectTitle, setSelectTitle] = useState<string>('');
-  const [selectContent, setSelectContent] = useState<string>('');
+  const [selectState, setSelectState] = useState<{
+    title: string;
+    content: string;
+  }>({
+    title: '',
+    content: '',
+  });
 
   useEffect(() => {
     getAllRemainMutate(null, {
@@ -34,24 +37,26 @@ export default function RemainsLists() {
         queryClient.invalidateQueries('getAllRemains');
       },
     });
-  }, [isDeleteModal, isRemainModal, isTimeModal]);
+  }, []);
   const onEdit = (id: string, title: string, content: string) => {
     setSelectModalId(id);
     setRemainKind('edit');
-    setSelectTitle(title);
-    setSelectContent(content);
-    setIsRemainModal(true);
+    setSelectState({
+      title: title,
+      content: content,
+    });
+    selectModal('EDIT_REMAIN_ITEM');
   };
   const onDelete = (id: string) => {
     setSelectModalId(id);
-    setIsDeleteModal(true);
+    selectModal('DELETE_REMAIN_ITEM');
   };
   const onCreate = () => {
     setRemainKind('create');
-    setIsRemainModal(true);
+    selectModal('CREATE_REMAIN_ITEM');
   };
   const onSetTime = () => {
-    setIsTimeModal(true);
+    selectModal('SET_REMAIN_TIME');
   };
 
   const onExcelPrint = () => {
@@ -110,20 +115,19 @@ export default function RemainsLists() {
           ))}
         </_ListLayout>
       </_Layout>
-      <RemainModal
-        selectModalId={selectModalId}
-        isRemainModal={isRemainModal}
-        setRemainModal={setIsRemainModal}
-        kind={remainKind}
-        initTitle={selectTitle}
-        initContent={selectContent}
-      />
-      <DeleteModal
-        selectModalId={selectModalId}
-        isDeleteModal={isDeleteModal}
-        setDeleteModal={setIsDeleteModal}
-      />
-      <TimeModal timeModal={isTimeModal} isSetTimeModal={setIsTimeModal} />
+      {modalState.selectedModal === 'SET_REMAIN_TIME' ? <TimeModal /> : null}
+      {modalState.selectedModal === 'CREATE_REMAIN_ITEM' ||
+      modalState.selectedModal === 'EDIT_REMAIN_ITEM' ? (
+        <RemainModal
+          selectModalId={selectModalId}
+          kind={remainKind}
+          initTitle={selectState.title}
+          initContent={selectState.content}
+        />
+      ) : null}
+      {modalState.selectedModal === 'DELETE_REMAIN_ITEM' ? (
+        <DeleteModal selectModalId={selectModalId} />
+      ) : null}
     </WithNavigatorBar>
   );
 }

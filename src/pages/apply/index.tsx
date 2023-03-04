@@ -25,7 +25,7 @@ export default function Index() {
 }
 const Layout = styled.div`
   display: flex;
-  margin: 260px 0 0 80px;
+  margin: 260px auto auto;
   gap: 30px;
 `;
 const _Wrapper = styled.div`

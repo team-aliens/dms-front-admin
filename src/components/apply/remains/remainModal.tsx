@@ -9,13 +9,12 @@ import {
 import styled from 'styled-components';
 import { useCreateRemain, useEditRemain } from '@/hooks/useRemainApi';
 import { useForm } from '@/hooks/useForm';
+import { useModal } from '@/hooks/useModal';
 
 interface PropsType {
   initTitle?: string;
   initContent?: string;
   selectModalId: string;
-  isRemainModal: boolean;
-  setRemainModal: Dispatch<SetStateAction<boolean>>;
   kind: 'create' | 'edit';
 }
 
@@ -27,14 +26,13 @@ export default function RemainModal({
   initTitle,
   initContent,
   selectModalId,
-  isRemainModal,
-  setRemainModal,
   kind,
 }: PropsType) {
   const { onHandleChange, state, setState } = useForm<FormState>({
     title: '',
     content: '',
   });
+  const { closeModal } = useModal();
   const { mutate: mutateCreateRemain } = useCreateRemain({
     title: state.title,
     description: state.content,
@@ -48,7 +46,7 @@ export default function RemainModal({
       title: '',
       content: '',
     }));
-  }, [isRemainModal]);
+  }, [kind]);
   useEffect(() => {
     setState((prev) => ({
       title: initTitle,
@@ -61,49 +59,42 @@ export default function RemainModal({
     } else {
       mutateEditRemain();
     }
-    setRemainModal(false);
+    closeModal();
   };
   return (
-    <div>
-      {isRemainModal ? (
-        <Modal
-          title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
-          inputList={[
-            <_InputWrapper>
-              <Input
-                onChange={onHandleChange}
-                name={'title'}
-                label="제목"
-                value={state.title}
-                placeholder="ex) 금요 외박"
-                type="text"
-                limit={30}
-              />
-              <_TextLength>({state.title.length}/30)</_TextLength>
-            </_InputWrapper>,
-            <_InputWrapper>
-              <_TextareaText>내용</_TextareaText>
-              <TextArea
-                onChange={onHandleChange}
-                name="content"
-                value={state.content}
-                height={176}
-                limit={200}
-              />
-            </_InputWrapper>,
-          ]}
-          buttonList={[
-            <Button
-              disabled={!(state.title && state.content)}
-              onClick={onClick}
-            >
-              추가
-            </Button>,
-          ]}
-          close={() => setRemainModal(false)}
-        />
-      ) : null}
-    </div>
+    <Modal
+      title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
+      inputList={[
+        <_InputWrapper>
+          <Input
+            onChange={onHandleChange}
+            name={'title'}
+            label="제목"
+            value={state.title}
+            placeholder="ex) 금요 외박"
+            type="text"
+            limit={30}
+          />
+          <_TextLength>({state.title.length}/30)</_TextLength>
+        </_InputWrapper>,
+        <_InputWrapper>
+          <_TextareaText>내용</_TextareaText>
+          <TextArea
+            onChange={onHandleChange}
+            name="content"
+            value={state.content}
+            height={176}
+            limit={200}
+          />
+        </_InputWrapper>,
+      ]}
+      buttonList={[
+        <Button disabled={!(state.title && state.content)} onClick={onClick}>
+          추가
+        </Button>,
+      ]}
+      close={closeModal}
+    />
   );
 }
 const _InputWrapper = styled.div`
