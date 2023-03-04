@@ -1,64 +1,121 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Add, Button, Gear, Trash } from '@team-aliens/design-system';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { StudyListOptions } from '@/components/apply/study/ListOptions';
 import { StudyCard } from '@/components/apply/study/StudyCard';
-import { useGetApplicationTime, useStudyRoomList } from '@/apis/studyRooms';
-import { useModal } from '@/hooks/useModal';
 import {
-  AddStudyRoomTimeModal,
-  ApplicationTime,
-} from '@/components/modals/AddStudyRoomTime';
-import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
+  useGetApplicationTime,
+  useSetApplicationTime,
+  useStudyRoomList,
+} from '@/apis/studyRooms';
+import { useModal } from '@/hooks/useModal';
 import { pagePath } from '@/utils/pagePath';
-
-export interface IStudyRoomTime {
-  startAt: string;
-  endAt: string;
-}
+import {
+  ApplicationTime,
+  SetApplicationTimeModal,
+} from '@/components/modals/SetApplicationTime';
+import { useToast } from '@/hooks/useToast';
 
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
-  const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
-  const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
-  const openDeleteStudyRoomTimeModal = () =>
-    selectModal('DELETE_STUDY_ROOM_TIME');
+  const { toastDispatch } = useToast();
+  // const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
+  // const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
+  // const openDeleteStudyRoomTimeModal = () =>
+  //   selectModal('DELETE_STUDY_ROOM_TIME');
 
-  const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
-    [],
-  );
-  const [hover, setHover] = useState<boolean>(false);
-  const [current, setCurrent] = useState<number>(0);
-  const [studyRoomTime] = useState<IStudyRoomTime>({
-    startAt: '00:00',
-    endAt: '00:00',
+  // const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
+  //   [],
+  // );
+  const { data: applicationTime, refetch } = useGetApplicationTime();
+  const [globalApplicationTime, onHandleChange] = useState<ApplicationTime>({
+    startHour: '00',
+    startMin: '00',
+    endHour: '00',
+    endMin: '00',
   });
-  const { startAt, endAt } = studyRoomTime;
 
-  const AddStudyRoomUseTime = (state: ApplicationTime) => {
-    setStudyRoomTimeList([...studyRoomTimeList, state]);
-  };
+  useEffect(() => {
+    if (applicationTime?.start_at && applicationTime?.end_at) {
+      const [startHour, startMin] = applicationTime.start_at.split(':');
+      const [endHour, endMin] = applicationTime.end_at.split(':');
+      onHandleChange({
+        ...globalApplicationTime,
+        startHour,
+        startMin,
+        endHour,
+        endMin,
+      });
+    }
+  }, [applicationTime]);
 
-  const EditStudyRoomUseTime = (state: ApplicationTime) => {
-    const copiedItems = [...studyRoomTimeList];
-    copiedItems[current] = state;
-    setStudyRoomTimeList(copiedItems);
+  const onChangeApplicationTime = (
+    type: keyof ApplicationTime,
+    value: string,
+  ) => {
+    onHandleChange({
+      ...globalApplicationTime,
+      [type]: value,
+    });
   };
+  const { mutate: setApplicationTime } = useSetApplicationTime(
+    {
+      start_at: `${globalApplicationTime.startHour}:${globalApplicationTime.startMin}:00`,
+      end_at: `${globalApplicationTime.endHour}:${globalApplicationTime.endMin}:00`,
+    },
+    {
+      onSuccess: () => {
+        closeModal();
+        refetch();
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '신청 시간 수정이 완료되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '수정할 신청 시간을 다시 확인 해 주세요.',
+        });
+      },
+    },
+  );
+  // const [hover, setHover] = useState<boolean>(false);
+  // const [current, setCurrent] = useState<number>(0);
 
-  const DeleteStudyRoomUseTime = () => {
-    setStudyRoomTimeList(studyRoomTimeList.filter((_, i) => current !== i));
-    closeModal();
-  };
+  // const AddStudyRoomUseTime = (state: ApplicationTime) => {
+  //   setStudyRoomTimeList([...studyRoomTimeList, state]);
+  // };
+
+  // const EditStudyRoomUseTime = (state: ApplicationTime) => {
+  //   const copiedItems = [...studyRoomTimeList];
+  //   copiedItems[current] = state;
+  //   setStudyRoomTimeList(copiedItems);
+  // };
+
+  // const DeleteStudyRoomUseTime = () => {
+  //   setStudyRoomTimeList(studyRoomTimeList.filter((_, i) => current !== i));
+  //   closeModal();
+  // };
 
   const { data: list } = useStudyRoomList();
-  const { data: applicationTime } = useGetApplicationTime();
+
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <StudyListOptions {...applicationTime} />
-        <_Buttons>
+        <StudyListOptions
+          onChangeDropdown={onChangeApplicationTime}
+          setApplicationTime={setApplicationTime}
+          startHour={globalApplicationTime.startHour}
+          startMin={globalApplicationTime.startMin}
+          endHour={globalApplicationTime.endHour}
+          endMin={globalApplicationTime.endMin}
+        />
+        {/* <_Buttons>
           <Button
             onClick={openAddStudyRoomTimeModal}
             color="gray"
@@ -94,7 +151,7 @@ export function StudyRoomList() {
               </div>
             );
           })}
-        </_Buttons>
+        </_Buttons> */}
         <_List>
           {list?.study_rooms.map((i) => (
             <Link to={pagePath.apply.studyRoom.deatail(i.id)}>
@@ -104,29 +161,22 @@ export function StudyRoomList() {
         </_List>
       </_Wrapper>
       {modalState.selectedModal === 'ADD_STUDY_ROOM_TIME' && (
-        <AddStudyRoomTimeModal
-          type="CREATE"
-          onClick={AddStudyRoomUseTime}
+        <SetApplicationTimeModal
+          setApplicationTime={setApplicationTime}
+          onChangeDropdown={onChangeApplicationTime}
           close={closeModal}
-          startAt={startAt}
-          endAt={endAt}
+          startHour={globalApplicationTime.startHour}
+          startMin={globalApplicationTime.startMin}
+          endHour={globalApplicationTime.endHour}
+          endMin={globalApplicationTime.endMin}
         />
       )}
-      {modalState.selectedModal === 'EDIT_STUDY_ROOM_TIME' && (
-        <AddStudyRoomTimeModal
-          type="EDIT"
-          onClick={EditStudyRoomUseTime}
-          close={closeModal}
-          startAt={`${studyRoomTimeList[current].startHour}:${studyRoomTimeList[current].startMin}`}
-          endAt={`${studyRoomTimeList[current].endHour}:${studyRoomTimeList[current].endMin}`}
-        />
-      )}
-      {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
+      {/* {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
         <DeleteStudyRoomTimeModal
           close={closeModal}
           onClick={DeleteStudyRoomUseTime}
         />
-      )}
+      )} */}
     </WithNavigatorBar>
   );
 }

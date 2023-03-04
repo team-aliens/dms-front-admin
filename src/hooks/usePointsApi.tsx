@@ -7,6 +7,7 @@ import {
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
+import { pagePath } from '@/utils/pagePath';
 
 export const useAllPointHistory = (pointType: PointType) =>
   useQuery(
@@ -34,7 +35,7 @@ export const usePointOptionList = () =>
 export const useCancelPointHistory = (point_history_id: string) => {
   const navigate = useNavigate();
   return useMutation(() => cancelPointHistory(point_history_id), {
-    onSuccess: () => navigate('/'),
+    onSuccess: () => navigate(pagePath.home),
   });
 };
 
