@@ -1,4 +1,5 @@
-import { useMutation } from 'react-query';
+import { getFileNameFromContentDisposition } from './../../utils/decoder';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '@/hooks/useModal';
 import { instance } from '../axios';
@@ -8,6 +9,7 @@ import {
   StudentPointHistoryResponse,
 } from './response';
 import { useToast } from '@/hooks/useToast';
+import fileSaver from 'file-saver';
 
 const router = '/points';
 
@@ -46,12 +48,23 @@ export const cancelPointHistory = async (point_history_id: string) => {
   await instance.put(`${router}/history/${point_history_id}`);
 };
 
-// export const getAllPointExcel = async () => {
-//   const { data } = await instance.get(`${router}/history/files`, {
-//     responseType: 'blob',
-//   });
-//   return new Blob(data);
-// };
+export const useDownloadPointHistoryExcel = () =>
+  useMutation(
+    () =>
+      instance.get(`${router}/history/file`, {
+        responseType: 'arraybuffer',
+      }),
+    {
+      onSuccess: (res) => {
+        const blob = new Blob([res.data], {
+          type: res.headers['content-type'],
+        });
+        const fileName = res.headers['content-disposition'];
+
+        fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
+      },
+    },
+  );
 
 export const useGivePointOption = (
   selectedPointOption: string,

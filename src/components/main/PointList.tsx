@@ -10,6 +10,7 @@ import {
 } from '@/hooks/usePointsApi';
 import { PointHistroyIdAtom } from '@/utils/atoms';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
+import { useDownloadPointHistoryExcel } from '@/apis/points';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();
@@ -17,7 +18,7 @@ export function PointList() {
   const { data } = useAllPointHistory('ALL');
   const cancelPoint = useCancelPointHistory(pointHistoryId);
   const openPointOptionModal = () => selectModal('POINT_OPTIONS');
-  // const { data: excel } = useDownLoadExcelFile();
+  const { mutate: downloadPointHistory } = useDownloadPointHistoryExcel();
 
   return (
     <_Wrapper>
@@ -32,7 +33,7 @@ export function PointList() {
         <Text margin={['bottom', 10]} color="gray6" size="titleL">
           전체 학생 상/벌점
         </Text>
-        <Button color="gray" kind="outline">
+        <Button color="gray" kind="outline" onClick={downloadPointHistory}>
           엑셀 출력
         </Button>
       </_Display>

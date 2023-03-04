@@ -5,15 +5,15 @@ import { useMutation } from 'react-query';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import RemainModal from '@/components/apply/remains/remainModal';
 import DeleteModal from '@/components/apply/remains/deleteModal';
-import { useGetAllRemains, useGetExcelPrint } from '@/hooks/useRemainApi';
+import { useGetAllRemains } from '@/hooks/useRemainApi';
 import TimeModal from '@/components/apply/remains/timeModal';
-import { getAllRemain } from '@/apis/remains';
+import { getAllRemain, useGetRemainListExcel } from '@/apis/remains';
 import { queryClient } from '@/index';
 import { useModal } from '@/hooks/useModal';
 
 export default function RemainsLists() {
   const { data: allRemains } = useGetAllRemains();
-  const { mutate: downloadExcel } = useGetExcelPrint();
+  const { mutate: downloadExcel } = useGetRemainListExcel();
   const { mutate: getAllRemainMutate } = useMutation(getAllRemain);
 
   const [remainKind, setRemainKind] = useState<'create' | 'edit'>('create');
@@ -51,14 +51,11 @@ export default function RemainsLists() {
     setTimeModal(true);
   };
 
-  const onExcelPrint = () => {
-    downloadExcel();
-  };
   return (
     <WithNavigatorBar>
       <_Layout>
         <_Header>
-          <Button color="gray" kind="outline" onClick={onExcelPrint}>
+          <Button color="gray" kind="outline" onClick={downloadExcel}>
             액셀 출력
           </Button>
           <_ButtonWrapper>

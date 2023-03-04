@@ -15,6 +15,7 @@ import { PointType } from '@/apis/points';
 import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
 import { useModal } from '@/hooks/useModal';
 import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal';
+import { getFileNameFromContentDisposition } from '@/utils/decoder';
 
 export interface FilterState {
   name: string;
