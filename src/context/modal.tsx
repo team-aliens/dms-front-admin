@@ -17,6 +17,7 @@ export type SelectedModalType =
   | 'POINT_OPTIONS'
   | 'GIVE_POINT'
   | 'DELETE_POINT_OPTION'
+  | 'SCHOOL_CHECKING_CODE'
   | '';
 
 interface ModalState {

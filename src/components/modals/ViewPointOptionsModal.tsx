@@ -36,7 +36,6 @@ export function ViewPointOptionsModal({
   setSelectedPointOption,
 }: PropsType) {
   const [newItem, setNewItem] = useState(true);
-  const { closeModal, selectModal, modalState } = useModal();
   const { onDropDownChange: AddChange, sort: AddState } =
     useDropDown<string>('');
   const { onDropDownChange: EditChange, sort: EditState } =
