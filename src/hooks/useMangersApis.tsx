@@ -11,6 +11,7 @@ import {
 import { useToast } from '@/hooks/useToast';
 import { PointType } from '@/apis/points';
 import { useModal } from './useModal';
+import { pagePath } from '@/utils/pagePath';
 
 interface PropsType {
   selectedId: string;
@@ -28,7 +29,7 @@ export const useFindId = ({ selectedId, answer }: PropsType) => {
         toastType: 'SUCCESS',
         message: `${res.email}으로 아이디가 발송되었습니다.`,
       });
-      navigate('/login');
+      navigate(pagePath.login);
     },
     onError: () => {
       toastDispatch({

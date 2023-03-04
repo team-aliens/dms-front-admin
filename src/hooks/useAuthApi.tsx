@@ -15,6 +15,7 @@ import {
 import { setCookie } from '@/utils/cookies';
 import { queryKeys } from '@/utils/queryKeys';
 import { serviceObjectToNavList } from '@/utils/serviceObjectToNavList';
+import { pagePath } from '@/utils/pagePath';
 
 interface PropsType {
   resetPwdState: ResetPasswordRequest;
@@ -31,7 +32,7 @@ export const useResetPwdMutation = ({ resetPwdState }: PropsType) => {
         toastType: 'SUCCESS',
         message: '비밀번호가 변경되었습니다.',
       });
-      navigate('/');
+      navigate(pagePath.home);
     },
   });
 };
@@ -70,7 +71,7 @@ export const useLoginMutation = ({
           expires: refreshExpired,
         });
       }
-      navigate('/');
+      navigate(pagePath.home);
     },
     onError: (err: AxiosError) => {
       if (err.response.status === 404) {
