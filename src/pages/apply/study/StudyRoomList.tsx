@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Add, Button, Gear, Trash } from '@team-aliens/design-system';
@@ -11,24 +11,19 @@ import {
   useStudyRoomList,
 } from '@/apis/studyRooms';
 import { useModal } from '@/hooks/useModal';
-import {
-  AddStudyRoomTimeModal,
-  ApplicationTime,
-} from '@/components/modals/AddStudyRoomTime';
 import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
 import { pagePath } from '@/utils/pagePath';
-
-export interface IStudyRoomTime {
-  startAt: string;
-  endAt: string;
-}
+import {
+  ApplicationTime,
+  SetApplicationTimeModal,
+} from '@/components/modals/SetApplicationTime';
 
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
-  const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
-  const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
-  const openDeleteStudyRoomTimeModal = () =>
-    selectModal('DELETE_STUDY_ROOM_TIME');
+  // const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
+  // const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
+  // const openDeleteStudyRoomTimeModal = () =>
+  //   selectModal('DELETE_STUDY_ROOM_TIME');
 
   const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
     [],
@@ -40,6 +35,20 @@ export function StudyRoomList() {
     endHour: '00',
     endMin: '00',
   });
+
+  useEffect(() => {
+    if (applicationTime?.start_at && applicationTime?.end_at) {
+      const [startHour, startMin] = applicationTime.start_at.split(':');
+      const [endHour, endMin] = applicationTime.end_at.split(':');
+      onHandleChange({
+        ...globalApplicationTime,
+        startHour,
+        startMin,
+        endHour,
+        endMin,
+      });
+    }
+  }, [applicationTime]);
 
   const onChangeApplicationTime = (
     type: keyof ApplicationTime,
@@ -62,28 +71,23 @@ export function StudyRoomList() {
       },
     },
   );
-  const [hover, setHover] = useState<boolean>(false);
-  const [current, setCurrent] = useState<number>(0);
-  const [studyRoomTime] = useState<IStudyRoomTime>({
-    startAt: '00:00',
-    endAt: '00:00',
-  });
-  const { startAt, endAt } = studyRoomTime;
+  // const [hover, setHover] = useState<boolean>(false);
+  // const [current, setCurrent] = useState<number>(0);
 
-  const AddStudyRoomUseTime = (state: ApplicationTime) => {
-    setStudyRoomTimeList([...studyRoomTimeList, state]);
-  };
+  // const AddStudyRoomUseTime = (state: ApplicationTime) => {
+  //   setStudyRoomTimeList([...studyRoomTimeList, state]);
+  // };
 
-  const EditStudyRoomUseTime = (state: ApplicationTime) => {
-    const copiedItems = [...studyRoomTimeList];
-    copiedItems[current] = state;
-    setStudyRoomTimeList(copiedItems);
-  };
+  // const EditStudyRoomUseTime = (state: ApplicationTime) => {
+  //   const copiedItems = [...studyRoomTimeList];
+  //   copiedItems[current] = state;
+  //   setStudyRoomTimeList(copiedItems);
+  // };
 
-  const DeleteStudyRoomUseTime = () => {
-    setStudyRoomTimeList(studyRoomTimeList.filter((_, i) => current !== i));
-    closeModal();
-  };
+  // const DeleteStudyRoomUseTime = () => {
+  //   setStudyRoomTimeList(studyRoomTimeList.filter((_, i) => current !== i));
+  //   closeModal();
+  // };
 
   const { data: list } = useStudyRoomList();
 
@@ -93,9 +97,12 @@ export function StudyRoomList() {
         <StudyListOptions
           onChangeDropdown={onChangeApplicationTime}
           setApplicationTime={setApplicationTime.mutate}
-          {...applicationTime}
+          startHour={globalApplicationTime.startHour}
+          startMin={globalApplicationTime.startMin}
+          endHour={globalApplicationTime.endHour}
+          endMin={globalApplicationTime.endMin}
         />
-        <_Buttons>
+        {/* <_Buttons>
           <Button
             onClick={openAddStudyRoomTimeModal}
             color="gray"
@@ -131,7 +138,7 @@ export function StudyRoomList() {
               </div>
             );
           })}
-        </_Buttons>
+        </_Buttons> */}
         <_List>
           {list?.study_rooms.map((i) => (
             <Link to={pagePath.apply.studyRoom.deatail(i.id)}>
@@ -141,29 +148,22 @@ export function StudyRoomList() {
         </_List>
       </_Wrapper>
       {modalState.selectedModal === 'ADD_STUDY_ROOM_TIME' && (
-        <AddStudyRoomTimeModal
-          type="CREATE"
-          onClick={AddStudyRoomUseTime}
+        <SetApplicationTimeModal
+          setApplicationTime={() => {}}
+          onChangeDropdown={onChangeApplicationTime}
           close={closeModal}
-          startAt={startAt}
-          endAt={endAt}
+          startHour={globalApplicationTime.startHour}
+          startMin={globalApplicationTime.startMin}
+          endHour={globalApplicationTime.endHour}
+          endMin={globalApplicationTime.endMin}
         />
       )}
-      {modalState.selectedModal === 'EDIT_STUDY_ROOM_TIME' && (
-        <AddStudyRoomTimeModal
-          type="EDIT"
-          onClick={EditStudyRoomUseTime}
-          close={closeModal}
-          startAt={`${studyRoomTimeList[current].startHour}:${studyRoomTimeList[current].startMin}`}
-          endAt={`${studyRoomTimeList[current].endHour}:${studyRoomTimeList[current].endMin}`}
-        />
-      )}
-      {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
+      {/* {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
         <DeleteStudyRoomTimeModal
           close={closeModal}
           onClick={DeleteStudyRoomUseTime}
         />
-      )}
+      )} */}
     </WithNavigatorBar>
   );
 }
