@@ -14,42 +14,47 @@ interface PropsType {
   initTitle?: string;
   initContent?: string;
   selectModalId: string;
-  remainModal: boolean;
+  isRemainModal: boolean;
   setRemainModal: Dispatch<SetStateAction<boolean>>;
   kind: 'create' | 'edit';
+}
+
+interface FormState {
+  title: string;
+  content: string;
 }
 export default function RemainModal({
   initTitle,
   initContent,
   selectModalId,
-  remainModal,
+  isRemainModal,
   setRemainModal,
   kind,
 }: PropsType) {
-  const [title, setTitle] = useState<string>(kind === 'edit' ? initTitle : '');
-  const [content, setContent] = useState<string>(
-    kind === 'edit' ? initContent : '',
-  );
+  const { onHandleChange, state, setState } = useForm<FormState>({
+    title: '',
+    content: '',
+  });
   const { mutate: mutateCreateRemain } = useCreateRemain({
-    title,
-    description: content,
+    title: state.title,
+    description: state.content,
   });
   const { mutate: mutateEditRemain } = useEditRemain(selectModalId, {
-    title,
-    description: content,
+    title: state.title,
+    description: state.content,
   });
   useEffect(() => {
-    setTitle(initTitle);
-    setContent(initContent);
-    setTitle('');
-    setContent('');
+    setState((prev) => ({
+      title: '',
+      content: '',
+    }));
+  }, [isRemainModal]);
+  useEffect(() => {
+    setState((prev) => ({
+      title: initTitle,
+      content: initContent,
+    }));
   }, [initTitle, initContent]);
-  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
   const onClick = () => {
     if (kind === 'create') {
       mutateCreateRemain();
@@ -60,35 +65,38 @@ export default function RemainModal({
   };
   return (
     <div>
-      {remainModal ? (
+      {isRemainModal ? (
         <Modal
           title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
           inputList={[
             <_InputWrapper>
               <Input
-                onChange={onChangeTitle}
-                name="제목"
+                onChange={onHandleChange}
+                name={'title'}
                 label="제목"
-                value={title}
+                value={state.title}
                 placeholder="ex) 금요 외박"
                 type="text"
                 limit={30}
               />
-              <_TextLength>({title.length}/30)</_TextLength>
+              <_TextLength>({state.title.length}/30)</_TextLength>
             </_InputWrapper>,
             <_InputWrapper>
               <_TextareaText>내용</_TextareaText>
               <TextArea
-                onChange={onChangeContent}
-                name="내용"
-                value={content}
+                onChange={onHandleChange}
+                name="content"
+                value={state.content}
                 height={176}
                 limit={200}
               />
             </_InputWrapper>,
           ]}
           buttonList={[
-            <Button disabled={!(title && content)} onClick={onClick}>
+            <Button
+              disabled={!(state.title && state.content)}
+              onClick={onClick}
+            >
               추가
             </Button>,
           ]}

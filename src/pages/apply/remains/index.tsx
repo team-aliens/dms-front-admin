@@ -17,10 +17,9 @@ export default function RemainsLists() {
   const { mutate: getAllRemainMutate } = useMutation(getAllRemain);
 
   const [remainKind, setRemainKind] = useState<'create' | 'edit'>('create');
-  const { selectModal, closeModal, modalState } = useModal();
-  const [remainModal, setRemainModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [timeModal, setTimeModal] = useState(false);
+  const [isRemainModal, setIsRemainModal] = useState(false);
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isTimeModal, setIsTimeModal] = useState(false);
   const [onMenuModal, setOnMenuModal] = useState<{ id; isCheck: boolean }>({
     id: '',
     isCheck: false,
@@ -35,24 +34,24 @@ export default function RemainsLists() {
         queryClient.invalidateQueries('getAllRemains');
       },
     });
-  }, [deleteModal, remainModal, timeModal]);
+  }, [isDeleteModal, isRemainModal, isTimeModal]);
   const onEdit = (id: string, title: string, content: string) => {
     setSelectModalId(id);
     setRemainKind('edit');
     setSelectTitle(title);
     setSelectContent(content);
-    setRemainModal(true);
+    setIsRemainModal(true);
   };
   const onDelete = (id: string) => {
     setSelectModalId(id);
-    setDeleteModal(true);
+    setIsDeleteModal(true);
   };
   const onCreate = () => {
     setRemainKind('create');
-    setRemainModal(true);
+    setIsRemainModal(true);
   };
   const onSetTime = () => {
-    setTimeModal(true);
+    setIsTimeModal(true);
   };
 
   const onExcelPrint = () => {
@@ -113,18 +112,18 @@ export default function RemainsLists() {
       </_Layout>
       <RemainModal
         selectModalId={selectModalId}
-        remainModal={remainModal}
-        setRemainModal={setRemainModal}
+        isRemainModal={isRemainModal}
+        setRemainModal={setIsRemainModal}
         kind={remainKind}
         initTitle={selectTitle}
         initContent={selectContent}
       />
       <DeleteModal
         selectModalId={selectModalId}
-        deleteModal={deleteModal}
-        setDeleteModal={setDeleteModal}
+        isDeleteModal={isDeleteModal}
+        setDeleteModal={setIsDeleteModal}
       />
-      <TimeModal timeModal={timeModal} setTimeModal={setTimeModal} />
+      <TimeModal timeModal={isTimeModal} isSetTimeModal={setIsTimeModal} />
     </WithNavigatorBar>
   );
 }

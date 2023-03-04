@@ -1,4 +1,4 @@
-import { Button, Input, Modal } from '@team-aliens/design-system';
+import { Button, DropDown, Input, Modal } from '@team-aliens/design-system';
 import {
   ChangeEvent,
   Dispatch,
@@ -12,7 +12,7 @@ import { DAY } from '@/apis/remains';
 
 interface PropsType {
   timeModal: boolean;
-  setTimeModal: Dispatch<SetStateAction<boolean>>;
+  isSetTimeModal: Dispatch<SetStateAction<boolean>>;
 }
 const getDayWithText = (text: string) => {
   switch (text) {
@@ -53,7 +53,7 @@ const getTextWithDay = (day: DAY) => {
     default:
   }
 };
-export default function TimeModal({ timeModal, setTimeModal }: PropsType) {
+export default function TimeModal({ timeModal, isSetTimeModal }: PropsType) {
   const { data: remainTime } = useGetRemainTime();
   const [startDay, setStartDay] = useState(
     getTextWithDay(remainTime?.start_day_of_week),
@@ -86,13 +86,10 @@ export default function TimeModal({ timeModal, setTimeModal }: PropsType) {
   }, [remainTime]);
   const onClick = () => {
     mutate();
-    setTimeModal(false);
+    isSetTimeModal(false);
   };
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    setter: Dispatch<SetStateAction<string>>,
-  ) => {
-    setter(e.target.value);
+  const onChange = (e: string, setter: Dispatch<SetStateAction<string>>) => {
+    setter(e);
   };
   return (
     <div>
@@ -101,53 +98,50 @@ export default function TimeModal({ timeModal, setTimeModal }: PropsType) {
           title="잔류 신청 시간 설정"
           inputList={[
             <_TimeWrapper>
-              <Input
+              <DropDown
+                items={['월', '화', '수', '목', '금', '토', '일']}
+                placeholder={'요일'}
                 onChange={(e) => onChange(e, setStartDay)}
-                name="startDay"
-                value={startDay ?? ''}
-                type="text"
-                width={36}
-              />
-              <p className="day">요일</p>
-              <Input
-                onChange={(e) => onChange(e, setStartHour)}
-                name="startHour"
-                value={startHour ?? 0}
-                type="number"
-                width={60}
               />
               <p>:</p>
-              <Input
+              <DropDown
+                items={[
+                  '1',
+                  '2',
+                  '3',
+                  '4',
+                  '5',
+                  '6',
+                  '7',
+                  '8',
+                  '9',
+                  '10',
+                  '11',
+                  '12',
+                ]}
+                placeholder={'시간'}
+                onChange={(e) => onChange(e, setStartHour)}
+              />
+              <p>:</p>
+              <DropDown
+                items={[
+                  '5',
+                  '10',
+                  '15',
+                  '20',
+                  '25',
+                  '30',
+                  '35',
+                  '40',
+                  '45',
+                  '50',
+                  '55',
+                  '60',
+                ]}
+                placeholder={'분'}
                 onChange={(e) => onChange(e, setStartMin)}
-                name="startMin"
-                value={startMin ?? 0}
-                type="number"
-                width={60}
               />
               <p className="to">~</p>
-              <Input
-                onChange={(e) => onChange(e, setEndDay)}
-                name="endDay"
-                value={endDay ?? ''}
-                type="text"
-                width={36}
-              />
-              <p className="day">요일</p>
-              <Input
-                onChange={(e) => onChange(e, setEndHour)}
-                name="endHour"
-                value={endHour ?? 0}
-                type="number"
-                width={60}
-              />
-              <p>:</p>
-              <Input
-                onChange={(e) => onChange(e, setEndMin)}
-                name="endMin"
-                value={endMin ?? 0}
-                type="number"
-                width={60}
-              />
             </_TimeWrapper>,
           ]}
           buttonList={[
@@ -155,7 +149,7 @@ export default function TimeModal({ timeModal, setTimeModal }: PropsType) {
               확인
             </Button>,
           ]}
-          close={() => setTimeModal(false)}
+          close={() => isSetTimeModal(false)}
         />
       ) : null}
     </div>
@@ -166,6 +160,7 @@ const _TimeWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   > .day {
     margin: 0 8px;
   }

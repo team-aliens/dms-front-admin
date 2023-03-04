@@ -4,12 +4,12 @@ import { useDeleteRemain } from '@/hooks/useRemainApi';
 
 interface PropsType {
   selectModalId: string;
-  deleteModal: boolean;
+  isDeleteModal: boolean;
   setDeleteModal: Dispatch<SetStateAction<boolean>>;
 }
 export default function DeleteModal({
   selectModalId,
-  deleteModal,
+  isDeleteModal,
   setDeleteModal,
 }: PropsType) {
   const { mutate } = useDeleteRemain(selectModalId);
@@ -20,7 +20,7 @@ export default function DeleteModal({
 
   return (
     <div>
-      {deleteModal ? (
+      {isDeleteModal ? (
         <Modal
           content="잔류 항목을 삭제하시겠습니까?"
           buttonList={[
