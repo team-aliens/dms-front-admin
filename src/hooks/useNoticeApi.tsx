@@ -10,6 +10,7 @@ import {
 } from '@/apis/notice';
 import { useToast } from '@/hooks/useToast';
 import { WriteNoticeRequest } from '@/apis/notice/request';
+import { pagePath } from '@/utils/pagePath';
 
 export const useNoticeList = (sortType: NoticeSortType) =>
   useQuery(['getNoticeList', sortType], () => getNoticeList(sortType), {
@@ -21,7 +22,7 @@ export const useDeleteNotice = (noticeId: string) => {
   const { toastDispatch } = useToast();
   return useMutation(() => deleteNotice(noticeId), {
     onSuccess: () => {
-      navigate('/notice');
+      navigate(pagePath.notice.list);
       toastDispatch({
         actionType: 'APPEND_TOAST',
         message: '공지사항이 삭제되었습니다.',
@@ -45,7 +46,7 @@ export const useWriteNotice = (content: WriteNoticeRequest) => {
         toastType: 'SUCCESS',
         message: '공지사항이 게시되었습니다.',
       });
-      navigate(`/notice/detail/${res.data.notice_id}`);
+      navigate(pagePath.notice.detail(res.data.notice_id));
     },
   });
 };
@@ -64,7 +65,7 @@ export const usePatchNotice = (
         toastType: 'SUCCESS',
         message: '공지사항이 수정되었습니다.',
       });
-      navigate(`/notice/detail/${res.data.notice_id}`);
+      navigate(pagePath.notice.detail(res.data.notice_id));
     },
   });
 };

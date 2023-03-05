@@ -1,3 +1,4 @@
+import { pagePath } from '@/utils/pagePath';
 import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../axios';
@@ -32,7 +33,9 @@ export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
     async () => instance.post<CreateStudyRoomResponse>(router, body),
     {
       onSuccess: (response) =>
-        navigate(`/apply/detail/${response.data.study_room_id}`),
+        navigate(
+          `${pagePath.apply.studyRoom.deatail(response.data.study_room_id)}`,
+        ),
     },
   );
 };
@@ -55,7 +58,7 @@ export const useDeleteStudyRoom = (
   return useMutation(async () => instance.delete(`${router}/${studyRoomId}`), {
     onSuccess: () => {
       closeModal();
-      navigate('/apply');
+      navigate(pagePath.apply.main);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
@@ -83,7 +86,7 @@ export const usePatchStudyRoom = (
     async () => instance.patch(`${router}/${studyRoomId}`, body),
     {
       onSuccess: () => {
-        navigate(`/apply/detail/${studyRoomId}`);
+        navigate(pagePath.apply.studyRoom.deatail(studyRoomId));
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
