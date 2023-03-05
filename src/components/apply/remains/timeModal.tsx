@@ -105,13 +105,16 @@ export default function TimeModal() {
 const _TimeWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  > .day {
-    margin: 0 8px;
+  justify-content: space-between;
+  text-align: center;
+  .day {
+    color: #555555;
+    font-weight: 400;
+    font-size: 14px;
+    width: 100px;
   }
   > .to {
-    margin: 0 32px;
+    margin: 0 20px;
   }
   > div > label > input {
     text-align: center;
