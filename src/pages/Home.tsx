@@ -12,8 +12,6 @@ import { useObj } from '@/hooks/useObj';
 import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
-import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
-import { useModal } from '@/hooks/useModal';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 
 export interface FilterState {

@@ -56,8 +56,8 @@ export const cancelPointHistory = async (point_history_id: string) => {
 export const useGivePointOption = (
   selectedPointOption: string,
   selectedStudentId: string[],
+  options?: MutationOptions,
 ) => {
-  const navigate = useNavigate();
   const { closeModal } = useModal();
   const { toastDispatch } = useToast();
 
@@ -68,13 +68,13 @@ export const useGivePointOption = (
   return useMutation(async () => instance.post(`${router}/history`, body), {
     onSuccess: () => {
       closeModal();
-      navigate(0);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
         message: '상/벌점이 부여되었습니다.',
       });
     },
+    ...options,
   });
 };
 

@@ -177,9 +177,11 @@ export function StudentList({
       {modalState.selectedModal === 'GIVE_POINT' && (
         <GivePointOptionsModal
           selectedStudentId={selectedStudentId}
+          setSelectedStudentId={setSelectedStudentId}
           close={closeModal}
           allPointOptions={allPointOptions}
           refetchAllPointOptions={refetchAllPointOptions}
+          refetchSearchStudents={refetchSearchStudents}
         />
       )}
       {modalState.selectedModal === 'DELETE_POINT_OPTION' && (
