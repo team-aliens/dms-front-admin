@@ -16,6 +16,7 @@ import { PatchRoom } from './pages/apply/study/PatchRoom';
 import Index from '@/pages/apply';
 import RemainsLists from '@/pages/apply/remains';
 import { pagePath } from './utils/pagePath';
+import { NotFoundPage } from './pages/NotFound';
 
 export const pathToKorean = {
   'notice': {
@@ -76,6 +77,7 @@ export function Router() {
             <Route index element={<RemainsLists />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
