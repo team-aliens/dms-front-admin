@@ -51,7 +51,10 @@ export function MyPage() {
           </Text>
           <_CardWrapper>
             <div>
-              <Verification onClickNewCode={() => selectModal('SCHOOL_CHECKING_CODE')} code={code} />
+              <Verification
+                onClickNewCode={() => selectModal('SCHOOL_CHECKING_CODE')}
+                code={code}
+              />
               <_OptionBtn>
                 <_PasswordChange to={pagePath.myPage.changePwd}>
                   <Text display="block" size="titleS">
@@ -94,7 +97,10 @@ export function MyPage() {
         />
       )}
       {modalState.selectedModal === 'SCHOOL_CHECKING_CODE' && (
-        <SchoolCheckingCodeModal closeModal={closeModal} onClick={getNewCode.mutate}/>
+        <SchoolCheckingCodeModal
+          closeModal={closeModal}
+          onClick={getNewCode.mutate}
+        />
       )}
       {modalState.selectedModal === 'LOGOUT' && (
         <LogOutModal closeModal={closeModal} />
