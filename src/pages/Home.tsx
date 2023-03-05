@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Button, Change } from '@team-aliens/design-system';
 import { StudentList } from '@/components/main/StudentList';
@@ -12,10 +12,7 @@ import { useObj } from '@/hooks/useObj';
 import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
-import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
 import { useModal } from '@/hooks/useModal';
-import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal';
-import { getFileNameFromContentDisposition } from '@/utils/decoder';
 
 export interface FilterState {
   name: string;
