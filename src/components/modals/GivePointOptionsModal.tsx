@@ -52,11 +52,9 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   };
 
   const onClickPointOption = (id: string) => {
-    if (selectedPointOption) {
-      setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
-    } else {
-      setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
-      setNewItem(true)
+    setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+    if (!selectedPointOption) {
+      setNewItem(true);
     }
   };
 
