@@ -22,10 +22,12 @@ export enum PointEnum {
 
 /** 학생 상/벌점 내역 조회 */
 export const getStudentPointHistory = async (student_id: string) => {
-  const { data } = await instance.get<Promise<StudentPointHistoryResponse>>(
-    `${router}/history/students/${student_id}`,
-  );
-  return data;
+  if (student_id !== '') {
+    const { data } = await instance.get<Promise<StudentPointHistoryResponse>>(
+      `${router}/history/students/${student_id}`,
+    );
+    return data;
+  }
 };
 
 /** 상/벌점 전체 조회 */
