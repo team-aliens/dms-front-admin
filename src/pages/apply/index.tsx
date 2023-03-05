@@ -10,13 +10,18 @@ export default function Index() {
         <Link to={pagePath.apply.studyRoom.list}>
           <_Wrapper>
             <Title>자습실</Title>
-            <Text>자습실 관리와 생성 또는 수정,삭제할 수 있습니다.</Text>
+            <Text>
+              자습실 관리와 생성 <br />
+              또는 수정,삭제할 수 있습니다.
+            </Text>
           </_Wrapper>
         </Link>
         <Link to={pagePath.apply.remains.list}>
           <_Wrapper>
             <Title>잔류</Title>
-            <Text>자습실 관리와 생성 또는 수정,삭제할 수 있습니다.</Text>
+            <Text>
+              잔류 항목 확인과 생성 <br /> 또는 수정,삭제할 수 있습니다.
+            </Text>
           </_Wrapper>
         </Link>
       </Layout>
