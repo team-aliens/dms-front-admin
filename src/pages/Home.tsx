@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Button, Change } from '@team-aliens/design-system';
 import { StudentList } from '@/components/main/StudentList';
@@ -12,9 +12,8 @@ import { useObj } from '@/hooks/useObj';
 import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
-import { GivePointOptionsModal } from '@/components/modals/GivePointOptionsModal';
+import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { useModal } from '@/hooks/useModal';
-import { ViewPointOptionsModal } from '@/components/modals/ViewPointOptionsModal';
 
 export interface FilterState {
   name: string;
@@ -38,8 +37,6 @@ interface Mode {
 export function Home() {
   const { debounce } = useDebounce();
 
-  const { modalState, closeModal } = useModal();
-
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
     sort: 'GCN',
@@ -58,15 +55,20 @@ export function Home() {
   });
   const [listViewType, setListViewType] = useState<ListViewType>('POINTS');
 
-  const { data: studentDetail } = useStudentDetail(selectedStudentId[0]);
+  const { data: studentDetail, refetch: refetchStudentDetail } =
+    useStudentDetail(selectedStudentId[0]);
 
-  const { data: studentList } = useSearchStudents({
-    name: debouncedName,
-    sort: filter.sort,
-    filter_type: filter.filterType,
-    min_point: limitPoint.startPoint,
-    max_point: limitPoint.endPoint,
-  });
+  const { data: studentList, refetch: refetchSearchStudents } =
+    useSearchStudents({
+      name: debouncedName,
+      sort: filter.sort,
+      filter_type: filter.filterType,
+      min_point: limitPoint.startPoint,
+      max_point: limitPoint.endPoint,
+    });
+
+  const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
+    useStudentPointHistory(selectedStudentId[0]);
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
@@ -150,6 +152,7 @@ export function Home() {
               mode={mode.type}
               studentList={studentList?.students || []}
               selectedStudentId={selectedStudentId}
+              setSelectedStudentId={setSelectedStudentId}
               name={filter.name}
               sort={filter.sort}
               filterType={filter.filterType}
@@ -160,6 +163,9 @@ export function Home() {
               onClickStudent={onClickStudent}
               onChangeLimitPoint={onChangeLimitPoint}
               onChangeFilterType={onChangeFilterType}
+              refetchSearchStudents={refetchSearchStudents}
+              refetchStudentDetail={refetchStudentDetail}
+              refetchStudentPointHistory={refetchStudentPointHistory}
             />
             <Divider />
             <OutsideClickHandler
@@ -179,6 +185,7 @@ export function Home() {
                 studentDetail={studentDetail}
                 studentId={selectedStudentId}
                 onClickStudent={onClickStudent}
+                studentPointHistory={studentPointHistory}
               />
             </OutsideClickHandler>
           </>

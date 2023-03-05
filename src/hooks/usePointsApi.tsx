@@ -1,5 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { MutationOptions, useMutation, useQuery } from 'react-query';
 import {
   cancelPointHistory,
   getAllPointHistory,
@@ -7,6 +6,7 @@ import {
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
+import { pagePath } from '@/utils/pagePath';
 
 export const useAllPointHistory = (pointType: PointType) =>
   useQuery(
@@ -31,12 +31,11 @@ export const usePointOptionList = () =>
     refetchOnWindowFocus: true,
   });
 
-export const useCancelPointHistory = (point_history_id: string) => {
-  const navigate = useNavigate();
+export const useCancelPointHistory = (
+  point_history_id: string,
+  options?: MutationOptions,
+) => {
   return useMutation(() => cancelPointHistory(point_history_id), {
-    onSuccess: () => navigate('/'),
+    ...options,
   });
 };
-
-// export const useDownLoadExcelFile = () =>
-//   useQuery(['document-download'], getAllPointExcel);

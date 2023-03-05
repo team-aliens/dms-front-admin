@@ -3,7 +3,6 @@ import {
   createRemain,
   deleteRemain,
   editRemain,
-  excelPrint,
   getAllRemain,
   getRemainTime,
   putRemainTime,
@@ -53,6 +52,16 @@ export const useDeleteRemain = (id: string) => {
     },
   });
 };
-export const useEditRemain = (id: string, body: EditRemainBody) =>
-  useMutation(() => editRemain(body, id));
-export const useGetExcelPrint = () => useMutation(excelPrint);
+export const useEditRemain = (id: string, body: EditRemainBody) => {
+  const { toastDispatch } = useToast();
+
+  return useMutation(() => editRemain(body, id), {
+    onSuccess: () => {
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'SUCCESS',
+        message: '잔류 항목이 수정되었습니다.',
+      });
+    },
+  });
+};

@@ -1,4 +1,4 @@
-import { Button, Input, Modal } from '@team-aliens/design-system';
+import { Button, DropDown, Input, Modal } from '@team-aliens/design-system';
 import {
   ChangeEvent,
   Dispatch,
@@ -8,171 +8,109 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useGetRemainTime, useSetRemainTime } from '@/hooks/useRemainApi';
-import { DAY } from '@/apis/remains';
-
-interface PropsType {
-  timeModal: boolean;
-  setTimeModal: Dispatch<SetStateAction<boolean>>;
+import { getDayWithText, getTextWithDay } from '@/utils/translate';
+import { useModal } from '@/hooks/useModal';
+import { useForm } from '@/hooks/useForm';
+interface ITimeState {
+  startDay: string;
+  startHour: string;
+  startMin: string;
+  endDay: string;
+  endHour: string;
+  endMin: string;
 }
-const getDayWithText = (text: string) => {
-  switch (text) {
-    case '월':
-      return DAY.MONDAY;
-    case '화':
-      return DAY.TUESDAY;
-    case '수':
-      return DAY.WEDNESDAY;
-    case '목':
-      return DAY.THURSDAY;
-    case '금':
-      return DAY.FRIDAY;
-    case '토':
-      return DAY.SATURDAY;
-    case '일':
-      return DAY.SUNDAY;
-    default:
-  }
-};
-
-const getTextWithDay = (day: DAY) => {
-  switch (day) {
-    case DAY.MONDAY:
-      return '월';
-    case DAY.TUESDAY:
-      return '화';
-    case DAY.WEDNESDAY:
-      return '수';
-    case DAY.THURSDAY:
-      return '목';
-    case DAY.FRIDAY:
-      return '금';
-    case DAY.SATURDAY:
-      return '토';
-    case DAY.SUNDAY:
-      return '일';
-    default:
-  }
-};
-export default function TimeModal({ timeModal, setTimeModal }: PropsType) {
+export default function TimeModal() {
   const { data: remainTime } = useGetRemainTime();
-  const [startDay, setStartDay] = useState(
-    getTextWithDay(remainTime?.start_day_of_week),
-  );
-  const [startHour, setStartHour] = useState(
-    remainTime?.start_time.slice(0, 2),
-  );
-  const [startMin, setStartMin] = useState(remainTime?.start_time.slice(3, 5));
-  const [endDay, setEndDay] = useState(
-    getTextWithDay(remainTime?.end_day_of_week),
-  );
-  const [endHour, setEndHour] = useState(
-    remainTime?.end_day_of_week.slice(0, 2),
-  );
-  const [endMin, setEndMin] = useState(remainTime?.end_time.slice(3, 5));
-
-  const { mutate } = useSetRemainTime({
-    start_day_of_week: getDayWithText(startDay),
-    start_time: `${startHour}:${startMin}:00`,
-    end_day_of_week: getDayWithText(endDay),
-    end_time: `${endHour}:${endMin}:00`,
+  const { onHandleChange, state: timeState } = useForm<ITimeState>({
+    startDay: getTextWithDay(remainTime?.start_day_of_week),
+    startHour: remainTime?.start_time.slice(0, 2),
+    startMin: remainTime?.start_time.slice(3, 5),
+    endDay: getTextWithDay(remainTime?.end_day_of_week),
+    endHour: remainTime?.end_time.slice(0, 2),
+    endMin: remainTime?.end_time.slice(3, 5),
   });
-  useEffect(() => {
-    setStartDay(getTextWithDay(remainTime?.start_day_of_week));
-    setStartHour(remainTime?.start_time.slice(0, 2));
-    setStartMin(remainTime?.start_time.slice(3, 5));
-    setEndDay(getTextWithDay(remainTime?.end_day_of_week));
-    setEndHour(remainTime?.end_time.slice(0, 2));
-    setEndMin(remainTime?.end_time.slice(3, 5));
-  }, [remainTime]);
+  const { closeModal } = useModal();
+  const { mutate } = useSetRemainTime({
+    start_day_of_week: getDayWithText(timeState.startDay),
+    start_time: `${timeState.startHour}:${timeState.startMin}:00`,
+    end_day_of_week: getDayWithText(timeState.endDay),
+    end_time: `${timeState.endHour}:${timeState.endMin}:00`,
+  });
   const onClick = () => {
     mutate();
-    setTimeModal(false);
-  };
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    setter: Dispatch<SetStateAction<string>>,
-  ) => {
-    setter(e.target.value);
+    closeModal();
   };
   return (
-    <div>
-      {timeModal ? (
-        <Modal
-          title="잔류 신청 시간 설정"
-          inputList={[
-            <_TimeWrapper>
-              <Input
-                onChange={(e) => onChange(e, setStartDay)}
-                name="startDay"
-                value={startDay ?? ''}
-                type="text"
-                width={36}
-              />
-              <p className="day">요일</p>
-              <Input
-                onChange={(e) => onChange(e, setStartHour)}
-                name="startHour"
-                value={startHour ?? 0}
-                type="number"
-                width={60}
-              />
-              <p>:</p>
-              <Input
-                onChange={(e) => onChange(e, setStartMin)}
-                name="startMin"
-                value={startMin ?? 0}
-                type="number"
-                width={60}
-              />
-              <p className="to">~</p>
-              <Input
-                onChange={(e) => onChange(e, setEndDay)}
-                name="endDay"
-                value={endDay ?? ''}
-                type="text"
-                width={36}
-              />
-              <p className="day">요일</p>
-              <Input
-                onChange={(e) => onChange(e, setEndHour)}
-                name="endHour"
-                value={endHour ?? 0}
-                type="number"
-                width={60}
-              />
-              <p>:</p>
-              <Input
-                onChange={(e) => onChange(e, setEndMin)}
-                name="endMin"
-                value={endMin ?? 0}
-                type="number"
-                width={60}
-              />
-            </_TimeWrapper>,
-          ]}
-          buttonList={[
-            <Button color="primary" onClick={onClick}>
-              확인
-            </Button>,
-          ]}
-          close={() => setTimeModal(false)}
-        />
-      ) : null}
-    </div>
+    <Modal
+      title="잔류 신청 시간 설정"
+      inputList={[
+        <_TimeWrapper key={'time'}>
+          <Input
+            onChange={onHandleChange}
+            name={'startDay'}
+            value={timeState.startDay}
+            key={'startDay'}
+          />
+          <p className="day">요일</p>
+          <Input
+            onChange={onHandleChange}
+            name={'startHour'}
+            value={timeState.startHour}
+            key={'startHour'}
+          />
+          <p className="day">:</p>
+          <Input
+            onChange={onHandleChange}
+            name={'startMin'}
+            value={timeState.startMin}
+            key={'startMin'}
+          />
+          <p className="to">~</p>
+          <Input
+            onChange={onHandleChange}
+            name={'endDay'}
+            value={timeState.endDay}
+            key={'endDay'}
+          />
+          <p className="day">요일</p>
+          <Input
+            onChange={onHandleChange}
+            name={'endHour'}
+            value={timeState.endHour}
+            key={'endHour'}
+          />
+          <p className="day">:</p>
+          <Input
+            onChange={onHandleChange}
+            name={'endMin'}
+            value={timeState.endMin}
+            key={'endMin'}
+          />
+        </_TimeWrapper>,
+      ]}
+      buttonList={[
+        <Button key={'okay'} color="primary" onClick={onClick}>
+          확인
+        </Button>,
+      ]}
+      close={closeModal}
+    />
   );
 }
 
 const _TimeWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  > p {
-    margin: 0 8px;
-  }
+  justify-content: space-between;
+  text-align: center;
   .day {
+    color: #555555;
+    font-weight: 400;
+    font-size: 14px;
+    width: 100px;
   }
   > .to {
-    margin: 0 32px;
+    margin: 0 20px;
   }
   > div > label > input {
     text-align: center;

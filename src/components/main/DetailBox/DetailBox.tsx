@@ -10,8 +10,10 @@ import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { useModal } from '@/hooks/useModal';
 import { StudentDetailPointList } from './StudentDetailPoint';
 import { PointType } from '@/apis/points';
+import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 interface PropsType {
+  studentPointHistory: StudentPointHistoryResponse;
   studentId: string[];
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
@@ -21,13 +23,12 @@ interface PropsType {
 const canDelete = true;
 
 export function DetailBox({
+  studentPointHistory,
   studentDetail,
   onClickStudent,
   mode,
   studentId,
 }: PropsType) {
-  const { data: studentPointHistory } = useStudentPointHistory(studentId[0]);
-  const { selectModal, closeModal, modalState } = useModal();
   const [currentPointType, setCurrentPointType] = useState<PointType>('ALL');
 
   return (
@@ -67,6 +68,7 @@ export function DetailBox({
           <_MateList>
             {studentDetail.room_mates.map((item) => (
               <Button
+                key={item.id}
                 kind="outline"
                 onClick={() => onClickStudent(item.id)}
                 color="gray"
@@ -89,6 +91,7 @@ export function DetailBox({
                 const { point_history_id, name, type, score } = history;
                 return (
                   <PointItem
+                    key={point_history_id}
                     point_history_id={point_history_id}
                     name={name}
                     type={type}
@@ -104,7 +107,7 @@ export function DetailBox({
           {studentId
             .filter((item) => item !== '' && item !== undefined)
             .map((id) => (
-              <StudentDetailPointList id={id} />
+              <StudentDetailPointList key={id} id={id} />
             ))}
         </_PointDetailBox>
       )}

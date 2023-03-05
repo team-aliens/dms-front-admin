@@ -5,60 +5,74 @@ import { useMutation } from 'react-query';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import RemainModal from '@/components/apply/remains/remainModal';
 import DeleteModal from '@/components/apply/remains/deleteModal';
-import { useGetAllRemains, useGetExcelPrint } from '@/hooks/useRemainApi';
+import { useGetAllRemains } from '@/hooks/useRemainApi';
 import TimeModal from '@/components/apply/remains/timeModal';
-import { getAllRemain } from '@/apis/remains';
+import { getAllRemain, useGetRemainListExcel } from '@/apis/remains';
 import { queryClient } from '@/index';
 import { useModal } from '@/hooks/useModal';
+import { useForm } from '@/hooks/useForm';
 
 export default function RemainsLists() {
   const { data: allRemains } = useGetAllRemains();
-  const { mutate: downloadExcel } = useGetExcelPrint();
+  const { mutate: downloadExcel } = useGetRemainListExcel();
   const { mutate: getAllRemainMutate } = useMutation(getAllRemain);
 
   const [remainKind, setRemainKind] = useState<'create' | 'edit'>('create');
-  const { selectModal, closeModal, modalState } = useModal();
-  const [remainModal, setRemainModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [timeModal, setTimeModal] = useState(false);
+  const { selectModal, modalState } = useModal();
+  const [onMenuModal, setOnMenuModal] = useState<{
+    id: string;
+    isCheck: boolean;
+  }>({
+    id: '',
+    isCheck: false,
+  });
   const [selectModalId, setSelectModalId] = useState<string>('');
-  const [selectTitle, setSelectTitle] = useState<string>('');
-  const [selectContent, setSelectContent] = useState<string>('');
+  const { setState: setSelectState, state: selectState } = useForm({
+    title: '',
+    content: '',
+  });
 
   useEffect(() => {
     getAllRemainMutate(null, {
-      onSuccess: () => {
-        queryClient.invalidateQueries('getAllRemains');
+      onSuccess: async () => {
+        await queryClient.invalidateQueries('getAllRemains');
       },
     });
-  }, [deleteModal, remainModal, timeModal]);
+  }, [modalState]);
   const onEdit = (id: string, title: string, content: string) => {
     setSelectModalId(id);
     setRemainKind('edit');
-    setSelectTitle(title);
-    setSelectContent(content);
-    setRemainModal(true);
+    setSelectState({
+      title: title,
+      content: content,
+    });
+    selectModal('EDIT_REMAIN_ITEM');
   };
   const onDelete = (id: string) => {
     setSelectModalId(id);
-    setDeleteModal(true);
+    selectModal('DELETE_REMAIN_ITEM');
   };
   const onCreate = () => {
     setRemainKind('create');
-    setRemainModal(true);
+    selectModal('CREATE_REMAIN_ITEM');
   };
   const onSetTime = () => {
-    setTimeModal(true);
+    selectModal('SET_REMAIN_TIME');
   };
 
-  const onExcelPrint = () => {
-    downloadExcel();
+  const onCheckMenu = (remain) => {
+    setOnMenuModal((prev) => {
+      return {
+        id: remain.id,
+        isCheck: !prev.isCheck || prev.id !== remain.id,
+      };
+    });
   };
   return (
     <WithNavigatorBar>
       <_Layout>
         <_Header>
-          <Button color="gray" kind="outline" onClick={onExcelPrint}>
+          <Button color="gray" kind="outline" onClick={downloadExcel}>
             액셀 출력
           </Button>
           <_ButtonWrapper>
@@ -73,59 +87,51 @@ export default function RemainsLists() {
             <_ListWrapper key={remain.id}>
               <_Title>{remain.title}</_Title>
               <_Text>{remain.description}</_Text>
-              <_CheckInput id="menu" type="checkbox" />
-              <_MenuWrapper>
-                <Text color="error" onClick={() => onDelete(remain.id)}>
-                  항목 삭제
-                </Text>
-                <Line />
-                <Text
-                  color="gray6"
-                  onClick={() =>
-                    onEdit(remain.id, remain.title, remain.description)
-                  }
-                >
-                  항목 수정
-                </Text>
-              </_MenuWrapper>
+              <_CheckInput
+                id="menu"
+                type="checkbox"
+                onClick={() => onCheckMenu(remain)}
+              />
+              {onMenuModal.id === remain.id && onMenuModal.isCheck ? (
+                <_MenuWrapper>
+                  <Text color="error" onClick={() => onDelete(remain.id)}>
+                    항목 삭제
+                  </Text>
+                  <_Line />
+                  <Text
+                    color="gray6"
+                    onClick={() =>
+                      onEdit(remain.id, remain.title, remain.description)
+                    }
+                  >
+                    항목 수정
+                  </Text>
+                </_MenuWrapper>
+              ) : null}
             </_ListWrapper>
           ))}
         </_ListLayout>
       </_Layout>
-      <RemainModal
-        selectModalId={selectModalId}
-        remainModal={remainModal}
-        setRemainModal={setRemainModal}
-        kind={remainKind}
-        initTitle={selectTitle}
-        initContent={selectContent}
-      />
-      <DeleteModal
-        selectModalId={selectModalId}
-        deleteModal={deleteModal}
-        setDeleteModal={setDeleteModal}
-      />
-      <TimeModal timeModal={timeModal} setTimeModal={setTimeModal} />
+      {modalState.selectedModal === 'SET_REMAIN_TIME' ? <TimeModal /> : null}
+      {modalState.selectedModal === 'CREATE_REMAIN_ITEM' ||
+      modalState.selectedModal === 'EDIT_REMAIN_ITEM' ? (
+        <RemainModal
+          selectModalId={selectModalId}
+          kind={remainKind}
+          initTitle={selectState.title}
+          initContent={selectState.content}
+        />
+      ) : null}
+      {modalState.selectedModal === 'DELETE_REMAIN_ITEM' ? (
+        <DeleteModal selectModalId={selectModalId} />
+      ) : null}
     </WithNavigatorBar>
-  );
-}
-function Line() {
-  return (
-    <svg
-      width="129"
-      height="2"
-      viewBox="0 0 129 2"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M0 1H128.484" stroke="#EEEEEE" />
-    </svg>
   );
 }
 const _Layout = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 80px 0 0 160px;
+  margin: 160px auto 0 auto;
   width: 1030px;
 `;
 const _Header = styled.div`
@@ -153,14 +159,15 @@ const _ListWrapper = styled.div`
   min-height: 180px;
   box-shadow: 0 1px 20px rgba(238, 238, 238, 0.8);
   border-radius: 4px;
-
-  & > input:checked ~ div {
-    display: flex;
-  }
 `;
 const _Title = styled.p`
   font-weight: 700;
   font-size: 22px;
+`;
+const _Line = styled.div`
+  width: 129px;
+  height: 2px;
+  background-color: #eeeeee;
 `;
 const _Text = styled.p`
   width: 729px;
@@ -169,7 +176,7 @@ const _Text = styled.p`
   line-height: 26px;
 `;
 const _MenuWrapper = styled.div`
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -180,10 +187,9 @@ const _MenuWrapper = styled.div`
   width: 160px;
   height: 112px;
   cursor: pointer;
-  box-shadow: 0px 1px 20px rgba(238, 238, 238, 0.8);
+  box-shadow: 0 1px 20px rgba(238, 238, 238, 0.8);
   border-radius: 6px;
   background-color: white;
-  z-index: 1;
 `;
 const _CheckInput = styled.input`
   appearance: none;

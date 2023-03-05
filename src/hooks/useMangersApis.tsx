@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import {
   deleteStudent,
@@ -11,6 +11,7 @@ import {
 import { useToast } from '@/hooks/useToast';
 import { PointType } from '@/apis/points';
 import { useModal } from './useModal';
+import { pagePath } from '@/utils/pagePath';
 
 interface PropsType {
   selectedId: string;
@@ -28,7 +29,7 @@ export const useFindId = ({ selectedId, answer }: PropsType) => {
         toastType: 'SUCCESS',
         message: `${res.email}으로 아이디가 발송되었습니다.`,
       });
-      navigate('/login');
+      navigate(pagePath.login);
     },
     onError: () => {
       toastDispatch({
@@ -55,8 +56,12 @@ export const useSearchStudents = ({
   min_point,
   max_point,
 }: SearchStudentPropsType) =>
-  useQuery(['studentList', name, sort, filter_type, min_point, max_point], () =>
-    searchStudentList(name, sort, filter_type, min_point, max_point),
+  useQuery(
+    ['studentList', name, sort, filter_type, min_point, max_point],
+    () => searchStudentList(name, sort, filter_type, min_point, max_point),
+    {
+      refetchOnWindowFocus: true,
+    },
   );
 
 export const useStudentDetail = (id: string) =>
@@ -64,14 +69,13 @@ export const useStudentDetail = (id: string) =>
 
 export const useMyProfileInfo = () => useQuery(['getMyProfile'], getMyProfile);
 
-export const useDeleteStudent = (student_id: string) => {
-  const navigate = useNavigate();
+export const useDeleteStudent = (
+  student_id: string,
+  options?: MutationOptions,
+) => {
   const { closeModal } = useModal();
 
   return useMutation(() => deleteStudent(student_id), {
-    onSuccess: () => {
-      closeModal();
-      navigate(0);
-    },
+    ...options,
   });
 };

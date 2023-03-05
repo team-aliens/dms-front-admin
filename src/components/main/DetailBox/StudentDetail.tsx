@@ -3,12 +3,14 @@ import { Text } from '@team-aliens/design-system';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { ModeType } from '@/pages/Home';
 import { DetailBox } from './DetailBox';
+import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 interface Props {
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
   studentId: string[];
   onClickStudent: (id: string) => void;
+  studentPointHistory: StudentPointHistoryResponse;
 }
 
 export function StudentDetail({
@@ -16,6 +18,7 @@ export function StudentDetail({
   studentDetail,
   studentId,
   onClickStudent,
+  studentPointHistory,
 }: Props) {
   return (
     <>
@@ -30,6 +33,7 @@ export function StudentDetail({
               mode={mode}
               studentDetail={studentDetail}
               onClickStudent={onClickStudent}
+              studentPointHistory={studentPointHistory}
             />
           ) : (
             <_NotSelected

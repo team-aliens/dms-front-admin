@@ -15,6 +15,8 @@ import {
 import { setCookie } from '@/utils/cookies';
 import { queryKeys } from '@/utils/queryKeys';
 import { serviceObjectToNavList } from '@/utils/serviceObjectToNavList';
+import { pagePath } from '@/utils/pagePath';
+import { setUseableFeatures } from '@/utils/setUseableFeatures';
 
 interface PropsType {
   resetPwdState: ResetPasswordRequest;
@@ -31,7 +33,7 @@ export const useResetPwdMutation = ({ resetPwdState }: PropsType) => {
         toastType: 'SUCCESS',
         message: '비밀번호가 변경되었습니다.',
       });
-      navigate('/');
+      navigate(pagePath.home);
     },
   });
 };
@@ -57,8 +59,7 @@ export const useLoginMutation = ({
         toastType: 'SUCCESS',
         message: '로그인이 완료되었습니다.',
       });
-      const features = serviceObjectToNavList(res.features);
-      setCookie('service', features.toString());
+      setUseableFeatures(res.features);
       const accessExpired = new Date(res.access_token_expired_at);
       setCookie('access_token', res.access_token, {
         expires: accessExpired,
@@ -70,7 +71,7 @@ export const useLoginMutation = ({
           expires: refreshExpired,
         });
       }
-      navigate('/');
+      navigate(pagePath.home);
     },
     onError: (err: AxiosError) => {
       if (err.response.status === 404) {
