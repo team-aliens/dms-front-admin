@@ -29,8 +29,8 @@ export default function RemainModal({
   kind,
 }: PropsType) {
   const { onHandleChange, state, setState } = useForm<FormState>({
-    title: '',
-    content: '',
+    title: kind === 'edit' ? initTitle : '',
+    content: kind === 'edit' ? initContent : '',
   });
   const { closeModal } = useModal();
   const { mutate: mutateCreateRemain } = useCreateRemain({
@@ -41,12 +41,6 @@ export default function RemainModal({
     title: state.title,
     description: state.content,
   });
-  useEffect(() => {
-    setState((prev) => ({
-      title: kind === 'edit' ? initTitle : '',
-      content: kind === 'edit' ? initContent : '',
-    }));
-  }, [selectModalId]);
   const onClick = () => {
     if (kind === 'create') {
       mutateCreateRemain();

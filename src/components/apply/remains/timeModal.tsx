@@ -8,8 +8,7 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useGetRemainTime, useSetRemainTime } from '@/hooks/useRemainApi';
-import { DAY } from '@/apis/remains';
-import { getDayWithText, getTextWithDay } from '@/utils/remain';
+import { getDayWithText, getTextWithDay } from '@/utils/translate';
 import { useModal } from '@/hooks/useModal';
 import { useForm } from '@/hooks/useForm';
 interface ITimeState {

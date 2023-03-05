@@ -10,6 +10,7 @@ import TimeModal from '@/components/apply/remains/timeModal';
 import { getAllRemain } from '@/apis/remains';
 import { queryClient } from '@/index';
 import { useModal } from '@/hooks/useModal';
+import { useForm } from '@/hooks/useForm';
 
 export default function RemainsLists() {
   const { data: allRemains } = useGetAllRemains();
@@ -23,10 +24,7 @@ export default function RemainsLists() {
     isCheck: false,
   });
   const [selectModalId, setSelectModalId] = useState<string>('');
-  const [selectState, setSelectState] = useState<{
-    title: string;
-    content: string;
-  }>({
+  const { setState: setSelectState, state: selectState } = useForm({
     title: '',
     content: '',
   });
