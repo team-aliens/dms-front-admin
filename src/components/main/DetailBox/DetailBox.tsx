@@ -10,8 +10,10 @@ import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { useModal } from '@/hooks/useModal';
 import { StudentDetailPointList } from './StudentDetailPoint';
 import { PointType } from '@/apis/points';
+import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 interface PropsType {
+  studentPointHistory: StudentPointHistoryResponse;
   studentId: string[];
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
@@ -21,13 +23,12 @@ interface PropsType {
 const canDelete = true;
 
 export function DetailBox({
+  studentPointHistory,
   studentDetail,
   onClickStudent,
   mode,
   studentId,
 }: PropsType) {
-  const { data: studentPointHistory } = useStudentPointHistory(studentId[0]);
-  const { selectModal, closeModal, modalState } = useModal();
   const [currentPointType, setCurrentPointType] = useState<PointType>('ALL');
 
   return (

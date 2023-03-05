@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { MutationOptions, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '@/hooks/useModal';
 import { instance } from '../axios';
@@ -82,6 +82,7 @@ export const useAddPointOption = (
   score: number,
   name: string,
   type: string,
+  options?: MutationOptions,
 ) => {
   const types = type === '상점' ? 'BONUS' : 'MINUS';
   const body = {
@@ -89,9 +90,8 @@ export const useAddPointOption = (
     score,
     name,
   };
-  const { closeModal } = useModal();
   return useMutation(async () => instance.post(`${router}/options`, body), {
-    onSuccess: () => closeModal(),
+    ...options,
   });
 };
 
@@ -100,9 +100,9 @@ export const useEditPointOption = (
   score: number,
   name: string,
   type: string,
+  options?: MutationOptions,
 ) => {
   const types = type === '상점' ? 'BONUS' : 'MINUS';
-  const { closeModal } = useModal();
   const body = {
     type: types,
     score: Number(score),
@@ -110,16 +110,18 @@ export const useEditPointOption = (
   };
   return useMutation(
     async () => instance.patch(`${router}/options/${id}`, body),
-    { onSuccess: () => closeModal() },
+    { onSuccess: () => {}, ...options },
   );
 };
 
-export const useDeletePointOption = (id: string) => {
-  const navigate = useNavigate();
+export const useDeletePointOption = (id: string, options?: MutationOptions) => {
+  const { selectModal } = useModal();
+
   return useMutation(
     async () => await instance.delete(`${router}/options/${id}`),
     {
-      onSuccess: () => navigate(0),
+      onSuccess: () => {},
+      ...options,
     },
   );
 };
