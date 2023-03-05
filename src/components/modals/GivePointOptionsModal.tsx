@@ -62,7 +62,7 @@ export function GivePointOptionsModal({
   };
 
   const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => (!(OptionId === id) && id));
+    setSelectedPointOption((OptionId) => !(OptionId === id) && id);
     if (!selectedPointOption) {
       setNewItem(true);
     }
