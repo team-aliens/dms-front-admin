@@ -52,7 +52,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@team-aliens/design-system": "^1.4.5",
+    "@team-aliens/design-system": "^1.4.6",
     "@types/styled-components": "^5.1.26",
     "@yarnpkg/pnpify": "^4.0.0-rc.36",
     "@yarnpkg/sdks": "^3.0.0-rc.36",

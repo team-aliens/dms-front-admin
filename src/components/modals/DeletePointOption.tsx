@@ -18,10 +18,6 @@ export function DeletePointOptionModal({
     selectModal('POINT_OPTIONS');
     setSelectedOption('');
   };
-  const confirm = () => {
-    onClick();
-    closeModal();
-  };
 
   return (
     <Modal
@@ -35,7 +31,7 @@ export function DeletePointOptionModal({
         >
           취소
         </Button>,
-        <Button onClick={confirm} kind="contained" color="error">
+        <Button onClick={onClick} kind="contained" color="error">
           확인
         </Button>,
       ]}

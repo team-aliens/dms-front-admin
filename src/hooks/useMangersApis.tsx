@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import {
   deleteStudent,
@@ -56,8 +56,12 @@ export const useSearchStudents = ({
   min_point,
   max_point,
 }: SearchStudentPropsType) =>
-  useQuery(['studentList', name, sort, filter_type, min_point, max_point], () =>
-    searchStudentList(name, sort, filter_type, min_point, max_point),
+  useQuery(
+    ['studentList', name, sort, filter_type, min_point, max_point],
+    () => searchStudentList(name, sort, filter_type, min_point, max_point),
+    {
+      refetchOnWindowFocus: true,
+    },
   );
 
 export const useStudentDetail = (id: string) =>
@@ -65,14 +69,13 @@ export const useStudentDetail = (id: string) =>
 
 export const useMyProfileInfo = () => useQuery(['getMyProfile'], getMyProfile);
 
-export const useDeleteStudent = (student_id: string) => {
-  const navigate = useNavigate();
+export const useDeleteStudent = (
+  student_id: string,
+  options?: MutationOptions,
+) => {
   const { closeModal } = useModal();
 
   return useMutation(() => deleteStudent(student_id), {
-    onSuccess: () => {
-      closeModal();
-      navigate(0);
-    },
+    ...options,
   });
 };

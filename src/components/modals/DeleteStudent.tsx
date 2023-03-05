@@ -1,5 +1,4 @@
 import { Modal, Button } from '@team-aliens/design-system';
-import { useDeleteStudent } from '@/hooks/useMangersApis';
 
 interface PropsType {
   onClick: () => void;

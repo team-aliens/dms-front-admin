@@ -7,30 +7,43 @@ import {
   Modal,
   Search,
 } from '@team-aliens/design-system';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { useAddPointOption, useGivePointOption } from '@/apis/points';
+import { AllPointsOptionResponse } from '@/apis/points/response';
 import {
   PointOptionRequest,
   SearchPointOptionsRequest,
 } from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
-import { usePointOptionList } from '@/hooks/usePointsApi';
 import { PointItem } from '../main/DetailBox/PointItem';
+import { useModal } from '@/hooks/useModal';
 
 interface PropsType {
   selectedStudentId: string[];
+  setSelectedStudentId?: Dispatch<SetStateAction<string[]>>;
   close: () => void;
+  allPointOptions: AllPointsOptionResponse;
+  refetchAllPointOptions?: () => void;
+  refetchSearchStudents?: () => void;
 }
 
-export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
-  const canClick = true;
-
-  const [newItem, setNewItem] = useState<boolean>(true);
+const canClick = true;
+export function GivePointOptionsModal({
+  close,
+  selectedStudentId,
+  setSelectedStudentId,
+  allPointOptions,
+  refetchAllPointOptions,
+  refetchSearchStudents,
+}: PropsType) {
+  const [newItem, setNewItem] = useState(true);
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
 
   const { onDropDownChange, sort } = useDropDown<string>('');
+
+  const { closeModal } = useModal();
 
   const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
@@ -42,10 +55,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
       score: 0,
       name: '',
     });
-
   const { score: scoreOption, name: nameOption } = addPointOption;
-
-  const { data: allPointOptions } = usePointOptionList();
 
   const newItemInput = () => {
     setNewItem(!newItem);
@@ -61,11 +71,18 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   const givePointOptionAPI = useGivePointOption(
     selectedPointOption,
     selectedStudentId,
+    {
+      onSuccess: () => {
+        closeModal();
+        setSelectedStudentId(['']);
+      },
+    },
   );
+  const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort, {
+    onSuccess: () => refetchAllPointOptions(),
+  });
 
   const { isLoading } = givePointOptionAPI;
-
-  const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort);
 
   return (
     <Modal

@@ -10,6 +10,8 @@ import {
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { useAddPointOption, useEditPointOption } from '@/apis/points';
+import { AllPointsOptionResponse } from '@/apis/points/response';
+
 import {
   PointOptionRequest,
   PointOptionUnderBarRequest,
@@ -17,19 +19,24 @@ import {
 } from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
-import { usePointOptionList } from '@/hooks/usePointsApi';
 import { PointItem } from '../main/DetailBox/PointItem';
+import { useModal } from '@/hooks/useModal';
+import { useCancelPointHistory } from '@/hooks/usePointsApi';
 
 interface PropsType {
   selectedPointOption?: string;
   setSelectedPointOption?: Dispatch<SetStateAction<string>>;
   close: () => void;
+  allPointOptions?: AllPointsOptionResponse;
+  refetchAllPointOptions?: () => void;
 }
 
 export function ViewPointOptionsModal({
   close,
   selectedPointOption,
   setSelectedPointOption,
+  allPointOptions,
+  refetchAllPointOptions,
 }: PropsType) {
   const MustTrue = true;
 
@@ -56,8 +63,6 @@ export function ViewPointOptionsModal({
 
   const { score: addPointScore, name: addPointName } = addPointOption;
   const { score_, name_ } = editPointOption;
-
-  const { data: allPointOptions } = usePointOptionList();
 
   const newItemInput = () => {
     setNewItem(!newItem);
@@ -88,12 +93,18 @@ export function ViewPointOptionsModal({
     addPointScore,
     addPointName,
     AddState,
+    {
+      onSuccess: () => refetchAllPointOptions(),
+    },
   );
   const editPointOptionAPI = useEditPointOption(
     selectedPointOption,
     score_,
     name_,
     EditState,
+    {
+      onSuccess: () => refetchAllPointOptions(),
+    },
   );
 
   return (

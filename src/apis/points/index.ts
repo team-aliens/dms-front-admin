@@ -1,5 +1,5 @@
 import { getFileNameFromContentDisposition } from './../../utils/decoder';
-import { useMutation, useQuery } from 'react-query';
+import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '@/hooks/useModal';
 import { instance } from '../axios';
@@ -22,10 +22,12 @@ export enum PointEnum {
 
 /** 학생 상/벌점 내역 조회 */
 export const getStudentPointHistory = async (student_id: string) => {
-  const { data } = await instance.get<Promise<StudentPointHistoryResponse>>(
-    `${router}/history/students/${student_id}`,
-  );
-  return data;
+  if (student_id !== '') {
+    const { data } = await instance.get<Promise<StudentPointHistoryResponse>>(
+      `${router}/history/students/${student_id}`,
+    );
+    return data;
+  }
 };
 
 /** 상/벌점 전체 조회 */
@@ -69,8 +71,8 @@ export const useDownloadPointHistoryExcel = () =>
 export const useGivePointOption = (
   selectedPointOption: string,
   selectedStudentId: string[],
+  options?: MutationOptions,
 ) => {
-  const navigate = useNavigate();
   const { closeModal } = useModal();
   const { toastDispatch } = useToast();
 
@@ -81,13 +83,13 @@ export const useGivePointOption = (
   return useMutation(async () => instance.post(`${router}/history`, body), {
     onSuccess: () => {
       closeModal();
-      // navigate(0);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
         message: '상/벌점이 부여되었습니다.',
       });
     },
+    ...options,
   });
 };
 
@@ -95,6 +97,7 @@ export const useAddPointOption = (
   score: number,
   name: string,
   type: string,
+  options?: MutationOptions,
 ) => {
   const types = type === '상점' ? 'BONUS' : 'MINUS';
   const body = {
@@ -112,6 +115,7 @@ export const useAddPointOption = (
         message: '상/벌점 항목이 추가되었습니다.',
       });
     },
+    ...options,
     onError: () => {
       toastDispatch({
         toastType: 'ERROR',
@@ -127,6 +131,7 @@ export const useEditPointOption = (
   score: number,
   name: string,
   type: string,
+  options?: MutationOptions,
 ) => {
   const types = type === '상점' ? 'BONUS' : 'MINUS';
   const { closeModal } = useModal();
@@ -146,6 +151,7 @@ export const useEditPointOption = (
           message: '상/벌점 항목이 수정되었습니다.',
         });
       },
+      ...options,
       onError: () => {
         toastDispatch({
           toastType: 'ERROR',
@@ -157,7 +163,7 @@ export const useEditPointOption = (
   );
 };
 
-export const useDeletePointOption = (id: string) => {
+export const useDeletePointOption = (id: string, options?: MutationOptions) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
   return useMutation(
@@ -170,6 +176,7 @@ export const useDeletePointOption = (id: string) => {
           message: '상/벌점 항목이 삭제되었습니다.',
         });
       },
+      ...options,
       onError: () => {
         toastDispatch({
           toastType: 'ERROR',

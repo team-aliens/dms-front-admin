@@ -13,13 +13,24 @@ export function DeletePointListModal({ closeModal, onClick }: PropsType) {
 
   return (
     <Modal
+      className="modalButton"
       close={closeModal}
       content="상/벌점 내역을 취소 하시겠습니까?"
       buttonList={[
-        <Button onClick={closeModal} kind="outline" color="gray">
+        <Button
+          className="modalButton"
+          onClick={closeModal}
+          kind="outline"
+          color="gray"
+        >
           취소
         </Button>,
-        <Button onClick={confirm} kind="contained" color="error">
+        <Button
+          className="modalButton"
+          onClick={confirm}
+          kind="contained"
+          color="error"
+        >
           확인
         </Button>,
       ]}

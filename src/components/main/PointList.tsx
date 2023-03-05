@@ -7,18 +7,40 @@ import { AllPointItem } from '@/components/main/DetailBox/PointItem';
 import {
   useAllPointHistory,
   useCancelPointHistory,
+  usePointOptionList,
 } from '@/hooks/usePointsApi';
 import { PointHistroyIdAtom } from '@/utils/atoms';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
-import { useDownloadPointHistoryExcel } from '@/apis/points';
+import { useState } from 'react';
+import { DeletePointOptionModal } from '../modals/DeletePointOption';
+import {
+  useDeletePointOption,
+  useDownloadPointHistoryExcel,
+} from '@/apis/points';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
-  const { data } = useAllPointHistory('ALL');
-  const cancelPoint = useCancelPointHistory(pointHistoryId);
+  const { data, refetch: refetchAllPointHistory } = useAllPointHistory('ALL');
+  const cancelPoint = useCancelPointHistory(pointHistoryId, {
+    onSuccess: () => refetchAllPointHistory(),
+  });
   const openPointOptionModal = () => selectModal('POINT_OPTIONS');
+
+  const { data: allPointOptions, refetch: refetchAllPointOptions } =
+    usePointOptionList();
+
   const { mutate: downloadPointHistory } = useDownloadPointHistoryExcel();
+
+  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+
+  const deletePointOptionAPI = useDeletePointOption(selectedPointOption, {
+    onSuccess: () => {
+      selectModal('POINT_OPTIONS');
+      refetchAllPointOptions();
+      setSelectedPointOption('');
+    },
+  });
 
   return (
     <_Wrapper>
@@ -74,7 +96,20 @@ export function PointList() {
         />
       )}
       {modalState.selectedModal === 'POINT_OPTIONS' && (
-        <ViewPointOptionsModal close={closeModal} />
+        <ViewPointOptionsModal
+          selectedPointOption={selectedPointOption}
+          setSelectedPointOption={setSelectedPointOption}
+          close={closeModal}
+          allPointOptions={allPointOptions}
+          refetchAllPointOptions={refetchAllPointOptions}
+        />
+      )}
+      {modalState.selectedModal === 'DELETE_POINT_OPTION' && (
+        <DeletePointOptionModal
+          setSelectedOption={setSelectedPointOption}
+          onClick={deletePointOptionAPI.mutate}
+          closeModal={closeModal}
+        />
       )}
     </_Wrapper>
   );
