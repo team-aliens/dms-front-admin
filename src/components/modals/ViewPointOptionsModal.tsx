@@ -252,7 +252,7 @@ export function ViewPointOptionsModal({
                   label="타입"
                   placeholder="상/벌점"
                   items={['상점', '벌점']}
-                  value={AddState === 'BONUS' ? '상점' : '벌점'}
+                  value={AddState}
                   onChange={AddChange}
                 />
               )}
@@ -285,6 +285,8 @@ const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
   margin-top: 35px;
+  cursor: pointer;
+  width: 85px;
   margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;

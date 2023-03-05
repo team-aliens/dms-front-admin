@@ -10,7 +10,10 @@ import {
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useAddPointOption, useGivePointOption } from '@/apis/points';
-import { PointOptionRequest, SearchPointOptionsRequest } from '@/apis/points/request';
+import {
+  PointOptionRequest,
+  SearchPointOptionsRequest,
+} from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { usePointOptionList } from '@/hooks/usePointsApi';
@@ -24,7 +27,7 @@ interface PropsType {
 export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   const canClick = true;
 
-  const [newItem, setNewItem] = useState(true);
+  const [newItem, setNewItem] = useState<boolean>(true);
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
 
   const { onDropDownChange, sort } = useDropDown<string>('');
@@ -49,7 +52,12 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   };
 
   const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+    if (selectedPointOption) {
+      setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+    } else {
+      setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+      setNewItem(true)
+    }
   };
 
   const givePointOptionAPI = useGivePointOption(
@@ -85,7 +93,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
       ]}
     >
       <_SearchWrapper className="grantPoint">
-        <Search className="grantPoint" />
+        <Search className="Search" />
         <_SearchInput
           className="grantPoint"
           type="text"
@@ -188,16 +196,17 @@ const _SearchInput = styled.input`
   width: 202px;
   height: 40px;
   border-bottom: 1px solid #dddddd;
-  margin: 0px 0px 0px 30px;
+  padding: 0px 0px 0px 30px;
   font-size: 16px;
 `;
 
 const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
-  padding-top: 35px;
+  margin-top: 35px;
   cursor: pointer;
-  padding-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
+  width: 85px;
+  margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;
     margin-right: 10px;
