@@ -21,11 +21,7 @@ interface ITimeState {
 }
 export default function TimeModal() {
   const { data: remainTime } = useGetRemainTime();
-  const {
-    onHandleChange,
-    state: timeState,
-    setState: setTimeState,
-  } = useForm<ITimeState>({
+  const { onHandleChange, state: timeState } = useForm<ITimeState>({
     startDay: getTextWithDay(remainTime?.start_day_of_week),
     startHour: remainTime?.start_time.slice(0, 2),
     startMin: remainTime?.start_time.slice(3, 5),
