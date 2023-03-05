@@ -20,8 +20,7 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
-import { useModal } from '@/hooks/useModal';
-import { useCancelPointHistory } from '@/hooks/usePointsApi';
+import { useToast } from '@/hooks/useToast';
 
 interface PropsType {
   selectedPointOption?: string;
@@ -89,12 +88,28 @@ export function ViewPointOptionsModal({
       point_option_name: '',
     });
 
+  const { toastDispatch } = useToast();
+
   const addPointOptionAPI = useAddPointOption(
     addPointScore,
     addPointName,
     AddState,
     {
-      onSuccess: () => refetchAllPointOptions(),
+      onSuccess: () => {
+        refetchAllPointOptions();
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목이 추가되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목 추가를 실패했습니다.',
+        });
+      },
     },
   );
   const editPointOptionAPI = useEditPointOption(
@@ -103,7 +118,21 @@ export function ViewPointOptionsModal({
     name_,
     EditState,
     {
-      onSuccess: () => refetchAllPointOptions(),
+      onSuccess: () => {
+        refetchAllPointOptions();
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목이 수정되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목 수정을 실패했습니다.',
+        });
+      },
     },
   );
 
