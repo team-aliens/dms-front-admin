@@ -21,10 +21,16 @@ export enum PointEnum {
 }
 
 /** 학생 상/벌점 내역 조회 */
-export const getStudentPointHistory = async (student_id: string) => {
+export const getStudentPointHistory = async (
+  student_id: string,
+  page?: number,
+  size?: number,
+) => {
   if (student_id !== '') {
     const { data } = await instance.get<Promise<StudentPointHistoryResponse>>(
-      `${router}/history/students/${student_id}`,
+      `${router}/history/students/${student_id}${
+        page || size ? `?page=${page}&size=${size}` : ''
+      }`,
     );
     return data;
   }
