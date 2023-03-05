@@ -13,7 +13,10 @@ import { PointHistroyIdAtom } from '@/utils/atoms';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 import { useState } from 'react';
 import { DeletePointOptionModal } from '../modals/DeletePointOption';
-import { useDeletePointOption, useDownloadPointHistoryExcel } from '@/apis/points';
+import {
+  useDeletePointOption,
+  useDownloadPointHistoryExcel,
+} from '@/apis/points';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();

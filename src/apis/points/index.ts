@@ -105,24 +105,22 @@ export const useAddPointOption = (
   };
   const { closeModal } = useModal();
   const { toastDispatch } = useToast();
-  return useMutation(async () => instance.post(`${router}/options`, body),
-    {
-      onSuccess: () => {
-        ...options,
-        toastDispatch({
-          toastType: 'SUCCESS',
-          actionType: 'APPEND_TOAST',
-          message: '상/벌점 항목이 추가되었습니다.',
-        },
-        );
-      },
-      onError: () => {
-        toastDispatch({
-          toastType: 'ERROR',
-          actionType: 'APPEND_TOAST',
-          message: '상/벌점 항목 추가를 실패했습니다.',
-        });
-      },
+  return useMutation(async () => instance.post(`${router}/options`, body), {
+    onSuccess: () => {
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 추가되었습니다.',
+      });
+    },
+    ...options,
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 추가를 실패했습니다.',
+      });
+    },
   });
 };
 
@@ -145,13 +143,13 @@ export const useEditPointOption = (
     async () => instance.patch(`${router}/options/${id}`, body),
     {
       onSuccess: () => {
-      ...options,
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
           message: '상/벌점 항목이 수정되었습니다.',
         });
       },
+      ...options,
       onError: () => {
         toastDispatch({
           toastType: 'ERROR',
@@ -170,13 +168,13 @@ export const useDeletePointOption = (id: string, options?: MutationOptions) => {
     async () => await instance.delete(`${router}/options/${id}`),
     {
       onSuccess: () => {
-        ...options,
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
           message: '상/벌점 항목이 삭제되었습니다.',
         });
       },
+      ...options,
       onError: () => {
         toastDispatch({
           toastType: 'ERROR',
