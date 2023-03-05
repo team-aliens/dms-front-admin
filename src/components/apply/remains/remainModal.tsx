@@ -1,11 +1,4 @@
 import { Button, Input, Modal, TextArea } from '@team-aliens/design-system';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
 import styled from 'styled-components';
 import { useCreateRemain, useEditRemain } from '@/hooks/useRemainApi';
 import { useForm } from '@/hooks/useForm';
