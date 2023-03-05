@@ -1,5 +1,4 @@
 import { Button, Modal } from '@team-aliens/design-system';
-import { Dispatch, SetStateAction } from 'react';
 import { useDeleteRemain } from '@/hooks/useRemainApi';
 import { useModal } from '@/hooks/useModal';
 
@@ -11,6 +10,7 @@ export default function DeleteModal({ selectModalId }: PropsType) {
   const { closeModal } = useModal();
   const onClick = () => {
     mutate();
+    closeModal();
   };
 
   return (
