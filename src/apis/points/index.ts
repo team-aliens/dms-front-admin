@@ -115,12 +115,9 @@ export const useEditPointOption = (
 };
 
 export const useDeletePointOption = (id: string, options?: MutationOptions) => {
-  const { selectModal } = useModal();
-
   return useMutation(
     async () => await instance.delete(`${router}/options/${id}`),
     {
-      onSuccess: () => {},
       ...options,
     },
   );
