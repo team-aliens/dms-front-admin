@@ -52,7 +52,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   };
 
   const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => (!(OptionId === id) && id));
+    setSelectedPointOption((OptionId) => !(OptionId === id) && id);
     if (!selectedPointOption) {
       setNewItem(true);
     }
