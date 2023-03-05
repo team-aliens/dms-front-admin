@@ -18,6 +18,7 @@ export function AddSeatType({ closeModal, refetchTypeList }: PropsType) {
     name: '',
     color: '#000000',
   });
+
   const changeColor = (color: ColorResult) => {
     setState({
       ...state,

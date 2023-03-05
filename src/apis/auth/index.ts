@@ -1,3 +1,4 @@
+import { setUseableFeatures } from './../../utils/setUseableFeatures';
 import { instance } from '../axios';
 import {
   PostEmailAuthCodeRequest,
@@ -18,16 +19,18 @@ export const login = async (body: LoginRequest) => {
 };
 
 export const reIssueToken = async (refreshToken: string) => {
-  const { data } = await instance.put<AuthorizationResponse>(
-    `${router}/reissue`,
-    null,
-    {
+  const response = await instance
+    .put<AuthorizationResponse>(`${router}/reissue`, null, {
       headers: {
         'refresh-token': `${refreshToken}`,
       },
-    },
-  );
-  return data;
+    })
+    .then((res) => {
+      setUseableFeatures(res.data.features);
+      return res;
+    });
+
+  return response.data;
 };
 
 /** 이메일 인증번호 보내기 */

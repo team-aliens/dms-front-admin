@@ -1,6 +1,5 @@
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver';
-
 export const download = async () => {
   const workbook = new Workbook();
   const worksheet = workbook.addWorksheet('학생등록_템플릿');
