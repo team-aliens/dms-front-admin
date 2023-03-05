@@ -55,9 +55,7 @@ export function PointItem({
       className="grantPoint"
       canClick={canClick}
       type={type}
-      onClick={() =>
-        canClick ? onClick(point_history_id, name, score, type) : ''
-      }
+      onClick={() => onClick(point_history_id, name, score, type)}
       OptionSelected={OptionSelected === point_history_id}
     >
       {canClick && OptionSelected === point_history_id ? (

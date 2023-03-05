@@ -35,7 +35,3 @@ export interface AllPointsOptionType {
   score: number;
   name: string;
 }
-
-export interface SearchPointOptionsRequest {
-  point_option_name: string;
-}
