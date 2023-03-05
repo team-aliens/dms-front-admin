@@ -69,14 +69,14 @@ export default function TimeModal() {
           <Input
             onChange={onHandleChange}
             name={'endDay'}
-            value={timeState.startMin}
+            value={timeState.endDay}
             key={'endDay'}
           />
           <p className="day">요일</p>
           <Input
             onChange={onHandleChange}
             name={'endHour'}
-            value={timeState.endDay}
+            value={timeState.endHour}
             key={'endHour'}
           />
           <p className="day">:</p>
