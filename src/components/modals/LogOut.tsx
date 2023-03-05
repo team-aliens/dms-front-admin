@@ -19,6 +19,7 @@ export function LogOutModal({ closeModal }: PropsType) {
     removeCookie('refresh_token');
     removeCookie('access_token');
     navigate(pagePath.login);
+    closeModal()
   };
 
   return (
