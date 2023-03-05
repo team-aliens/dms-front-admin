@@ -13,7 +13,7 @@ import { PointHistroyIdAtom } from '@/utils/atoms';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 import { useState } from 'react';
 import { DeletePointOptionModal } from '../modals/DeletePointOption';
-import { useDeletePointOption } from '@/apis/points';
+import { useDeletePointOption, useDownloadPointHistoryExcel } from '@/apis/points';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();
@@ -26,7 +26,8 @@ export function PointList() {
 
   const { data: allPointOptions, refetch: refetchAllPointOptions } =
     usePointOptionList();
-  // const { data: excel } = useDownLoadExcelFile();
+
+  const { mutate: downloadPointHistory } = useDownloadPointHistoryExcel();
 
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
 
@@ -51,7 +52,7 @@ export function PointList() {
         <Text margin={['bottom', 10]} color="gray6" size="titleL">
           전체 학생 상/벌점
         </Text>
-        <Button color="gray" kind="outline">
+        <Button color="gray" kind="outline" onClick={downloadPointHistory}>
           엑셀 출력
         </Button>
       </_Display>

@@ -12,13 +12,18 @@ import styled from 'styled-components';
 import { useAddPointOption, useEditPointOption } from '@/apis/points';
 import {
   AllPointsOptionResponse,
-  SearchPointOptionsRequest,
 } from '@/apis/points/response';
+import {
+  useAddPointOption,
+  useEditPointOption,
+} from '@/apis/points';
+import { PointOptionRequest, PointOptionUnderBarRequest, SearchPointOptionsRequest } from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
 import { useModal } from '@/hooks/useModal';
 import { useCancelPointHistory } from '@/hooks/usePointsApi';
+
 
 interface PropsType {
   selectedPointOption?: string;
@@ -28,7 +33,6 @@ interface PropsType {
   refetchAllPointOptions?: () => void;
 }
 
-const MustTrue = true;
 
 export function ViewPointOptionsModal({
   close,
@@ -37,38 +41,30 @@ export function ViewPointOptionsModal({
   allPointOptions,
   refetchAllPointOptions,
 }: PropsType) {
+  
+  const MustTrue = true;
+
   const [newItem, setNewItem] = useState(true);
+
   const { onDropDownChange: AddChange, sort: AddState } =
     useDropDown<string>('');
   const { onDropDownChange: EditChange, sort: EditState } =
     useDropDown<string>('');
-  const [addPointOption, setAddPointOption] = useState({
-    score: 0,
-    name: '',
-  });
-  const [editPointOption, setEditPointOption] = useState({
-    score_: 0,
-    name_: '',
-  });
+
+  const { state: addPointOption, onHandleChange: addPointOptionHandler } =
+    useForm<PointOptionRequest>({
+      score: 0,
+      name: '',
+    });
+  const { state: editPointOption, setState: setEditPointOption, onHandleChange: EditPointOptionHandler } =
+    useForm<PointOptionUnderBarRequest>({
+      score_: 0,
+      name_: '',
+    });
 
   const { score: addPointScore, name: addPointName } = addPointOption;
   const { score_, name_ } = editPointOption;
 
-  const onAddPointOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setAddPointOption({
-      ...addPointOption,
-      [name]: value,
-    });
-  };
-
-  const onEditPointOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setEditPointOption({
-      ...editPointOption,
-      [name]: value,
-    });
-  };
 
   const newItemInput = () => {
     setNewItem(!newItem);
@@ -186,7 +182,6 @@ export function ViewPointOptionsModal({
       {selectedPointOption ? (
         <>
           <_AddImgWrapper
-            onClick={selectedPointOption ? undefined : newItemInput}
             newItem={newItem}
           >
             <_Text>항목 수정</_Text>
@@ -200,7 +195,7 @@ export function ViewPointOptionsModal({
               placeholder="ex) 무단 외출"
               name="name_"
               value={name_}
-              onChange={onEditPointOption}
+              onChange={EditPointOptionHandler}
             />
             <_AddInputSmallWrapper>
               <Input
@@ -210,7 +205,7 @@ export function ViewPointOptionsModal({
                 placeholder="ex) 12 (숫자만 입력)"
                 name="score_"
                 value={score_}
-                onChange={onEditPointOption}
+                onChange={EditPointOptionHandler}
               />
               <DropDown
                 width={216}
@@ -239,9 +234,7 @@ export function ViewPointOptionsModal({
             )}
           </_AddImgWrapper>
           <_AddInputBigWrapper>
-            {newItem ? (
-              ''
-            ) : (
+            {!newItem && (
               <Input
                 className="grantPoint"
                 width={478}
@@ -250,13 +243,11 @@ export function ViewPointOptionsModal({
                 placeholder="ex) 무단 외출"
                 name="name"
                 value={addPointName}
-                onChange={onAddPointOption}
+                onChange={addPointOptionHandler}
               />
             )}
             <_AddInputSmallWrapper>
-              {newItem ? (
-                ''
-              ) : (
+              {!newItem &&  (
                 <Input
                   className="grantPoint"
                   width={243}
@@ -265,12 +256,10 @@ export function ViewPointOptionsModal({
                   placeholder="ex) 12 (숫자만 입력)"
                   name="score"
                   value={addPointScore}
-                  onChange={onAddPointOption}
+                  onChange={addPointOptionHandler}
                 />
               )}
-              {newItem ? (
-                ''
-              ) : (
+              {!newItem && (
                 <DropDown
                   className="grantPoint"
                   width={216}
@@ -310,7 +299,6 @@ const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
   margin-top: 35px;
-  cursor: pointer;
   margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;

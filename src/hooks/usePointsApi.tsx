@@ -6,6 +6,7 @@ import {
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
+import { pagePath } from '@/utils/pagePath';
 
 export const useAllPointHistory = (pointType: PointType) =>
   useQuery(
@@ -38,6 +39,3 @@ export const useCancelPointHistory = (
     ...options,
   });
 };
-
-// export const useDownLoadExcelFile = () =>
-//   useQuery(['document-download'], getAllPointExcel);

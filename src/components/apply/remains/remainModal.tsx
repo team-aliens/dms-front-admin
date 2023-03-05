@@ -8,95 +8,92 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useCreateRemain, useEditRemain } from '@/hooks/useRemainApi';
+import { useForm } from '@/hooks/useForm';
+import { useModal } from '@/hooks/useModal';
 
 interface PropsType {
   initTitle?: string;
   initContent?: string;
   selectModalId: string;
-  remainModal: boolean;
-  setRemainModal: Dispatch<SetStateAction<boolean>>;
   kind: 'create' | 'edit';
+}
+
+interface FormState {
+  title: string;
+  content: string;
 }
 export default function RemainModal({
   initTitle,
   initContent,
   selectModalId,
-  remainModal,
-  setRemainModal,
   kind,
 }: PropsType) {
-  const [title, setTitle] = useState<string>(
-    kind === 'create' ? '' : 'initTitle',
-  );
-  const [content, setContent] = useState<string>(
-    kind === 'create' ? '' : 'initContent',
-  );
+  const { onHandleChange, state, setState } = useForm<FormState>({
+    title: kind === 'edit' ? initTitle : '',
+    content: kind === 'edit' ? initContent : '',
+  });
+  const { closeModal } = useModal();
   const { mutate: mutateCreateRemain } = useCreateRemain({
-    title,
-    description: content,
+    title: state.title,
+    description: state.content,
   });
   const { mutate: mutateEditRemain } = useEditRemain(selectModalId, {
-    title,
-    description: content,
+    title: state.title,
+    description: state.content,
   });
-
-  useEffect(() => {
-    setTitle(initTitle);
-    setContent(initContent);
-  }, [initTitle, initContent]);
-  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
   const onClick = () => {
     if (kind === 'create') {
       mutateCreateRemain();
     } else {
       mutateEditRemain();
     }
-    setTitle('');
-    setContent('');
-    setRemainModal(false);
+    closeModal();
+  };
+  const onCloseModal = () => {
+    setState({
+      title: '',
+      content: '',
+    });
+    closeModal();
   };
   return (
-    <div>
-      {remainModal ? (
-        <Modal
-          title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
-          inputList={[
-            <_InputWrapper>
-              <Input
-                onChange={onChangeTitle}
-                name="제목"
-                label="제목"
-                value={title}
-                placeholder="ex) 금요 외박"
-                limit={30}
-              />
-              <_TextLength>({title.length}/30)</_TextLength>
-            </_InputWrapper>,
-            <_InputWrapper>
-              <_TextareaText>내용</_TextareaText>
-              <TextArea
-                onChange={onChangeContent}
-                name="내용"
-                value={content}
-                height={176}
-              />
-              <_TextLength>({content.length}/200)</_TextLength>
-            </_InputWrapper>,
-          ]}
-          buttonList={[
-            <Button disabled={!(title && content)} onClick={onClick}>
-              추가
-            </Button>,
-          ]}
-          close={() => setRemainModal(false)}
-        />
-      ) : null}
-    </div>
+    <Modal
+      title={kind === 'create' ? '잔류 항목 추가' : '잔류 항목 수정'}
+      inputList={[
+        <_InputWrapper key={'title'}>
+          <Input
+            onChange={onHandleChange}
+            name={'title'}
+            label="제목"
+            value={state.title}
+            placeholder="ex) 금요 외박"
+            type="text"
+            limit={30}
+          />
+          <_TextLength>({state.title.length}/30)</_TextLength>
+        </_InputWrapper>,
+        <_InputWrapper key={'content'}>
+          <_TextareaText>내용</_TextareaText>
+          <TextArea
+            onChange={onHandleChange}
+            name="content"
+            value={state.content}
+            height={176}
+            limit={200}
+          />
+        </_InputWrapper>,
+      ]}
+      buttonList={[
+        <Button
+          key={'add'}
+          disabled={!(state.title && state.content)}
+          onClick={onClick}
+        >
+          추가
+        </Button>,
+      ]}
+      close={onCloseModal}
+    />
   );
 }
 const _InputWrapper = styled.div`

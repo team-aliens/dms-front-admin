@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Button, Change } from '@team-aliens/design-system';
 import { StudentList } from '@/components/main/StudentList';
@@ -13,6 +13,7 @@ import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
+import { useModal } from '@/hooks/useModal';
 
 export interface FilterState {
   name: string;

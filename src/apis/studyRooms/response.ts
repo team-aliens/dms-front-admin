@@ -6,8 +6,8 @@ import {
 } from '@/apis/studyRooms/request';
 
 export interface ApplicationTimeResponse {
-  start_at: string;
-  end_at: string;
+  start_at: `${number}:${number}:${number}`;
+  end_at: `${number}:${number}:${number}`;
 }
 
 export interface CreateStudyRoomResponse {

@@ -3,7 +3,6 @@ import {
   createRemain,
   deleteRemain,
   editRemain,
-  excelPrint,
   getAllRemain,
   getRemainTime,
   putRemainTime,
@@ -55,4 +54,3 @@ export const useDeleteRemain = (id: string) => {
 };
 export const useEditRemain = (id: string, body: EditRemainBody) =>
   useMutation(() => editRemain(body, id));
-export const useGetExcelPrint = () => useMutation(excelPrint);

@@ -12,8 +12,8 @@ import styled from 'styled-components';
 import { useAddPointOption, useGivePointOption } from '@/apis/points';
 import {
   AllPointsOptionResponse,
-  SearchPointOptionsRequest,
 } from '@/apis/points/response';
+import { PointOptionRequest, SearchPointOptionsRequest } from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
@@ -38,24 +38,28 @@ export function GivePointOptionsModal({
   refetchSearchStudents,
 }: PropsType) {
   const [newItem, setNewItem] = useState(true);
+  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+
   const { onDropDownChange, sort } = useDropDown<string>('');
-  const [addPointOption, setAddPointOption] = useState({
-    score: 0,
-    name: '',
-  });
 
   const { score: scoreOption, name: nameOption } = addPointOption;
   const { closeModal } = useModal();
-
-  const onAddPointOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name: option } = e.target;
-    setAddPointOption({
-      ...addPointOption,
-      [option]: value,
+  
+  const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
+    useForm<SearchPointOptionsRequest>({
+      point_option_name: '',
     });
-  };
+
+  const { state: addPointOption, onHandleChange: addPointOptionHandler } =
+    useForm<PointOptionRequest>({
+      score: 0,
+      name: '',
+    });
 
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+  const { score: scoreOption, name: nameOption } = addPointOption;
+
+  const { data: allPointOptions } = usePointOptionList();
 
   const newItemInput = () => {
     setNewItem(!newItem);
@@ -64,11 +68,6 @@ export function GivePointOptionsModal({
   const onClickPointOption = (id: string) => {
     setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
   };
-
-  const { state: pointOptionState, onHandleChange } =
-    useForm<SearchPointOptionsRequest>({
-      point_option_name: '',
-    });
 
   const givePointOptionAPI = useGivePointOption(
     selectedPointOption,
@@ -84,6 +83,8 @@ export function GivePointOptionsModal({
     onSuccess: () => refetchAllPointOptions(),
   });
 
+  const { isLoading } = givePointOptionAPI;
+
   return (
     <Modal
       className="grantPoint"
@@ -96,7 +97,7 @@ export function GivePointOptionsModal({
           margin={newItem ? [-40, 0, 0, 0] : [0, 0, 0, 0]}
           disabled={
             newItem
-              ? !(selectedPointOption && selectedStudentId)
+              ? !(selectedPointOption && selectedStudentId && !isLoading)
               : !(scoreOption && nameOption && sort)
           }
           onClick={
@@ -115,7 +116,7 @@ export function GivePointOptionsModal({
           placeholder="ex) 봉사활동"
           name="point_option_name"
           value={pointOptionState.point_option_name}
-          onChange={onHandleChange}
+          onChange={pointOptionStateHandler}
         />
       </_SearchWrapper>
       <_PointOptionList className="grantPoint">
@@ -127,6 +128,7 @@ export function GivePointOptionsModal({
             const { point_option_id, name, type, score } = options;
             return (
               <PointItem
+                key={point_option_id}
                 point_history_id={point_option_id}
                 name={name}
                 type={type}
@@ -155,9 +157,7 @@ export function GivePointOptionsModal({
         )}
       </_AddImgWrapper>
       <_AddInputBigWrapper className="grantPoint">
-        {newItem ? (
-          ''
-        ) : (
+        {!newItem && (
           <Input
             className="grantPoint"
             width={478}
@@ -166,13 +166,11 @@ export function GivePointOptionsModal({
             placeholder="ex) 무단 외출"
             name="name"
             value={nameOption}
-            onChange={onAddPointOption}
+            onChange={addPointOptionHandler}
           />
         )}
         <_AddInputSmallWrapper className="grantPoint">
-          {newItem ? (
-            ''
-          ) : (
+          {!newItem && (
             <Input
               className="grantPoint"
               width={243}
@@ -181,12 +179,10 @@ export function GivePointOptionsModal({
               placeholder="ex) 12 (숫자만 입력)"
               name="score"
               value={scoreOption}
-              onChange={onAddPointOption}
+              onChange={addPointOptionHandler}
             />
           )}
-          {newItem ? (
-            ''
-          ) : (
+          {!newItem && (
             <DropDown
               className="grantPoint"
               width={216}

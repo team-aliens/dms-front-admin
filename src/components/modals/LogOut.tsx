@@ -1,3 +1,4 @@
+import { pagePath } from '@/utils/pagePath';
 import { Button, Modal } from '@team-aliens/design-system';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -12,12 +13,14 @@ export function LogOutModal({ closeModal }: PropsType) {
   const [cookies, setCookie, removeCookie] = useCookies([
     'refresh_token',
     'access_token',
+    'service',
   ]);
 
   const logout = () => {
     removeCookie('refresh_token');
     removeCookie('access_token');
-    navigate('/login');
+    removeCookie('service');
+    navigate(pagePath.login);
   };
 
   return (
