@@ -68,7 +68,7 @@ export const useGivePointOption = (
   return useMutation(async () => instance.post(`${router}/history`, body), {
     onSuccess: () => {
       closeModal();
-      navigate(0);
+      // navigate(0);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
