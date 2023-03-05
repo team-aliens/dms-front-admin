@@ -52,7 +52,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
   };
 
   const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+    setSelectedPointOption((OptionId) => (!(OptionId === id) && id));
     if (!selectedPointOption) {
       setNewItem(true);
     }
@@ -76,7 +76,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
       buttonList={[
         <Button
           className="grantPoint"
-          margin={newItem ? [-40, 0, 0, 0] : [0, 0, 0, 0]}
+          margin={newItem && [-40, 0, 0, 0]}
           disabled={
             newItem
               ? !(selectedPointOption && selectedStudentId && !isLoading)

@@ -9,11 +9,12 @@ import {
 } from '@team-aliens/design-system';
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
+import { useAddPointOption, useEditPointOption } from '@/apis/points';
 import {
-  useAddPointOption,
-  useEditPointOption,
-} from '@/apis/points';
-import { PointOptionRequest, PointOptionUnderBarRequest, SearchPointOptionsRequest } from '@/apis/points/request';
+  PointOptionRequest,
+  PointOptionUnderBarRequest,
+  SearchPointOptionsRequest,
+} from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { usePointOptionList } from '@/hooks/usePointsApi';
@@ -25,13 +26,11 @@ interface PropsType {
   close: () => void;
 }
 
-
 export function ViewPointOptionsModal({
   close,
   selectedPointOption,
   setSelectedPointOption,
 }: PropsType) {
-  
   const MustTrue = true;
 
   const [newItem, setNewItem] = useState(true);
@@ -46,15 +45,17 @@ export function ViewPointOptionsModal({
       score: 0,
       name: '',
     });
-  const { state: editPointOption, setState: setEditPointOption, onHandleChange: EditPointOptionHandler } =
-    useForm<PointOptionUnderBarRequest>({
-      score_: 0,
-      name_: '',
-    });
+  const {
+    state: editPointOption,
+    setState: setEditPointOption,
+    onHandleChange: EditPointOptionHandler,
+  } = useForm<PointOptionUnderBarRequest>({
+    score_: 0,
+    name_: '',
+  });
 
   const { score: addPointScore, name: addPointName } = addPointOption;
   const { score_, name_ } = editPointOption;
-
 
   const { data: allPointOptions } = usePointOptionList();
 
@@ -74,7 +75,7 @@ export function ViewPointOptionsModal({
     });
     EditChange(option_type);
     setSelectedPointOption((OptionId) =>
-      OptionId === option_id ? '' : option_id,
+      !(OptionId === option_id) ? option_id : '',
     );
   };
 
@@ -152,6 +153,7 @@ export function ViewPointOptionsModal({
             const { point_option_id, name, type, score } = options;
             return (
               <PointItem
+                key={point_option_id}
                 point_history_id={point_option_id}
                 name={name}
                 type={type}
@@ -167,9 +169,7 @@ export function ViewPointOptionsModal({
       </_PointOptionList>
       {selectedPointOption ? (
         <>
-          <_AddImgWrapper
-            newItem={newItem}
-          >
+          <_AddImgWrapper newItem={newItem}>
             <_Text>항목 수정</_Text>
           </_AddImgWrapper>
           <_AddInputBigWrapper>
@@ -233,7 +233,7 @@ export function ViewPointOptionsModal({
               />
             )}
             <_AddInputSmallWrapper>
-              {!newItem &&  (
+              {!newItem && (
                 <Input
                   className="grantPoint"
                   width={243}

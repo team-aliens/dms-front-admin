@@ -56,6 +56,7 @@ export function PointFilterModal({
       <_Buttons>
         {FilterType.map((type) => (
           <_Button
+            key={type}
             onClick={() => setPointType(type)}
             isClicked={type === pointType}
           >
