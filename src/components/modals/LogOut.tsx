@@ -21,6 +21,7 @@ export function LogOutModal({ closeModal }: PropsType) {
     removeCookie('access_token');
     removeCookie('service');
     navigate(pagePath.login);
+    closeModal()
   };
 
   return (

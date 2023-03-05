@@ -27,6 +27,7 @@ export function StudentDetailPointList({ id }: PropsType) {
           const { name, point_history_id, score, type } = history;
           return (
             <PointItem
+              key={point_history_id}
               canDelete={false}
               name={name}
               point_history_id={point_history_id}
