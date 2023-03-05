@@ -10,10 +10,11 @@ import {
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { useAddPointOption, useGivePointOption } from '@/apis/points';
+import { AllPointsOptionResponse } from '@/apis/points/response';
 import {
-  AllPointsOptionResponse,
-} from '@/apis/points/response';
-import { PointOptionRequest, SearchPointOptionsRequest } from '@/apis/points/request';
+  PointOptionRequest,
+  SearchPointOptionsRequest,
+} from '@/apis/points/request';
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
@@ -42,9 +43,8 @@ export function GivePointOptionsModal({
 
   const { onDropDownChange, sort } = useDropDown<string>('');
 
-  const { score: scoreOption, name: nameOption } = addPointOption;
   const { closeModal } = useModal();
-  
+
   const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
       point_option_name: '',
@@ -55,11 +55,7 @@ export function GivePointOptionsModal({
       score: 0,
       name: '',
     });
-
-  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
   const { score: scoreOption, name: nameOption } = addPointOption;
-
-  const { data: allPointOptions } = usePointOptionList();
 
   const newItemInput = () => {
     setNewItem(!newItem);
