@@ -41,7 +41,7 @@ export function ViewPointOptionsModal({
   const { onDropDownChange: EditChange, sort: EditState } =
     useDropDown<string>('');
 
-  const { state: addPointOption, onHandleChange: setAddPointOption } =
+  const { state: addPointOption, onHandleChange: addPointOptionHandler } =
     useForm<PointOptionRequest>({
       score: 0,
       name: '',
@@ -229,7 +229,7 @@ export function ViewPointOptionsModal({
                 placeholder="ex) 무단 외출"
                 name="name"
                 value={addPointName}
-                onChange={setAddPointOption}
+                onChange={addPointOptionHandler}
               />
             )}
             <_AddInputSmallWrapper>
@@ -242,7 +242,7 @@ export function ViewPointOptionsModal({
                   placeholder="ex) 12 (숫자만 입력)"
                   name="score"
                   value={addPointScore}
-                  onChange={setAddPointOption}
+                  onChange={addPointOptionHandler}
                 />
               )}
               {!newItem && (

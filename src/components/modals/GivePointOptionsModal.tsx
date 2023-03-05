@@ -29,12 +29,12 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
 
   const { onDropDownChange, sort } = useDropDown<string>('');
 
-  const { state: pointOptionState, onHandleChange: setPointOptionState } =
+  const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
       point_option_name: '',
     });
 
-  const { state: addPointOption, onHandleChange: setAddPointOption } =
+  const { state: addPointOption, onHandleChange: addPointOptionHandler } =
     useForm<PointOptionRequest>({
       score: 0,
       name: '',
@@ -89,7 +89,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
           placeholder="ex) 봉사활동"
           name="point_option_name"
           value={pointOptionState.point_option_name}
-          onChange={setPointOptionState}
+          onChange={pointOptionStateHandler}
         />
       </_SearchWrapper>
       <_PointOptionList className="grantPoint">
@@ -139,7 +139,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
             placeholder="ex) 무단 외출"
             name="name"
             value={nameOption}
-            onChange={setAddPointOption}
+            onChange={addPointOptionHandler}
           />
         )}
         <_AddInputSmallWrapper className="grantPoint">
@@ -152,7 +152,7 @@ export function GivePointOptionsModal({ close, selectedStudentId }: PropsType) {
               placeholder="ex) 12 (숫자만 입력)"
               name="score"
               value={scoreOption}
-              onChange={setAddPointOption}
+              onChange={addPointOptionHandler}
             />
           )}
           {!newItem && (
