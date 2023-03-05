@@ -9,6 +9,9 @@ import {
   getAllRemainTimeResponse,
   getRemainTimeResponse,
 } from '@/apis/remains/response';
+import { useMutation } from 'react-query';
+import fileSaver from 'file-saver';
+import { getFileNameFromContentDisposition } from '@/utils/decoder';
 
 const router = '/remains';
 
@@ -51,19 +54,19 @@ export const deleteRemain = async (path: string) => {
   await instance.delete(`${router}/options/${path}`);
 };
 
-export const excelPrint = async () => {
-  await instance
-    .get(`${router}/status/file`, {
-      responseType: 'blob',
-    })
-    .then((res: AxiosResponse<Blob>) => {
-      const url = URL.createObjectURL(
-        new Blob([res.data], { type: res.headers['content-type'] }),
-      );
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '학생 잔류 신청 내역.xlsx');
-      document.body.appendChild(link);
-      link.click();
-    });
-};
+export const useGetRemainListExcel = () =>
+  useMutation(
+    () =>
+      instance.get(`${router}/status/file`, {
+        responseType: 'blob',
+      }),
+    {
+      onSuccess: (res) => {
+        const blob = new Blob([res.data], {
+          type: res.headers['content-type'],
+        });
+        const fileName = res.headers['content-disposition'];
+        fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
+      },
+    },
+  );

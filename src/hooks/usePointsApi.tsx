@@ -38,6 +38,3 @@ export const useCancelPointHistory = (point_history_id: string) => {
     onSuccess: () => navigate(pagePath.home),
   });
 };
-
-// export const useDownLoadExcelFile = () =>
-//   useQuery(['document-download'], getAllPointExcel);
