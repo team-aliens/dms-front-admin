@@ -103,8 +103,26 @@ export const useAddPointOption = (
     score,
     name,
   };
-  return useMutation(async () => instance.post(`${router}/options`, body), {
-    ...options,
+  const { closeModal } = useModal();
+  const { toastDispatch } = useToast();
+  return useMutation(async () => instance.post(`${router}/options`, body),
+    {
+      onSuccess: () => {
+        ...options,
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목이 추가되었습니다.',
+        },
+        );
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목 추가를 실패했습니다.',
+        });
+      },
   });
 };
 
@@ -116,6 +134,8 @@ export const useEditPointOption = (
   options?: MutationOptions,
 ) => {
   const types = type === '상점' ? 'BONUS' : 'MINUS';
+  const { closeModal } = useModal();
+  const { toastDispatch } = useToast();
   const body = {
     type: types,
     score: Number(score),
@@ -123,15 +143,47 @@ export const useEditPointOption = (
   };
   return useMutation(
     async () => instance.patch(`${router}/options/${id}`, body),
-    { onSuccess: () => {}, ...options },
+    {
+      onSuccess: () => {
+      ...options,
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목이 수정되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목 수정을 실패했습니다.',
+        });
+      },
+    },
   );
 };
 
 export const useDeletePointOption = (id: string, options?: MutationOptions) => {
+  const navigate = useNavigate();
+  const { toastDispatch } = useToast();
   return useMutation(
     async () => await instance.delete(`${router}/options/${id}`),
     {
-      ...options,
+      onSuccess: () => {
+        ...options,
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목이 삭제되었습니다.',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          toastType: 'ERROR',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점 항목 삭제를 실패했습니다.',
+        });
+      },
     },
   );
 };

@@ -138,6 +138,7 @@ export function StudentList({
       <_StudentList>
         {studentList.map((item) => (
           <StudentBox
+            key={item.id}
             mode={mode}
             studentInfo={item}
             onClickStudent={onClickStudent}

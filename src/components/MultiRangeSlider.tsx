@@ -60,8 +60,9 @@ export function MultiRangeSlider({
   return (
     <>
       <_Marking>
-        {markings.map((res) => (
+        {markings.map((res, idx) => (
           <Text
+            key={idx}
             size="captionM"
             color={
               (+res.replace('+', '') === 100 && +maxVal > 100) ||

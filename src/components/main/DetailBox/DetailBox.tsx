@@ -68,6 +68,7 @@ export function DetailBox({
           <_MateList>
             {studentDetail.room_mates.map((item) => (
               <Button
+                key={item.id}
                 kind="outline"
                 onClick={() => onClickStudent(item.id)}
                 color="gray"
@@ -90,6 +91,7 @@ export function DetailBox({
                 const { point_history_id, name, type, score } = history;
                 return (
                   <PointItem
+                    key={point_history_id}
                     point_history_id={point_history_id}
                     name={name}
                     type={type}
@@ -105,7 +107,7 @@ export function DetailBox({
           {studentId
             .filter((item) => item !== '' && item !== undefined)
             .map((id) => (
-              <StudentDetailPointList id={id} />
+              <StudentDetailPointList key={id} id={id} />
             ))}
         </_PointDetailBox>
       )}

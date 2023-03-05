@@ -62,7 +62,10 @@ export function GivePointOptionsModal({
   };
 
   const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => (OptionId === id ? '' : id));
+    setSelectedPointOption((OptionId) => (!(OptionId === id) && id));
+    if (!selectedPointOption) {
+      setNewItem(true);
+    }
   };
 
   const givePointOptionAPI = useGivePointOption(
@@ -90,7 +93,7 @@ export function GivePointOptionsModal({
       buttonList={[
         <Button
           className="grantPoint"
-          margin={newItem ? [-40, 0, 0, 0] : [0, 0, 0, 0]}
+          margin={newItem && [-40, 0, 0, 0]}
           disabled={
             newItem
               ? !(selectedPointOption && selectedStudentId && !isLoading)
@@ -105,7 +108,7 @@ export function GivePointOptionsModal({
       ]}
     >
       <_SearchWrapper className="grantPoint">
-        <Search className="grantPoint" />
+        <Search className="Search" />
         <_SearchInput
           className="grantPoint"
           type="text"
@@ -208,16 +211,17 @@ const _SearchInput = styled.input`
   width: 202px;
   height: 40px;
   border-bottom: 1px solid #dddddd;
-  margin: 0px 0px 0px 30px;
+  padding: 0px 0px 0px 30px;
   font-size: 16px;
 `;
 
 const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
-  padding-top: 35px;
+  margin-top: 35px;
   cursor: pointer;
-  padding-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
+  width: 85px;
+  margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;
     margin-right: 10px;

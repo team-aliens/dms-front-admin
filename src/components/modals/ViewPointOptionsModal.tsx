@@ -11,6 +11,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { useAddPointOption, useEditPointOption } from '@/apis/points';
 import { AllPointsOptionResponse } from '@/apis/points/response';
+
 import {
   PointOptionRequest,
   PointOptionUnderBarRequest,
@@ -79,7 +80,7 @@ export function ViewPointOptionsModal({
     });
     EditChange(option_type);
     setSelectedPointOption((OptionId) =>
-      OptionId === option_id ? '' : option_id,
+      !(OptionId === option_id) ? option_id : '',
     );
   };
 
@@ -163,6 +164,7 @@ export function ViewPointOptionsModal({
             const { point_option_id, name, type, score } = options;
             return (
               <PointItem
+                key={point_option_id}
                 point_history_id={point_option_id}
                 name={name}
                 type={type}
@@ -261,7 +263,7 @@ export function ViewPointOptionsModal({
                   label="타입"
                   placeholder="상/벌점"
                   items={['상점', '벌점']}
-                  value={AddState === 'BONUS' ? '상점' : '벌점'}
+                  value={AddState}
                   onChange={AddChange}
                 />
               )}
@@ -294,6 +296,8 @@ const _AddImgWrapper = styled.div<{ newItem: boolean }>`
   display: flex;
   align-items: center;
   margin-top: 35px;
+  cursor: pointer;
+  width: 85px;
   margin-bottom: ${({ newItem }) => (newItem ? '-20px' : '20px')};
   .addImg {
     width: 17px;
