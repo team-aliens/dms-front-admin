@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Text } from '@team-aliens/design-system';
 import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { PointItem } from './PointItem';
 import { StudentProfile } from './StudentInfo';
 import { PointBox } from './PointBox';
-import { ModeType } from '@/pages/Home';
-import { useStudentPointHistory } from '@/hooks/usePointsApi';
-import { useModal } from '@/hooks/useModal';
-import { StudentDetailPointList } from './StudentDetailPoint';
 import { PointType } from '@/apis/points';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 interface PropsType {
   studentPointHistory: StudentPointHistoryResponse;
   studentId: string[];
-  mode: ModeType;
   studentDetail: GetStudentDetailResponse;
   onClickStudent: (id: string) => void;
 }
@@ -26,91 +21,74 @@ export function DetailBox({
   studentPointHistory,
   studentDetail,
   onClickStudent,
-  mode,
   studentId,
 }: PropsType) {
   const [currentPointType, setCurrentPointType] = useState<PointType>('ALL');
 
   return (
     <>
-      {mode === 'POINTS' && (
-        <_Message margin={['top', 12]} color="gray5" size="bodyL">
-          학생 전체 상/벌점 내역은 학생 상세 확인해주세요.
-        </_Message>
-      )}
-      {mode === 'GENERAL' ? (
-        <_DetailBox>
-          <StudentProfile
-            student_id={studentId[0]}
-            name={studentDetail.name}
-            gcn={studentDetail.gcn}
-            sex={studentDetail.sex}
-            room_number={studentDetail.room_number}
-            profile_image_url={studentDetail.profile_image_url}
+      <_DetailBox>
+        <StudentProfile
+          student_id={studentId[0]}
+          name={studentDetail.name}
+          gcn={studentDetail.gcn}
+          sex={studentDetail.sex}
+          room_number={studentDetail.room_number}
+          profile_image_url={studentDetail.profile_image_url}
+        />
+        <_PointWrapper>
+          <PointBox
+            currentPointType={currentPointType}
+            setCurrentPointType={setCurrentPointType}
+            pointType="BONUS"
+            point={studentDetail.bonus_point}
           />
-          <_PointWrapper>
-            <PointBox
-              currentPointType={currentPointType}
-              setCurrentPointType={setCurrentPointType}
-              pointType="BONUS"
-              point={studentDetail.bonus_point}
-            />
-            <PointBox
-              currentPointType={currentPointType}
-              setCurrentPointType={setCurrentPointType}
-              pointType="MINUS"
-              point={studentDetail.minus_point}
-            />
-          </_PointWrapper>
-          <Text size="bodyS" color="gray6" margin={['top', 40]}>
-            동일 호실 학생
-          </Text>
-          <_MateList>
-            {studentDetail.room_mates.map((item) => (
-              <Button
-                key={item.id}
-                kind="outline"
-                onClick={() => onClickStudent(item.id)}
-                color="gray"
-              >
-                {item.name}
-              </Button>
-            ))}
-          </_MateList>
-          <Text size="bodyS" color="gray6" margin={['top', 40]}>
-            상/벌점
-          </Text>
-          <_PointList>
-            {studentPointHistory?.point_histories
-              .filter(
-                (history) =>
-                  history.type === currentPointType ||
-                  currentPointType === 'ALL',
-              )
-              .map((history) => {
-                const { point_history_id, name, type, score } = history;
-                return (
-                  <PointItem
-                    key={point_history_id}
-                    point_history_id={point_history_id}
-                    name={name}
-                    type={type}
-                    score={score}
-                    canDelete={canDelete}
-                  />
-                );
-              })}
-          </_PointList>
-        </_DetailBox>
-      ) : (
-        <_PointDetailBox>
-          {studentId
-            .filter((item) => item !== '' && item !== undefined)
-            .map((id) => (
-              <StudentDetailPointList key={id} id={id} />
-            ))}
-        </_PointDetailBox>
-      )}
+          <PointBox
+            currentPointType={currentPointType}
+            setCurrentPointType={setCurrentPointType}
+            pointType="MINUS"
+            point={studentDetail.minus_point}
+          />
+        </_PointWrapper>
+        <Text size="bodyS" color="gray6" margin={['top', 40]}>
+          동일 호실 학생
+        </Text>
+        <_MateList>
+          {studentDetail.room_mates.map((item) => (
+            <Button
+              key={item.id}
+              kind="outline"
+              onClick={() => onClickStudent(item.id)}
+              color="gray"
+            >
+              {item.name}
+            </Button>
+          ))}
+        </_MateList>
+        <Text size="bodyS" color="gray6" margin={['top', 40]}>
+          상/벌점
+        </Text>
+        <_PointList>
+          {studentPointHistory?.point_histories
+            .filter(
+              (history) =>
+                history.type === currentPointType || currentPointType === 'ALL',
+            )
+            .map((history) => {
+              const { point_history_id, name, type, score } = history;
+              return (
+                <PointItem
+                  key={point_history_id}
+                  point_history_id={point_history_id}
+                  name={name}
+                  type={type}
+                  score={score}
+                  canDelete={canDelete}
+                />
+              );
+            })}
+        </_PointList>
+      </_DetailBox>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
@@ -20,6 +20,7 @@ import { useDeleteStudent } from '@/hooks/useMangersApis';
 import { GivePointOptionsModal } from '../modals/GivePointOptionsModal';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 import { DeletePointOptionModal } from '../modals/DeletePointOption';
+import { useToast } from '@/hooks/useToast';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -79,11 +80,25 @@ export function StudentList({
   const { data: allPointOptions, refetch: refetchAllPointOptions } =
     usePointOptionList();
 
+  const { toastDispatch } = useToast();
+
   const deletePointOptionAPI = useDeletePointOption(selectedPointOption, {
     onSuccess: () => {
       selectModal('POINT_OPTIONS');
       refetchAllPointOptions();
       setSelectedPointOption('');
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 삭제되었습니다.',
+      });
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 삭제를 실패했습니다.',
+      });
     },
   });
 
@@ -95,10 +110,10 @@ export function StudentList({
   };
 
   const pointListText = () => {
-    if (!selectedStudentId[0]) {
-      return '상/벌점 항목 보기';
+    if (selectedStudentId.filter((i) => i).length > 0) {
+      return '상/벌점 부여';
     }
-    return '상/벌점 부여';
+    return '상/벌점 항목 보기';
   };
 
   return (
@@ -116,9 +131,9 @@ export function StudentList({
             <Button
               className="grantPoint"
               onClick={() =>
-                !selectedStudentId[0]
-                  ? selectModal('POINT_OPTIONS')
-                  : selectModal('GIVE_POINT')
+                selectedStudentId.filter((i) => i).length > 0
+                  ? selectModal('GIVE_POINT')
+                  : selectModal('POINT_OPTIONS')
               }
             >
               {pointListText()}
@@ -178,11 +193,9 @@ export function StudentList({
       {modalState.selectedModal === 'GIVE_POINT' && (
         <GivePointOptionsModal
           selectedStudentId={selectedStudentId}
-          setSelectedStudentId={setSelectedStudentId}
           close={closeModal}
           allPointOptions={allPointOptions}
           refetchAllPointOptions={refetchAllPointOptions}
-          refetchSearchStudents={refetchSearchStudents}
         />
       )}
       {modalState.selectedModal === 'DELETE_POINT_OPTION' && (
