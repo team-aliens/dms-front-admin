@@ -1,4 +1,9 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  BrowserRouter,
+  createBrowserRouter,
+} from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
 import { FindIdPage } from './pages/FindId';
 import { Home } from '@/pages/Home';
@@ -47,38 +52,62 @@ export const pathToKorean = {
   },
 };
 
-export function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={pagePath.home} element={<Home />} />
-        <Route path={pagePath.login} element={<LoginPage />} />
-        <Route path={pagePath.findAccountId} element={<FindIdPage />} />
-        <Route path={pagePath.resetPassword} element={<ResetPwdPage />} />
-        <Route path={pagePath.myPage.main}>
-          <Route index element={<MyPage />} />
-          <Route path="change-pwd" element={<ChangePwd />} />
-        </Route>
-        <Route path={pagePath.notice.list}>
-          <Route index element={<NoticeListPage />} />
-          <Route path="write" element={<WriteNoticePage />} />
-          <Route path="detail/patch/:noticeId" element={<PatchNoticePage />} />
-          <Route path="detail/:noticeId" element={<NoticeDetail />} />
-        </Route>
-        <Route path={pagePath.apply.main}>
-          <Route index element={<Index />} />
-          <Route path="study">
-            <Route index element={<StudyRoomList />} />
-            <Route path="create" element={<CreateRoom />} />
-            <Route path="detail/:id" element={<StudyRoomDetail />} />
-            <Route path="detail/patch/:id" element={<PatchRoom />} />
-          </Route>
-          <Route path="remains">
-            <Route index element={<RemainsLists />} />
-          </Route>
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+export const Router = createBrowserRouter([
+  {
+    path: '',
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: pagePath.home,
+        element: <Home />,
+      },
+      {
+        path: pagePath.login,
+        element: <LoginPage />,
+      },
+      {
+        path: pagePath.findAccountId,
+        element: <FindIdPage />,
+      },
+      {
+        path: pagePath.resetPassword,
+        element: <ResetPwdPage />,
+      },
+      {
+        path: pagePath.myPage.main,
+        children: [
+          { index: true, element: <MyPage /> },
+          { path: 'change-pwd', element: <ChangePwd /> },
+        ],
+      },
+      {
+        path: pagePath.notice.list,
+        children: [
+          { index: true, element: <NoticeListPage /> },
+          { path: 'write', element: <WriteNoticePage /> },
+          { path: 'detail/patch/:noticeId', element: <PatchNoticePage /> },
+          { path: 'detail/:noticeId', element: <NoticeDetail /> },
+        ],
+      },
+      {
+        path: pagePath.apply.main,
+        children: [
+          { index: true, element: <Index /> },
+          {
+            path: 'study',
+            children: [
+              { index: true, element: <StudyRoomList /> },
+              { path: 'create', element: <CreateRoom /> },
+              { path: 'detail/:id', element: <StudyRoomDetail /> },
+              { path: 'detail/patch/:id', element: <PatchRoom /> },
+            ],
+          },
+          {
+            path: 'remains',
+            children: [{ index: true, element: <RemainsLists /> }],
+          },
+        ],
+      },
+    ],
+  },
+]);
