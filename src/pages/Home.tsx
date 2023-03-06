@@ -13,7 +13,7 @@ import { useSearchStudents, useStudentDetail } from '@/hooks/useMangersApis';
 import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
-import { useModal } from '@/hooks/useModal';
+import { usePointHistoryList } from '@/hooks/usePointHistoryList';
 
 export interface FilterState {
   name: string;
@@ -36,6 +36,8 @@ interface Mode {
 
 export function Home() {
   const { debounce } = useDebounce();
+  const { addStudentPointHistory, state: studentsPointHistoryList } =
+    usePointHistoryList();
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -68,7 +70,11 @@ export function Home() {
     });
 
   const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
-    useStudentPointHistory(selectedStudentId[0]);
+    useStudentPointHistory(selectedStudentId[selectedStudentId.length - 1], {
+      onSuccess: (res) => {
+        addStudentPointHistory(res.point_histories);
+      },
+    });
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
@@ -95,15 +101,13 @@ export function Home() {
           selectedStudentId.filter((element) => element !== id),
         );
       } else {
-        if (selectedStudentId[0] === '') selectedStudentId[0] = id;
-        else selectedStudentId[selectedStudentId.length] = id;
-        setSelectedStudentId([...selectedStudentId]);
+        setSelectedStudentId([...selectedStudentId, id]);
       }
     } else {
-      selectedStudentId[0] = selectedStudentId[0] === id ? '' : id;
-      setSelectedStudentId([...selectedStudentId]);
+      setSelectedStudentId(selectedStudentId[0] === id ? [''] : [id]);
     }
   };
+
   const ChangeMode = () => {
     switch (mode.type) {
       case 'GENERAL':
@@ -186,6 +190,9 @@ export function Home() {
                 studentId={selectedStudentId}
                 onClickStudent={onClickStudent}
                 studentPointHistory={studentPointHistory}
+                studentsPointHistoryList={
+                  studentsPointHistoryList.pointHistoryList
+                }
               />
             </OutsideClickHandler>
           </>

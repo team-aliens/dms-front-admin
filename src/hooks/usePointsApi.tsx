@@ -1,4 +1,9 @@
-import { MutationOptions, useMutation, useQuery } from 'react-query';
+import {
+  MutationOptions,
+  useMutation,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query';
 import {
   cancelPointHistory,
   getAllPointHistory,
@@ -6,7 +11,7 @@ import {
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
-import { pagePath } from '@/utils/pagePath';
+import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 export const useAllPointHistory = (pointType: PointType) =>
   useQuery(
@@ -17,13 +22,14 @@ export const useAllPointHistory = (pointType: PointType) =>
     },
   );
 
-export const useStudentPointHistory = (student_id: string) =>
+export const useStudentPointHistory = (
+  student_id: string,
+  options?: UseQueryOptions<StudentPointHistoryResponse>,
+) =>
   useQuery(
-    ['getStudentPointHistory', student_id],
+    [`getStudentPointHistory_${student_id}`, student_id],
     () => getStudentPointHistory(student_id),
-    {
-      refetchOnWindowFocus: true,
-    },
+    options,
   );
 
 export const usePointOptionList = () =>

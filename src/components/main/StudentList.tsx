@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
@@ -95,10 +95,10 @@ export function StudentList({
   };
 
   const pointListText = () => {
-    if (!selectedStudentId[0]) {
-      return '상/벌점 항목 보기';
+    if (selectedStudentId.filter((i) => i).length > 0) {
+      return '상/벌점 부여';
     }
-    return '상/벌점 부여';
+    return '상/벌점 항목 보기';
   };
 
   return (
@@ -116,9 +116,9 @@ export function StudentList({
             <Button
               className="grantPoint"
               onClick={() =>
-                !selectedStudentId[0]
-                  ? selectModal('POINT_OPTIONS')
-                  : selectModal('GIVE_POINT')
+                selectedStudentId.filter((i) => i).length > 0
+                  ? selectModal('GIVE_POINT')
+                  : selectModal('POINT_OPTIONS')
               }
             >
               {pointListText()}

@@ -18,7 +18,7 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
-import { useModal } from '@/hooks/useModal';
+import { usePointHistoryList } from '@/hooks/usePointHistoryList';
 
 interface PropsType {
   selectedStudentId: string[];
@@ -43,8 +43,6 @@ export function GivePointOptionsModal({
 
   const { onDropDownChange, sort } = useDropDown<string>('');
 
-  const { closeModal } = useModal();
-
   const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
       point_option_name: '',
@@ -67,17 +65,22 @@ export function GivePointOptionsModal({
       setNewItem(true);
     }
   };
-
+  const { addPointOptionToStudents } = usePointHistoryList();
   const givePointOptionAPI = useGivePointOption(
     selectedPointOption,
-    selectedStudentId,
+    selectedStudentId.filter((i) => i),
     {
       onSuccess: () => {
-        closeModal();
-        setSelectedStudentId(['']);
+        addPointOptionToStudents(
+          allPointOptions.point_options.find(
+            (option) => option.point_option_id === selectedPointOption,
+          ),
+        );
+        setSelectedPointOption('');
       },
     },
   );
+
   const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort, {
     onSuccess: () => refetchAllPointOptions(),
   });
