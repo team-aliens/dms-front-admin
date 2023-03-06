@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { PointItem } from './PointItem';
 import { useStudentDetail } from '@/hooks/useMangersApis';
+import { StudentPointHistoryResponse } from '@/apis/points/response';
 
 interface PropsType {
   id: string;

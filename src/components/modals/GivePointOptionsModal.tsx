@@ -19,6 +19,7 @@ import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
 import { useModal } from '@/hooks/useModal';
+import { useToast } from '@/hooks/useToast';
 
 interface PropsType {
   selectedStudentId: string[];
@@ -43,7 +44,7 @@ export function GivePointOptionsModal({
 
   const { onDropDownChange, sort } = useDropDown<string>('');
 
-  const { closeModal } = useModal();
+  const { toastDispatch } = useToast();
 
   const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
@@ -73,13 +74,33 @@ export function GivePointOptionsModal({
     selectedStudentId,
     {
       onSuccess: () => {
-        closeModal();
-        setSelectedStudentId(['']);
+        setSelectedPointOption('');
+        refetchAllPointOptions();
+        refetchSearchStudents();
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '상/벌점이 부여되었습니다.',
+        });
       },
     },
   );
   const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort, {
-    onSuccess: () => refetchAllPointOptions(),
+    onSuccess: () => {
+      refetchAllPointOptions();
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 추가되었습니다.',
+      });
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 추가를 실패했습니다.',
+      });
+    },
   });
 
   const { isLoading } = givePointOptionAPI;
