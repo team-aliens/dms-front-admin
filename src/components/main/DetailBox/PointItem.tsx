@@ -7,12 +7,13 @@ import {
   StudentPointHistoryType,
 } from '@/apis/points/response';
 import { PointHistroyIdAtom } from '@/utils/atoms';
+import { PointEnum, PointType } from '@/apis/points';
 
 interface PropsType extends StudentPointHistoryType {
   isDeleteListOption?: boolean;
   canDelete?: boolean;
   canClick?: boolean;
-  onClick?: (id: string, name: string, score: number, type: string) => void;
+  onClick?: (id: string, name: string, score: number, type: PointType) => void;
   OptionSelected?: string;
 }
 
@@ -36,17 +37,6 @@ export function PointItem({
 
   const openDeletePointModal = () => {
     selectModal('DELETE_POINT_OPTION');
-  };
-
-  const typeChanger = () => {
-    switch (type) {
-      case 'BONUS':
-        return '상점';
-      case 'MINUS':
-        return '벌점';
-      default:
-        return '';
-    }
   };
 
   return (
@@ -75,7 +65,7 @@ export function PointItem({
         color={type === 'BONUS' ? 'primary' : 'error'}
         size="bodyS"
       >
-        {typeChanger()}
+        {PointEnum[type]}
       </_PointType>
       <_Line />
       {canClick && OptionSelected === point_history_id ? (
