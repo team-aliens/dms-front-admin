@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { getCookie } from './utils/cookies';
 import { pagePath } from './utils/pagePath';
 import { Outlet, RouterProvider } from 'react-router-dom';
+import { PointListProvider } from './context/pointHistoryList';
 
 export function App() {
   const { modalState } = useModal();
@@ -26,9 +27,11 @@ export function App() {
   return (
     <RecoilRoot>
       <ToastProvider>
-        <ToastContainer />
-        <Outlet />
-        <RouterProvider router={Router} />
+        <PointListProvider>
+          <ToastContainer />
+          <Outlet />
+          <RouterProvider router={Router} />
+        </PointListProvider>
       </ToastProvider>
     </RecoilRoot>
   );

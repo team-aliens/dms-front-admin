@@ -17,6 +17,7 @@ import {
   useDeletePointOption,
   useDownloadPointHistoryExcel,
 } from '@/apis/points';
+import { useToast } from '@/hooks/useToast';
 
 export function PointList() {
   const { modalState, closeModal, selectModal } = useModal();
@@ -30,6 +31,8 @@ export function PointList() {
   const { data: allPointOptions, refetch: refetchAllPointOptions } =
     usePointOptionList();
 
+  const { toastDispatch } = useToast();
+
   const { mutate: downloadPointHistory } = useDownloadPointHistoryExcel();
 
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
@@ -39,6 +42,18 @@ export function PointList() {
       selectModal('POINT_OPTIONS');
       refetchAllPointOptions();
       setSelectedPointOption('');
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 삭제되었습니다.',
+      });
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 삭제를 실패했습니다.',
+      });
     },
   });
 

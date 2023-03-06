@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
 import { ModeType } from '@/pages/Home';
+import { usePointHistoryList } from '@/hooks/usePointHistoryList';
 
 interface Props {
   mode: ModeType;
@@ -24,12 +25,21 @@ export function StudentBox({
     if (selectedStudentId.includes(studentInfo.id))
       ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [selectedStudentId]);
+  const { updateRecentlyStudentInfo } = usePointHistoryList();
   return (
     <_Wrapper
       ref={ref}
       isSelected={isSelected}
       className="studentBox"
-      onClick={() => onClickStudent(studentInfo.id, mode)}
+      onClick={() => {
+        onClickStudent(studentInfo.id, mode);
+        // if (mode === 'POINTS')
+        updateRecentlyStudentInfo({
+          studentId: studentInfo.id,
+          gcn: studentInfo.gcn,
+          name: studentInfo.name,
+        });
+      }}
     >
       <img
         className="studentBox"

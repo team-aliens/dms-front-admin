@@ -7,12 +7,13 @@ import {
   StudentPointHistoryType,
 } from '@/apis/points/response';
 import { PointHistroyIdAtom } from '@/utils/atoms';
+import { PointEnum, PointType } from '@/apis/points';
 
 interface PropsType extends StudentPointHistoryType {
   isDeleteListOption?: boolean;
   canDelete?: boolean;
   canClick?: boolean;
-  onClick?: (id: string, name: string, score: number, type: string) => void;
+  onClick?: (id: string, name: string, score: number, type: PointType) => void;
   OptionSelected?: string;
 }
 
@@ -38,17 +39,6 @@ export function PointItem({
     selectModal('DELETE_POINT_OPTION');
   };
 
-  const typeChanger = () => {
-    switch (type) {
-      case 'BONUS':
-        return '상점';
-      case 'MINUS':
-        return '벌점';
-      default:
-        return '';
-    }
-  };
-
   return (
     <_Wrapper
       className="grantPoint"
@@ -59,6 +49,7 @@ export function PointItem({
     >
       {canClick && OptionSelected === point_history_id ? (
         <Text
+          className="grantPoint"
           margin={[0, 20]}
           color={type === 'BONUS' ? 'primary' : 'error'}
           size="BtnM"
@@ -66,24 +57,29 @@ export function PointItem({
           {name}
         </Text>
       ) : (
-        <Text margin={[0, 20]} color="gray6" size="BtnM">
+        <Text className="grantPoint" margin={[0, 20]} color="gray6" size="BtnM">
           {name}
         </Text>
       )}
       <_PointType
+        className="grantPoint"
         margin={['left', 'auto']}
         color={type === 'BONUS' ? 'primary' : 'error'}
         size="bodyS"
       >
-        {typeChanger()}
+        {PointEnum[type]}
       </_PointType>
-      <_Line />
+      <_Line className="grantPoint" />
       {canClick && OptionSelected === point_history_id ? (
-        <Text margin={[0, 30]} color={type === 'BONUS' ? 'primary' : 'error'}>
+        <Text
+          className="grantPoint"
+          margin={[0, 30]}
+          color={type === 'BONUS' ? 'primary' : 'error'}
+        >
           {score}
         </Text>
       ) : (
-        <Text margin={[0, 30]} color="gray6">
+        <Text className="grantPoint" margin={[0, 30]} color="gray6">
           {score}
         </Text>
       )}

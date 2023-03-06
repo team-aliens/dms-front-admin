@@ -4,6 +4,8 @@ import { GetStudentDetailResponse } from '@/apis/managers/response';
 import { ModeType } from '@/pages/Home';
 import { DetailBox } from './DetailBox';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
+import { HistoryList } from './HistoryList';
+import { PointHistoryList } from '@/context/pointHistoryList';
 
 interface Props {
   mode: ModeType;
@@ -11,6 +13,7 @@ interface Props {
   studentId: string[];
   onClickStudent: (id: string) => void;
   studentPointHistory: StudentPointHistoryResponse;
+  studentsPointHistoryList: PointHistoryList[];
 }
 
 export function StudentDetail({
@@ -19,6 +22,7 @@ export function StudentDetail({
   studentId,
   onClickStudent,
   studentPointHistory,
+  studentsPointHistoryList,
 }: Props) {
   return (
     <>
@@ -27,25 +31,31 @@ export function StudentDetail({
           <Text size="titleL" color="gray6">
             {mode === 'GENERAL' ? '학생 상세 확인' : '학생 상/벌점'}
           </Text>
-          {studentId && studentDetail ? (
-            <DetailBox
-              studentId={studentId}
-              mode={mode}
-              studentDetail={studentDetail}
-              onClickStudent={onClickStudent}
-              studentPointHistory={studentPointHistory}
-            />
+          {mode === 'GENERAL' ? (
+            studentId.filter((i) => i).length > 0 ? (
+              studentDetail && (
+                <DetailBox
+                  studentId={studentId}
+                  studentDetail={studentDetail}
+                  onClickStudent={onClickStudent}
+                  studentPointHistory={studentPointHistory}
+                />
+              )
+            ) : (
+              <_NotSelected
+                size="bodyL"
+                color="gray5"
+                display="block"
+                margin={['top', 40]}
+              >
+                학생 목록에서 선택하여 상세 내용을 확인하세요.
+              </_NotSelected>
+            )
           ) : (
-            <_NotSelected
-              size="bodyL"
-              color="gray5"
-              display="block"
-              margin={['top', 40]}
-            >
-              {mode === 'GENERAL'
-                ? '학생 목록에서 선택하여 상세 내용을 확인하세요.'
-                : '학생 전체 상/벌점 내역은 학생 상세 확인해주세요.'}
-            </_NotSelected>
+            <HistoryList
+              studentId={studentId}
+              pointHistoryList={studentsPointHistoryList}
+            />
           )}
         </_ScrollArea>
       </_Wrapper>
