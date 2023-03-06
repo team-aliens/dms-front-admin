@@ -3,9 +3,16 @@ import { ToastContainer, ToastProvider } from '@team-aliens/design-system';
 import { Router } from './router';
 import { useModal } from './hooks/useModal';
 import { useEffect } from 'react';
+import { getCookie } from './utils/cookies';
+import { pagePath } from './utils/pagePath';
 
 export function App() {
   const { modalState } = useModal();
+  const accessToken = getCookie('access_token');
+  const refreshToken = getCookie('refresh_token');
+  if (!accessToken && !refreshToken && window.location.pathname !== '/login') {
+    window.location.href = pagePath.login;
+  }
   useEffect(() => {
     if (modalState.selectedModal) {
       document.body.style.overflow = 'hidden';

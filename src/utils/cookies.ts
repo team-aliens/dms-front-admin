@@ -13,7 +13,9 @@ export interface CookieSetOptions {
 
 const cookie = new Cookies();
 
-export const getCookie = (name: string) => cookie.get<string>(name);
+type CookieType = 'access_token' | 'refresh_token' | 'navList' | 'service';
+
+export const getCookie = (name: CookieType) => cookie.get<string>(name);
 
 export const setCookie = (
   name: string,
