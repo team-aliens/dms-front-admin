@@ -130,7 +130,7 @@ export function GivePointOptionsModal({
           margin={newItem && [-40, 0, 0, 0]}
           disabled={
             newItem
-              ? !(selectedPointOption && selectedStudentId && !isLoading)
+              ? !(selectedPointOption.id && selectedStudentId && !isLoading)
               : !(scoreOption && nameOption && sort)
           }
           onClick={
