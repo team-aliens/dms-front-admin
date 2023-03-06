@@ -5,6 +5,7 @@ import { useModal } from './hooks/useModal';
 import { useEffect } from 'react';
 import { getCookie } from './utils/cookies';
 import { pagePath } from './utils/pagePath';
+import { Outlet, RouterProvider } from 'react-router-dom';
 
 export function App() {
   const { modalState } = useModal();
@@ -26,7 +27,8 @@ export function App() {
     <RecoilRoot>
       <ToastProvider>
         <ToastContainer />
-        <Router />
+        <Outlet />
+        <RouterProvider router={Router} />
       </ToastProvider>
     </RecoilRoot>
   );
