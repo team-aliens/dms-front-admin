@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 export function StudentDetailPointList({ id }: PropsType) {
-  const { data: studentPointHistory } = useStudentPointHistory(id);
+  const { data: studentPointHistory } = useStudentPointHistory(id, 0, 4);
   const { data: studentDetail } = useStudentDetail(id);
 
   return (
@@ -23,7 +23,7 @@ export function StudentDetailPointList({ id }: PropsType) {
         </Text>
       </_StudentNameNumber>
       <_PointItemList>
-        {studentPointHistory?.point_histories.slice(0, 4).map((history) => {
+        {studentPointHistory?.point_histories.map((history) => {
           const { name, point_history_id, score, type } = history;
           return (
             <PointItem
