@@ -131,7 +131,7 @@ export default function RemainsLists() {
 const _Layout = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 160px auto 0 auto;
+  margin: 160px auto 150px auto;
   width: 1030px;
 `;
 const _Header = styled.div`
