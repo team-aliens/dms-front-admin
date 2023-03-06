@@ -6,7 +6,7 @@ import {
   getStudentPointHistory,
   PointType,
 } from '@/apis/points';
-import { pagePath } from '@/utils/pagePath';
+import { usePointHistoryList } from './usePointHistoryList';
 
 export const useAllPointHistory = (pointType: PointType) =>
   useQuery(
@@ -21,14 +21,19 @@ export const useStudentPointHistory = (
   student_id: string,
   page?: number,
   size?: number,
-) =>
-  useQuery(
-    [`getStudentPointHistory${student_id}`, student_id, page, size],
+) => {
+  const { addStudentPointHistory } = usePointHistoryList();
+  return useQuery(
+    [`getStudentPointHistory_${student_id}`, student_id, page, size],
     () => getStudentPointHistory(student_id, page, size),
     {
       refetchOnWindowFocus: true,
+      onSuccess: (res) => {
+        addStudentPointHistory(res.point_histories);
+      },
     },
   );
+};
 
 export const usePointOptionList = () =>
   useQuery(['usePointList'], () => getAllPoints(), {

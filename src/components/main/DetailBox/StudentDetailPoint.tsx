@@ -1,30 +1,27 @@
 import { Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { PointItem } from './PointItem';
-import { useStudentDetail } from '@/hooks/useMangersApis';
-import { StudentPointHistoryResponse } from '@/apis/points/response';
+import { StudentPointHistoryType } from '@/apis/points/response';
 
 interface PropsType {
-  id: string;
+  name: string;
+  gcn: string;
+  historyList: StudentPointHistoryType[];
 }
 
-export function StudentDetailPointList({ id }: PropsType) {
-  const { data: studentPointHistory } = useStudentPointHistory(id, 0, 4);
-  const { data: studentDetail } = useStudentDetail(id);
-
+export function StudentDetailPointList({ name, gcn, historyList }: PropsType) {
   return (
     <>
       <_StudentNameNumber>
         <Text color="gray10" size="bodyL">
-          {studentDetail?.name}
+          {name}
         </Text>
         <Text color="gray6" size="bodyS">
-          {studentDetail?.gcn}
+          {gcn}
         </Text>
       </_StudentNameNumber>
       <_PointItemList>
-        {studentPointHistory?.point_histories.map((history) => {
+        {historyList.slice(0, 4).map((history) => {
           const { name, point_history_id, score, type } = history;
           return (
             <PointItem

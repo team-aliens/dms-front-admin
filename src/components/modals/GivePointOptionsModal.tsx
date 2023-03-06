@@ -7,9 +7,14 @@ import {
   Modal,
   Search,
 } from '@team-aliens/design-system';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, useState } from 'react';
 import styled from 'styled-components';
-import { useAddPointOption, useGivePointOption } from '@/apis/points';
+import {
+  PointEnum,
+  PointType,
+  useAddPointOption,
+  useGivePointOption,
+} from '@/apis/points';
 import { AllPointsOptionResponse } from '@/apis/points/response';
 import {
   PointOptionRequest,
@@ -18,33 +23,33 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { PointItem } from '../main/DetailBox/PointItem';
-import { useModal } from '@/hooks/useModal';
+import { usePointHistoryList } from '@/hooks/usePointHistoryList';
 import { useToast } from '@/hooks/useToast';
 
 interface PropsType {
   selectedStudentId: string[];
-  setSelectedStudentId?: Dispatch<SetStateAction<string[]>>;
   close: () => void;
   allPointOptions: AllPointsOptionResponse;
   refetchAllPointOptions?: () => void;
-  refetchSearchStudents?: () => void;
 }
 
 const canClick = true;
 export function GivePointOptionsModal({
   close,
   selectedStudentId,
-  setSelectedStudentId,
   allPointOptions,
   refetchAllPointOptions,
-  refetchSearchStudents,
 }: PropsType) {
   const [newItem, setNewItem] = useState(true);
-  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
-
-  const { onDropDownChange, sort } = useDropDown<string>('');
-
+  const [selectedPointOption, setSelectedPointOption] = useState<{
+    id: string;
+    type: PointType;
+  }>({
+    id: '',
+    type: 'ALL',
+  });
   const { toastDispatch } = useToast();
+  const { onDropDownChange, sort } = useDropDown<string>('');
 
   const { state: pointOptionState, onHandleChange: pointOptionStateHandler } =
     useForm<SearchPointOptionsRequest>({
@@ -62,29 +67,51 @@ export function GivePointOptionsModal({
     setNewItem(!newItem);
   };
 
-  const onClickPointOption = (id: string) => {
-    setSelectedPointOption((OptionId) => !(OptionId === id) && id);
+  const onClickPointOption = (
+    id: string,
+    name: string,
+    score: number,
+    type: PointType,
+  ) => {
+    setSelectedPointOption({
+      id,
+      type,
+    });
     if (!selectedPointOption) {
       setNewItem(true);
     }
   };
-
+  const { addPointOptionToStudents } = usePointHistoryList();
   const givePointOptionAPI = useGivePointOption(
-    selectedPointOption,
-    selectedStudentId,
+    selectedPointOption.id,
+    selectedStudentId.filter((i) => i),
     {
       onSuccess: () => {
-        setSelectedPointOption('');
-        refetchAllPointOptions();
-        refetchSearchStudents();
+        addPointOptionToStudents(
+          allPointOptions.point_options.find(
+            (option) => option.point_option_id === selectedPointOption.id,
+          ),
+        );
         toastDispatch({
-          toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
-          message: '상/벌점이 부여되었습니다.',
+          toastType: 'SUCCESS',
+          message: `${PointEnum[selectedPointOption.type]}이 부여되었습니다.`,
+        });
+        setSelectedPointOption({
+          id: '',
+          type: 'ALL',
+        });
+      },
+      onError: () => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'ERROR',
+          message: '잠시 후 다시 시도해 주세요.',
         });
       },
     },
   );
+
   const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort, {
     onSuccess: () => {
       refetchAllPointOptions();
@@ -117,7 +144,7 @@ export function GivePointOptionsModal({
           margin={newItem && [-40, 0, 0, 0]}
           disabled={
             newItem
-              ? !(selectedPointOption && selectedStudentId && !isLoading)
+              ? !(selectedPointOption.id && selectedStudentId && !isLoading)
               : !(scoreOption && nameOption && sort)
           }
           onClick={
@@ -155,7 +182,7 @@ export function GivePointOptionsModal({
                 score={score}
                 canClick={canClick}
                 onClick={onClickPointOption}
-                OptionSelected={selectedPointOption}
+                OptionSelected={selectedPointOption.id}
               />
             );
           })}
