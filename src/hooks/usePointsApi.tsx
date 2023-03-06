@@ -24,12 +24,17 @@ export const useAllPointHistory = (pointType: PointType) =>
 
 export const useStudentPointHistory = (
   student_id: string,
+  page?: number,
+  size?: number,
   options?: UseQueryOptions<StudentPointHistoryResponse>,
 ) =>
   useQuery(
-    [`getStudentPointHistory_${student_id}`, student_id],
-    () => getStudentPointHistory(student_id),
-    options,
+    [`getStudentPointHistory${student_id}`, student_id, page, size],
+    () => getStudentPointHistory(student_id, page, size),
+    {
+      refetchOnWindowFocus: true,
+      ...options,
+    },
   );
 
 export const usePointOptionList = () =>

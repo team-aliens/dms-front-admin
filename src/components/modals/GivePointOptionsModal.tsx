@@ -113,7 +113,21 @@ export function GivePointOptionsModal({
   );
 
   const addPointOptionAPI = useAddPointOption(scoreOption, nameOption, sort, {
-    onSuccess: () => refetchAllPointOptions(),
+    onSuccess: () => {
+      refetchAllPointOptions();
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 추가되었습니다.',
+      });
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 추가를 실패했습니다.',
+      });
+    },
   });
 
   const { isLoading } = givePointOptionAPI;

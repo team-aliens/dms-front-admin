@@ -20,6 +20,7 @@ import { useDeleteStudent } from '@/hooks/useMangersApis';
 import { GivePointOptionsModal } from '../modals/GivePointOptionsModal';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 import { DeletePointOptionModal } from '../modals/DeletePointOption';
+import { useToast } from '@/hooks/useToast';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -79,11 +80,25 @@ export function StudentList({
   const { data: allPointOptions, refetch: refetchAllPointOptions } =
     usePointOptionList();
 
+  const { toastDispatch } = useToast();
+
   const deletePointOptionAPI = useDeletePointOption(selectedPointOption, {
     onSuccess: () => {
       selectModal('POINT_OPTIONS');
       refetchAllPointOptions();
       setSelectedPointOption('');
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목이 삭제되었습니다.',
+      });
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '상/벌점 항목 삭제를 실패했습니다.',
+      });
     },
   });
 
