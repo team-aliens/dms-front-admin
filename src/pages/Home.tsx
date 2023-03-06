@@ -36,8 +36,7 @@ interface Mode {
 
 export function Home() {
   const { debounce } = useDebounce();
-  const { addStudentPointHistory, state: studentsPointHistoryList } =
-    usePointHistoryList();
+  const { state: studentsPointHistoryList } = usePointHistoryList();
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -70,11 +69,7 @@ export function Home() {
     });
 
   const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
-    useStudentPointHistory(selectedStudentId[selectedStudentId.length - 1], {
-      onSuccess: (res) => {
-        addStudentPointHistory(res.point_histories);
-      },
-    });
+    useStudentPointHistory(selectedStudentId[selectedStudentId.length - 1]);
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
