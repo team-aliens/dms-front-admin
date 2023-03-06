@@ -76,50 +76,50 @@ export default function TimeModal() {
         <_TimeWrapper key={'time'}>
           <DropDown
             items={dayToArray}
-            placeholder={'요일'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'startDay')}
             value={timeState.startDay}
-            width={50}
+            width={45}
           />
           <p className="day">요일</p>
           <DropDown
             items={hourToArray}
-            placeholder={'시간'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'startHour')}
             value={timeState.startHour}
-            width={50}
+            width={70}
           />
           <p className="day">:</p>
           <DropDown
             items={minToArray}
-            placeholder={'분'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'startMin')}
             value={timeState.startMin}
-            width={50}
+            width={70}
           />
           <p className="to">~</p>
           <DropDown
             items={dayToArray}
-            placeholder={'요일'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'endDay')}
             value={timeState.endDay}
-            width={50}
+            width={45}
           />
           <p className="day">요일</p>
           <DropDown
             items={hourToArray}
-            placeholder={'시간'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'endHour')}
             value={timeState.endHour}
-            width={50}
+            width={70}
           />
           <p className="day">:</p>
           <DropDown
             items={minToArray}
-            placeholder={'분'}
+            placeholder={''}
             onChange={(value) => onChangeDropDown(value, 'endMin')}
             value={timeState.endMin}
-            width={50}
+            width={70}
           />
         </_TimeWrapper>,
       ]}
@@ -142,10 +142,9 @@ const _TimeWrapper = styled.div`
     color: #555555;
     font-weight: 400;
     font-size: 14px;
-    width: 100px;
   }
   > .to {
-    margin: 0 20px;
+    margin: 0 12px;
   }
   > div > label > input {
     text-align: center;
