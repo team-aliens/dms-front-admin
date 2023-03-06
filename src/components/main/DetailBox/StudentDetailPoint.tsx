@@ -13,9 +13,6 @@ export function StudentDetailPointList({ id }: PropsType) {
   const { data: studentPointHistory } = useStudentPointHistory(id, 0, 4);
   const { data: studentDetail } = useStudentDetail(id);
 
-  const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
-    useStudentPointHistory(id);
-
   return (
     <>
       <_StudentNameNumber>
