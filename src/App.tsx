@@ -27,7 +27,7 @@ export function App() {
     <RecoilRoot>
       <ToastProvider>
         <PointListProvider>
-          <ToastContainer />
+          <ToastContainer zIndex={999} />
           <Router />
         </PointListProvider>
       </ToastProvider>

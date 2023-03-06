@@ -102,6 +102,13 @@ export function GivePointOptionsModal({
           type: 'ALL',
         });
       },
+      onError: () => {
+        toastDispatch({
+          actionType: 'APPEND_TOAST',
+          toastType: 'ERROR',
+          message: '잠시 후 다시 시도해 주세요.',
+        });
+      },
     },
   );
 
