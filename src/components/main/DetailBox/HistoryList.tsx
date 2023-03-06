@@ -11,8 +11,15 @@ interface PropsType {
 export function HistoryList({ pointHistoryList, studentId }: PropsType) {
   return (
     <>
-      <_Message margin={['top', 12]} color="gray5" size="bodyL">
-        학생 전체 상/벌점 내역은 학생 상세 확인해주세요.
+      <_Message margin={['top', 40]} color="gray5" size="bodyL">
+        {studentId.length > 1 ? (
+          '학생 전체 상/벌점 내역은 학생 상세 확인해주세요.'
+        ) : (
+          <>
+            학생 목록에서 선택하여
+            <br /> 상세 내용을 확인하세요.
+          </>
+        )}
       </_Message>
       <_PointDetailBox>
         {pointHistoryList
