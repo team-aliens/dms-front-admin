@@ -9,7 +9,7 @@ export function Divider() {
 }
 
 const _Wrapper = styled.div`
-  margin: 0 40px;
+  margin: 0 20px 0 40px;
 `;
 
 const _Divider = styled.hr`

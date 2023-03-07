@@ -6,6 +6,7 @@ import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { NoticeSortEnum, NoticeSortType } from '@/apis/notice';
 import { NoticeItem } from '@/components/notice/NoticeItem';
 import { useNoticeList } from '@/hooks/useNoticeApi';
+import { pagePath } from '@/utils/pagePath';
 
 export function NoticeListPage() {
   const [sortType, setSortType] = useState<NoticeSortType>('NEW');
@@ -23,7 +24,7 @@ export function NoticeListPage() {
           >
             {NoticeSortEnum[sortType]}순
           </Button>
-          <Link to="/notice/write">
+          <Link to={pagePath.notice.write}>
             <Button kind="outline" color="primary">
               공지 작성하기
             </Button>
@@ -32,7 +33,7 @@ export function NoticeListPage() {
         <_List>
           {noticeList &&
             noticeList.notices.map((item) => (
-              <Link to={`/notice/detail/${item.id}`} key={item.id}>
+              <Link to={pagePath.notice.detail(item.id)} key={item.id}>
                 <NoticeItem noticeItem={item} key={item.id} />
               </Link>
             ))}

@@ -1,4 +1,9 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  BrowserRouter,
+  createBrowserRouter,
+} from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage';
 import { FindIdPage } from './pages/FindId';
 import { Home } from '@/pages/Home';
@@ -9,10 +14,14 @@ import { WriteNoticePage } from '@/pages/notice/Write';
 import { MyPage } from './pages/myPage';
 import { ChangePwd } from './pages/myPage/ChangePwd';
 import { PatchNoticePage } from '@/pages/notice/Patch';
-import { StudyRoomList } from './pages/apply/StudyRoomList';
-import { CreateRoom } from '@/pages/apply/CreateRoom';
-import { StudyRoomDetail } from '@/pages/apply/Detail';
-import { PatchRoom } from './pages/apply/PatchRoom';
+import { StudyRoomList } from './pages/apply/study/StudyRoomList';
+import { CreateRoom } from '@/pages/apply/study/CreateRoom';
+import { StudyRoomDetail } from '@/pages/apply/study/Detail';
+import { PatchRoom } from './pages/apply/study/PatchRoom';
+import Index from '@/pages/apply';
+import RemainsLists from '@/pages/apply/remains';
+import { pagePath } from './utils/pagePath';
+import { NotFoundPage } from './pages/NotFound';
 
 export const pathToKorean = {
   'notice': {
@@ -43,31 +52,62 @@ export const pathToKorean = {
   },
 };
 
-export function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/find-account-id" element={<FindIdPage />} />
-        <Route path="/reset" element={<ResetPwdPage />} />
-        <Route path="/my-page">
-          <Route index element={<MyPage />} />
-          <Route path="change-pwd" element={<ChangePwd />} />
-        </Route>
-        <Route path="/notice">
-          <Route index element={<NoticeListPage />} />
-          <Route path="write" element={<WriteNoticePage />} />
-          <Route path="detail/patch/:noticeId" element={<PatchNoticePage />} />
-          <Route path="detail/:noticeId" element={<NoticeDetail />} />
-        </Route>
-        <Route path="/apply">
-          <Route index element={<StudyRoomList />} />
-          <Route path="create" element={<CreateRoom />} />
-          <Route path="detail/:id" element={<StudyRoomDetail />} />
-          <Route path="detail/patch/:id" element={<PatchRoom />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
+export const Router = createBrowserRouter([
+  {
+    path: '',
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: pagePath.home,
+        element: <Home />,
+      },
+      {
+        path: pagePath.login,
+        element: <LoginPage />,
+      },
+      {
+        path: pagePath.findAccountId,
+        element: <FindIdPage />,
+      },
+      {
+        path: pagePath.resetPassword,
+        element: <ResetPwdPage />,
+      },
+      {
+        path: pagePath.myPage.main,
+        children: [
+          { index: true, element: <MyPage /> },
+          { path: 'change-pwd', element: <ChangePwd /> },
+        ],
+      },
+      {
+        path: pagePath.notice.list,
+        children: [
+          { index: true, element: <NoticeListPage /> },
+          { path: 'write', element: <WriteNoticePage /> },
+          { path: 'detail/patch/:noticeId', element: <PatchNoticePage /> },
+          { path: 'detail/:noticeId', element: <NoticeDetail /> },
+        ],
+      },
+      {
+        path: pagePath.apply.main,
+        children: [
+          { index: true, element: <Index /> },
+          {
+            path: 'study',
+            children: [
+              { index: true, element: <StudyRoomList /> },
+              { path: 'create', element: <CreateRoom /> },
+              { path: 'detail/:id', element: <StudyRoomDetail /> },
+              { path: 'detail/patch/:id', element: <PatchRoom /> },
+            ],
+          },
+          {
+            path: 'remains',
+            children: [{ index: true, element: <RemainsLists /> }],
+          },
+        ],
+      },
+    ],
+  },
+]);

@@ -12,6 +12,16 @@ export type SelectedModalType =
   | 'ADD_STUDY_ROOM_TIME'
   | 'EDIT_STUDY_ROOM_TIME'
   | 'DELETE_STUDY_ROOM_TIME'
+  | 'STUDENT_EXEL'
+  | 'DELETE_STUDENT'
+  | 'POINT_OPTIONS'
+  | 'GIVE_POINT'
+  | 'DELETE_POINT_OPTION'
+  | 'SET_REMAIN_TIME'
+  | 'CREATE_REMAIN_ITEM'
+  | 'EDIT_REMAIN_ITEM'
+  | 'DELETE_REMAIN_ITEM'
+  | 'SCHOOL_CHECKING_CODE'
   | '';
 
 interface ModalState {
