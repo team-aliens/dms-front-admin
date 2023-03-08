@@ -23,7 +23,7 @@ export function MultiRangeSlider({
 }: PropsType) {
   const gap = 1;
   const markings = [
-    '-(100+)',
+    '-100+',
     '-80',
     '-60',
     '-40',

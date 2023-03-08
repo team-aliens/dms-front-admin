@@ -5,6 +5,7 @@ import { useModal } from './hooks/useModal';
 import { useEffect } from 'react';
 import { getCookie } from './utils/cookies';
 import { pagePath } from './utils/pagePath';
+import { Outlet, RouterProvider } from 'react-router-dom';
 import { PointListProvider } from './context/pointHistoryList';
 
 export function App() {
@@ -27,8 +28,9 @@ export function App() {
     <RecoilRoot>
       <ToastProvider>
         <PointListProvider>
-          <ToastContainer zIndex={999} />
-          <Router />
+          <ToastContainer />
+          <Outlet />
+          <RouterProvider router={Router} />
         </PointListProvider>
       </ToastProvider>
     </RecoilRoot>
