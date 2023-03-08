@@ -11,6 +11,7 @@ import { getAllRemain, useGetRemainListExcel } from '@/apis/remains';
 import { queryClient } from '@/index';
 import { useModal } from '@/hooks/useModal';
 import { useForm } from '@/hooks/useForm';
+import { RemainOption } from '@/components/apply/remains/options';
 
 export default function RemainsLists() {
   const { data: allRemains } = useGetAllRemains();
@@ -34,8 +35,8 @@ export default function RemainsLists() {
 
   useEffect(() => {
     getAllRemainMutate(null, {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries('getAllRemains');
+      onSuccess: () => {
+        queryClient.invalidateQueries('getAllRemains');
       },
     });
   }, [modalState]);
@@ -60,14 +61,6 @@ export default function RemainsLists() {
     selectModal('SET_REMAIN_TIME');
   };
 
-  const onCheckMenu = (remain) => {
-    setOnMenuModal((prev) => {
-      return {
-        id: remain.id,
-        isCheck: !prev.isCheck || prev.id !== remain.id,
-      };
-    });
-  };
   return (
     <WithNavigatorBar>
       <_Layout>
@@ -84,31 +77,7 @@ export default function RemainsLists() {
         </_Header>
         <_ListLayout>
           {allRemains?.remain_options.map((remain) => (
-            <_ListWrapper key={remain.id}>
-              <_Title>{remain.title}</_Title>
-              <_Text>{remain.description}</_Text>
-              <_CheckInput
-                id="menu"
-                type="checkbox"
-                onClick={() => onCheckMenu(remain)}
-              />
-              {onMenuModal.id === remain.id && onMenuModal.isCheck ? (
-                <_MenuWrapper>
-                  <Text color="error" onClick={() => onDelete(remain.id)}>
-                    항목 삭제
-                  </Text>
-                  <_Line />
-                  <Text
-                    color="gray6"
-                    onClick={() =>
-                      onEdit(remain.id, remain.title, remain.description)
-                    }
-                  >
-                    항목 수정
-                  </Text>
-                </_MenuWrapper>
-              ) : null}
-            </_ListWrapper>
+            <RemainOption {...remain} onDelete={onDelete} onEdit={onEdit} />
           ))}
         </_ListLayout>
       </_Layout>
@@ -133,6 +102,7 @@ const _Layout = styled.div`
   flex-direction: column;
   margin: 160px auto 0 auto;
   width: 1030px;
+  padding-bottom: 80px;
 `;
 const _Header = styled.div`
   display: flex;
@@ -148,56 +118,4 @@ const _ListLayout = styled.div`
   flex-direction: column;
   margin-top: 17px;
   gap: 20px;
-`;
-const _ListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  gap: 16px;
-  padding: 28px 0 0 40px;
-  width: 1030px;
-  min-height: 180px;
-  box-shadow: 0 1px 20px rgba(238, 238, 238, 0.8);
-  border-radius: 4px;
-`;
-const _Title = styled.p`
-  font-weight: 700;
-  font-size: 22px;
-`;
-const _Line = styled.div`
-  width: 129px;
-  height: 2px;
-  background-color: #eeeeee;
-`;
-const _Text = styled.p`
-  width: 729px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 26px;
-`;
-const _MenuWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: absolute;
-  gap: 15px;
-  top: 56px;
-  right: 20px;
-  width: 160px;
-  height: 112px;
-  cursor: pointer;
-  box-shadow: 0 1px 20px rgba(238, 238, 238, 0.8);
-  border-radius: 6px;
-  background-color: white;
-`;
-const _CheckInput = styled.input`
-  appearance: none;
-  &:after {
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    content: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_10930_18573)'%3E%3Cpath d='M10.5371 19.4277C10.5371 20.2527 11.2121 20.9277 12.0371 20.9277C12.8621 20.9277 13.5371 20.2527 13.5371 19.4277C13.5371 18.6027 12.8621 17.9277 12.0371 17.9277C11.2121 17.9277 10.5371 18.6027 10.5371 19.4277ZM10.5371 4.42773C10.5371 5.25273 11.2121 5.92773 12.0371 5.92773C12.8621 5.92773 13.5371 5.25273 13.5371 4.42773C13.5371 3.60273 12.8621 2.92773 12.0371 2.92773C11.2121 2.92773 10.5371 3.60273 10.5371 4.42773ZM10.5371 11.9277C10.5371 12.7527 11.2121 13.4277 12.0371 13.4277C12.8621 13.4277 13.5371 12.7527 13.5371 11.9277C13.5371 11.1027 12.8621 10.4277 12.0371 10.4277C11.2121 10.4277 10.5371 11.1027 10.5371 11.9277Z' fill='%23999999'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_10930_18573'%3E%3Crect width='24' height='24' fill='white' transform='translate(0 24) rotate(-90)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
-  }
 `;

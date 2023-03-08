@@ -15,7 +15,7 @@ import {
 } from '@/apis/remains/request';
 
 export const useGetAllRemains = () =>
-  useQuery(['getAllRemains'], getAllRemain, {
+  useQuery(['getAllRemains'], () => getAllRemain(), {
     refetchOnWindowFocus: true,
   });
 
