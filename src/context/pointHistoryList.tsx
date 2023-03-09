@@ -39,6 +39,10 @@ type RemovePointListAction = {
   studentId: string;
 };
 
+type ResetStudentListAction = {
+  type: 'RESET';
+};
+
 const listDefaultValue: PointHistoryListState = {
   pointHistoryList: [],
   recentlySelectedStudent: {
@@ -55,7 +59,8 @@ type ActionTypes =
   | AddPointListAction
   | RemovePointListAction
   | AddPointAction
-  | SelectStudentAction;
+  | SelectStudentAction
+  | ResetStudentListAction;
 
 type DispatchTypes = Dispatch<ActionTypes>;
 
@@ -107,6 +112,11 @@ const pointHistoryListReducer = (
             ],
           };
         }),
+      };
+    case 'RESET':
+      return {
+        ...state,
+        pointHistoryList: [],
       };
     default:
       return state;

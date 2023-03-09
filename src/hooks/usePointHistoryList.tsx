@@ -33,6 +33,18 @@ export const usePointHistoryList = () => {
       point: option,
     });
   };
+  const resetStudentLists = () => {
+    dispatch({
+      type: 'RESET',
+    });
+  };
+  const removeStudentId = (id: string) => {
+    dispatch({
+      type: 'REMOVE',
+      studentId: id,
+    });
+  };
+
   const pointHistoryList = state.pointHistoryList;
 
   return {
@@ -40,6 +52,8 @@ export const usePointHistoryList = () => {
     updateRecentlyStudentInfo,
     addStudentPointHistory,
     addPointOptionToStudents,
+    resetStudentLists,
     pointHistoryList,
+    removeStudentId,
   };
 };

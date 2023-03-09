@@ -37,8 +37,19 @@ export const useGetRemainTime = () =>
   useQuery(['getRemainTime'], getRemainTime, {
     refetchOnWindowFocus: true,
   });
-export const useSetRemainTime = (body: putRemainTimeBody) =>
-  useMutation(() => putRemainTime(body));
+export const useSetRemainTime = (body: putRemainTimeBody) => {
+  const { toastDispatch } = useToast();
+
+  return useMutation(() => putRemainTime(body), {
+    onSuccess: () => {
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'SUCCESS',
+        message: '잔류 신청 시간이 설정되었습니다.',
+      });
+    },
+  });
+};
 export const useDeleteRemain = (id: string) => {
   const { toastDispatch } = useToast();
 

@@ -33,7 +33,6 @@ export function StudentBox({
       className="studentBox"
       onClick={() => {
         onClickStudent(studentInfo.id, mode);
-        // if (mode === 'POINTS')
         updateRecentlyStudentInfo({
           studentId: studentInfo.id,
           gcn: studentInfo.gcn,
