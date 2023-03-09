@@ -27,9 +27,16 @@ export function StudentDetail({
   return (
     <>
       <_Wrapper isSelected={studentId[0] !== ''}>
+        {mode === 'POINTS' && (
+          <>
+            <Text size="titleM" color="gray10">
+              학생 {studentId.length}명 선택됨
+            </Text>
+          </>
+        )}
         <_ScrollArea>
           <Text size="titleL" color="gray6">
-            {mode === 'GENERAL' ? '학생 상세 확인' : '학생 상/벌점'}
+            {mode === 'GENERAL' && '학생 상세 확인'}
           </Text>
           {mode === 'GENERAL' ? (
             studentId.filter((i) => i).length > 0 ? (
@@ -90,20 +97,8 @@ const _ScrollArea = styled.div`
   width: 600px;
   height: 600px;
   padding-bottom: 50px;
-  padding-left: 20px;
+  padding-right: 10px;
   overflow: scroll;
-`;
-
-const _DetailBox = styled.div`
-  position: relative;
-  margin-top: 43px;
-  padding: 60px 40px;
-  width: 436px;
-  min-height: 485px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 1px 20px rgba(238, 238, 238, 0.8);
-  border-radius: 4px;
 `;
 
 const _NotSelected = styled(Text)`

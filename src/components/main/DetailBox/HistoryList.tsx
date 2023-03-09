@@ -9,19 +9,10 @@ interface PropsType {
 }
 
 export function HistoryList({ pointHistoryList, studentId }: PropsType) {
+  // console.log(pointHistoryList);
   return (
     <>
-      <_Message margin={['top', 40]} color="gray5" size="bodyL">
-        {studentId.length > 1 ? (
-          '학생 전체 상/벌점 내역은 학생 상세 확인해주세요.'
-        ) : (
-          <>
-            학생 목록에서 선택하여
-            <br /> 상세 내용을 확인하세요.
-          </>
-        )}
-      </_Message>
-      <_PointDetailBox>
+      <_PointDetailBox isSelected={studentId.length > 0}>
         {pointHistoryList
           .filter((i) => studentId.includes(i.studentId))
           .map(({ name, gcn, studentId, list }) => (
@@ -37,12 +28,11 @@ export function HistoryList({ pointHistoryList, studentId }: PropsType) {
   );
 }
 
-const _PointDetailBox = styled.div`
+const _PointDetailBox = styled.div<{ isSelected: boolean }>`
   position: relative;
   width: 309px;
   min-height: 485px;
-`;
-
-const _Message = styled(Text)`
-  width: 191px;
+  border-top: ${({ theme, isSelected }) =>
+    isSelected && `1px solid ${theme.color.gray5}`};
+  margin-top: 20px;
 `;

@@ -37,6 +37,8 @@ interface Mode {
 export function Home() {
   const { debounce } = useDebounce();
   const { state: studentsPointHistoryList } = usePointHistoryList();
+  console.log(studentsPointHistoryList.pointHistoryList);
+  console.log(studentsPointHistoryList.recentlySelectedStudent);
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -50,6 +52,7 @@ export function Home() {
 
   const [debouncedName, setDebouncedName] = useState(filter.name);
   const [selectedStudentId, setSelectedStudentId] = useState<string[]>(['']);
+
   const [mode, setMode] = useState<Mode>({
     type: 'GENERAL',
     text: '상벌점 부여',
@@ -133,12 +136,20 @@ export function Home() {
   return (
     <WithNavigatorBar>
       <_Wrapper>
-        <_ModeButton onClick={ChangeMode} Icon={<Change />}>
+        <_ModeButton
+          onClick={() => {
+            ChangeMode();
+            setSelectedStudentId(['']);
+          }}
+          Icon={<Change />}
+        >
           {mode.text}
         </_ModeButton>
         {mode.type === 'POINTS' && (
           <_PointListButton
-            onClick={ChangeListMode}
+            onClick={() => {
+              ChangeListMode();
+            }}
             color="gray"
             kind="outline"
           >
@@ -167,29 +178,18 @@ export function Home() {
               refetchStudentPointHistory={refetchStudentPointHistory}
             />
             <Divider />
-            <OutsideClickHandler
-              onOutsideClick={(e: MouseEvent) => {
-                const { className } = e.target as Element;
-                const isClickAbleElement =
-                  className.includes('studentBox') ||
-                  className.includes('filterButton') ||
-                  className.includes('searchBox') ||
-                  className.includes('grantPoint') ||
-                  className.includes('modalButton');
-                if (!isClickAbleElement) setSelectedStudentId(['']);
-              }}
-            >
+            <div>
               <StudentDetail
                 mode={mode.type}
                 studentDetail={studentDetail}
-                studentId={selectedStudentId}
+                studentId={selectedStudentId.filter((i) => i)}
                 onClickStudent={onClickStudent}
                 studentPointHistory={studentPointHistory}
                 studentsPointHistoryList={
                   studentsPointHistoryList.pointHistoryList
                 }
               />
-            </OutsideClickHandler>
+            </div>
           </>
         ) : (
           <PointList />
