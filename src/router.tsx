@@ -22,6 +22,7 @@ import Index from '@/pages/apply';
 import RemainsLists from '@/pages/apply/remains';
 import { pagePath } from './utils/pagePath';
 import { NotFoundPage } from './pages/NotFound';
+import Root from './pages/Root';
 
 export const pathToKorean = {
   'notice': {
@@ -55,6 +56,7 @@ export const pathToKorean = {
 export const Router = createBrowserRouter([
   {
     path: '',
+    element: <Root />,
     errorElement: <NotFoundPage />,
     children: [
       {
