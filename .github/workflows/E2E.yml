@@ -34,8 +34,10 @@ jobs:
       - name: Generate Environment Variables File for Production
         env:
           REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
+          CYPRESS_RECORD_KEY: 'record'
         run: |
           echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env
+          echo "CYPRESS_RECORD_KEY" >> .env
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
@@ -46,5 +48,6 @@ jobs:
           build: yarn add -D cypress
           config-file: cypress.config.js
           wait-on: 'http://localhost:3000'
-          wait-on-timeout: 200
+          wait-on-timeout: 10000
           browser: chrome
+          record: false
