@@ -1,0 +1,29 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'hotfixes'
+      - 'release/**'
+      - 'main'
+      - 'develop'
+  pull_request:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'release/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+- name: Cypress run
+  uses: cypress-io/github-action@v4
+  env:
+    APP_PUBLIC_URL: ${{ secrets.APP_PUBLIC_URL }}
+
+  with:
+    build: yarn build
+    start: yarn dev
+    record: true
