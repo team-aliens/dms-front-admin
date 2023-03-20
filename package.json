@@ -8,7 +8,7 @@
     "prepare": "husky install",
     "lint": "npx eslint --ext .tsx --ext .ts .",
     "lint:fix": "npx eslint --ext .tsx --ext .ts . --fix",
-    "e2e": "sudo yarn cypress run"
+    "e2e": "yarn cypress run"
   },
   "license": "MIT",
   "devDependencies": {

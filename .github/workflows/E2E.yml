@@ -23,34 +23,34 @@ jobs:
     name: End-to-End tests (web)
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
-    steps:
-      ## 공통 설정
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - uses: bahmutov/npm-install@HEAD
-      ## -----------------------------
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v5
-        with:
-          browser: chrome
-          headless: true
-          build: yarn add -D cypress
-
-      - name: upload failure screenshots
-          uses: actions/upload-artifact@v3
-          if: failure()
+      steps:
+        ## 공통 설정
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: setup node
+          uses: actions/setup-node@v3
           with:
-            name: cypress-screenshots
-            path: cypress/screenshots
+            node-version: 16
+        - uses: bahmutov/npm-install@HEAD
+        ## -----------------------------
 
-        - name: upload failure videos
-          uses: actions/upload-artifact@v3
-          if: failure()
+        - name: Cypress run
+          uses: cypress-io/github-action@v5
           with:
-            name: cypress-videos
-            path: cypress/videos
+            browser: chrome
+            headless: true
+            build: yarn add -D cypress
+
+        - name: upload failure screenshots
+            uses: actions/upload-artifact@v3
+            if: failure()
+            with:
+              name: cypress-screenshots
+              path: cypress/screenshots
+
+          - name: upload failure videos
+            uses: actions/upload-artifact@v3
+            if: failure()
+            with:
+              name: cypress-videos
+              path: cypress/videos
