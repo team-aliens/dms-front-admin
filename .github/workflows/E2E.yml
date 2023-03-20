@@ -35,9 +35,16 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          install: false
+          start: yarn dev
+          install-command: yarn install --immutable
+          command-prefix: yarn dlx
+          config-file: cypress.config.js
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 200
           browser: chrome
           headless: true
-          build: yarn add -D cypress
+          record: true
 
       # - name: upload failure screenshots
       #     uses: actions/upload-artifact@v3
