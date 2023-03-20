@@ -33,10 +33,10 @@ jobs:
 
       - name: Generate Environment Variables File for Production
         env:
-          REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
+          APP_PUBLIC_URL: ${{ secrets.APP_PUBLIC_URL }}
           CYPRESS_RECORD_KEY: 'record'
         run: |
-          echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env
+          echo "APP_PUBLIC_URL=$APP_PUBLIC_URL" >> .env
           echo "CYPRESS_RECORD_KEY" >> .env
 
       - name: Cypress run
@@ -51,3 +51,5 @@ jobs:
           wait-on-timeout: 10000
           browser: chrome
           record: false
+        env:
+          APP_PUBLIC_URL: ${{ secrets.APP_PUBLIC_URL }}
