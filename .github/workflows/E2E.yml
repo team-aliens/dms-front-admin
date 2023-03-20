@@ -40,10 +40,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          install: false
           start: yarn dev
           install-command: yarn install --immutable
           command-prefix: yarn dlx
+          build: yarn add -D cypress
           config-file: cypress.config.js
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 200
