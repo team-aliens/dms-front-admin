@@ -30,7 +30,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: bahmutov/npm-install@HEAD
+
+      - name: Generate Environment Variables File for Production
+        env:
+          REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
+        run: |
+          echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
@@ -43,19 +48,4 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 200
           browser: chrome
-          headless: true
           record: true
-
-      # - name: upload failure screenshots
-      #     uses: actions/upload-artifact@v3
-      #     if: failure()
-      #     with:
-      #       name: cypress-screenshots
-      #       path: cypress/screenshots
-
-      #   - name: upload failure videos
-      #     uses: actions/upload-artifact@v3
-      #     if: failure()
-      #     with:
-      #       name: cypress-videos
-      #       path: cypress/videos
