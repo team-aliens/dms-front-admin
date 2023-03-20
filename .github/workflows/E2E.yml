@@ -38,7 +38,7 @@ jobs:
           echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v2
         with:
           start: yarn dev
           install-command: yarn install --immutable
