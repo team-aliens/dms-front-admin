@@ -7,7 +7,8 @@
     "build": "env-cmd --silent webpack --mode production --progress --config ./config/webpack.config.js",
     "prepare": "husky install",
     "lint": "npx eslint --ext .tsx --ext .ts .",
-    "lint:fix": "npx eslint --ext .tsx --ext .ts . --fix"
+    "lint:fix": "npx eslint --ext .tsx --ext .ts . --fix",
+    "e2e": "sudo yarn cypress run"
   },
   "license": "MIT",
   "devDependencies": {
@@ -35,6 +36,8 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
+    "cypress": "^12.8.1",
+    "cypress-react-selector": "^3.0.0",
     "env-cmd": "^10.1.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",

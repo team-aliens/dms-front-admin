@@ -9,7 +9,6 @@ interface PropsType {
 }
 
 export function HistoryList({ pointHistoryList, studentId }: PropsType) {
-  // console.log(pointHistoryList);
   return (
     <>
       <_PointDetailBox isSelected={studentId.length > 0}>

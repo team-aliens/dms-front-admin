@@ -69,24 +69,26 @@ export function DetailBox({
           상/벌점
         </Text>
         <_PointList>
-          {studentPointHistory?.point_histories
-            .filter(
-              (history) =>
-                history.type === currentPointType || currentPointType === 'ALL',
-            )
-            .map((history) => {
-              const { point_history_id, name, type, score } = history;
-              return (
-                <PointItem
-                  key={point_history_id}
-                  point_history_id={point_history_id}
-                  name={name}
-                  type={type}
-                  score={score}
-                  canDelete={canDelete}
-                />
-              );
-            })}
+          {studentPointHistory?.point_histories &&
+            studentPointHistory.point_histories
+              .filter(
+                (history) =>
+                  history.type === currentPointType ||
+                  currentPointType === 'ALL',
+              )
+              .map((history) => {
+                const { point_history_id, name, type, score } = history;
+                return (
+                  <PointItem
+                    key={point_history_id}
+                    point_history_id={point_history_id}
+                    name={name}
+                    type={type}
+                    score={score}
+                    canDelete={canDelete}
+                  />
+                );
+              })}
         </_PointList>
       </_DetailBox>
     </>

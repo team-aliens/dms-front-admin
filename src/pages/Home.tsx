@@ -37,8 +37,6 @@ interface Mode {
 export function Home() {
   const { debounce } = useDebounce();
   const { state: studentsPointHistoryList } = usePointHistoryList();
-  console.log(studentsPointHistoryList.pointHistoryList);
-  console.log(studentsPointHistoryList.recentlySelectedStudent);
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
