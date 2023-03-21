@@ -4,7 +4,7 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
   },
-  projectId: 'dms-front-admin',
+  projectId: '3rnwun',
   env: {
     'cypress-react-selector': {
       root: '#root',
