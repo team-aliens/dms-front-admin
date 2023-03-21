@@ -13,7 +13,10 @@ const Root = () => {
   ]);
 
   setInterval(() => {
-    if (!getCookie('service')) {
+    if (
+      !getCookie('service') &&
+      (getCookie('access_token') || getCookie('refresh_token'))
+    ) {
       removeCookie('refresh_token');
       removeCookie('access_token');
       removeCookie('service');
@@ -23,7 +26,7 @@ const Root = () => {
 
   return (
     <>
-      <Outlet></Outlet>
+      <Outlet />
     </>
   );
 };
