@@ -20,6 +20,12 @@ export interface SeatType {
   color: string;
 }
 
+export interface StydyTimeType {
+  id: string;
+  start_time: string;
+  end_time: string;
+}
+
 export interface SeatPreview {
   id?: string;
   width_location: number;
@@ -58,4 +64,8 @@ export interface StudyRoomListResponse {
 
 export interface SeatTypeResponse {
   types: SeatType[];
+}
+
+export interface StudyTimeResponse {
+  time_slots: StydyTimeType[];
 }

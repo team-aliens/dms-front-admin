@@ -5,13 +5,14 @@ import {
   Input,
   Button,
 } from '@team-aliens/design-system';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { GradeType, SexType } from '@/apis/studyRooms/request';
 import {
   gradeTypeToKorean,
   SexToKorean,
   sexTypeToKorean,
 } from '@/utils/translate';
+import { SetUseTimeModal } from '@/components/modals/SetUseTime';
 
 const sex = ['ALL', 'MALE', 'FEMALE'].map((i: SexType) => sexTypeToKorean(i));
 
@@ -44,6 +45,7 @@ export function CreateStudyRoomDetailOptions({
   createStudyRoom,
   patch,
 }: PropsType) {
+  const [modal, setModal] = useState<boolean>(false);
   return (
     <_Wrapper>
       <SegmentedBtn
@@ -104,10 +106,23 @@ export function CreateStudyRoomDetailOptions({
           ['left', 'auto'],
           ['top', 'auto'],
         ]}
-        onClick={createStudyRoom}
+        onClick={() => {
+          setModal(true);
+        }}
       >
-        {patch ? '자습실 수정' : '자습실 생성'}
+        다음
       </Button>
+      {modal && (
+        <SetUseTimeModal
+          startHour=""
+          startMin=""
+          endHour=""
+          endMin=""
+          close={() => setModal(false)}
+          createStudyRoom={createStudyRoom}
+          onChangeDropdown={()=>{}}
+        />
+      )}
     </_Wrapper>
   );
 }

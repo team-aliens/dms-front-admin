@@ -35,3 +35,7 @@ export interface CreatSeatTypeRequest {
   name: string;
   color: string;
 }
+export interface CreateStudyTimeRequest {
+  start_time: string;
+  end_time: string;
+}

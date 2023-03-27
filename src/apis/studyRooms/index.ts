@@ -8,9 +8,11 @@ import {
   SeatTypeResponse,
   StudyRoomDetailResponse,
   StudyRoomListResponse,
+  StudyTimeResponse,
 } from '@/apis/studyRooms/response';
 import {
   CreateStudyRoomRequest,
+  CreateStudyTimeRequest,
   CreatSeatTypeRequest,
   SetApplicationTimeRequest,
 } from '@/apis/studyRooms/request';
@@ -97,6 +99,27 @@ export const usePatchStudyRoom = (
   );
 };
 
+export const usePatchStudyTime = (
+  studyTimeId: string,
+  body: CreateStudyTimeRequest,
+  options?: MutationOptions,
+) => {
+  const { toastDispatch } = useToast();
+  return useMutation(
+    async () => instance.patch(`${router}/time-slots/${studyTimeId}`, body),
+    {
+      onSuccess: () => {
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '시간이 수정되었습니다.',
+        });
+      },
+      ...options,
+    },
+  );
+};
+
 export const useStudyRoomList = () =>
   useQuery(['studyRoomList'], async () => {
     const { data } = await instance.get<StudyRoomListResponse>(
@@ -121,5 +144,21 @@ export const useCreateSeatType = (
 
 export const useDeleteSeatType = (id: string, options?: MutationOptions) =>
   useMutation(async () => instance.delete(`${router}/types/${id}`), {
+    ...options,
+  });
+
+export const useGetStudyTimes = () =>
+  useQuery(['studyTimes'], async () => {
+    const { data } = await instance.get<StudyTimeResponse>(
+      `${router}/time-slots`,
+    );
+    return data;
+  });
+
+export const useCreateStudyTime = (
+  body: CreateStudyTimeRequest,
+  options?: MutationOptions,
+) =>
+  useMutation(async () => instance.post(`${router}/time-slots`, body), {
     ...options,
   });
