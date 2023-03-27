@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { getCookie } from '@/utils/cookies';
 import { pagePath } from '@/utils/pagePath';
+import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 
 export interface FilterState {
   name: string;

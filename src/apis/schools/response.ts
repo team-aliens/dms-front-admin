@@ -1,3 +1,5 @@
+import { Features } from '../auth/response';
+
 export interface SchoolInformation {
   id: string;
   name: string;
