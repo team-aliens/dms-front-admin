@@ -1,0 +1,55 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'hotfixes'
+      - 'release/**'
+      - 'main'
+      - 'develop'
+  pull_request:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'release/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cypress-run:
+    name: End-to-End tests (web)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Generate Environment Variables File for Production
+        env:
+          APP_PUBLIC_URL: ${{ secrets.APP_PUBLIC_URL }}
+          CYPRESS_RECORD_KEY: 'record'
+        run: |
+          echo "APP_PUBLIC_URL=$APP_PUBLIC_URL" >> .env
+          echo "CYPRESS_RECORD_KEY" >> .env
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn dev
+          install-command: yarn install --immutable
+          command-prefix: yarn dlx
+          build: yarn add -D cypress
+          config-file: cypress.config.js
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 10000
+          browser: chrome
+          record: false
+        env:
+          APP_PUBLIC_URL: ${{ secrets.APP_PUBLIC_URL }}
