@@ -21,6 +21,7 @@ export interface StudyRoom {
   north_description: string;
   available_sex: SexType;
   available_grade: GradeType;
+  time_slot_ids: string[];
 }
 
 export interface CreateStudyRoomRequest extends StudyRoom {

@@ -62,6 +62,15 @@ export const useStudyRoom = () => {
       },
     });
   };
+  const onChangeStudyTime = (times_id: string[]) => {
+    dispatch({
+      type: 'SET_STUDY_ROOM_OPTION',
+      payload: {
+        ...studyRoomState,
+        time_slot_ids: times_id,
+      },
+    });
+  };
   const confirmSetting = () => {
     dispatch({
       type: 'CONFIRM_SET_SEAT',
@@ -73,6 +82,7 @@ export const useStudyRoom = () => {
     onChangeSex,
     onChangeInput,
     onChangeSeatSetting,
+    onChangeStudyTime,
     confirmSetting,
     initalValue,
   };
