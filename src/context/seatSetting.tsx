@@ -71,7 +71,10 @@ const seatDefaultValue: SeatState = {
   available_grade: 0,
   seats: [],
   seat: seatInitialValue,
+<<<<<<< refs/remotes/origin/releases/study-rooms
   time_slots: [],
+=======
+>>>>>>> fix: 자습실 생성 API 수정
   time_slot_ids: [],
 };
 

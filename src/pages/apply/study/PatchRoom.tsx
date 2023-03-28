@@ -47,6 +47,7 @@ export const PatchRoom = () => {
     onChangeSex,
     onChangeSeatSetting,
     initalValue,
+    onChangeStudyTime,
   } = useStudyRoom();
 
   useEffect(() => {
@@ -151,6 +152,7 @@ export const PatchRoom = () => {
           <CreateStudyRoomDetailOptions
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
+            onChangeStudyTime={onChangeStudyTime}
             onChangeGrade={onChangeGrade}
             createStudyRoom={onClick}
             patch

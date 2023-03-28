@@ -20,6 +20,7 @@ const grade = [0, 1, 2, 3].map((i: GradeType) => gradeTypeToKorean(i));
 interface PropsType {
   onChangeSegmented: (sex: SexToKorean) => void;
   onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeStudyTime: (times_id: string[]) => void;
   west_description: string;
   east_description: string;
   north_description: string;
@@ -34,6 +35,7 @@ interface PropsType {
 export function CreateStudyRoomDetailOptions({
   onChangeSegmented,
   onChangeInput,
+  onChangeStudyTime,
   west_description,
   east_description,
   north_description,
@@ -108,6 +110,21 @@ export function CreateStudyRoomDetailOptions({
       >
         {patch ? '자습실 수정' : '자습실 생성'}
       </Button>
+<<<<<<< refs/remotes/origin/releases/study-rooms
+=======
+      {modal && (
+        <SetUseTimeModal
+          startHour=""
+          startMin=""
+          endHour=""
+          endMin=""
+          close={() => setModal(false)}
+          createStudyRoom={createStudyRoom}
+          onChangeDropdown={()=>{}}
+          onChangeStudyTime={onChangeStudyTime}
+        />
+      )}
+>>>>>>> fix: 자습실 생성 API 수정
     </_Wrapper>
   );
 }

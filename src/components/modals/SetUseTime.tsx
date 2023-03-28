@@ -1,6 +1,6 @@
 import { Modal, Button, DropDown, Arrow } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useState, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import {
   useCreateStudyTime,
   useGetStudyTimes,
@@ -22,6 +22,7 @@ interface PropsType {
   close: () => void;
   createStudyRoom: () => void;
   onChangeDropdown: (type: keyof ApplicationTime, value: string) => void;
+  onChangeStudyTime: (times_id: string[]) => void;
 }
 
 const hourToArray = Array(24)
@@ -36,6 +37,7 @@ export function SetUseTimeModal({
   close,
   createStudyRoom,
   onChangeDropdown,
+  onChangeStudyTime,
   startHour,
   startMin,
   endHour,
@@ -62,6 +64,10 @@ export function SetUseTimeModal({
   const { data, refetch } = useGetStudyTimes();
   const [selectList, setSelectList] = useState<string[]>([]);
 
+  useEffect(() => {
+    onChangeStudyTime(selectList);
+  }, [selectList]);
+
   const patchStudyTime = usePatchStudyTime(
     selectList[0],
     {
@@ -75,7 +81,7 @@ export function SetUseTimeModal({
     },
   );
 
-  const onChangeStudyTime = (type: string, value: string) => {
+  const setStudyTime = (type: string, value: string) => {
     onChange({
       ...studyTimeDropDownItems,
       [type]: value,
@@ -98,8 +104,9 @@ export function SetUseTimeModal({
       inputList={[
         <>
           <_Times>
-            {data?.time_slots.map((time: StydyTimeType) => (
+            {data?.time_slots.map((time: StydyTimeType, index) => (
               <TimePressButton
+                key={index}
                 setSelect={setSelectList}
                 select={selectList}
                 timeSlotId={time.id}
@@ -129,7 +136,7 @@ export function SetUseTimeModal({
                 placeholder="00"
                 onChange={(startHour) => {
                   onChangeDropdown('startHour', startHour);
-                  onChangeStudyTime('startHour', startHour);
+                  setStudyTime('startHour', startHour);
                 }}
                 width={80}
                 value={startHour}
@@ -140,7 +147,7 @@ export function SetUseTimeModal({
                 placeholder="00"
                 onChange={(startMin) => {
                   onChangeDropdown('startMin', startMin);
-                  onChangeStudyTime('startMin', startMin);
+                  setStudyTime('startMin', startMin);
                 }}
                 width={80}
                 value={startMin}
@@ -151,7 +158,7 @@ export function SetUseTimeModal({
                 placeholder="00"
                 onChange={(endHour) => {
                   onChangeDropdown('endHour', endHour);
-                  onChangeStudyTime('endHour', endHour);
+                  setStudyTime('endHour', endHour);
                 }}
                 width={80}
                 value={endHour}
@@ -162,7 +169,7 @@ export function SetUseTimeModal({
                 placeholder="00"
                 onChange={(endMin) => {
                   onChangeDropdown('endMin', endMin);
-                  onChangeStudyTime('endMin', endMin);
+                  setStudyTime('endMin', endMin);
                 }}
                 width={80}
                 value={endMin}
