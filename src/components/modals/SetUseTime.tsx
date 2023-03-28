@@ -1,4 +1,4 @@
-import { Modal, Button, DropDown, Arrow } from '@team-aliens/design-system';
+import { Modal, Button, DropDown } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import {
@@ -6,22 +6,13 @@ import {
   useGetStudyTimes,
   usePatchStudyTime,
 } from '@/apis/studyRooms';
-import { useForm } from '@/hooks/useForm';
+import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
-import { CreateStudyTimeRequest } from '@/apis/studyRooms/request';
 import { StydyTimeType } from '@/apis/studyRooms/response';
-
-export interface ApplicationTime {
-  startHour: string;
-  startMin: string;
-  endHour: string;
-  endMin: string;
-}
 
 interface PropsType {
   close: () => void;
   createStudyRoom: () => void;
-  onChangeDropdown: (type: keyof ApplicationTime, value: string) => void;
   onChangeStudyTime: (times_id: string[]) => void;
 }
 
@@ -36,65 +27,74 @@ const minToArray = Array(60)
 export function SetUseTimeModal({
   close,
   createStudyRoom,
-  onChangeDropdown,
   onChangeStudyTime,
-  startHour,
-  startMin,
-  endHour,
-  endMin,
-}: ApplicationTime & PropsType) {
-  const [addTime, setAddTime] = useState<boolean>(false);
-  const { state, onHandleChange, setState } = useForm<CreateStudyTimeRequest>({
-    start_time: '00:00',
-    end_time: '00:00',
-  });
-  const [studyTimeDropDownItems, onChange] = useState<ApplicationTime>({
-    startHour: '00',
-    startMin: '00',
-    endHour: '00',
-    endMin: '00',
-  });
-
-  const createStudyTime = useCreateStudyTime(state, {
-    onSuccess: () => {
-      setAddTime(!addTime);
-      refetch();
-    },
-  });
-  const { data, refetch } = useGetStudyTimes();
+}: PropsType) {
   const [selectList, setSelectList] = useState<string[]>([]);
+  const [addTime, setAddTime] = useState<boolean>(false);
+  const [isFetch, setIsFetch] = useState<boolean>(false);
+  const { onDropDownChange: onChangeStartHour, sort: startHourState } =
+    useDropDown<string>('');
+  const { onDropDownChange: onChangeStartMin, sort: startMinState } =
+    useDropDown<string>('');
+  const { onDropDownChange: onChangeEndHour, sort: endHourState } =
+    useDropDown<string>('');
+  const { onDropDownChange: onChangeEndMin, sort: endMinState } =
+    useDropDown<string>('');
 
+  //이용시간 get API
+  const { data, refetch } = useGetStudyTimes();
+
+  //이용시간 선택
   useEffect(() => {
     onChangeStudyTime(selectList);
+    if (selectList.length === 1) {
+      setIsFetch(true);
+    } else {
+      setIsFetch(false);
+      reSetState();
+    }
   }, [selectList]);
 
-  const patchStudyTime = usePatchStudyTime(
-    selectList[0],
+  //이용시간 추가 API
+  const createStudyTime = useCreateStudyTime(
     {
-      start_time: state.start_time,
-      end_time: state.end_time,
+      start_time: String(
+        (startHourState || '00') + ':' + (startMinState || '00'),
+      ),
+      end_time: String((endHourState || '00') + ':' + (endMinState || '00')),
     },
     {
       onSuccess: () => {
+        setAddTime(!addTime);
         refetch();
+        reSetState();
       },
     },
   );
 
-  const setStudyTime = (type: string, value: string) => {
-    onChange({
-      ...studyTimeDropDownItems,
-      [type]: value,
-    });
-    setState({
-      ...state,
-      start_time:
-        studyTimeDropDownItems.startHour +
-        ':' +
-        studyTimeDropDownItems.startMin,
-      end_time:
-        studyTimeDropDownItems.endHour + ':' + studyTimeDropDownItems.endMin,
-    });
+  //이용시간 수정 API
+  const patchStudyTime = usePatchStudyTime(
+    selectList[0],
+    {
+      start_time: String(
+        (startHourState || '00') + ':' + (startMinState || '00'),
+      ),
+      end_time: String((endHourState || '00') + ':' + (endMinState || '00')),
+    },
+    {
+      onSuccess: () => {
+        refetch();
+        reSetState();
+      },
+    },
+  );
+
+  //드롭다운 state 값 초기화
+  const reSetState = () => {
+    onChangeStartHour('');
+    onChangeStartMin('');
+    onChangeEndHour('');
+    onChangeEndMin('');
   };
 
   return (
@@ -122,11 +122,7 @@ export function SetUseTimeModal({
               size="default"
               onClick={() => setAddTime(!addTime)}
             >
-              {addTime
-                ? '닫기'
-                : selectList.length === 1
-                ? '사용 시간 수정'
-                : '사용 시간 추가'}
+              {addTime ? '닫기' : isFetch ? '사용 시간 수정' : '사용 시간 추가'}
             </Button>
           </div>
           {addTime && (
@@ -134,56 +130,49 @@ export function SetUseTimeModal({
               <DropDown
                 items={hourToArray}
                 placeholder="00"
-                onChange={(startHour) => {
-                  onChangeDropdown('startHour', startHour);
-                  setStudyTime('startHour', startHour);
+                onChange={(value) => {
+                  onChangeStartHour(value);
                 }}
                 width={80}
-                value={startHour}
+                value={startHourState}
               />
               <p>:</p>
               <DropDown
                 items={minToArray}
                 placeholder="00"
-                onChange={(startMin) => {
-                  onChangeDropdown('startMin', startMin);
-                  setStudyTime('startMin', startMin);
+                onChange={(value) => {
+                  onChangeStartMin(value);
                 }}
                 width={80}
-                value={startMin}
+                value={startMinState}
               />
               <p className="to">~</p>
               <DropDown
                 items={hourToArray}
                 placeholder="00"
-                onChange={(endHour) => {
-                  onChangeDropdown('endHour', endHour);
-                  setStudyTime('endHour', endHour);
+                onChange={(value) => {
+                  onChangeEndHour(value);
                 }}
                 width={80}
-                value={endHour}
+                value={endHourState}
               />
               <p>:</p>
               <DropDown
                 items={minToArray}
                 placeholder="00"
-                onChange={(endMin) => {
-                  onChangeDropdown('endMin', endMin);
-                  setStudyTime('endMin', endMin);
+                onChange={(value) => {
+                  onChangeEndMin(value);
                 }}
                 width={80}
-                value={endMin}
-                className="hi"
+                value={endMinState}
               />
               <Button
                 color="gray"
-                onClick={
-                  selectList.length === 1
-                    ? patchStudyTime.mutate
-                    : createStudyTime.mutate
-                }
+                onClick={() => {
+                  isFetch ? patchStudyTime.mutate() : createStudyTime.mutate();
+                }}
               >
-                {selectList.length === 1 ? '시간대 수정' : '시간대 추가'}
+                {isFetch ? '시간대 수정' : '시간대 추가'}
               </Button>
             </_SetTime>
           )}
@@ -224,7 +213,7 @@ const _SetTime = styled.div`
   > .to {
     margin: 0 20px;
   }
-  > .hi {
-    margin: 0 10px;
+  > button {
+    margin-left: 10px;
   }
 `;
