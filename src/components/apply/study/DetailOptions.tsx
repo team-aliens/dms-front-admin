@@ -116,13 +116,8 @@ export function CreateStudyRoomDetailOptions({
       </Button>
       {modal && (
         <SetUseTimeModal
-          startHour=""
-          startMin=""
-          endHour=""
-          endMin=""
           close={() => setModal(false)}
           createStudyRoom={createStudyRoom}
-          onChangeDropdown={()=>{}}
           onChangeStudyTime={onChangeStudyTime}
         />
       )}
