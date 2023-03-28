@@ -183,7 +183,10 @@ export function SetUseTimeModal({
         </>,
       ]}
       buttonList={[
-        <Button disabled={selectList ? true : false} onClick={createStudyRoom}>
+        <Button
+          disabled={selectList.length !== 0 ? false : true}
+          onClick={createStudyRoom}
+        >
           생성
         </Button>,
       ]}
