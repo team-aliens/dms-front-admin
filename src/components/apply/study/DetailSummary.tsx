@@ -49,9 +49,15 @@ interface PropsType {
   detail: StudyRoomDetailResponse;
   id: string;
   selectModal: () => void;
+  timeSlotId: string;
 }
 
-export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
+export function StudyRoomDetailSummary({
+  detail,
+  id,
+  selectModal,
+  timeSlotId,
+}: PropsType) {
   return (
     <_Options>
       {detailOptions.map((option) => {
@@ -67,7 +73,7 @@ export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
           </_Summary>
         );
       })}
-      <Link to={pagePath.apply.studyRoom.patch(id)}>
+      <Link to={pagePath.apply.studyRoom.patch(id)} state={{ timeSlotId }}>
         <Button color="primary" kind="rounded">
           수정하기
         </Button>
@@ -86,7 +92,6 @@ export function StudyRoomDetailSummary({ detail, id, selectModal }: PropsType) {
 
 const _Options = styled.div`
   display: flex;
-  margin-top: 52px;
   > a {
     margin-left: auto;
   }
