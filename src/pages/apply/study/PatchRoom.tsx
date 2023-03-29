@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
 import {
@@ -20,6 +20,7 @@ import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
+import { pagePath } from '@/utils/pagePath';
 
 interface ILocation {
   state: {
@@ -59,8 +60,9 @@ export const PatchRoom = () => {
 
   const { data: seatTypeList, refetch: refetchTypeList } = useSeatTypeList();
 
-  const patchStudyRoom = usePatchStudyRoom(id, {
+  const { mutateAsync: patchStudyRoom } = usePatchStudyRoom(id, {
     ...creatStudyRoomRequest,
+    time_slot_ids: [timeSlotId],
     seats: creatStudyRoomRequest.seats.map(
       (i): Seat => ({
         width_location: i.width_location,
@@ -73,6 +75,7 @@ export const PatchRoom = () => {
   });
 
   const closeSeatSetting = () => setSeatSetting(false);
+  const navigate = useNavigate();
 
   const deleteType = useDeleteSeatType(deleteId, {
     onSuccess: () => refetchTypeList(),
@@ -97,6 +100,11 @@ export const PatchRoom = () => {
     });
   };
 
+  const onClick = () => {
+    patchStudyRoom().then(() => {
+      navigate(pagePath.apply.main);
+    });
+  };
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
@@ -144,7 +152,7 @@ export const PatchRoom = () => {
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
-            createStudyRoom={patchStudyRoom.mutate}
+            createStudyRoom={onClick}
             patch
             {...rest}
           />
