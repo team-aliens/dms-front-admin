@@ -4,3 +4,8 @@ export const PointHistroyIdAtom = atom({
   key: 'PointHistoryId',
   default: '',
 });
+
+export const DeleteTagIdAtom = atom({
+  key: 'DeleteTagIdAtom',
+  default: '',
+});
