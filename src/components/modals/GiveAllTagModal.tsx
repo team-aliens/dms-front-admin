@@ -184,7 +184,10 @@ export function GiveAllTagModal({
     <Modal
       title="학생 태그"
       content=""
-      close={close}
+      close={() => {
+        setSelectedTag('');
+        close();
+      }}
       buttonList={[
         <Button
           margin={newItem && [-40, 0, 0, 0]}
