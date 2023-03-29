@@ -37,8 +37,6 @@ interface Mode {
 export function Home() {
   const { debounce } = useDebounce();
   const { state: studentsPointHistoryList } = usePointHistoryList();
-  console.log(studentsPointHistoryList.pointHistoryList);
-  console.log(studentsPointHistoryList.recentlySelectedStudent);
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -56,7 +54,7 @@ export function Home() {
 
   const [mode, setMode] = useState<Mode>({
     type: 'GENERAL',
-    text: '상벌점 부여',
+    text: '부여',
   });
   const [listViewType, setListViewType] = useState<ListViewType>('POINTS');
 
@@ -114,7 +112,7 @@ export function Home() {
         setMode({ ...mode, type: 'POINTS', text: '일반' });
         break;
       case 'POINTS':
-        setMode({ ...mode, type: 'GENERAL', text: '상/벌점 부여' });
+        setMode({ ...mode, type: 'GENERAL', text: '부여' });
         setListViewType('POINTS');
         break;
       default:

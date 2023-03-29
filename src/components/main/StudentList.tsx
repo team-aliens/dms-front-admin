@@ -25,6 +25,12 @@ import { TagDropDown } from './TagDropDown';
 import { TagType } from '@/apis/tags/response';
 import { DeleteStudentTagModal } from '../modals/DeleteStudentTag';
 import { useDeleteStudentTag } from '@/hooks/useTagApi';
+import { GiveAllTagModal } from '../modals/GiveAllTagModal';
+import { useTagList } from '@/hooks/useTagsApi';
+import { DeleteTagModal } from '../modals/DeleteTag';
+import { ViewAllTagModal } from '../modals/ViewAllTagModal';
+import { useDeleteTag } from '@/apis/tags';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -67,6 +73,9 @@ export function StudentList({
   refetchStudentPointHistory,
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
+  const [tagModal, setTagModal] = useState<string>('');
+  const [showGiveModal, setShowGiveModal] = useState<boolean>(false);
+  const [showViewModal, setShowViewModal] = useState<boolean>(false);
   const openPointFilterModal = () => selectModal('POINT_FILTER');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
 
@@ -85,9 +94,12 @@ export function StudentList({
   });
 
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+  const [selectedTag, setSelectedTag] = useState<string>('');
 
   const { data: allPointOptions, refetch: refetchAllPointOptions } =
     usePointOptionList();
+
+  const { data: allTags, refetch: refetchAllTags } = useTagList();
 
   const { toastDispatch } = useToast();
 
@@ -111,6 +123,26 @@ export function StudentList({
     },
   });
 
+  const deleteTagAPI = useDeleteTag(selectedTag, {
+    onSuccess: () => {
+      refetchAllTags();
+      setSelectedTag('');
+      toastDispatch({
+        toastType: 'SUCCESS',
+        actionType: 'APPEND_TOAST',
+        message: '태그가 삭제되었습니다.',
+      });
+      selectModal('');
+    },
+    onError: () => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '태그 삭제를 실패했습니다.',
+      });
+    },
+  });
+
   const filterText = () => {
     if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
       return '상/벌점';
@@ -127,9 +159,19 @@ export function StudentList({
 
   const pointListText = () => {
     if (selectedStudentId.filter((i) => i).length > 0) {
-      return '상/벌점 부여';
+      return '부여';
     }
-    return '상/벌점 항목 보기';
+    return '항목 보기';
+  };
+
+  const setShowGiveModalFunc = () => {
+    setShowGiveModal(!showGiveModal);
+    setShowViewModal(false);
+  };
+
+  const setShowViewModalFunc = () => {
+    setShowViewModal(!showViewModal);
+    setShowGiveModal(false);
   };
 
   const tagId = useRecoilValue(DeleteTagIdAtom);
@@ -151,16 +193,74 @@ export function StudentList({
         />
         <_Buttons>
           {mode === 'POINTS' && (
-            <Button
-              className="grantPoint"
-              onClick={() =>
-                selectedStudentId.filter((i) => i).length > 0
-                  ? selectModal('GIVE_POINT')
-                  : selectModal('POINT_OPTIONS')
-              }
-            >
-              {pointListText()}
-            </Button>
+            <_ChooseModalBoxWrapper>
+              <Button
+                className="grantPoint"
+                onClick={() =>
+                  selectedStudentId.filter((i) => i).length > 0
+                    ? setShowGiveModalFunc()
+                    : setShowViewModalFunc()
+                }
+              >
+                {pointListText()}
+              </Button>
+              {selectedStudentId.filter((i) => i).length > 0 &&
+                showGiveModal && (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      setShowGiveModal(false);
+                    }}
+                  >
+                    <_ChooseBox>
+                      <_ChooseBoxText
+                        onClick={() => {
+                          selectModal('GIVE_POINT');
+                          setShowGiveModal(false);
+                        }}
+                      >
+                        상/벌점 부여
+                      </_ChooseBoxText>
+                      <_Line />
+                      <_ChooseBoxText
+                        onClick={() => {
+                          selectModal('GIVE_TAG_OPTIONS');
+                          setShowGiveModal(false);
+                        }}
+                      >
+                        학생 태그 부여
+                      </_ChooseBoxText>
+                    </_ChooseBox>
+                  </OutsideClickHandler>
+                )}
+              {!(selectedStudentId.filter((i) => i).length > 0) &&
+                showViewModal && (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      setShowViewModal(false);
+                    }}
+                  >
+                    <_ChooseBox>
+                      <_ChooseBoxText
+                        onClick={() => {
+                          selectModal('POINT_OPTIONS');
+                          setShowViewModal(false);
+                        }}
+                      >
+                        상/벌점 항목 보기
+                      </_ChooseBoxText>
+                      <_Line />
+                      <_ChooseBoxText
+                        onClick={() => {
+                          selectModal('VIEW_TAG_OPTIONS');
+                          setShowViewModal(false);
+                        }}
+                      >
+                        학생 태그 항목 보기
+                      </_ChooseBoxText>
+                    </_ChooseBox>
+                  </OutsideClickHandler>
+                )}
+            </_ChooseModalBoxWrapper>
           )}
           <Button
             kind="outline"
@@ -249,15 +349,40 @@ export function StudentList({
             closeModal();
           }}
           close={closeModal}
+      {modalState.selectedModal === 'GIVE_TAG_OPTIONS' && (
+        <GiveAllTagModal
+          close={closeModal}
+          selectedStudentId={selectedStudentId}
+          refetchAllTags={refetchAllTags}
+          allTags={allTags}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
+          setTagModal={setTagModal}
+        />
+      )}
+      {modalState.selectedModal === 'VIEW_TAG_OPTIONS' && (
+        <ViewAllTagModal
+          close={closeModal}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
+          allTags={allTags}
+          refetchAllTags={refetchAllTags}
+          setTagModal={setTagModal}
+        />
+      )}
+      {modalState.selectedModal === 'DELETE_TAG' && (
+        <DeleteTagModal
+          setSelectedOption={setSelectedTag}
+          onClick={deleteTagAPI.mutate}
+          closeModal={closeModal}
+          tagModal={tagModal}
         />
       )}
     </_Wrapper>
   );
 }
 
-const _Wrapper = styled.div<{
-  detailIsOpened: boolean;
-}>`
+const _Wrapper = styled.div<{ detailIsOpened: boolean }>`
   width: ${({ detailIsOpened }) => (detailIsOpened ? 500 : 670)}px;
   transition: width 0.7s ease-in-out;
   margin-left: 50px;
@@ -290,4 +415,38 @@ const _Buttons = styled.div`
   align-items: center;
   gap: 10px;
   margin: 10px 0;
+`;
+
+const _ChooseModalBoxWrapper = styled.div`
+  position: relative;
+`;
+
+const _ChooseBox = styled.div`
+  z-index: 99;
+  margin-left: -48px;
+  margin-top: 8px;
+  position: absolute;
+  width: 132px;
+  height: 92px;
+  background: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid ${({ theme }) => theme.color.gray3};
+`;
+
+const _ChooseBoxText = styled.div`
+  font-weight: 400;
+  font-size: 12px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const _Line = styled.div`
+  width: 110px;
+  height: 1px;
+  border: 1px solid ${({ theme }) => theme.color.gray3};
 `;
