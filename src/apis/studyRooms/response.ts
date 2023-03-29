@@ -50,6 +50,7 @@ export interface StudyRoomItem {
   available_sex: SexType;
   in_use_headcount: number;
   total_available_seat: number;
+  timeSlotId: string;
 }
 
 export interface StudyRoomListResponse {
@@ -58,4 +59,23 @@ export interface StudyRoomListResponse {
 
 export interface SeatTypeResponse {
   types: SeatType[];
+}
+
+export interface ITimeSlots {
+  id: string;
+  start_time: string;
+  end_time: string;
+}
+
+export interface StudyTimeSlotsResponse {
+  time_slots: ITimeSlots[];
+}
+
+export interface CreateStudyTimeSlotsResponse {
+  time_slot_id: string;
+}
+
+export interface EditStudyTimeSlotsResponse {
+  start_time: string;
+  end_time: string;
 }

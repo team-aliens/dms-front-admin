@@ -1,3 +1,5 @@
+import { MutationOptions } from 'react-query';
+
 export type SeatStatusType = 'AVAILABLE' | 'UNAVAILABLE' | 'EMPTY' | 'IN_USE';
 export type SexType = 'MALE' | 'FEMALE' | 'ALL';
 export type GradeType = 0 | 1 | 2 | 3;
@@ -9,7 +11,11 @@ export interface Seat {
   type_id: string;
   status: SeatStatusType;
 }
-
+interface Slots {
+  id: string;
+  end_time: string;
+  start_time: string;
+}
 export interface StudyRoom {
   floor: number;
   name: string;
@@ -21,10 +27,16 @@ export interface StudyRoom {
   north_description: string;
   available_sex: SexType;
   available_grade: GradeType;
+  time_slot_ids: string[];
+  time_slots: Slots[];
 }
 
 export interface CreateStudyRoomRequest extends StudyRoom {
   seats: Seat[];
+}
+
+export interface StudyRoomListRequest {
+  time_slot: string;
 }
 
 export interface SetApplicationTimeRequest {
@@ -34,4 +46,27 @@ export interface SetApplicationTimeRequest {
 export interface CreatSeatTypeRequest {
   name: string;
   color: string;
+}
+
+export interface CreateStudyTimeSlotsRequest {
+  body: {
+    start_time: string;
+    end_time: string;
+  };
+}
+
+export interface EditStudyTimeSlotsRequest extends MutationOptions {
+  path: {
+    time_slot_id: string;
+  };
+  body: {
+    start_time: string;
+    end_time: string;
+  };
+}
+
+export interface DeleteStudyTimeSlotsRequest {
+  path: {
+    time_slot_id: string;
+  };
 }
