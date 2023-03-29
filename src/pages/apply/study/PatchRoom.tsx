@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
 import {
@@ -21,9 +21,19 @@ import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
 
+interface ILocation {
+  state: {
+    timeSlotId: string;
+  };
+}
+
 export const PatchRoom = () => {
   const { id } = useParams();
-  const { data: detail } = useStudyRoomDetail(id);
+  const location = useLocation();
+  const {
+    state: { timeSlotId },
+  } = location as unknown as ILocation;
+  const { data: detail } = useStudyRoomDetail(id, timeSlotId);
 
   const [seatSetting, setSeatSetting] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>('');
