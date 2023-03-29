@@ -7,6 +7,7 @@ export const deleteTag = async (student_id: string, tag_id: string) => {
   await instance.delete(
     `${router}/students?student_id=${student_id}&tag_id=${tag_id}`,
   );
+};
 
 /** 태그 전체 조회 */
 export const getAllTags = async () => {

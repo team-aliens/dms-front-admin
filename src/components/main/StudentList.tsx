@@ -349,6 +349,8 @@ export function StudentList({
             closeModal();
           }}
           close={closeModal}
+        />
+      )}
       {modalState.selectedModal === 'GIVE_TAG_OPTIONS' && (
         <GiveAllTagModal
           close={closeModal}

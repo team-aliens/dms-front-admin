@@ -18,7 +18,7 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { useToast } from '@/hooks/useToast';
-import { AllTagListResponse } from '@/apis/tags/response';
+import { TagListResponse } from '@/apis/tags/response';
 import { TagList } from '../main/DetailBox/TagList';
 import {
   AddTagRequest,
@@ -34,7 +34,7 @@ interface PropsType {
   close: () => void;
   selectedTag: string;
   setSelectedTag: Dispatch<SetStateAction<string>>;
-  allTags: AllTagListResponse;
+  allTags: TagListResponse;
   refetchAllTags?: () => void;
   setTagModal: Dispatch<SetStateAction<string>>;
 }

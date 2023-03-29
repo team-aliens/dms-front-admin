@@ -1,8 +1,8 @@
-import { deleteTag, tagList } from '@/apis/tags';
+import { deleteTag, getAllTags } from '@/apis/tags';
 import { useMutation, useQuery } from 'react-query';
 import { useToast } from './useToast';
 
-export const useTagList = () => useQuery(['tags'], tagList);
+export const useTagList = () => useQuery(['tags'], getAllTags);
 
 export const useDeleteStudentTag = (
   student_id: string,
