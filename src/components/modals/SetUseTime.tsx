@@ -125,57 +125,57 @@ export function SetUseTimeModal({
               {addTime ? '닫기' : isFetch ? '사용 시간 수정' : '사용 시간 추가'}
             </Button>
           </div>
-          {addTime && (
-            <_SetTime>
-              <DropDown
-                items={hourToArray}
-                placeholder="00"
-                onChange={(value) => {
-                  onChangeStartHour(value);
-                }}
-                width={80}
-                value={startHourState}
-              />
-              <p>:</p>
-              <DropDown
-                items={minToArray}
-                placeholder="00"
-                onChange={(value) => {
-                  onChangeStartMin(value);
-                }}
-                width={80}
-                value={startMinState}
-              />
-              <p className="to">~</p>
-              <DropDown
-                items={hourToArray}
-                placeholder="00"
-                onChange={(value) => {
-                  onChangeEndHour(value);
-                }}
-                width={80}
-                value={endHourState}
-              />
-              <p>:</p>
-              <DropDown
-                items={minToArray}
-                placeholder="00"
-                onChange={(value) => {
-                  onChangeEndMin(value);
-                }}
-                width={80}
-                value={endMinState}
-              />
-              <Button
-                color="gray"
-                onClick={() => {
-                  isFetch ? patchStudyTime.mutate() : createStudyTime.mutate();
-                }}
-              >
-                {isFetch ? '시간대 수정' : '시간대 추가'}
-              </Button>
-            </_SetTime>
-          )}
+          <_SetTime
+            style={addTime ? { height: '47px', overflowY: 'visible' } : {}}
+          >
+            <DropDown
+              items={hourToArray}
+              placeholder="00"
+              onChange={(value) => {
+                onChangeStartHour(value);
+              }}
+              width={80}
+              value={startHourState}
+            />
+            <p>:</p>
+            <DropDown
+              items={minToArray}
+              placeholder="00"
+              onChange={(value) => {
+                onChangeStartMin(value);
+              }}
+              width={80}
+              value={startMinState}
+            />
+            <p>~</p>
+            <DropDown
+              items={hourToArray}
+              placeholder="00"
+              onChange={(value) => {
+                onChangeEndHour(value);
+              }}
+              width={80}
+              value={endHourState}
+            />
+            <p>:</p>
+            <DropDown
+              items={minToArray}
+              placeholder="00"
+              onChange={(value) => {
+                onChangeEndMin(value);
+              }}
+              width={80}
+              value={endMinState}
+            />
+            <Button
+              color="gray"
+              onClick={() => {
+                isFetch ? patchStudyTime.mutate() : createStudyTime.mutate();
+              }}
+            >
+              {isFetch ? '시간대 수정' : '시간대 추가'}
+            </Button>
+          </_SetTime>
         </>,
       ]}
       buttonList={[
@@ -191,7 +191,7 @@ export function SetUseTimeModal({
 }
 
 const _Times = styled.div`
-  overflow-x: auto;
+  overflow-x: scroll;
   white-space: nowrap;
   > button {
     display: inline-block;
@@ -204,16 +204,18 @@ const _Times = styled.div`
 
 const _SetTime = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+  height: 0;
+  transition: all 0.2s;
   > p {
     margin: 0 8px;
     font-weight: 700;
   }
-  > .to {
-    margin: 0 20px;
-  }
   > button {
     margin-left: 10px;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
