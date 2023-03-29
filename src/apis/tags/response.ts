@@ -12,6 +12,6 @@ export interface AllTagListPropsType {
   tag_id: string;
   tag_name: string;
   tag_color: string;
-  OptionSelected : string;
+  OptionSelected: string;
   onClick?: (tagId: string, tagName: string, tagColor: string) => void;
 }
