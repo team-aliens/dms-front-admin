@@ -13,6 +13,11 @@ import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { usePointHistoryList } from '@/hooks/usePointHistoryList';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { getCookie } from '@/utils/cookies';
+import { pagePath } from '@/utils/pagePath';
+import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 import { TagType } from '@/apis/tags/response';
 
 export interface FilterState {

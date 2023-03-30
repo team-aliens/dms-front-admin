@@ -74,36 +74,37 @@ export function PointList() {
           엑셀 출력
         </Button>
       </_Display>
-      {data?.point_histories.map((res, i) => {
-        const {
-          point_history_id,
-          student_name,
-          student_gcn,
-          point_name,
-          point_score,
-          point_type,
-          date,
-        } = res;
-        const isSameDate = res.date === data?.point_histories[i - 1]?.date;
-        return (
-          <>
-            {!isSameDate && (
-              <Text margin={[30, 0, 9, 0]} color="gray6" size="titleS">
-                {date}
-              </Text>
-            )}
-            <AllPointItem
-              key={point_history_id}
-              point_history_id={point_history_id}
-              student_name={student_name}
-              student_gcn={student_gcn}
-              point_name={point_name}
-              point_score={point_score}
-              point_type={point_type}
-            />
-          </>
-        );
-      })}
+      {data?.point_histories &&
+        data.point_histories.map((res, i) => {
+          const {
+            point_history_id,
+            student_name,
+            student_gcn,
+            point_name,
+            point_score,
+            point_type,
+            date,
+          } = res;
+          const isSameDate = res.date === data?.point_histories[i - 1]?.date;
+          return (
+            <>
+              {!isSameDate && (
+                <Text margin={[30, 0, 9, 0]} color="gray6" size="titleS">
+                  {date}
+                </Text>
+              )}
+              <AllPointItem
+                key={point_history_id}
+                point_history_id={point_history_id}
+                student_name={student_name}
+                student_gcn={student_gcn}
+                point_name={point_name}
+                point_score={point_score}
+                point_type={point_type}
+              />
+            </>
+          );
+        })}
       {modalState.selectedModal === 'DELETE_POINT_LIST' && (
         <DeletePointListModal
           onClick={cancelPoint.mutate}

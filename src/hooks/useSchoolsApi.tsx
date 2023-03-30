@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import {
+  availAbleFeatures,
   changeSchoolQnA,
   getSchoolList,
   getSchoolQuestion,
@@ -27,3 +28,6 @@ export const useSchoolQuestionQuery = ({ selectedId, isNextStep }: PropsType) =>
 
 export const useSchoolListQuery = () =>
   useQuery([queryKeys.학교리스트조회], getSchoolList);
+
+export const useAvailAbleFeatures = () =>
+  useQuery([queryKeys.사용가능기능조회], availAbleFeatures);

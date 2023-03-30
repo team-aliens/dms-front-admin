@@ -35,9 +35,9 @@ jobs:
 
       - name: Generate Environment Variables File for Production
         env:
-          REACT_APP_DOMAIN: ${{ secrets.your_key }}
+          REACT_APP_DOMAIN: ${{ secrets.APP_PUBLIC_URL }}
         run: |
-          echo "your_key=$your_key" >> .env
+          echo "APP_PUBLIC_URL=$APP_PUBLIC_URL" >> .env
       - name: Install Dependencies
         run: yarn install --immutable
 
