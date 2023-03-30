@@ -13,22 +13,17 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
   const { mutateAsync: mutataeAddStudyFile } = useAddStudyFile(files);
   const { mutateAsync: mutateStudyExcelSample } = useGetStudyExcelSample();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     setFiles((prev) => [...prev, e.target.files[0]]);
   };
 
   const handleExampleExcel = () => {
-    mutateStudyExcelSample()
-      .catch(() => {
-        toastDispatch({
-          toastType: 'ERROR',
-          actionType: 'APPEND_TOAST',
-          message: '파일 다운로드에 실패했습니다.',
-        });
-      })
-      .finally(() => {
-        closeModal();
+    mutateStudyExcelSample().catch(() => {
+      toastDispatch({
+        toastType: 'ERROR',
+        actionType: 'APPEND_TOAST',
+        message: '파일 다운로드에 실패했습니다.',
       });
+    });
   };
   const addFile = () => {
     mutataeAddStudyFile()

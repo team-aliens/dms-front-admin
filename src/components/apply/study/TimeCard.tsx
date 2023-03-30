@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Button, Trash } from '@team-aliens/design-system';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { SelectedModalType } from '@/context/modal';
 import { ITimeSlots } from '@/apis/studyRooms/response';
+import { tranformTimeSlot } from '@/utils/time';
 
 interface PropsType {
   setClickId: Dispatch<SetStateAction<string>>;
@@ -28,16 +29,17 @@ export default function TimeCard({
     setClickId(prevId);
     selectModal('DELETE_STUDY_ROOM_TIME');
   };
+  const { start_hour, start_min, end_min, end_hour } =
+    tranformTimeSlot(timeSlot);
   return (
     <_TimeWrapper isSelect={selectId === prevId}>
       <Button
         kind={selectId == prevId ? 'contained' : 'outline'}
         color={selectId === prevId ? 'primary' : 'gray'}
       >
-        <p onClick={() => setSelectId(prevId)}>
-          {timeSlot.start_time.slice(0, 2)}:{timeSlot.start_time.slice(3, 5)}시
-          ~ {timeSlot.end_time.slice(0, 2)}:{timeSlot.end_time.slice(3, 5)}시{' '}
-        </p>
+        <_time onClick={() => setSelectId(prevId)}>
+          {start_hour}:{start_min}시 ~ {end_hour}:{end_min}시{' '}
+        </_time>
         <Line className="line" />
         <div className="timeMenu">
           <div onClick={onClickEdit}>
@@ -87,14 +89,6 @@ const _TimeWrapper = styled.div<{ isSelect: boolean }>`
     transition: all 0.3s;
     position: relative;
   }
-  p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 16px;
-    height: 100%;
-  }
   button .timeMenu {
     display: flex;
     align-items: center;
@@ -125,14 +119,21 @@ const _TimeWrapper = styled.div<{ isSelect: boolean }>`
     .line {
       position: absolute;
       top: 25%;
-      left: 58%;
+      left: 140px;
       path {
         stroke: ${({ isSelect }) => (isSelect ? '#579AFF' : '#F3F3F3')};
       }
     }
   }
 `;
-
+const _time = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 16px;
+  height: 100%;
+`;
 const Line = ({ className }: { className: string }) => {
   return (
     <svg

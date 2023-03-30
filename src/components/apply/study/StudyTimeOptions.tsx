@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
 import { Seat } from '@/apis/studyRooms/request';
 import { pagePath } from '@/utils/pagePath';
+import { tranformTimeSlot } from '@/utils/time';
 
 export default function StudyTimeOptions({
   timeSlotId,
@@ -54,8 +55,10 @@ export default function StudyTimeOptions({
             isSelect={selectId === timeSlot.id}
             onClick={() => onClick(timeSlot.id)}
           >
-            {timeSlot.start_time.slice(0, 2)}:{timeSlot.start_time.slice(3, 5)}{' '}
-            ~ {timeSlot.end_time.slice(0, 2)}:{timeSlot.end_time.slice(3, 5)}
+            {tranformTimeSlot(timeSlot).start_hour}:
+            {tranformTimeSlot(timeSlot).start_min} ~{' '}
+            {tranformTimeSlot(timeSlot).end_hour}:
+            {tranformTimeSlot(timeSlot).end_min}
           </_studyTimeSlot>
         ))}
       </_studyTimeSlots>
