@@ -29,6 +29,7 @@ export function CreateRoom() {
     onChangeInput,
     onChangeSex,
     onChangeSeatSetting,
+    onChangeStudyTime,
     initalValue,
   } = useStudyRoom();
 
@@ -129,6 +130,7 @@ export function CreateRoom() {
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
+            onChangeStudyTime={onChangeStudyTime}
             createStudyRoom={createStudyRoom.mutate}
             {...rest}
           />

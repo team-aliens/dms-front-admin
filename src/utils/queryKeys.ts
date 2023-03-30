@@ -8,4 +8,5 @@ export const queryKeys = {
   학생리스트조회: 'studentList',
   공지상세보기: 'noticeDetail',
   이메일인증코드확인: 'checkEmailAuthCode',
+  사용가능기능조회: 'availAbleFeatures',
 };

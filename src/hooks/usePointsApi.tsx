@@ -29,7 +29,7 @@ export const useStudentPointHistory = (
     {
       refetchOnWindowFocus: true,
       onSuccess: (res) => {
-        addStudentPointHistory(res.point_histories);
+        addStudentPointHistory(res?.point_histories);
       },
     },
   );

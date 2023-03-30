@@ -12,6 +12,8 @@ import {
   SexToKorean,
   sexTypeToKorean,
 } from '@/utils/translate';
+import { useModal } from '@/hooks/useModal';
+import { SetUseTimeModal } from '@/components/modals/SetUseTime';
 
 const sex = ['ALL', 'MALE', 'FEMALE'].map((i: SexType) => sexTypeToKorean(i));
 
@@ -28,6 +30,7 @@ interface PropsType {
   available_sex: SexType;
   onChangeGrade: (grade: string & GradeType) => void;
   createStudyRoom: () => void;
+  onChangeStudyTime: (time_id: string[]) => void;
   patch?: boolean;
 }
 
@@ -41,9 +44,10 @@ export function CreateStudyRoomDetailOptions({
   available_sex,
   available_grade,
   onChangeGrade,
+  onChangeStudyTime,
   createStudyRoom,
-  patch,
 }: PropsType) {
+  const { modalState, selectModal, closeModal } = useModal();
   return (
     <_Wrapper>
       <SegmentedBtn
@@ -104,10 +108,17 @@ export function CreateStudyRoomDetailOptions({
           ['left', 'auto'],
           ['top', 'auto'],
         ]}
-        onClick={createStudyRoom}
+        onClick={() => selectModal('SET_STUDY_TIME')}
       >
-        {patch ? '자습실 수정' : '자습실 생성'}
+        다음
       </Button>
+      {modalState.selectedModal === 'SET_STUDY_TIME' && (
+        <SetUseTimeModal
+          close={closeModal}
+          createStudyRoom={createStudyRoom}
+          onChangeStudyTime={onChangeStudyTime}
+        />
+      )}
     </_Wrapper>
   );
 }

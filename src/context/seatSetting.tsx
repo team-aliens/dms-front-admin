@@ -71,6 +71,8 @@ const seatDefaultValue: SeatState = {
   available_grade: 0,
   seats: [],
   seat: seatInitialValue,
+  time_slots: [],
+  time_slot_ids: [],
 };
 
 export const SeatSettingContext = createContext<SeatState>(seatDefaultValue);

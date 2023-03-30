@@ -4,6 +4,7 @@ import { Text } from '@team-aliens/design-system';
 import { StudentInfo } from '@/apis/managers/response';
 import { ModeType } from '@/pages/Home';
 import { usePointHistoryList } from '@/hooks/usePointHistoryList';
+import { Tag } from './Tag';
 
 interface Props {
   mode: ModeType;
@@ -61,6 +62,11 @@ export function StudentBox({
       >
         {studentInfo.gcn}
       </Text>
+      <_Tags>
+        {studentInfo.tags.map((tag) => (
+          <Tag key={tag.id} id={tag.id} color={tag.color} name={tag.name} />
+        ))}
+      </_Tags>
       <Text
         className="studentBox"
         size="bodyL"
@@ -82,7 +88,6 @@ const _Wrapper = styled.li<WrapperProps>`
   z-index: 1;
   width: 100%;
   height: 70px;
-
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.color.primaryDarken1 : theme.color.gray1};
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
@@ -98,4 +103,13 @@ const _Wrapper = styled.li<WrapperProps>`
       isSelected ? theme.color.primary : theme.color.gray5};
     border-radius: 50%;
   }
+`;
+
+const _Tags = styled.div`
+  width: 40%;
+  display: flex;
+  align-items: center;
+  margin-left: 24px;
+  gap: 10px;
+  overflow: hidden;
 `;

@@ -7,6 +7,7 @@ import { getCookie } from './utils/cookies';
 import { pagePath } from './utils/pagePath';
 import { Outlet, RouterProvider } from 'react-router-dom';
 import { PointListProvider } from './context/pointHistoryList';
+import { GlobalStyle } from './style/globalStyle';
 
 export function App() {
   const { modalState } = useModal();
@@ -30,6 +31,7 @@ export function App() {
         <PointListProvider>
           <ToastContainer />
           <Outlet />
+          <GlobalStyle />
           <RouterProvider router={Router} />
         </PointListProvider>
       </ToastProvider>

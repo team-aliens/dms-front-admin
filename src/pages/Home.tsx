@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { ChangeEvent, useState } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
 import { Button, Change } from '@team-aliens/design-system';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
@@ -14,6 +13,12 @@ import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { usePointHistoryList } from '@/hooks/usePointHistoryList';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { getCookie } from '@/utils/cookies';
+import { pagePath } from '@/utils/pagePath';
+import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
+import { TagType } from '@/apis/tags/response';
 
 export interface FilterState {
   name: string;
@@ -37,8 +42,6 @@ interface Mode {
 export function Home() {
   const { debounce } = useDebounce();
   const { state: studentsPointHistoryList } = usePointHistoryList();
-  console.log(studentsPointHistoryList.pointHistoryList);
-  console.log(studentsPointHistoryList.recentlySelectedStudent);
 
   const { obj: filter, changeObjectValue } = useObj<FilterState>({
     name: '',
@@ -49,13 +52,14 @@ export function Home() {
     startPoint: -100,
     endPoint: 100,
   });
+  const [checkedTagList, setCheckedTagList] = useState<TagType[]>([]);
 
   const [debouncedName, setDebouncedName] = useState(filter.name);
   const [selectedStudentId, setSelectedStudentId] = useState<string[]>(['']);
 
   const [mode, setMode] = useState<Mode>({
     type: 'GENERAL',
-    text: '상벌점 부여',
+    text: '부여',
   });
   const [listViewType, setListViewType] = useState<ListViewType>('POINTS');
 
@@ -69,6 +73,7 @@ export function Home() {
       filter_type: filter.filterType,
       min_point: limitPoint.startPoint,
       max_point: limitPoint.endPoint,
+      tag_id: checkedTagList,
     });
 
   const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
@@ -112,7 +117,7 @@ export function Home() {
         setMode({ ...mode, type: 'POINTS', text: '일반' });
         break;
       case 'POINTS':
-        setMode({ ...mode, type: 'GENERAL', text: '상/벌점 부여' });
+        setMode({ ...mode, type: 'GENERAL', text: '부여' });
         setListViewType('POINTS');
         break;
       default:
@@ -168,6 +173,8 @@ export function Home() {
               filterType={filter.filterType}
               startPoint={limitPoint.startPoint}
               endPoint={limitPoint.endPoint}
+              checkedTagList={checkedTagList}
+              setCheckedTagList={setCheckedTagList}
               onChangeSearchName={onChangeSearchName}
               onChangeSortType={onChangeSortType}
               onClickStudent={onClickStudent}
@@ -202,6 +209,7 @@ export function Home() {
 const _Wrapper = styled.div`
   display: flex;
   margin: 160px auto 0 auto;
+  overflow-y: scroll;
 `;
 
 const _ModeButton = styled(Button)`

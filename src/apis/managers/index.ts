@@ -7,6 +7,7 @@ import {
 } from './response';
 import { ResetPasswordRequest } from './request';
 import { PointType } from '../points';
+import { TagType } from '../tags/response';
 
 const router = '/managers';
 
@@ -40,9 +41,13 @@ export const searchStudentList = async (
   filter_type: PointType,
   min_point: number,
   max_point: number,
+  tag_id: TagType[],
 ) => {
+  const tagIds = tag_id.map((res) => res.id).join('&tag_id=');
   const { data } = await instance.get<SearchStudentListResponse>(
-    `${router}/students?name=${name}&sort=${sort}&filter_type=${filter_type}&min_point=${min_point}&max_point=${max_point}`,
+    `${router}/students?name=${name}&sort=${sort}&filter_type=${filter_type}&min_point=${min_point}&max_point=${max_point}${
+      tagIds && '&tag_id='
+    }${tagIds}`,
   );
   return data;
 };

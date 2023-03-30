@@ -1,6 +1,6 @@
 import { BreadCrumb, StudyRoom } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import {
   useDeleteStudyRoom,
@@ -13,10 +13,13 @@ import { DeleteStudyRoom } from '@/components/modals/DeleteStudyRoom';
 import { SeatTypeList } from '@/components/apply/study/SeatTypeList';
 import { AppliedStudentList } from '@/components/apply/study/AppliedStudentList';
 import { pathToKorean } from '@/router';
+import StudyTimeOptions from '@/components/apply/study/StudyTimeOptions';
 
 export function StudyRoomDetail() {
   const { id } = useParams();
-  const { data: detail } = useStudyRoomDetail(id);
+  const location = useLocation();
+  const timeSlotId = location.state.timeSlotId;
+  const { data: detail } = useStudyRoomDetail(id, timeSlotId);
   const { selectModal, closeModal, modalState } = useModal();
   const deleteStudyRoom = useDeleteStudyRoom(id);
   const { data: typeList } = useSeatTypeList();
@@ -29,12 +32,14 @@ export function StudyRoomDetail() {
         />
       )}
       <_Wrapper>
-        <BreadCrumb left={351} pathToKorean={pathToKorean} />
+        <BreadCrumb top={46} left={351} pathToKorean={pathToKorean} />
         <StudyRoomDetailSummary
           detail={detail}
           id={id}
           selectModal={() => selectModal('DELETE_STUDY_ROOM')}
+          timeSlotId={timeSlotId}
         />
+        <StudyTimeOptions timeSlotId={timeSlotId} />
         <_SeatDetails>
           {detail && <StudyRoom {...detail} />}
           <section>
