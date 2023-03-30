@@ -66,6 +66,7 @@ export const useGetRemainListExcel = () =>
           type: res.headers['content-type'],
         });
         const fileName = res.headers['content-disposition'];
+
         fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
       },
     },

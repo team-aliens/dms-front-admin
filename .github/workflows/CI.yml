@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "APP_PUBLIC_URL=$APP_PUBLIC_URL" >> .env
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: yarn install --immutable --immutable-cache
 
       - name: Build Packages
         run: yarn build

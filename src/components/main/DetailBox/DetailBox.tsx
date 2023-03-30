@@ -7,6 +7,7 @@ import { StudentProfile } from './StudentInfo';
 import { PointBox } from './PointBox';
 import { PointType } from '@/apis/points';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
+import { Tag } from '../Tag';
 
 interface PropsType {
   studentPointHistory: StudentPointHistoryResponse;
@@ -64,6 +65,22 @@ export function DetailBox({
               {item.name}
             </Button>
           ))}
+        </_MateList>
+        <Text size="bodyS" color="gray6" margin={['top', 40]}>
+          학생 태그
+        </Text>
+        <_MateList>
+          {studentDetail.tags.map((tag) => {
+            return (
+              <Tag
+                key={tag.id}
+                id={tag.id}
+                name={tag.name}
+                color={tag.color}
+                canHover={true}
+              />
+            );
+          })}
         </_MateList>
         <Text size="bodyS" color="gray6" margin={['top', 40]}>
           상/벌점
@@ -129,28 +146,4 @@ const _PointList = styled.div`
   align-items: center;
   margin-top: 10px;
   gap: 10px;
-`;
-
-const _PointDetailBox = styled.div`
-  position: relative;
-  width: 309px;
-  min-height: 485px;
-`;
-
-const _Message = styled(Text)`
-  width: 191px;
-`;
-
-const _PointItemList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-`;
-
-const _StudentNameNumber = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 40px 0 7px 0;
-  gap: 12px;
 `;

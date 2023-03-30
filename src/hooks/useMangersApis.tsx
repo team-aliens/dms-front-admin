@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/useToast';
 import { PointType } from '@/apis/points';
 import { useModal } from './useModal';
 import { pagePath } from '@/utils/pagePath';
+import { TagType } from '@/apis/tags/response';
 
 interface PropsType {
   selectedId: string;
@@ -47,6 +48,7 @@ interface SearchStudentPropsType {
   filter_type: PointType;
   min_point: number;
   max_point: number;
+  tag_id?: TagType[];
 }
 
 export const useSearchStudents = ({
@@ -55,10 +57,12 @@ export const useSearchStudents = ({
   filter_type,
   min_point,
   max_point,
+  tag_id,
 }: SearchStudentPropsType) =>
   useQuery(
-    ['studentList', name, sort, filter_type, min_point, max_point],
-    () => searchStudentList(name, sort, filter_type, min_point, max_point),
+    ['studentList', name, sort, filter_type, min_point, max_point, tag_id],
+    () =>
+      searchStudentList(name, sort, filter_type, min_point, max_point, tag_id),
     {
       refetchOnWindowFocus: true,
     },
