@@ -51,7 +51,7 @@ export function SetUseTimeModal({
       setIsFetch(true);
     } else {
       setIsFetch(false);
-      reSetState();
+      resetState();
     }
   }, [selectList]);
 
@@ -67,7 +67,7 @@ export function SetUseTimeModal({
       onSuccess: () => {
         setAddTime(!addTime);
         refetch();
-        reSetState();
+        resetState();
       },
     },
   );
@@ -84,13 +84,13 @@ export function SetUseTimeModal({
     {
       onSuccess: () => {
         refetch();
-        reSetState();
+        resetState();
       },
     },
   );
 
   //드롭다운 state 값 초기화
-  const reSetState = () => {
+  const resetState = () => {
     onChangeStartHour('');
     onChangeStartMin('');
     onChangeEndHour('');
