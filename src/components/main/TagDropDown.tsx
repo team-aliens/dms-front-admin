@@ -1,7 +1,7 @@
 import { TagType } from '@/apis/tags/response';
 import { useTagList } from '@/hooks/useTagApi';
 import { Arrow, Button, CheckBox } from '@team-aliens/design-system';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styled from 'styled-components';
 import { Tag } from './Tag';
@@ -20,18 +20,22 @@ export function TagDropDown({
   const [click, setClick] = useState(false);
   const { data: tagList } = useTagList();
 
-  const tagText = () => {
-    if (click) return <Arrow size={18} colorKey="gray6" direction="bottom" />;
+  const tagState = useMemo(() => {
+    if (click)
+      return {
+        text: <Arrow size={18} colorKey="gray6" direction="bottom" />,
+        color: 'gray',
+      };
     else if (checkedTagList.length > 0) {
-      return ' ' + checkedTagList.length;
+      return { text: ' ' + checkedTagList.length, color: 'primary' };
     }
-  };
+    return { text: '', color: 'gray' };
+  }, [click]);
 
-  const tagColor = () => {
-    if (checkedTagList.length && click === false) {
-      return 'primary';
-    }
-    return 'gray';
+  const onChangeCheckBox = (isClick: boolean, tagElement: TagType) => {
+    if (isClick) {
+      setCheckedTagList(checkedTagList.filter((item) => item !== tagElement));
+    } else setCheckedTagList([...checkedTagList, tagElement]);
   };
 
   return (
@@ -44,10 +48,10 @@ export function TagDropDown({
       <_TagDropDown>
         <Button
           onClick={() => setClick(!click)}
-          color={tagColor()}
+          color={tagState.color as 'primary' | 'gray' | 'error'}
           kind="outline"
         >
-          <>학생 태그{tagText()}</>
+          <>학생 태그{tagState.text}</>
         </Button>
         {click && (
           <_Tags>
@@ -57,11 +61,7 @@ export function TagDropDown({
                   size={18}
                   status={checkedTagList.includes(tag)}
                   onChange={() =>
-                    checkedTagList.includes(tag)
-                      ? setCheckedTagList(
-                          checkedTagList.filter((item) => item !== tag),
-                        )
-                      : setCheckedTagList([...checkedTagList, tag])
+                    onChangeCheckBox(checkedTagList.includes(tag), tag)
                   }
                 />
                 <Tag id={tag.id} name={tag.name} color={tag.color} />

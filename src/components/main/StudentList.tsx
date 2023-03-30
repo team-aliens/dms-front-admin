@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
@@ -143,19 +149,15 @@ export function StudentList({
     },
   });
 
-  const filterText = () => {
+  const filterState = useMemo(() => {
     if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
-      return '상/벌점';
+      return { text: '상/벌점', color: 'gray' };
     }
-    return `${PointEnum[filterType]} / ${startPoint}~${endPoint}점`;
-  };
-
-  const filterColor = () => {
-    if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
-      return 'gray';
-    }
-    return 'primary';
-  };
+    return {
+      text: `${PointEnum[filterType]} / ${startPoint}~${endPoint}점`,
+      color: 'primary',
+    };
+  }, [startPoint, endPoint, filterType]);
 
   const pointListText = () => {
     if (selectedStudentId.filter((i) => i).length > 0) {
@@ -275,11 +277,11 @@ export function StudentList({
       </_Filter>
       <_Buttons>
         <Button
-          color={filterColor()}
+          color={filterState.color as 'primary' | 'gray' | 'error'}
           kind="outline"
           onClick={openPointFilterModal}
         >
-          {filterText()}
+          {filterState.text}
         </Button>
         <TagDropDown
           refetchSearchStudents={refetchSearchStudents}
