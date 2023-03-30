@@ -133,8 +133,6 @@ const moduleWrapper = (tsserver) => {
             }
             break;
         }
-      } else {
-        str = str.replace(/^\/?/, process.platform === `win32` ? `` : `/`);
       }
     }
 
