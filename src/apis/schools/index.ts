@@ -5,6 +5,7 @@ import {
   SchoolQuestionResponse,
 } from './response';
 import { ChangeSchoolQnARequest } from '@/apis/schools/request';
+import { IsUseAbleFeature } from '../auth/response';
 
 const router = '/schools';
 
@@ -38,4 +39,13 @@ export const reIssueSchoolCode = async () => {
 
 export const changeSchoolQnA = async (body: ChangeSchoolQnARequest) => {
   await instance.patch(`${router}/question`, body);
+};
+
+/* 사용가능 기능 조회 */
+export const availAbleFeatures = async () => {
+  const { data } = await instance.get<IsUseAbleFeature>(
+    `${router}/available-features`,
+  );
+
+  return data;
 };
