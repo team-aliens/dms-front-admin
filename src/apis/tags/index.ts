@@ -1,12 +1,17 @@
 import { MutationOptions, useMutation } from 'react-query';
 import { instance } from '../axios';
-import { AllTagListResponse } from './response';
-
+import { TagListResponse } from './response';
 const router = '/tags';
+
+export const deleteTag = async (student_id: string, tag_id: string) => {
+  await instance.delete(
+    `${router}/students?student_id=${student_id}&tag_id=${tag_id}`,
+  );
+};
 
 /** 태그 전체 조회 */
 export const getAllTags = async () => {
-  const { data } = await instance.get<Promise<AllTagListResponse>>(`${router}`);
+  const { data } = await instance.get<Promise<TagListResponse>>(`${router}`);
   return data;
 };
 

@@ -1,14 +1,20 @@
 import styled from 'styled-components';
 import { Button, SearchBox, Sort } from '@team-aliens/design-system';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { SortEnum } from '@/apis/managers';
 import { StudentBox } from '@/components/main/StudentBox';
 import { StudentInfo } from '@/apis/managers/response';
 import { useModal } from '@/hooks/useModal';
 import { PointFilterModal } from '@/components/modals/PointFilter';
 import { DeletePointListModal } from '../modals/DeletePointList';
-import { PointHistroyIdAtom } from '@/utils/atoms';
+import { DeleteTagIdAtom, PointHistroyIdAtom } from '@/utils/atoms';
 import {
   useCancelPointHistory,
   usePointOptionList,
@@ -21,6 +27,10 @@ import { GivePointOptionsModal } from '../modals/GivePointOptionsModal';
 import { ViewPointOptionsModal } from '../modals/ViewPointOptionsModal';
 import { DeletePointOptionModal } from '../modals/DeletePointOption';
 import { useToast } from '@/hooks/useToast';
+import { TagDropDown } from './TagDropDown';
+import { TagType } from '@/apis/tags/response';
+import { DeleteStudentTagModal } from '../modals/DeleteStudentTag';
+import { useDeleteStudentTag } from '@/hooks/useTagApi';
 import { GiveAllTagModal } from '../modals/GiveAllTagModal';
 import { useTagList } from '@/hooks/useTagsApi';
 import { DeleteTagModal } from '../modals/DeleteTag';
@@ -35,6 +45,8 @@ interface Props extends FilterState {
   studentList: StudentInfo[];
   startPoint: number;
   endPoint: number;
+  checkedTagList: TagType[];
+  setCheckedTagList: Dispatch<SetStateAction<TagType[]>>;
   onChangeSearchName: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeSortType: () => void;
   onClickStudent: (id: string, modeType?: ModeType) => void;
@@ -55,6 +67,8 @@ export function StudentList({
   filterType,
   startPoint,
   endPoint,
+  checkedTagList,
+  setCheckedTagList,
   onChangeSearchName,
   onChangeSortType,
   onClickStudent,
@@ -70,6 +84,7 @@ export function StudentList({
   const [showViewModal, setShowViewModal] = useState<boolean>(false);
   const openPointFilterModal = () => selectModal('POINT_FILTER');
   const [pointHistoryId] = useRecoilState(PointHistroyIdAtom);
+
   const cancelPoint = useCancelPointHistory(pointHistoryId, {
     onSuccess: () => {
       refetchStudentPointHistory();
@@ -134,12 +149,15 @@ export function StudentList({
     },
   });
 
-  const filterText = () => {
+  const filterState = useMemo(() => {
     if (startPoint === -100 && endPoint === 100 && filterType === 'ALL') {
-      return '상/벌점 필터';
+      return { text: '상/벌점', color: 'gray' };
     }
-    return `${PointEnum[filterType]} / ${startPoint}~${endPoint}점`;
-  };
+    return {
+      text: `${PointEnum[filterType]} / ${startPoint}~${endPoint}점`,
+      color: 'primary',
+    };
+  }, [startPoint, endPoint, filterType]);
 
   const pointListText = () => {
     if (selectedStudentId.filter((i) => i).length > 0) {
@@ -158,6 +176,15 @@ export function StudentList({
     setShowGiveModal(false);
   };
 
+  const tagId = useRecoilValue(DeleteTagIdAtom);
+
+  const deleteStudentTag = useDeleteStudentTag(
+    selectedStudentId[0],
+    tagId,
+    refetchSearchStudents,
+    refetchStudentDetail,
+  );
+
   return (
     <_Wrapper detailIsOpened={!!selectedStudentId[0]}>
       <_Filter className="filter">
@@ -167,9 +194,7 @@ export function StudentList({
           onChange={onChangeSearchName}
         />
         <_Buttons>
-          {mode === 'GENERAL' ? (
-            <Button onClick={openPointFilterModal}>{filterText()}</Button>
-          ) : (
+          {mode === 'POINTS' && (
             <_ChooseModalBoxWrapper>
               <Button
                 className="grantPoint"
@@ -250,6 +275,20 @@ export function StudentList({
           </Button>
         </_Buttons>
       </_Filter>
+      <_Buttons>
+        <Button
+          color={filterState.color as 'primary' | 'gray' | 'error'}
+          kind="outline"
+          onClick={openPointFilterModal}
+        >
+          {filterState.text}
+        </Button>
+        <TagDropDown
+          refetchSearchStudents={refetchSearchStudents}
+          checkedTagList={checkedTagList}
+          setCheckedTagList={setCheckedTagList}
+        />
+      </_Buttons>
       <_StudentList>
         {studentList.map((item) => (
           <StudentBox
@@ -305,6 +344,15 @@ export function StudentList({
           closeModal={closeModal}
         />
       )}
+      {modalState.selectedModal === 'DELETE_STUDENT_TAG' && (
+        <DeleteStudentTagModal
+          onClick={() => {
+            deleteStudentTag.mutate();
+            closeModal();
+          }}
+          close={closeModal}
+        />
+      )}
       {modalState.selectedModal === 'GIVE_TAG_OPTIONS' && (
         <GiveAllTagModal
           close={closeModal}
@@ -348,6 +396,7 @@ const _Wrapper = styled.div<{ detailIsOpened: boolean }>`
 const _Filter = styled.section`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   > button {
     > svg > path {
       fill: ${({ theme }) => theme.color.gray6};
@@ -355,7 +404,7 @@ const _Filter = styled.section`
   }
 `;
 const _StudentList = styled.ul`
-  margin-top: 36px;
+  padding: 20px 0 20px 0;
   display: flex;
   flex-direction: column;
   gap: 16px 0;
@@ -369,6 +418,7 @@ const _Buttons = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  margin: 10px 0;
 `;
 
 const _ChooseModalBoxWrapper = styled.div`

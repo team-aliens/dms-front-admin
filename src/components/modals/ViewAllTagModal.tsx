@@ -18,7 +18,7 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { useForm } from '@/hooks/useForm';
 import { useToast } from '@/hooks/useToast';
-import { AllTagListResponse } from '@/apis/tags/response';
+import { TagListResponse } from '@/apis/tags/response';
 import { TagList } from '../main/DetailBox/TagList';
 import {
   AddTagRequest,
@@ -34,7 +34,7 @@ interface PropsType {
   close: () => void;
   selectedTag: string;
   setSelectedTag: Dispatch<SetStateAction<string>>;
-  allTags: AllTagListResponse;
+  allTags: TagListResponse;
   refetchAllTags?: () => void;
   setTagModal: Dispatch<SetStateAction<string>>;
 }
@@ -176,7 +176,10 @@ export function ViewAllTagModal({
     <Modal
       title="학생 태그"
       content=""
-      close={close}
+      close={() => {
+        setSelectedTag('');
+        close();
+      }}
       buttonList={[
         selectedTag ? (
           <Button
@@ -243,13 +246,13 @@ export function ViewAllTagModal({
               <Text size="bodyS" color="gray6">
                 색상
               </Text>
-              <_BigCircleWrapper
-                onClick={() => setEditColorDropDown(!editColorDropDown)}
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setEditColorDropDown(false);
+                }}
               >
-                <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setEditColorDropDown(false);
-                  }}
+                <_BigCircleWrapper
+                  onClick={() => setEditColorDropDown(!editColorDropDown)}
                 >
                   <_BigColorCircle backColor={editSelectedColor} />
                   <img src={Triangle} alt="삼각형" />
@@ -274,8 +277,8 @@ export function ViewAllTagModal({
                       })}
                     </_DropDownContainer>
                   )}
-                </OutsideClickHandler>
-              </_BigCircleWrapper>
+                </_BigCircleWrapper>
+              </OutsideClickHandler>
             </_CenterWrapper>
           </>
         </>

@@ -13,7 +13,7 @@ import { useForm } from '@/hooks/useForm';
 import Triangle from '../../assets/Triangle.svg';
 import { TagList } from '../main/DetailBox/TagList';
 import { AddTagRequest, SearchTagRequest } from '@/apis/tags/request';
-import { AllTagListResponse } from '@/apis/tags/response';
+import { TagListResponse } from '@/apis/tags/response';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useAddTag, useGiveTag } from '@/apis/tags';
 import { useToast } from '@/hooks/useToast';
@@ -22,7 +22,7 @@ import { AxiosError } from 'axios';
 interface PropsType {
   selectedStudentId: string[];
   close: () => void;
-  allTags: AllTagListResponse;
+  allTags: TagListResponse;
   refetchAllTags: () => void;
   selectedTag: string;
   setSelectedTag: Dispatch<SetStateAction<string>>;
@@ -184,7 +184,10 @@ export function GiveAllTagModal({
     <Modal
       title="학생 태그"
       content=""
-      close={close}
+      close={() => {
+        setSelectedTag('');
+        close();
+      }}
       buttonList={[
         <Button
           margin={newItem && [-40, 0, 0, 0]}
