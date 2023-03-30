@@ -1,4 +1,4 @@
-import { Modal, Button, DropDown } from '@team-aliens/design-system';
+import { Modal, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import {
@@ -10,6 +10,7 @@ import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
 import { StydyTimeType } from '@/apis/studyRooms/response';
 import { TimePicker } from './TimePicker';
+import { useToast } from '@/hooks/useToast';
 
 interface PropsType {
   close: () => void;
@@ -65,6 +66,7 @@ export function SetUseTimeModal({
     },
   );
 
+  const { toastDispatch } = useToast();
   //이용시간 수정 API
   const patchStudyTime = usePatchStudyTime(
     selectList[0],
@@ -76,6 +78,11 @@ export function SetUseTimeModal({
     },
     {
       onSuccess: () => {
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '시간이 수정되었습니다.',
+        });
         refetch();
         resetState();
       },
