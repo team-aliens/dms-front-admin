@@ -2259,13 +2259,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.2.6":
-  version: 29.2.6
-  resolution: "@types/jest@npm:29.2.6"
+"@types/jest@npm:^29.5.0":
+  version: 29.5.0
+  resolution: "@types/jest@npm:29.5.0"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 90190ac830334af1470d255853f9621fe657e5030b4d96773fc1f884833cd303c76580b00c1b86dc38a8db94f1c7141d462190437a10af31852b8845a57c48ba
+  checksum: cd877e5c56d299cceb8bfdcbb1a77723c706750dd3c3bc47403bc3599b8faff590a3b009c68bb5b11bf7a8c77d1fb01de5e124329b4a08e65f1cdda28b0ecdb8
   languageName: node
   linkType: hard
 
@@ -2296,6 +2296,13 @@ __metadata:
   version: 5.1.2
   resolution: "@types/minimatch@npm:5.1.2"
   checksum: 0391a282860c7cb6fe262c12b99564732401bdaa5e395bee9ca323c312c1a0f45efbf34dce974682036e857db59a5c9b1da522f3d6055aeead7097264c8705a8
+  languageName: node
+  linkType: hard
+
+"@types/mocha@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "@types/mocha@npm:10.0.1"
+  checksum: 224ea9fce7b1734ccdb9aa99a622d902a538ce1847bca7fd22c5fb38adcf3ed536f50f48f587085db988a4bb3c2eb68f4b98e1cd6a38bc5547bd3bbbedc54495
   languageName: node
   linkType: hard
 
@@ -5246,7 +5253,8 @@ __metadata:
     "@babel/runtime-corejs3": ^7.18.9
     "@team-aliens/design-system": ^1.4.9
     "@types/file-saver": ^2
-    "@types/jest": ^29.2.6
+    "@types/jest": ^29.5.0
+    "@types/mocha": ^10.0.1
     "@types/node": ^18.11.18
     "@types/react": ^18.0.27
     "@types/react-color": ^3.0.6

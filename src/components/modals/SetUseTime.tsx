@@ -9,20 +9,13 @@ import {
 import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
 import { StydyTimeType } from '@/apis/studyRooms/response';
+import { TimePicker } from './TimePicker';
 
 interface PropsType {
   close: () => void;
   createStudyRoom: () => void;
   onChangeStudyTime: (times_id: string[]) => void;
 }
-
-const hourToArray = Array(24)
-  .fill(void 0)
-  .map((_, idx) => `${idx < 10 ? '0' + String(idx) : String(idx)}`);
-
-const minToArray = Array(60)
-  .fill(void 0)
-  .map((_, idx) => `${idx < 10 ? '0' + String(idx) : String(idx)}`);
 
 export function SetUseTimeModal({
   close,
@@ -106,7 +99,6 @@ export function SetUseTimeModal({
           <_Times>
             {data?.time_slots.map((time: StydyTimeType, index) => (
               <TimePressButton
-                key={index}
                 setSelect={setSelectList}
                 select={selectList}
                 timeSlotId={time.id}
@@ -128,44 +120,19 @@ export function SetUseTimeModal({
           <_SetTime
             style={addTime ? { height: '47px', overflowY: 'visible' } : {}}
           >
-            <DropDown
-              items={hourToArray}
-              placeholder="00"
-              onChange={(value) => {
-                onChangeStartHour(value);
+            <TimePicker
+              timeState={{
+                startHourState: startHourState,
+                startMinState: startMinState,
+                endHourState: endHourState,
+                endMinState: endMinState,
               }}
-              width={80}
-              value={startHourState}
-            />
-            <p>:</p>
-            <DropDown
-              items={minToArray}
-              placeholder="00"
-              onChange={(value) => {
-                onChangeStartMin(value);
+              onChangeState={{
+                onChangeSH: onChangeStartHour,
+                onChangeSM: onChangeStartMin,
+                onChangeEH: onChangeEndHour,
+                onChangeEM: onChangeEndMin,
               }}
-              width={80}
-              value={startMinState}
-            />
-            <p>~</p>
-            <DropDown
-              items={hourToArray}
-              placeholder="00"
-              onChange={(value) => {
-                onChangeEndHour(value);
-              }}
-              width={80}
-              value={endHourState}
-            />
-            <p>:</p>
-            <DropDown
-              items={minToArray}
-              placeholder="00"
-              onChange={(value) => {
-                onChangeEndMin(value);
-              }}
-              width={80}
-              value={endMinState}
             />
             <Button
               color="gray"
