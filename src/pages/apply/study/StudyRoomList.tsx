@@ -185,6 +185,10 @@ const _TimeList = styled.div`
   display: flex;
   gap: 12px;
   margin-top: 40px;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    height: 8px;
+  }
 `;
 const _List = styled.ul`
   margin-top: 47px;

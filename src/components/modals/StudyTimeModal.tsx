@@ -34,14 +34,14 @@ export default function StudyTimeModal({
   ModalType,
 }: PropsType) {
   const [timeSlots, setTimeSlots] = useState(initTimeSlots);
-  const timeSlot = timeSlots.time_slots.filter(
-    (slot) => slot.id === timeSlotId,
-  );
+  const timeSlot =
+    ModalType === 'edit' &&
+    timeSlots.time_slots.filter((slot) => slot.id === timeSlotId);
   const { state: studyTimeState, setState } = useForm<FormState>({
-    start_hour: timeSlot[0].start_time.slice(0, 2) ?? '0',
-    start_min: timeSlot[0].start_time.slice(3, 5) ?? '0',
-    end_hour: timeSlot[0].end_time.slice(0, 2) ?? '0',
-    end_min: timeSlot[0].end_time.slice(3, 5) ?? '0',
+    start_hour: timeSlot[0]?.start_time.slice(0, 2) ?? '00',
+    start_min: timeSlot[0]?.start_time.slice(3, 5) ?? '00',
+    end_hour: timeSlot[0]?.end_time.slice(0, 2) ?? '00',
+    end_min: timeSlot[0]?.end_time.slice(3, 5) ?? '00',
   });
   const { mutateAsync: mutateCreateTimeSlot } = useCreateTimeSlots({
     body: {

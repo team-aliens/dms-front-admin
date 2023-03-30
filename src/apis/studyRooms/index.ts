@@ -146,19 +146,18 @@ export const useStudyTimeSlots = () =>
     return data;
   });
 
-export const useCreateTimeSlots = ({ body }: CreateStudyTimeSlotsRequest) =>
+export const useCreateTimeSlots = (
+  body: CreateStudyTimeSlotsRequest,
+  options?: MutationOptions,
+) =>
   useMutation(
     () =>
-      instance.post<CreateStudyTimeSlotsResponse>(`${router}/time-slots`, body),
+      instance.post<CreateStudyTimeSlotsResponse>(
+        `${router}/time-slots`,
+        body.body,
+      ),
     {
-      onSuccess: () => {
-        const { toastDispatch } = useToast();
-        toastDispatch({
-          toastType: 'SUCCESS',
-          actionType: 'APPEND_TOAST',
-          message: '자습실 이용 시간이 추가되었습니다.',
-        });
-      },
+      ...options,
     },
   );
 
