@@ -182,7 +182,4 @@ const _SetTime = styled.div`
   > button {
     margin-left: 10px;
   }
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
