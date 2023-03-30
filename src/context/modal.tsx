@@ -24,6 +24,7 @@ export type SelectedModalType =
   | 'SCHOOL_CHECKING_CODE'
   | 'PRINT_STUDY_ROOM_APPLY'
   | 'SET_STUDY_ROOM_APPLY_TIME'
+  | 'SET_STUDY_TIME'
   | '';
 
 interface ModalState {

@@ -46,6 +46,7 @@ export const PatchRoom = () => {
     onChangeInput,
     onChangeSex,
     onChangeSeatSetting,
+    onChangeStudyTime,
     initalValue,
   } = useStudyRoom();
 
@@ -153,6 +154,7 @@ export const PatchRoom = () => {
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
             createStudyRoom={onClick}
+            onChangeStudyTime={onChangeStudyTime}
             patch
             {...rest}
           />
