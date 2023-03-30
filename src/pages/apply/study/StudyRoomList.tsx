@@ -19,10 +19,10 @@ import {
 } from '@/components/modals/SetApplicationTime';
 import { useToast } from '@/hooks/useToast';
 import TimeCard from '@/components/apply/study/TimeCard';
-import CreateStudyTimeModal from '@/components/modals/CreateStudyTimeModal';
+import CreateStudyTimeModal from '@/components/modals/StudyTimeModal';
 import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
-import EditStudyTimeModal from '@/components/modals/EditStudyTimeModal';
 import PrintStudyRoomApplyModal from '@/components/modals/PrintStudyRoomApplyModal';
+import StudyTimeModal from '@/components/modals/StudyTimeModal';
 
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
@@ -153,7 +153,7 @@ export function StudyRoomList() {
         />
       )}
       {modalState.selectedModal === 'ADD_STUDY_ROOM_TIME' && (
-        <CreateStudyTimeModal closeModal={closeModal} />
+        <StudyTimeModal ModalType="create" closeModal={closeModal} />
       )}
       {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
         <DeleteStudyRoomTimeModal
@@ -162,10 +162,11 @@ export function StudyRoomList() {
         />
       )}
       {modalState.selectedModal === 'EDIT_STUDY_ROOM_TIME' && (
-        <EditStudyTimeModal
+        <StudyTimeModal
           initTimeSlots={studyTimeSlots}
           closeModal={closeModal}
           timeSlotId={clickTimeCardId}
+          ModalType={'edit'}
         />
       )}
       {modalState.selectedModal === 'PRINT_STUDY_ROOM_APPLY' && (

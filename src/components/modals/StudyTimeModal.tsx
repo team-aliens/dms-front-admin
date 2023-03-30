@@ -1,14 +1,19 @@
 import { Button, DropDown, Modal } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useCreateTimeSlots } from '@/apis/studyRooms';
+import { useCreateTimeSlots, useEditTimeSlots } from '@/apis/studyRooms';
 import { useForm } from '@/hooks/useForm';
 import { useToast } from '@/hooks/useToast';
+import { StudyTimeSlotsResponse } from '@/apis/studyRooms/response';
+import { useState } from 'react';
 
 interface PropsType {
+  initTimeSlots?: StudyTimeSlotsResponse;
   closeModal: () => void;
+  ModalType: 'create' | 'edit';
+  timeSlotId?: string;
 }
 
-interface IUseForm {
+interface FormState {
   start_hour: string;
   start_min: string;
   end_hour: string;
@@ -22,30 +27,66 @@ const minToArray = Array(60)
   .fill(void 0)
   .map((_, idx) => `${idx < 10 ? '0' + String(idx) : String(idx)}`);
 
-export default function CreateStudyTimeModal({ closeModal }: PropsType) {
-  const { state: studyTimeState, setState } = useForm<IUseForm>({
-    start_hour: '00',
-    start_min: '00',
-    end_hour: '00',
-    end_min: '00',
+export default function StudyTimeModal({
+  closeModal,
+  timeSlotId,
+  initTimeSlots,
+  ModalType,
+}: PropsType) {
+  const [timeSlots, setTimeSlots] = useState(initTimeSlots);
+  const timeSlot = timeSlots.time_slots.filter(
+    (slot) => slot.id === timeSlotId,
+  );
+  const { state: studyTimeState, setState } = useForm<FormState>({
+    start_hour: timeSlot[0].start_time.slice(0, 2) ?? '0',
+    start_min: timeSlot[0].start_time.slice(3, 5) ?? '0',
+    end_hour: timeSlot[0].end_time.slice(0, 2) ?? '0',
+    end_min: timeSlot[0].end_time.slice(3, 5) ?? '0',
   });
-  const { mutateAsync } = useCreateTimeSlots({
+  const { mutateAsync: mutateCreateTimeSlot } = useCreateTimeSlots({
     body: {
       start_time: `${studyTimeState.start_hour}:${studyTimeState.start_min}`,
       end_time: `${studyTimeState.end_hour}:${studyTimeState.end_min}`,
     },
   });
+  const { mutateAsync: mutateEditTimeSlot } = useEditTimeSlots({
+    body: {
+      start_time: `${studyTimeState.start_hour}:${studyTimeState.start_min}`,
+      end_time: `${studyTimeState.end_hour}:${studyTimeState.end_min}`,
+    },
+    path: {
+      time_slot_id: timeSlotId,
+    },
+  });
   const { toastDispatch } = useToast();
 
   const onClick = () => {
-    mutateAsync().then(() => {
-      toastDispatch({
-        toastType: 'SUCCESS',
-        actionType: 'APPEND_TOAST',
-        message: '자습실 이용 시간이 추가되었습니다.',
+    if (ModalType === 'create') {
+      mutateCreateTimeSlot().then(() => {
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '자습실 이용 시간이 추가되었습니다.',
+        });
       });
-      closeModal();
-    });
+    } else {
+      mutateEditTimeSlot()
+        .then(() => {
+          toastDispatch({
+            toastType: 'SUCCESS',
+            actionType: 'APPEND_TOAST',
+            message: '자습실 이용 시간이 수정되었습니다.',
+          });
+          closeModal();
+        })
+        .catch((err) => {
+          toastDispatch({
+            toastType: 'ERROR',
+            actionType: 'APPEND_TOAST',
+            message: '자습실 이용시간 수정이 실패되었습니다.',
+          });
+        });
+    }
   };
 
   const onChange = (name: string, value: string) => {

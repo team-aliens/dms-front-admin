@@ -14,12 +14,11 @@ import { SeatTypeList } from '@/components/apply/study/SeatTypeList';
 import { AppliedStudentList } from '@/components/apply/study/AppliedStudentList';
 import { pathToKorean } from '@/router';
 import StudyTimeOptions from '@/components/apply/study/StudyTimeOptions';
-import { useState } from 'react';
 
 export function StudyRoomDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const [timeSlotId] = useState(location.state.timeSlotId);
+  const timeSlotId = location.state.timeSlotId;
   const { data: detail } = useStudyRoomDetail(id, timeSlotId);
   const { selectModal, closeModal, modalState } = useModal();
   const deleteStudyRoom = useDeleteStudyRoom(id);
