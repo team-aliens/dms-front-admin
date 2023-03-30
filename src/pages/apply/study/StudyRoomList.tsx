@@ -27,14 +27,6 @@ import PrintStudyRoomApplyModal from '@/components/modals/PrintStudyRoomApplyMod
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
   const { toastDispatch } = useToast();
-  // const openAddStudyRoomTimeModal = () => selectModal('ADD_STUDY_ROOM_TIME');
-  // const openEditStudyRoomTimeModal = () => selectModal('EDIT_STUDY_ROOM_TIME');
-  // const openDeleteStudyRoomTimeModal = () =>
-  //   selectModal('DELETE_STUDY_ROOM_TIME');
-
-  // const [studyRoomTimeList, setStudyRoomTimeList] = useState<ApplicationTime[]>(
-  //   [],
-  // );
   const { data: applicationTime, refetch } = useGetApplicationTime();
   const [globalApplicationTime, onHandleChange] = useState<ApplicationTime>({
     startHour: '00',
@@ -90,23 +82,6 @@ export function StudyRoomList() {
       },
     },
   );
-  // const [hover, setHover] = useState<boolean>(false);
-  // const [current, setCurrent] = useState<number>(0);
-
-  // const AddStudyRoomUseTime = (state: ApplicationTime) => {
-  //   setStudyRoomTimeList([...studyRoomTimeList, state]);
-  // };
-
-  // const EditStudyRoomUseTime = (state: ApplicationTime) => {
-  //   const copiedItems = [...studyRoomTimeList];
-  //   copiedItems[current] = state;
-  //   setStudyRoomTimeList(copiedItems);
-  // };
-
-  // const DeleteStudyRoomUseTime = () => {
-  //   setStudyRoomTimeList(studyRoomTimeList.filter((_, i) => current !== i));
-  //   closeModal();
-  // };
   const { data: studyTimeSlots, mutate: mutateStudyTimeSlots } =
     useStudyTimeSlots();
   const [selectTimeCardId, setSelectTimeCardId] = useState('');
@@ -134,43 +109,6 @@ export function StudyRoomList() {
           endHour={globalApplicationTime.endHour}
           endMin={globalApplicationTime.endMin}
         />
-        {/*<_Buttons>*/}
-        {/*  <Button*/}
-        {/*    onClick={openAddStudyRoomTimeModal}*/}
-        {/*    color="gray"*/}
-        {/*    kind="outline"*/}
-        {/*    Icon={<Add />}*/}
-        {/*  />*/}
-        {/*  {studyRoomTimeList.map((studyRomTime, idx) => {*/}
-        {/*    const { startHour, startMin, endHour, endMin } = studyRomTime;*/}
-        {/*    return (*/}
-        {/*      <div*/}
-        {/*        onMouseEnter={() => current === idx && setHover(true)}*/}
-        {/*        onMouseLeave={() => setHover(false)}*/}
-        {/*      >*/}
-        {/*        <Button*/}
-        {/*          onClick={() => setCurrent(idx)}*/}
-        {/*          color={current === idx ? 'primary' : 'gray'}*/}
-        {/*          kind={current === idx ? 'contained' : 'outline'}*/}
-        {/*        >*/}
-        {/*          {startHour}시 {startMin !== '00' && `${startMin}분`} ~{' '}*/}
-        {/*          {endHour}시 {endMin !== '00' && `${endMin}분`}*/}
-        {/*          {hover && current === idx && (*/}
-        {/*            <>*/}
-        {/*              <_Line />*/}
-        {/*              <_Border onClick={openEditStudyRoomTimeModal}>*/}
-        {/*                <Gear colorKey="gray1" size={18} />*/}
-        {/*              </_Border>*/}
-        {/*              <_Border onClick={openDeleteStudyRoomTimeModal}>*/}
-        {/*                <Trash colorKey="gray1" size={18} />*/}
-        {/*              </_Border>*/}
-        {/*            </>*/}
-        {/*          )}*/}
-        {/*        </Button>*/}
-        {/*      </div>*/}
-        {/*    );*/}
-        {/*  })}*/}
-        {/*</_Buttons>*/}
         <_TimeList>
           <Button
             kind={'outline'}
@@ -233,12 +171,6 @@ export function StudyRoomList() {
       {modalState.selectedModal === 'PRINT_STUDY_ROOM_APPLY' && (
         <PrintStudyRoomApplyModal closeModal={closeModal} />
       )}
-      {/* {modalState.selectedModal === 'DELETE_STUDY_ROOM_TIME' && (
-        <DeleteStudyRoomTimeModal
-          close={closeModal}
-          onClick={DeleteStudyRoomUseTime}
-        />
-      )} */}
     </WithNavigatorBar>
   );
 }

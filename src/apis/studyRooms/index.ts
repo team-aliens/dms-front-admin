@@ -116,7 +116,6 @@ export const useStudyRoomList = ({ time_slot }: StudyRoomListRequest) =>
     const { data } = await instance.get<StudyRoomListResponse>(
       `${router}/list/managers?time_slot=${time_slot}`,
     );
-    console.log(data);
     return data;
   });
 
