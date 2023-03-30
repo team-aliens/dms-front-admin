@@ -1,3 +1,5 @@
+import { TagType } from '../tags/response';
+
 export interface FindAccountIdResponse {
   email: string;
 }
@@ -8,6 +10,7 @@ export interface StudentInfo {
   gcn: string;
   room_number: string;
   profile_image_url: string;
+  tags: TagType[];
 }
 
 export interface SearchStudentListResponse {
@@ -31,6 +34,7 @@ export interface GetStudentDetailResponse {
   minus_point: number;
   room_mates: RoomMatesInfo[];
   sex: GenderType;
+  tags: TagType[];
 }
 
 export interface GetMyProfileResponse {

@@ -22,6 +22,10 @@ export type SelectedModalType =
   | 'EDIT_REMAIN_ITEM'
   | 'DELETE_REMAIN_ITEM'
   | 'SCHOOL_CHECKING_CODE'
+  | 'DELETE_STUDENT_TAG'
+  | 'GIVE_TAG_OPTIONS'
+  | 'VIEW_TAG_OPTIONS'
+  | 'DELETE_TAG'
   | '';
 
 interface ModalState {
