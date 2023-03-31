@@ -1,6 +1,6 @@
 import { Modal, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
 import { TimePicker } from './TimePicker';
@@ -10,21 +10,40 @@ import {
   useEditTimeSlots,
   useStudyTimeSlots,
 } from '@/apis/studyRooms';
+import { useForm } from '@/hooks/useForm';
 
 interface PropsType {
   close: () => void;
   createStudyRoom: () => void;
   onChangeStudyTime: (times_id: string[]) => void;
+  isCreateRoom: boolean;
+  setTimeSlotId: (ids: string[])=>void;
 }
+
+export type fetchTimeStateType = {
+  sHState: string;
+  sMState: string;
+  eHState: string;
+  eMState: string;
+};
 
 export function SetUseTimeModal({
   close,
   createStudyRoom,
   onChangeStudyTime,
+  isCreateRoom,
+  setTimeSlotId,
 }: PropsType) {
   const [selectList, setSelectList] = useState<string[]>([]);
   const [addTime, setAddTime] = useState<boolean>(false);
   const [isFetch, setIsFetch] = useState<boolean>(false);
+  const { state: fetchTimeState, setState: setFetchTimeState } =
+    useForm<fetchTimeStateType>({
+      sHState: '00',
+      sMState: '00',
+      eHState: '00',
+      eMState: '00',
+    });
   const { onDropDownChange: onChangeStartHour, sort: startHourState } =
     useDropDown<string>('');
   const { onDropDownChange: onChangeStartMin, sort: startMinState } =
@@ -34,14 +53,23 @@ export function SetUseTimeModal({
   const { onDropDownChange: onChangeEndMin, sort: endMinState } =
     useDropDown<string>('');
 
+  const fetchDropDownItems = () => {
+    onChangeStartHour(fetchTimeState.sHState);
+    onChangeStartMin(fetchTimeState.sMState);
+    onChangeEndHour(fetchTimeState.eHState);
+    onChangeEndMin(fetchTimeState.eMState);
+  };
+
   //이용시간 get API
   const { data, mutate } = useStudyTimeSlots();
 
   //이용시간 선택
   useEffect(() => {
     onChangeStudyTime(selectList);
+    setTimeSlotId(selectList);
     if (selectList.length === 1) {
       setIsFetch(true);
+      fetchDropDownItems();
     } else {
       setIsFetch(false);
       resetState();
@@ -108,18 +136,20 @@ export function SetUseTimeModal({
 
   return (
     <Modal
-      title="자습실 사용 시간 설정"
+      title="자습실 이용 시간 설정"
       close={close}
       inputList={[
         <>
           <_Times>
             {data?.time_slots.map((time, index) => (
               <TimePressButton
+                key={index}
                 setSelect={setSelectList}
                 select={selectList}
                 timeSlotId={time.id}
                 start_time={time.start_time}
                 end_time={time.end_time}
+                setFetchTimeState={setFetchTimeState}
               />
             ))}
           </_Times>
@@ -166,7 +196,7 @@ export function SetUseTimeModal({
           disabled={selectList.length !== 0 ? false : true}
           onClick={createStudyRoom}
         >
-          생성
+          {isCreateRoom ? '생성' : '수정'}
         </Button>,
       ]}
     />

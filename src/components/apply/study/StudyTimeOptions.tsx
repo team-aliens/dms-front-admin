@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   usePatchStudyRoom,
   useStudyRoomDetail,
@@ -13,35 +13,29 @@ import { tranformTimeSlot } from '@/utils/time';
 
 export default function StudyTimeOptions({
   timeSlotId,
+  setTimeSlotState,
+  refetch,
 }: {
   timeSlotId: string;
+  setTimeSlotState: React.Dispatch<React.SetStateAction<string>>;
+  refetch: () => void;
 }) {
   const { id } = useParams();
   const { data: detail } = useStudyRoomDetail(id, timeSlotId);
   const { initalValue, studyRoomState } = useStudyRoom();
   const { time_slots, seat, ...creatStudyRoomRequest } = studyRoomState;
-  const { mutate: patchStudyRoom } = usePatchStudyRoom(id, {
-    ...studyRoomState,
-    time_slot_ids: [timeSlotId],
-    seats: creatStudyRoomRequest.seats.map(
-      (i): Seat => ({
-        width_location: i.width_location,
-        height_location: i.height_location,
-        number: i.number || null,
-        status: i.status === 'IN_USE' ? 'AVAILABLE' : i.status,
-        type_id: i.type?.id || null,
-      }),
-    ),
-  });
-  const [selectId, setSelectId] = useState('');
+
+  const [selectId, setSelectId] = useState(timeSlotId);
 
   const onClick = (id: string) => {
     setSelectId(id);
-    patchStudyRoom();
+    setTimeSlotState(id);
+    refetch();
   };
   useEffect(() => {
     initalValue(detail);
   }, [detail]);
+
   return (
     <_wrapper>
       <_title>자습실 이용 시간</_title>
@@ -75,9 +69,15 @@ const _studyTimeSlots = styled.div`
   display: flex;
   gap: 12px;
   margin-left: 16px;
+  white-space: nowrap;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    height: 8px;
+  }
 `;
 const _studyTimeSlot = styled.button<{ isSelect: boolean }>`
   display: flex;
+  flex: none;
   justify-content: center;
   align-items: center;
   width: 126px;
@@ -86,6 +86,6 @@ const _studyTimeSlot = styled.button<{ isSelect: boolean }>`
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   color: ${({ isSelect }) => (isSelect ? '#3D8AFF' : 'black')};
-  border: ${({ isSelect }) => (isSelect ? '1px solid #3D8AFF' : '')};
+  border: ${({ isSelect }) => (isSelect ? '1px solid #3D8AFF' : 'black')};
   cursor: pointer;
 `;

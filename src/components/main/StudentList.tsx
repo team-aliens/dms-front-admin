@@ -30,7 +30,7 @@ import { useToast } from '@/hooks/useToast';
 import { TagDropDown } from './TagDropDown';
 import { TagType } from '@/apis/tags/response';
 import { DeleteStudentTagModal } from '../modals/DeleteStudentTag';
-import { useDeleteStudentTag } from '@/hooks/useTagApi';
+import { useDeleteStudentTag } from '@/hooks/useTagsApi';
 import { GiveAllTagModal } from '../modals/GiveAllTagModal';
 import { useTagList } from '@/hooks/useTagsApi';
 import { DeleteTagModal } from '../modals/DeleteTag';

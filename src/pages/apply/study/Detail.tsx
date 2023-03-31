@@ -2,6 +2,7 @@ import { BreadCrumb, StudyRoom } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
+import { useEffect } from 'react';
 import {
   useDeleteStudyRoom,
   useSeatTypeList,
@@ -14,15 +15,24 @@ import { SeatTypeList } from '@/components/apply/study/SeatTypeList';
 import { AppliedStudentList } from '@/components/apply/study/AppliedStudentList';
 import { pathToKorean } from '@/router';
 import StudyTimeOptions from '@/components/apply/study/StudyTimeOptions';
+import { useForm } from '@/hooks/useForm';
 
 export function StudyRoomDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const timeSlotId = location.state.timeSlotId;
-  const { data: detail } = useStudyRoomDetail(id, timeSlotId);
+
+  let timeSlotId = location.state.timeSlotId;
+  const { state: timeSlotState, setState: setTimeSlotState } =
+    useForm(timeSlotId);
+  const { data: detail, refetch } = useStudyRoomDetail(id, timeSlotState);
   const { selectModal, closeModal, modalState } = useModal();
   const deleteStudyRoom = useDeleteStudyRoom(id);
   const { data: typeList } = useSeatTypeList();
+
+  useEffect(() => {
+    timeSlotId = timeSlotState;
+  }, [timeSlotState]);
+
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'DELETE_STUDY_ROOM' && (
@@ -39,7 +49,11 @@ export function StudyRoomDetail() {
           selectModal={() => selectModal('DELETE_STUDY_ROOM')}
           timeSlotId={timeSlotId}
         />
-        <StudyTimeOptions timeSlotId={timeSlotId} />
+        <StudyTimeOptions
+          timeSlotId={timeSlotId}
+          setTimeSlotState={setTimeSlotState}
+          refetch={refetch}
+        />
         <_SeatDetails>
           {detail && <StudyRoom {...detail} />}
           <section>

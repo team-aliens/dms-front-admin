@@ -127,10 +127,14 @@ export function CreateRoom() {
             total_height_size={total_height_size}
           />
           <CreateStudyRoomDetailOptions
+            setTimeSlotId={(ids: string[]) => {
+              console.log(ids);
+            }}
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
             onChangeStudyTime={onChangeStudyTime}
+            isCreateRoom={true}
             createStudyRoom={createStudyRoom.mutate}
             {...rest}
           />

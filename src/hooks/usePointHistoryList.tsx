@@ -24,7 +24,7 @@ export const usePointHistoryList = () => {
   const addStudentPointHistory = (history: StudentPointHistoryType[]) => {
     dispatch({
       type: 'ADD_STUDENT',
-      pointHistory: history,
+      pointHistory: history || [],
     });
   };
   const addPointOptionToStudents = (option: AllPointsOptionType) => {

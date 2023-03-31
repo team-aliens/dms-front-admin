@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from '@team-aliens/design-system';
-import { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { GradeType, SexType } from '@/apis/studyRooms/request';
 import {
   gradeTypeToKorean,
@@ -32,6 +32,8 @@ interface PropsType {
   createStudyRoom: () => void;
   onChangeStudyTime: (time_id: string[]) => void;
   patch?: boolean;
+  isCreateRoom: boolean;
+  setTimeSlotId: (ids: string[]) => void;
 }
 
 export function CreateStudyRoomDetailOptions({
@@ -46,6 +48,8 @@ export function CreateStudyRoomDetailOptions({
   onChangeGrade,
   onChangeStudyTime,
   createStudyRoom,
+  isCreateRoom,
+  setTimeSlotId,
 }: PropsType) {
   const { modalState, selectModal, closeModal } = useModal();
   return (
@@ -114,6 +118,8 @@ export function CreateStudyRoomDetailOptions({
       </Button>
       {modalState.selectedModal === 'SET_STUDY_TIME' && (
         <SetUseTimeModal
+          setTimeSlotId={setTimeSlotId}
+          isCreateRoom={isCreateRoom}
           close={closeModal}
           createStudyRoom={createStudyRoom}
           onChangeStudyTime={onChangeStudyTime}

@@ -22,10 +22,8 @@ import {
 } from '@/apis/studyRooms/request';
 import { useToast } from '@/hooks/useToast';
 import { useModal } from '@/hooks/useModal';
-import * as path from 'path';
 import fileSaver from 'file-saver';
 import { getFileNameFromContentDisposition } from '@/utils/decoder';
-import { doc } from 'prettier';
 
 const router = '/study-rooms';
 
@@ -39,13 +37,18 @@ export const useGetApplicationTime = () =>
 
 export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
   const navigate = useNavigate();
+  const { toastDispatch } = useToast();
   return useMutation(
     async () => instance.post<CreateStudyRoomResponse>(router, body),
     {
-      onSuccess: (response) =>
-        navigate(
-          `${pagePath.apply.studyRoom.deatail(response.data.study_room_id)}`,
-        ),
+      onSuccess: (response) => {
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '자습실이 생성되었습니다.',
+        });
+        navigate(`${pagePath.apply.studyRoom.list}`);
+      },
     },
   );
 };
@@ -68,7 +71,7 @@ export const useDeleteStudyRoom = (
   return useMutation(async () => instance.delete(`${router}/${studyRoomId}`), {
     onSuccess: () => {
       closeModal();
-      navigate(pagePath.apply.main);
+      navigate(`${pagePath.apply.studyRoom.list}`);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
@@ -106,6 +109,7 @@ export const usePatchStudyRoom = (
           actionType: 'APPEND_TOAST',
           message: '자습실이 수정되었습니다.',
         });
+        navigate(`${pagePath.apply.studyRoom.list}`);
       },
     },
   );
