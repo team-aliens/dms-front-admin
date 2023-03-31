@@ -79,9 +79,15 @@ const _studyTimeSlots = styled.div`
   display: flex;
   gap: 12px;
   margin-left: 16px;
+  white-space: nowrap;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    height: 8px;
+  }
 `;
 const _studyTimeSlot = styled.button<{ isSelect: boolean }>`
   display: flex;
+  flex: none;
   justify-content: center;
   align-items: center;
   width: 126px;
