@@ -1,6 +1,6 @@
 import { Modal, Button } from '@team-aliens/design-system';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
 import { TimePicker } from './TimePicker';
@@ -16,6 +16,8 @@ interface PropsType {
   close: () => void;
   createStudyRoom: () => void;
   onChangeStudyTime: (times_id: string[]) => void;
+  isCreateRoom: boolean;
+  setTimeSlotId: (ids: string[])=>void;
 }
 
 export type fetchTimeStateType = {
@@ -29,6 +31,8 @@ export function SetUseTimeModal({
   close,
   createStudyRoom,
   onChangeStudyTime,
+  isCreateRoom,
+  setTimeSlotId,
 }: PropsType) {
   const [selectList, setSelectList] = useState<string[]>([]);
   const [addTime, setAddTime] = useState<boolean>(false);
@@ -62,6 +66,7 @@ export function SetUseTimeModal({
   //이용시간 선택
   useEffect(() => {
     onChangeStudyTime(selectList);
+    setTimeSlotId(selectList);
     if (selectList.length === 1) {
       setIsFetch(true);
       fetchDropDownItems();
@@ -191,7 +196,7 @@ export function SetUseTimeModal({
           disabled={selectList.length !== 0 ? false : true}
           onClick={createStudyRoom}
         >
-          생성
+          {isCreateRoom ? '생성' : '수정'}
         </Button>,
       ]}
     />

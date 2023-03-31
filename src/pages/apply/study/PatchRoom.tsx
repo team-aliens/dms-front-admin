@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { BreadCrumb } from '@team-aliens/design-system';
 import { StudyRoom } from '@team-aliens/design-system/dist/components/studyRoom';
 import {
@@ -21,20 +21,14 @@ import { Seat } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
 import { pagePath } from '@/utils/pagePath';
-
-interface ILocation {
-  state: {
-    timeSlotId: string;
-  };
-}
+import { useForm } from '@/hooks/useForm';
 
 export const PatchRoom = () => {
   const { id } = useParams();
+  const { state: timeSlotId, setState: setTimeSlotId } = useForm<string[]>([]);
   const location = useLocation();
-  const {
-    state: { timeSlotId },
-  } = location as unknown as ILocation;
-  const { data: detail } = useStudyRoomDetail(id, timeSlotId);
+  const timeSlot = location.state.timeSlotId;
+  const { data: detail } = useStudyRoomDetail(id, timeSlot); //여기
 
   const [seatSetting, setSeatSetting] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>('');
@@ -63,7 +57,7 @@ export const PatchRoom = () => {
 
   const { mutateAsync: patchStudyRoom } = usePatchStudyRoom(id, {
     ...creatStudyRoomRequest,
-    time_slot_ids: [timeSlotId],
+    time_slot_ids: timeSlotId,
     seats: creatStudyRoomRequest.seats.map(
       (i): Seat => ({
         width_location: i.width_location,
@@ -150,11 +144,15 @@ export const PatchRoom = () => {
             total_height_size={total_height_size}
           />
           <CreateStudyRoomDetailOptions
+            setTimeSlotId={(ids: string[]) => {
+              setTimeSlotId(ids);
+            }}
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
             createStudyRoom={onClick}
             onChangeStudyTime={onChangeStudyTime}
+            isCreateRoom={false}
             patch
             {...rest}
           />
