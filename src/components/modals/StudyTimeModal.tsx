@@ -68,6 +68,7 @@ export default function StudyTimeModal({
           actionType: 'APPEND_TOAST',
           message: '자습실 이용 시간이 추가되었습니다.',
         });
+        closeModal();
       });
     } else {
       mutateEditTimeSlot()
@@ -98,7 +99,7 @@ export default function StudyTimeModal({
   return (
     <Modal
       close={closeModal}
-      title="자습실 사용 시간 설정"
+      title="자습실 이용 시간 설정"
       inputList={[
         <_Wrapper>
           <DropDown
@@ -130,7 +131,11 @@ export default function StudyTimeModal({
           ></DropDown>
         </_Wrapper>,
       ]}
-      buttonList={[<Button onClick={onClick}>생성</Button>]}
+      buttonList={[
+        <Button onClick={onClick}>
+          {ModalType === 'create' ? '생성' : '수정'}
+        </Button>,
+      ]}
     ></Modal>
   );
 }

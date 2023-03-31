@@ -195,6 +195,6 @@ export const useGetStudyExcelSample = () =>
   useMutation(async () => {
     const a = document.createElement('a');
     a.href =
-      'https://file.notion.so/f/s/5f6c4d89-bce7-49bf-b107-2e6ef52105fa/DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx?id=ba651a7d-3f56-4b1f-9afa-978500a8e5b7&table=block&spaceId=06958058-af42-4393-8b43-0071a0d4a86f&expirationTimestamp=1680162572191&signature=F-eLjS5zFMayXDMLQaObwQcSWyiINd6S8q5EQOiYu50&downloadName=DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx';
+      'https://image-dms.s3.ap-northeast-2.amazonaws.com/DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx';
     a.click();
   });

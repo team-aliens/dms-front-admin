@@ -103,7 +103,7 @@ export const PatchRoom = () => {
 
   const onClick = () => {
     patchStudyRoom().then(() => {
-      navigate(pagePath.apply.main);
+      navigate(pagePath.apply.studyRoom.list);
     });
   };
   return (

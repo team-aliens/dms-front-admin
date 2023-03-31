@@ -38,7 +38,7 @@ export default function TimeCard({
         color={selectId === prevId ? 'primary' : 'gray'}
       >
         <_time onClick={() => setSelectId(prevId)}>
-          {start_hour}:{start_min}시 ~ {end_hour}:{end_min}시{' '}
+          {start_hour}:{start_min} ~ {end_hour}:{end_min}{' '}
         </_time>
         <Line className="line" />
         <div className="timeMenu">
@@ -85,7 +85,7 @@ const _TimeWrapper = styled.div<{ isSelect: boolean }>`
   gap: 12px;
   height: auto;
   button {
-    width: 150px;
+    width: 120px;
     transition: all 0.3s;
     position: relative;
   }
@@ -107,7 +107,7 @@ const _TimeWrapper = styled.div<{ isSelect: boolean }>`
     }
   }
   button:hover {
-    width: 240px;
+    width: 220px;
     height: auto;
     .timeMenu {
       transition-delay: 0.15s;
@@ -119,7 +119,7 @@ const _TimeWrapper = styled.div<{ isSelect: boolean }>`
     .line {
       position: absolute;
       top: 25%;
-      left: 140px;
+      left: 120px;
       path {
         stroke: ${({ isSelect }) => (isSelect ? '#579AFF' : '#F3F3F3')};
       }

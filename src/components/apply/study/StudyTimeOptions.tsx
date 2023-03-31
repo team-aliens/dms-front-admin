@@ -17,7 +17,6 @@ export default function StudyTimeOptions({
   timeSlotId: string;
 }) {
   const { id } = useParams();
-  const { data: studyTimeSlots, mutate } = useStudyTimeSlots();
   const { data: detail } = useStudyRoomDetail(id, timeSlotId);
   const { initalValue, studyRoomState } = useStudyRoom();
   const { time_slots, seat, ...creatStudyRoomRequest } = studyRoomState;
@@ -41,16 +40,13 @@ export default function StudyTimeOptions({
     patchStudyRoom();
   };
   useEffect(() => {
-    mutate();
-  }, []);
-  useEffect(() => {
     initalValue(detail);
   }, [detail]);
   return (
     <_wrapper>
-      <_title>자습실 이용시간</_title>
+      <_title>자습실 이용 시간</_title>
       <_studyTimeSlots>
-        {studyTimeSlots?.time_slots.map((timeSlot) => (
+        {detail?.time_slots.map((timeSlot) => (
           <_studyTimeSlot
             isSelect={selectId === timeSlot.id}
             onClick={() => onClick(timeSlot.id)}
