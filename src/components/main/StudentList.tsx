@@ -167,12 +167,16 @@ export function StudentList({
   };
 
   const setShowGiveModalFunc = () => {
-    setShowGiveModal(!showGiveModal);
-    setShowViewModal(false);
+    if (showGiveModal === false) {
+      setShowGiveModal(true);
+      setShowViewModal(false);
+    } else {
+      setShowGiveModal(false);
+    }
   };
 
   const setShowViewModalFunc = () => {
-    setShowViewModal(!showViewModal);
+    setShowViewModal((prev) => !prev);
     setShowGiveModal(false);
   };
 
@@ -209,7 +213,7 @@ export function StudentList({
               {selectedStudentId.filter((i) => i).length > 0 &&
                 showGiveModal && (
                   <OutsideClickHandler
-                    onOutsideClick={() => {
+                    onOutsideClick={(e) => {
                       setShowGiveModal(false);
                     }}
                   >
@@ -237,8 +241,11 @@ export function StudentList({
               {!(selectedStudentId.filter((i) => i).length > 0) &&
                 showViewModal && (
                   <OutsideClickHandler
-                    onOutsideClick={() => {
-                      setShowViewModal(false);
+                    onOutsideClick={(e) => {
+                      if (
+                        !(e.target as Element).className.includes('grantPoint')
+                      )
+                        setShowViewModal(false);
                     }}
                   >
                     <_ChooseBox>
