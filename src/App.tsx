@@ -29,7 +29,7 @@ export function App() {
     <RecoilRoot>
       <ToastProvider>
         <PointListProvider>
-          <ToastContainer />
+          <ToastContainer zIndex={20} />
           <Outlet />
           <GlobalStyle />
           <RouterProvider router={Router} />
