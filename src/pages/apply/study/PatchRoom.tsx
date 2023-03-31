@@ -44,7 +44,11 @@ export const PatchRoom = () => {
     initalValue,
   } = useStudyRoom();
 
-  console.log(detail);
+  const default_time_slots_id = () => {
+    return detail.time_slots.map((data) => {
+      return data.id;
+    });
+  };
 
   useEffect(() => {
     initalValue(detail);
@@ -155,6 +159,7 @@ export const PatchRoom = () => {
             onChangeGrade={onChangeGrade}
             createStudyRoom={onClick}
             onChangeStudyTime={onChangeStudyTime}
+            default_time_slots_id={default_time_slots_id()}
             isCreateRoom={false}
             patch
             {...rest}

@@ -129,7 +129,6 @@ export function CreateRoom() {
           />
           <CreateStudyRoomDetailOptions
             setTimeSlotId={(ids: string[]) => {
-              console.log(ids);
             }}
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
@@ -137,6 +136,7 @@ export function CreateRoom() {
             onChangeStudyTime={onChangeStudyTime}
             isCreateRoom={true}
             createStudyRoom={createStudyRoom.mutate}
+            default_time_slots_id={[]}
             {...rest}
           />
         </_Body>

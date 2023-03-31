@@ -34,6 +34,7 @@ interface PropsType {
   patch?: boolean;
   isCreateRoom: boolean;
   setTimeSlotId: (ids: string[]) => void;
+  default_time_slots_id: string[];
 }
 
 export function CreateStudyRoomDetailOptions({
@@ -50,6 +51,7 @@ export function CreateStudyRoomDetailOptions({
   createStudyRoom,
   isCreateRoom,
   setTimeSlotId,
+  default_time_slots_id,
 }: PropsType) {
   const { modalState, selectModal, closeModal } = useModal();
   return (
@@ -123,6 +125,7 @@ export function CreateStudyRoomDetailOptions({
           close={closeModal}
           createStudyRoom={createStudyRoom}
           onChangeStudyTime={onChangeStudyTime}
+          default_time_slots_id={default_time_slots_id}
         />
       )}
     </_Wrapper>
