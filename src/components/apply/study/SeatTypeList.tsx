@@ -25,8 +25,6 @@ const _Wrapper = styled.ul`
   width: 360px;
   display: flow;
   overflow-x: scroll;
-  height: 24px;
-  margin-bottom: 15px;
 `;
 
 const _Type = styled.li<{

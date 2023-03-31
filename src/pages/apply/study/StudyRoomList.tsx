@@ -82,12 +82,12 @@ export function StudyRoomList() {
       },
     },
   );
-  const { data: studyTimeSlots, mutate: mutateStudyTimeSlots } =
+  const { data: studyTimeSlots, mutateAsync: mutateStudyTimeSlots } =
     useStudyTimeSlots();
   const [selectTimeCardId, setSelectTimeCardId] = useState('');
   const [clickTimeCardId, setClickTimeCardId] = useState('');
   const { data: list, mutate: mutateStudyRoomList } = useStudyRoomList({
-    time_slot: selectTimeCardId,
+    time_slot: selectTimeCardId ?? studyTimeSlots[0],
   });
 
   useEffect(() => {
@@ -95,8 +95,16 @@ export function StudyRoomList() {
   }, [selectTimeCardId]);
 
   useEffect(() => {
+    if (modalState.selectedModal === 'ADD_STUDY_ROOM_TIME') return;
     mutateStudyTimeSlots();
   }, [modalState]);
+
+  useEffect(() => {
+    mutateStudyTimeSlots().then((res) => {
+      setSelectTimeCardId(res.time_slots[0].id);
+      mutateStudyRoomList();
+    });
+  }, []);
 
   return (
     <WithNavigatorBar>

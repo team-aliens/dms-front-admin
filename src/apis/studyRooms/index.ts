@@ -22,10 +22,8 @@ import {
 } from '@/apis/studyRooms/request';
 import { useToast } from '@/hooks/useToast';
 import { useModal } from '@/hooks/useModal';
-import * as path from 'path';
 import fileSaver from 'file-saver';
 import { getFileNameFromContentDisposition } from '@/utils/decoder';
-import { doc } from 'prettier';
 
 const router = '/study-rooms';
 
@@ -39,13 +37,18 @@ export const useGetApplicationTime = () =>
 
 export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
   const navigate = useNavigate();
+  const { toastDispatch } = useToast();
   return useMutation(
     async () => instance.post<CreateStudyRoomResponse>(router, body),
     {
-      onSuccess: (response) =>
-        navigate(
-          `${pagePath.apply.studyRoom.deatail(response.data.study_room_id)}`,
-        ),
+      onSuccess: (response) => {
+        toastDispatch({
+          toastType: 'SUCCESS',
+          actionType: 'APPEND_TOAST',
+          message: '자습실이 생성되었습니다.',
+        });
+        navigate(`${pagePath.apply.studyRoom.list}`);
+      },
     },
   );
 };
@@ -68,7 +71,7 @@ export const useDeleteStudyRoom = (
   return useMutation(async () => instance.delete(`${router}/${studyRoomId}`), {
     onSuccess: () => {
       closeModal();
-      navigate(pagePath.apply.main);
+      navigate(`${pagePath.apply.studyRoom.list}`);
       toastDispatch({
         toastType: 'SUCCESS',
         actionType: 'APPEND_TOAST',
@@ -106,6 +109,7 @@ export const usePatchStudyRoom = (
           actionType: 'APPEND_TOAST',
           message: '자습실이 수정되었습니다.',
         });
+        navigate(`${pagePath.apply.studyRoom.list}`);
       },
     },
   );
@@ -195,6 +199,6 @@ export const useGetStudyExcelSample = () =>
   useMutation(async () => {
     const a = document.createElement('a');
     a.href =
-      'https://file.notion.so/f/s/5f6c4d89-bce7-49bf-b107-2e6ef52105fa/DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx?id=ba651a7d-3f56-4b1f-9afa-978500a8e5b7&table=block&spaceId=06958058-af42-4393-8b43-0071a0d4a86f&expirationTimestamp=1680162572191&signature=F-eLjS5zFMayXDMLQaObwQcSWyiINd6S8q5EQOiYu50&downloadName=DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx';
+      'https://image-dms.s3.ap-northeast-2.amazonaws.com/DMS_%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%A6%E1%86%A8%E1%84%89%E1%85%A6%E1%86%AF_%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.xlsx';
     a.click();
   });

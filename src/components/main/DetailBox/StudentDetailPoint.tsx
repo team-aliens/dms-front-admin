@@ -21,7 +21,7 @@ export function StudentDetailPointList({ name, gcn, historyList }: PropsType) {
         </Text>
       </_StudentNameNumber>
       <_PointItemList>
-        {historyList.slice(0, 4).map((history) => {
+        {historyList?.slice(0, 4).map((history) => {
           const { name, point_history_id, score, type } = history;
           return (
             <PointItem
