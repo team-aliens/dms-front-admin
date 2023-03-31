@@ -1,5 +1,5 @@
 import { TagType } from '@/apis/tags/response';
-import { useTagList } from '@/hooks/useTagApi';
+import { useTagList } from '@/hooks/useTagsApi';
 import { Arrow, Button, CheckBox } from '@team-aliens/design-system';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -55,7 +55,7 @@ export function TagDropDown({
         </Button>
         {click && (
           <_Tags>
-            {tagList.tags.map((tag) => (
+            {tagList?.tags?.map((tag) => (
               <_Item key={tag.id}>
                 <CheckBox
                   size={18}

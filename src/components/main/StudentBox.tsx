@@ -63,7 +63,7 @@ export function StudentBox({
         {studentInfo.gcn}
       </Text>
       <_Tags>
-        {studentInfo.tags.map((tag) => (
+        {studentInfo.tags?.map((tag) => (
           <Tag key={tag.id} id={tag.id} color={tag.color} name={tag.name} />
         ))}
       </_Tags>

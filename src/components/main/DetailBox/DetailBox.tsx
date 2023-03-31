@@ -70,7 +70,7 @@ export function DetailBox({
           학생 태그
         </Text>
         <_MateList>
-          {studentDetail.tags.map((tag) => {
+          {studentDetail.tags?.map((tag) => {
             return (
               <Tag
                 key={tag.id}
