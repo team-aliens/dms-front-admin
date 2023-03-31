@@ -44,6 +44,8 @@ export const PatchRoom = () => {
     initalValue,
   } = useStudyRoom();
 
+  console.log(detail);
+
   useEffect(() => {
     initalValue(detail);
   }, [detail]);
@@ -114,6 +116,7 @@ export const PatchRoom = () => {
           seatTypeList={seatTypeList?.types || []}
           deleteSeatType={deleteSeatType}
           closeSeatSetting={closeSeatSetting}
+          addSeat={modalState.selectedModal === 'ADD_SEAT_TYPE' ? true : false}
         />
       )}
       <_Wrapper>

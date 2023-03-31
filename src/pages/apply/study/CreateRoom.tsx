@@ -97,6 +97,7 @@ export function CreateRoom() {
           seatTypeList={seatTypeList?.types || []}
           deleteSeatType={deleteSeatType}
           closeSeatSetting={closeSeatSetting}
+          addSeat={modalState.selectedModal === 'ADD_SEAT_TYPE' ? true : false}
         />
       )}
       <_Wrapper>

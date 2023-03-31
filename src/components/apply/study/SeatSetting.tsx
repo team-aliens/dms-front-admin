@@ -28,6 +28,7 @@ interface PropsType {
   selectModal: (modal: SelectedModalType) => void;
   deleteSeatType: (id: string) => void;
   closeSeatSetting: () => void;
+  addSeat: boolean;
 }
 
 export function SeatSetting({
@@ -35,6 +36,7 @@ export function SeatSetting({
   seatTypeList,
   deleteSeatType,
   closeSeatSetting,
+  addSeat,
 }: PropsType) {
   const { studyRoomState, onChangeSeatSetting, confirmSetting } =
     useStudyRoom();
@@ -51,7 +53,7 @@ export function SeatSetting({
   };
 
   return (
-    <OutsideClickHandler onOutsideClick={closeSeatSetting}>
+    <OutsideClickHandler onOutsideClick={!addSeat && closeSeatSetting}>
       <_Wrapper>
         <_EscapeWrapper onClick={closeSeatSetting}>
           <Escape size={24} />
@@ -144,7 +146,10 @@ export function SeatSetting({
             }
             kind="contained"
             color="primary"
-            onClick={confirmSetting}
+            onClick={() => {
+              confirmSetting();
+              closeSeatSetting();
+            }}
             margin={['left', 20]}
           >
             확인
