@@ -1,4 +1,4 @@
-import { Modal, Button } from '@team-aliens/design-system';
+import { Modal, Button, Add, Arrow } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { useDropDown } from '@/hooks/useDropDown';
@@ -136,7 +136,6 @@ export function SetUseTimeModal({
     onChangeEndMin('');
   };
 
-
   return (
     <Modal
       title="자습실 이용 시간 설정"
@@ -164,6 +163,11 @@ export function SetUseTimeModal({
               size="default"
               onClick={() => setAddTime(!addTime)}
             >
+              {addTime ? (
+                <Arrow colorKey="gray6" direction="top" />
+              ) : (
+                <Add colorKey="gray6" />
+              )}
               {addTime ? '닫기' : isFetch ? '사용 시간 수정' : '사용 시간 추가'}
             </Button>
           </div>
