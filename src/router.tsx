@@ -38,11 +38,14 @@ export const pathToKorean = {
   },
   'apply': {
     index: '신청',
-    create: '자습실 생성',
-    detail: {
-      index: '자습실 상세보기',
-      patch: {
-        dynamic: '자습실 수정하기',
+    study: {
+      index: '자습실 목록보기',
+      create: '자습실 생성',
+      detail: {
+        index: '자습실 상세보기',
+        patch: {
+          dynamic: '자습실 수정하기',
+        },
       },
     },
   },
