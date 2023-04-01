@@ -6,12 +6,14 @@ import { DetailBox } from './DetailBox';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
 import { HistoryList } from './HistoryList';
 import { PointHistoryList } from '@/context/pointHistoryList';
+import { IsUseAbleFeature } from '@/apis/auth/response';
 
 interface Props {
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
   studentId: string[];
   onClickStudent: (id: string) => void;
+  availableFeature: IsUseAbleFeature;
   studentPointHistory: StudentPointHistoryResponse;
   studentsPointHistoryList: PointHistoryList[];
 }
@@ -21,6 +23,7 @@ export function StudentDetail({
   studentDetail,
   studentId,
   onClickStudent,
+  availableFeature,
   studentPointHistory,
   studentsPointHistoryList,
 }: Props) {
@@ -44,6 +47,7 @@ export function StudentDetail({
                 <DetailBox
                   studentId={studentId}
                   studentDetail={studentDetail}
+                  availableFeature={availableFeature}
                   onClickStudent={onClickStudent}
                   studentPointHistory={studentPointHistory}
                 />
@@ -62,6 +66,7 @@ export function StudentDetail({
             <HistoryList
               studentId={studentId}
               pointHistoryList={studentsPointHistoryList}
+              availableFeature={availableFeature}
             />
           )}
         </_ScrollArea>

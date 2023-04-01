@@ -2,28 +2,35 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { pagePath } from '@/utils/pagePath';
+import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 
 export default function Index() {
+  const { data: availableFeature } = useAvailAbleFeatures();
+
   return (
     <WithNavigatorBar>
       <Layout>
-        <Link to={pagePath.apply.studyRoom.list}>
-          <_Wrapper>
-            <Title>자습실</Title>
-            <Text>
-              자습실 관리와 생성 <br />
-              또는 수정,삭제할 수 있습니다.
-            </Text>
-          </_Wrapper>
-        </Link>
-        <Link to={pagePath.apply.remains.list}>
-          <_Wrapper>
-            <Title>잔류</Title>
-            <Text>
-              잔류 항목 확인과 생성 <br /> 또는 수정,삭제할 수 있습니다.
-            </Text>
-          </_Wrapper>
-        </Link>
+        {availableFeature?.study_room_service && (
+          <Link to={pagePath.apply.studyRoom.list}>
+            <_Wrapper>
+              <Title>자습실</Title>
+              <Text>
+                자습실 관리와 생성 <br />
+                또는 수정,삭제할 수 있습니다.
+              </Text>
+            </_Wrapper>
+          </Link>
+        )}
+        {availableFeature?.remain_service && (
+          <Link to={pagePath.apply.remains.list}>
+            <_Wrapper>
+              <Title>잔류</Title>
+              <Text>
+                잔류 항목 확인과 생성 <br /> 또는 수정,삭제할 수 있습니다.
+              </Text>
+            </_Wrapper>
+          </Link>
+        )}
       </Layout>
     </WithNavigatorBar>
   );

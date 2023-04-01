@@ -11,6 +11,7 @@ import {
 import { useToast } from '@/hooks/useToast';
 import { WriteNoticeRequest } from '@/apis/notice/request';
 import { pagePath } from '@/utils/pagePath';
+import { useModal } from './useModal';
 
 export const useNoticeList = (sortType: NoticeSortType) =>
   useQuery(['getNoticeList', sortType], () => getNoticeList(sortType), {
@@ -18,6 +19,7 @@ export const useNoticeList = (sortType: NoticeSortType) =>
   });
 
 export const useDeleteNotice = (noticeId: string) => {
+  const { closeModal } = useModal();
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
   return useMutation(() => deleteNotice(noticeId), {
@@ -28,6 +30,7 @@ export const useDeleteNotice = (noticeId: string) => {
         message: '공지사항이 삭제되었습니다.',
         toastType: 'SUCCESS',
       });
+      closeModal();
     },
   });
 };

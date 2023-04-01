@@ -106,10 +106,11 @@ const _Wrapper = styled.li<WrapperProps>`
 `;
 
 const _Tags = styled.div`
-  width: 40%;
+  max-width: 45%;
   display: flex;
   align-items: center;
   margin-left: 24px;
   gap: 10px;
+  white-space: nowrap;
   overflow: hidden;
 `;

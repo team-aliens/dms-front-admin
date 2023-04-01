@@ -2,14 +2,21 @@ import { Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { PointItem } from './PointItem';
 import { StudentPointHistoryType } from '@/apis/points/response';
+import { IsUseAbleFeature } from '@/apis/auth/response';
 
 interface PropsType {
   name: string;
   gcn: string;
   historyList: StudentPointHistoryType[];
+  availableFeature: IsUseAbleFeature;
 }
 
-export function StudentDetailPointList({ name, gcn, historyList }: PropsType) {
+export function StudentDetailPointList({
+  name,
+  gcn,
+  historyList,
+  availableFeature,
+}: PropsType) {
   return (
     <>
       <_StudentNameNumber>
@@ -21,19 +28,20 @@ export function StudentDetailPointList({ name, gcn, historyList }: PropsType) {
         </Text>
       </_StudentNameNumber>
       <_PointItemList>
-        {historyList?.slice(0, 4).map((history) => {
-          const { name, point_history_id, score, type } = history;
-          return (
-            <PointItem
-              key={point_history_id}
-              canDelete={false}
-              name={name}
-              point_history_id={point_history_id}
-              score={score}
-              type={type}
-            />
-          );
-        })}
+        {availableFeature?.point_service &&
+          historyList?.slice(0, 4).map((history) => {
+            const { name, point_history_id, score, type } = history;
+            return (
+              <PointItem
+                key={point_history_id}
+                canDelete={false}
+                name={name}
+                point_history_id={point_history_id}
+                score={score}
+                type={type}
+              />
+            );
+          })}
       </_PointItemList>
     </>
   );

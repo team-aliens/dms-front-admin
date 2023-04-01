@@ -8,12 +8,14 @@ import { PointBox } from './PointBox';
 import { PointType } from '@/apis/points';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
 import { Tag } from '../Tag';
+import { IsUseAbleFeature } from '@/apis/auth/response';
 
 interface PropsType {
   studentPointHistory: StudentPointHistoryResponse;
   studentId: string[];
   studentDetail: GetStudentDetailResponse;
   onClickStudent: (id: string) => void;
+  availableFeature: IsUseAbleFeature;
 }
 
 const canDelete = true;
@@ -23,6 +25,7 @@ export function DetailBox({
   studentDetail,
   onClickStudent,
   studentId,
+  availableFeature,
 }: PropsType) {
   const [currentPointType, setCurrentPointType] = useState<PointType>('ALL');
 
@@ -37,20 +40,22 @@ export function DetailBox({
           room_number={studentDetail.room_number}
           profile_image_url={studentDetail.profile_image_url}
         />
-        <_PointWrapper>
-          <PointBox
-            currentPointType={currentPointType}
-            setCurrentPointType={setCurrentPointType}
-            pointType="BONUS"
-            point={studentDetail.bonus_point}
-          />
-          <PointBox
-            currentPointType={currentPointType}
-            setCurrentPointType={setCurrentPointType}
-            pointType="MINUS"
-            point={studentDetail.minus_point}
-          />
-        </_PointWrapper>
+        {availableFeature?.point_service && (
+          <_PointWrapper>
+            <PointBox
+              currentPointType={currentPointType}
+              setCurrentPointType={setCurrentPointType}
+              pointType="BONUS"
+              point={studentDetail.bonus_point}
+            />
+            <PointBox
+              currentPointType={currentPointType}
+              setCurrentPointType={setCurrentPointType}
+              pointType="MINUS"
+              point={studentDetail.minus_point}
+            />
+          </_PointWrapper>
+        )}
         <Text size="bodyS" color="gray6" margin={['top', 40]}>
           동일 호실 학생
         </Text>
@@ -82,31 +87,35 @@ export function DetailBox({
             );
           })}
         </_MateList>
-        <Text size="bodyS" color="gray6" margin={['top', 40]}>
-          상/벌점
-        </Text>
-        <_PointList>
-          {studentPointHistory?.point_histories &&
-            studentPointHistory.point_histories
-              .filter(
-                (history) =>
-                  history.type === currentPointType ||
-                  currentPointType === 'ALL',
-              )
-              .map((history) => {
-                const { point_history_id, name, type, score } = history;
-                return (
-                  <PointItem
-                    key={point_history_id}
-                    point_history_id={point_history_id}
-                    name={name}
-                    type={type}
-                    score={score}
-                    canDelete={canDelete}
-                  />
-                );
-              })}
-        </_PointList>
+        {availableFeature?.point_service && (
+          <>
+            <Text size="bodyS" color="gray6" margin={['top', 40]}>
+              상/벌점
+            </Text>
+            <_PointList>
+              {studentPointHistory?.point_histories &&
+                studentPointHistory.point_histories
+                  .filter(
+                    (history) =>
+                      history.type === currentPointType ||
+                      currentPointType === 'ALL',
+                  )
+                  .map((history) => {
+                    const { point_history_id, name, type, score } = history;
+                    return (
+                      <PointItem
+                        key={point_history_id}
+                        point_history_id={point_history_id}
+                        name={name}
+                        type={type}
+                        score={score}
+                        canDelete={canDelete}
+                      />
+                    );
+                  })}
+            </_PointList>
+          </>
+        )}
       </_DetailBox>
     </>
   );

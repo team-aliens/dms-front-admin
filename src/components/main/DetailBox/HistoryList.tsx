@@ -2,13 +2,19 @@ import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
 import { StudentDetailPointList } from './StudentDetailPoint';
 import { PointHistoryList } from '@/context/pointHistoryList';
+import { IsUseAbleFeature } from '@/apis/auth/response';
 
 interface PropsType {
   pointHistoryList: PointHistoryList[];
   studentId: string[];
+  availableFeature: IsUseAbleFeature;
 }
 
-export function HistoryList({ pointHistoryList, studentId }: PropsType) {
+export function HistoryList({
+  pointHistoryList,
+  studentId,
+  availableFeature,
+}: PropsType) {
   return (
     <>
       <_PointDetailBox isSelected={studentId.length > 0}>
@@ -20,6 +26,7 @@ export function HistoryList({ pointHistoryList, studentId }: PropsType) {
               name={name}
               gcn={gcn}
               historyList={list}
+              availableFeature={availableFeature}
             />
           ))}
       </_PointDetailBox>
