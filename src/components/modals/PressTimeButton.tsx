@@ -1,5 +1,5 @@
 import { Button } from '@team-aliens/design-system';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchTimeStateType } from './SetUseTime';
 
 interface BtnPropsType {
@@ -9,6 +9,7 @@ interface BtnPropsType {
   select: string[];
   setSelect: React.Dispatch<React.SetStateAction<string[]>>;
   setFetchTimeState: React.Dispatch<React.SetStateAction<fetchTimeStateType>>;
+  default_time_slots_id: string[];
 }
 
 export function TimePressButton({
@@ -18,6 +19,7 @@ export function TimePressButton({
   select,
   setSelect,
   setFetchTimeState,
+  default_time_slots_id,
 }: BtnPropsType) {
   const [onPress, setOnPress] = useState<boolean>(false);
 
@@ -25,11 +27,13 @@ export function TimePressButton({
     setOnPress(true);
     sliceTime();
     setSelect([...select, timeSlotId]);
+    console.log(select);
   };
 
   const unPush = () => {
     setOnPress(false);
     setSelect(select.filter((id) => id !== timeSlotId));
+    console.log(select);
   };
 
   const sliceTime = () => {
@@ -40,6 +44,18 @@ export function TimePressButton({
       eMState: end_time.slice(3, 5),
     });
   };
+
+  useEffect(() => {
+    default_time_slots_id.map((id) => {
+      if (timeSlotId) {
+        if (timeSlotId === id) {
+          setOnPress(true);
+          sliceTime();
+          setSelect(default_time_slots_id);
+        }
+      }
+    });
+  }, []);
 
   return (
     <Button

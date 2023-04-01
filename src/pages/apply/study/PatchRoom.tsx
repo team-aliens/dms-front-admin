@@ -44,6 +44,12 @@ export const PatchRoom = () => {
     initalValue,
   } = useStudyRoom();
 
+  const default_time_slots_id = () => {
+    return detail.time_slots.map((data) => {
+      return data.id;
+    });
+  };
+
   useEffect(() => {
     initalValue(detail);
   }, [detail]);
@@ -114,6 +120,7 @@ export const PatchRoom = () => {
           seatTypeList={seatTypeList?.types || []}
           deleteSeatType={deleteSeatType}
           closeSeatSetting={closeSeatSetting}
+          addSeat={modalState.selectedModal === 'ADD_SEAT_TYPE' ? true : false}
         />
       )}
       <_Wrapper>
@@ -152,6 +159,7 @@ export const PatchRoom = () => {
             onChangeGrade={onChangeGrade}
             createStudyRoom={onClick}
             onChangeStudyTime={onChangeStudyTime}
+            default_time_slots_id={default_time_slots_id()}
             isCreateRoom={false}
             patch
             {...rest}

@@ -46,7 +46,7 @@ export function AddSeatType({ closeModal, refetchTypeList }: PropsType) {
         />,
       ]}
       buttonList={[
-        <Button color="error" kind="outline">
+        <Button color="error" kind="outline" onClick={closeModal}>
           취소
         </Button>,
         <Button

@@ -37,6 +37,7 @@ import { DeleteTagModal } from '../modals/DeleteTag';
 import { ViewAllTagModal } from '../modals/ViewAllTagModal';
 import { useDeleteTag } from '@/apis/tags';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { IsUseAbleFeature } from '@/apis/auth/response';
 
 interface Props extends FilterState {
   mode: ModeType;
@@ -47,6 +48,7 @@ interface Props extends FilterState {
   endPoint: number;
   checkedTagList: TagType[];
   setCheckedTagList: Dispatch<SetStateAction<TagType[]>>;
+  availableFeature: IsUseAbleFeature;
   onChangeSearchName: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeSortType: () => void;
   onClickStudent: (id: string, modeType?: ModeType) => void;
@@ -77,6 +79,7 @@ export function StudentList({
   refetchSearchStudents,
   refetchStudentDetail,
   refetchStudentPointHistory,
+  availableFeature,
 }: Props) {
   const { modalState, selectModal, closeModal } = useModal();
   const [tagModal, setTagModal] = useState<string>('');
@@ -218,15 +221,19 @@ export function StudentList({
                     }}
                   >
                     <_ChooseBox>
-                      <_ChooseBoxText
-                        onClick={() => {
-                          selectModal('GIVE_POINT');
-                          setShowGiveModal(false);
-                        }}
-                      >
-                        상/벌점 부여
-                      </_ChooseBoxText>
-                      <_Line />
+                      {availableFeature?.point_service && (
+                        <>
+                          <_ChooseBoxText
+                            onClick={() => {
+                              selectModal('GIVE_POINT');
+                              setShowGiveModal(false);
+                            }}
+                          >
+                            상/벌점 부여
+                          </_ChooseBoxText>
+                          <_Line />
+                        </>
+                      )}
                       <_ChooseBoxText
                         onClick={() => {
                           selectModal('GIVE_TAG_OPTIONS');
@@ -249,15 +256,19 @@ export function StudentList({
                     }}
                   >
                     <_ChooseBox>
-                      <_ChooseBoxText
-                        onClick={() => {
-                          selectModal('POINT_OPTIONS');
-                          setShowViewModal(false);
-                        }}
-                      >
-                        상/벌점 항목 보기
-                      </_ChooseBoxText>
-                      <_Line />
+                      {availableFeature?.point_service && (
+                        <>
+                          <_ChooseBoxText
+                            onClick={() => {
+                              selectModal('POINT_OPTIONS');
+                              setShowViewModal(false);
+                            }}
+                          >
+                            상/벌점 항목 보기
+                          </_ChooseBoxText>
+                          <_Line />
+                        </>
+                      )}
                       <_ChooseBoxText
                         onClick={() => {
                           selectModal('VIEW_TAG_OPTIONS');
@@ -283,13 +294,15 @@ export function StudentList({
         </_Buttons>
       </_Filter>
       <_Buttons>
-        <Button
-          color={filterState.color as 'primary' | 'gray' | 'error'}
-          kind="outline"
-          onClick={openPointFilterModal}
-        >
-          {filterState.text}
-        </Button>
+        {availableFeature?.point_service && (
+          <Button
+            color={filterState.color as 'primary' | 'gray' | 'error'}
+            kind="outline"
+            onClick={openPointFilterModal}
+          >
+            {filterState.text}
+          </Button>
+        )}
         <TagDropDown
           refetchSearchStudents={refetchSearchStudents}
           checkedTagList={checkedTagList}
@@ -438,7 +451,7 @@ const _ChooseBox = styled.div`
   margin-top: 8px;
   position: absolute;
   width: 132px;
-  height: 92px;
+  max-height: 92px;
   background: #ffffff;
   border-radius: 4px;
   display: flex;

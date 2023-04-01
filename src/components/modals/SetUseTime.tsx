@@ -17,7 +17,8 @@ interface PropsType {
   createStudyRoom: () => void;
   onChangeStudyTime: (times_id: string[]) => void;
   isCreateRoom: boolean;
-  setTimeSlotId: (ids: string[])=>void;
+  setTimeSlotId: (ids: string[]) => void;
+  default_time_slots_id: string[];
 }
 
 export type fetchTimeStateType = {
@@ -33,6 +34,7 @@ export function SetUseTimeModal({
   onChangeStudyTime,
   isCreateRoom,
   setTimeSlotId,
+  default_time_slots_id,
 }: PropsType) {
   const [selectList, setSelectList] = useState<string[]>([]);
   const [addTime, setAddTime] = useState<boolean>(false);
@@ -134,6 +136,7 @@ export function SetUseTimeModal({
     onChangeEndMin('');
   };
 
+
   return (
     <Modal
       title="자습실 이용 시간 설정"
@@ -150,6 +153,7 @@ export function SetUseTimeModal({
                 start_time={time.start_time}
                 end_time={time.end_time}
                 setFetchTimeState={setFetchTimeState}
+                default_time_slots_id={default_time_slots_id}
               />
             ))}
           </_Times>

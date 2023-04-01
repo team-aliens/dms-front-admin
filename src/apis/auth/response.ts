@@ -2,6 +2,7 @@ export type Features =
   | 'notice_service'
   | 'point_service'
   | 'meal_service'
+  | 'remain_service'
   | 'study_room_service';
 
 export type IsUseAbleFeature = {

@@ -97,6 +97,7 @@ export function CreateRoom() {
           seatTypeList={seatTypeList?.types || []}
           deleteSeatType={deleteSeatType}
           closeSeatSetting={closeSeatSetting}
+          addSeat={modalState.selectedModal === 'ADD_SEAT_TYPE' ? true : false}
         />
       )}
       <_Wrapper>
@@ -128,7 +129,6 @@ export function CreateRoom() {
           />
           <CreateStudyRoomDetailOptions
             setTimeSlotId={(ids: string[]) => {
-              console.log(ids);
             }}
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
@@ -136,6 +136,7 @@ export function CreateRoom() {
             onChangeStudyTime={onChangeStudyTime}
             isCreateRoom={true}
             createStudyRoom={createStudyRoom.mutate}
+            default_time_slots_id={[]}
             {...rest}
           />
         </_Body>

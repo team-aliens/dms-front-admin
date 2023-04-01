@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { Button, Change } from '@team-aliens/design-system';
 import { StudentList } from '@/components/main/StudentList';
 import { Divider } from '@/components/main/Divider';
@@ -13,12 +13,9 @@ import { PointList } from '@/components/main/PointList';
 import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { usePointHistoryList } from '@/hooks/usePointHistoryList';
-import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { getCookie } from '@/utils/cookies';
-import { pagePath } from '@/utils/pagePath';
-import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 import { TagType } from '@/apis/tags/response';
+import { getCookie } from '@/utils/cookies';
+import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 
 export interface FilterState {
   name: string;
@@ -138,6 +135,8 @@ export function Home() {
     }
   };
 
+  const { data: availableFeature } = useAvailAbleFeatures();
+
   return (
     <WithNavigatorBar>
       <_Wrapper>
@@ -150,7 +149,7 @@ export function Home() {
         >
           {mode.text}
         </_ModeButton>
-        {mode.type === 'POINTS' && (
+        {mode.type === 'POINTS' && availableFeature?.point_service && (
           <_PointListButton
             onClick={() => {
               ChangeListMode();
@@ -175,6 +174,7 @@ export function Home() {
               endPoint={limitPoint.endPoint}
               checkedTagList={checkedTagList}
               setCheckedTagList={setCheckedTagList}
+              availableFeature={availableFeature}
               onChangeSearchName={onChangeSearchName}
               onChangeSortType={onChangeSortType}
               onClickStudent={onClickStudent}
@@ -191,6 +191,7 @@ export function Home() {
                 studentDetail={studentDetail}
                 studentId={selectedStudentId.filter((i) => i)}
                 onClickStudent={onClickStudent}
+                availableFeature={availableFeature}
                 studentPointHistory={studentPointHistory}
                 studentsPointHistoryList={
                   studentsPointHistoryList.pointHistoryList
