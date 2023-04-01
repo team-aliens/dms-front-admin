@@ -99,10 +99,10 @@ const _Wrapper = styled.div<{
 `;
 
 const _ScrollArea = styled.div`
-  width: 600px;
+  width: 466px;
   height: 600px;
   padding-bottom: 50px;
-  padding-right: 10px;
+  padding: 0 8px 60px 8px;
   overflow: scroll;
 `;
 

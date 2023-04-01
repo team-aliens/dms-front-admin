@@ -100,6 +100,7 @@ export const usePatchStudyRoom = (
 ) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
+  const { closeModal } = useModal();
   return useMutation(
     async () => instance.patch(`${router}/${studyRoomId}`, body),
     {
@@ -110,6 +111,7 @@ export const usePatchStudyRoom = (
           message: '자습실이 수정되었습니다.',
         });
         navigate(`${pagePath.apply.studyRoom.list}`);
+        closeModal();
       },
     },
   );
@@ -178,7 +180,7 @@ export const useDeleteTimeSlots = ({ path }: DeleteStudyTimeSlotsRequest) =>
 export const useGetStudyExcel = () =>
   useMutation(
     () =>
-      instance.post(`${router}/students/file`, {
+      instance.get(`${router}/students/file`, {
         responseType: 'blob',
       }),
     {
@@ -192,9 +194,22 @@ export const useGetStudyExcel = () =>
     },
   );
 
-export const useAddStudyFile = (body: any) =>
-  useMutation(() => instance.post(`${router}/students/file`, body));
-
+export const useAddStudyFile = (body: File) =>
+  useMutation(() => {
+    const fd = new FormData();
+    fd.append(
+      'file',
+      new Blob([JSON.stringify(body)], {
+        type: 'application/json',
+      }),
+    );
+    return instance.get(`${router}/students/file`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      params: fd,
+    });
+  });
 export const useGetStudyExcelSample = () =>
   useMutation(async () => {
     const a = document.createElement('a');

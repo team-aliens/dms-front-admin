@@ -8,12 +8,13 @@ interface PropType {
   closeModal: () => void;
 }
 export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState<File>();
   const { toastDispatch } = useToast();
-  const { mutateAsync: mutataeAddStudyFile } = useAddStudyFile(files);
+  const { mutateAsync: mutataeAddStudyFile } = useAddStudyFile(file);
   const { mutateAsync: mutateStudyExcelSample } = useGetStudyExcelSample();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFiles((prev) => [...prev, e.target.files[0]]);
+    if (!e.target.files[0]) return;
+    setFile(e.target.files[0]);
   };
 
   const handleExampleExcel = () => {
@@ -69,7 +70,7 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
           onChange={onChange}
         />
         <label htmlFor="file">
-          {files.length == 0 ? (
+          {!file ? (
             <>
               <Cloud />
               <button>내 컴퓨터</button>
@@ -77,17 +78,15 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
             </>
           ) : (
             <div className="files">
-              {files.map((file) => (
-                <div className="file">
-                  <FileIcon />
-                  <div>
-                    <Text color={'gray5'}>{file.name}</Text>
-                    <Text size={'bodyS'} color={'gray5'}>
-                      {Math.round(file.size / 1000)}KB
-                    </Text>
-                  </div>
+              <div className="file">
+                <FileIcon />
+                <div>
+                  <Text color={'gray5'}>{file.name}</Text>
+                  <Text size={'bodyS'} color={'gray5'}>
+                    {Math.round(file.size / 1000)}KB
+                  </Text>
                 </div>
-              ))}
+              </div>
             </div>
           )}
         </label>

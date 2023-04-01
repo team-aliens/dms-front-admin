@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button, Add } from '@team-aliens/design-system';
+import { BreadCrumb, Button, Add } from '@team-aliens/design-system';
 import { WithNavigatorBar } from '@/components/WithNavigatorBar';
 import { StudyListOptions } from '@/components/apply/study/ListOptions';
 import { StudyCard } from '@/components/apply/study/StudyCard';
@@ -23,6 +23,7 @@ import CreateStudyTimeModal from '@/components/modals/StudyTimeModal';
 import { DeleteStudyRoomTimeModal } from '@/components/modals/DeleteStudyRoomTime';
 import PrintStudyRoomApplyModal from '@/components/modals/PrintStudyRoomApplyModal';
 import StudyTimeModal from '@/components/modals/StudyTimeModal';
+import { pathToKorean } from '@/router';
 
 export function StudyRoomList() {
   const { closeModal, selectModal, modalState } = useModal();
@@ -108,6 +109,7 @@ export function StudyRoomList() {
 
   return (
     <WithNavigatorBar>
+      <BreadCrumb top={46} left={351} pathToKorean={pathToKorean} />
       <_Wrapper>
         <StudyListOptions
           onChangeDropdown={onChangeApplicationTime}
@@ -194,9 +196,6 @@ const _TimeList = styled.div`
   gap: 12px;
   margin-top: 40px;
   overflow: scroll;
-  ::-webkit-scrollbar {
-    height: 8px;
-  }
 `;
 const _List = styled.ul`
   margin-top: 47px;

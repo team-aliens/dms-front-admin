@@ -62,7 +62,7 @@ export function StudentBox({
       >
         {studentInfo.gcn}
       </Text>
-      <_Tags>
+      <_Tags isSelected={isSelected}>
         {studentInfo.tags?.map((tag) => (
           <Tag key={tag.id} id={tag.id} color={tag.color} name={tag.name} />
         ))}
@@ -105,7 +105,7 @@ const _Wrapper = styled.li<WrapperProps>`
   }
 `;
 
-const _Tags = styled.div`
+const _Tags = styled.div<{ isSelected: boolean }>`
   max-width: 45%;
   display: flex;
   align-items: center;
@@ -113,4 +113,5 @@ const _Tags = styled.div`
   gap: 10px;
   white-space: nowrap;
   overflow: hidden;
+  opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
 `;
