@@ -71,9 +71,6 @@ const _studyTimeSlots = styled.div`
   margin-left: 16px;
   white-space: nowrap;
   overflow-x: scroll;
-  ::-webkit-scrollbar {
-    height: 8px;
-  }
 `;
 const _studyTimeSlot = styled.button<{ isSelect: boolean }>`
   display: flex;

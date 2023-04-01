@@ -100,6 +100,7 @@ export const usePatchStudyRoom = (
 ) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
+  const { closeModal } = useModal();
   return useMutation(
     async () => instance.patch(`${router}/${studyRoomId}`, body),
     {
@@ -110,6 +111,7 @@ export const usePatchStudyRoom = (
           message: '자습실이 수정되었습니다.',
         });
         navigate(`${pagePath.apply.studyRoom.list}`);
+        closeModal();
       },
     },
   );
