@@ -14,7 +14,6 @@ import { PointType } from '@/apis/points';
 import { useStudentPointHistory } from '@/hooks/usePointsApi';
 import { usePointHistoryList } from '@/hooks/usePointHistoryList';
 import { TagType } from '@/apis/tags/response';
-import { getCookie } from '@/utils/cookies';
 import { useAvailAbleFeatures } from '@/hooks/useSchoolsApi';
 
 export interface FilterState {
@@ -73,8 +72,13 @@ export function Home() {
       tag_id: checkedTagList,
     });
 
+  const { data: availableFeature } = useAvailAbleFeatures();
+
   const { data: studentPointHistory, refetch: refetchStudentPointHistory } =
-    useStudentPointHistory(selectedStudentId[selectedStudentId.length - 1]);
+    useStudentPointHistory(
+      selectedStudentId[selectedStudentId.length - 1],
+      availableFeature?.point_service,
+    );
 
   const onChangeSortType = () => {
     const value: SortType = filter.sort === 'GCN' ? 'NAME' : 'GCN';
@@ -135,8 +139,6 @@ export function Home() {
     }
   };
 
-  const { data: availableFeature } = useAvailAbleFeatures();
-
   return (
     <WithNavigatorBar>
       <_Wrapper>
@@ -189,6 +191,7 @@ export function Home() {
               <StudentDetail
                 mode={mode.type}
                 studentDetail={studentDetail}
+                studentList={studentList?.students || []}
                 studentId={selectedStudentId.filter((i) => i)}
                 onClickStudent={onClickStudent}
                 availableFeature={availableFeature}

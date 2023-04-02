@@ -14,7 +14,7 @@ export interface PointHistoryList extends StudentSummary {
   list: StudentPointHistoryType[];
 }
 
-interface PointHistoryListState {
+export interface PointHistoryListState {
   recentlySelectedStudent: StudentSummary;
   pointHistoryList: PointHistoryList[];
 }

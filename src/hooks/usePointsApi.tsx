@@ -19,6 +19,7 @@ export const useAllPointHistory = (pointType: PointType) =>
 
 export const useStudentPointHistory = (
   student_id: string,
+  isActive?: boolean,
   page?: number,
   size?: number,
 ) => {
@@ -31,6 +32,7 @@ export const useStudentPointHistory = (
       onSuccess: (res) => {
         addStudentPointHistory(res?.point_histories);
       },
+      enabled: isActive,
     },
   );
 };
