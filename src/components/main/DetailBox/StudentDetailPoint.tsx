@@ -7,7 +7,7 @@ import { IsUseAbleFeature } from '@/apis/auth/response';
 interface PropsType {
   name: string;
   gcn: string;
-  historyList: StudentPointHistoryType[];
+  historyList?: StudentPointHistoryType[];
   availableFeature: IsUseAbleFeature;
 }
 

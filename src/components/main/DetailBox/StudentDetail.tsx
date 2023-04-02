@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { Text } from '@team-aliens/design-system';
-import { GetStudentDetailResponse } from '@/apis/managers/response';
+import {
+  GetStudentDetailResponse,
+  StudentInfo,
+} from '@/apis/managers/response';
 import { ModeType } from '@/pages/Home';
 import { DetailBox } from './DetailBox';
 import { StudentPointHistoryResponse } from '@/apis/points/response';
@@ -11,6 +14,7 @@ import { IsUseAbleFeature } from '@/apis/auth/response';
 interface Props {
   mode: ModeType;
   studentDetail: GetStudentDetailResponse;
+  studentList: StudentInfo[];
   studentId: string[];
   onClickStudent: (id: string) => void;
   availableFeature: IsUseAbleFeature;
@@ -21,6 +25,7 @@ interface Props {
 export function StudentDetail({
   mode,
   studentDetail,
+  studentList,
   studentId,
   onClickStudent,
   availableFeature,
@@ -65,6 +70,7 @@ export function StudentDetail({
           ) : (
             <HistoryList
               studentId={studentId}
+              studentList={studentList}
               pointHistoryList={studentsPointHistoryList}
               availableFeature={availableFeature}
             />
