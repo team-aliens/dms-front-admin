@@ -125,9 +125,13 @@ export const useStudyRoomList = ({ time_slot }: StudyRoomListRequest) =>
     return data;
   });
 
-export const useSeatTypeList = () =>
+export const useSeatTypeList = (study_room_id?: string) =>
   useQuery(['seatType'], async () => {
-    const { data } = await instance.get<SeatTypeResponse>(`${router}/types`);
+    const { data } = await instance.get<SeatTypeResponse>(
+      `${router}/types${
+        study_room_id ? `?study_room_id=${study_room_id}` : ''
+      }`,
+    );
     return data;
   });
 

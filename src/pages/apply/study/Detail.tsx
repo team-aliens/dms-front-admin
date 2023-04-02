@@ -27,7 +27,7 @@ export function StudyRoomDetail() {
   const { data: detail, refetch } = useStudyRoomDetail(id, timeSlotState);
   const { selectModal, closeModal, modalState } = useModal();
   const deleteStudyRoom = useDeleteStudyRoom(id);
-  const { data: typeList } = useSeatTypeList();
+  const { data: typeList } = useSeatTypeList(id);
 
   useEffect(() => {
     timeSlotId = timeSlotState;
