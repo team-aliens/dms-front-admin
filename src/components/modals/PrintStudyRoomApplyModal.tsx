@@ -1,7 +1,11 @@
 import { Button, Modal, Text } from '@team-aliens/design-system';
 import styled from 'styled-components';
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import { useAddStudyFile, useGetStudyExcelSample } from '@/apis/studyRooms';
+import {
+  useAddStudyFile,
+  useGetStudyExcel,
+  useGetStudyExcelSample,
+} from '@/apis/studyRooms';
 import { useToast } from '@/hooks/useToast';
 
 interface PropType {
@@ -12,6 +16,7 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
   const { toastDispatch } = useToast();
   const { mutateAsync: mutataeAddStudyFile } = useAddStudyFile(file);
   const { mutateAsync: mutateStudyExcelSample } = useGetStudyExcelSample();
+  const { mutate: mutateGetStudyExcel } = useGetStudyExcel();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files[0]) return;
     setFile(e.target.files[0]);
@@ -29,6 +34,7 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
   const addFile = () => {
     mutataeAddStudyFile()
       .then(() => {
+        mutateGetStudyExcel();
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
