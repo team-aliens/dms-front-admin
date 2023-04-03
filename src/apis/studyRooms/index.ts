@@ -184,9 +184,29 @@ export const useDeleteTimeSlots = ({ path }: DeleteStudyTimeSlotsRequest) =>
 export const useGetStudyExcel = () =>
   useMutation(
     () =>
-      instance.get(`${router}/students/file`, {
+      instance.post(`${router}/students/file`, null, {
         responseType: 'blob',
       }),
+      {
+        onSuccess: (res) => {
+          const blob = new Blob([res.data], {
+            type: res.headers['content-type'],
+          });
+          const fileName = res.headers['content-disposition'];
+          fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
+        },
+      },
+  );
+
+export const useAddStudyFile = (body: File) =>
+  useMutation(
+    () => {
+      const fd = new FormData();
+      fd.append('file', body);
+      return instance.post(`${router}/students/file`, fd, {
+        responseType: 'blob',
+      });
+    },
     {
       onSuccess: (res) => {
         const blob = new Blob([res.data], {
@@ -194,26 +214,10 @@ export const useGetStudyExcel = () =>
         });
         const fileName = res.headers['content-disposition'];
         fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
-      },
-    },
+      }
+    }
   );
 
-export const useAddStudyFile = (body: File) =>
-  useMutation(() => {
-    const fd = new FormData();
-    fd.append(
-      'file',
-      new Blob([JSON.stringify(body)], {
-        type: 'application/json',
-      }),
-    );
-    return instance.get(`${router}/students/file`, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      params: fd,
-    });
-  });
 export const useGetStudyExcelSample = () =>
   useMutation(async () => {
     const a = document.createElement('a');
