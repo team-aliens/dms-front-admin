@@ -34,7 +34,6 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
   const addFile = () => {
     mutataeAddStudyFile()
       .then(() => {
-        mutateGetStudyExcel();
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
@@ -45,7 +44,7 @@ export default function PrintStudyRoomApplyModal({ closeModal }: PropType) {
         toastDispatch({
           toastType: 'ERROR',
           actionType: 'APPEND_TOAST',
-          message: '파일이 실패되었습니다.',
+          message: '파일 형식이 잘못되었습니다.',
         });
       })
       .finally(() => {
