@@ -41,7 +41,7 @@ export function AppliedStudentList({ studentList }: PropsType) {
               {item.type?.name}
             </Text>
             <Text size="captionM" color="gray10">
-              {item.student?.gcn} {item.student?.name}
+              {item.student?.gcn}<br/>{item.student?.name}
             </Text>
           </_Row>
         ))}
