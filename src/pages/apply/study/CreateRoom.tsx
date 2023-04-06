@@ -14,9 +14,10 @@ import {
 } from '@/apis/studyRooms';
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
-import { Seat } from '@/apis/studyRooms/request';
+import { Seat, StudyRoomErrorMessage } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
+import { useObj } from '@/hooks/useObj';
 
 export function CreateRoom() {
   const [seatSetting, setSeatSetting] = useState<boolean>(false);
@@ -33,8 +34,17 @@ export function CreateRoom() {
     initalValue,
   } = useStudyRoom();
 
-  const { name, floor, total_height_size, total_width_size, ...rest } =
-    studyRoomState;
+  const {
+    name,
+    floor,
+    total_height_size,
+    total_width_size,
+    east_description,
+    west_description,
+    north_description,
+    south_description,
+    ...rest
+  } = studyRoomState;
 
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
 
@@ -43,6 +53,47 @@ export function CreateRoom() {
   useEffect(() => {
     initalValue();
   }, []);
+
+  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
+    useObj<StudyRoomErrorMessage>({
+      floor: '',
+      name: '',
+      eastDescription: '',
+      westDescription: '',
+      southDescription: '',
+      northDescription: '',
+    });
+
+  const errorChange = () => {
+    if (!floor || floor <= 0)
+      changeErrorMessage('floor', '1 이상이어야 합니다.');
+    else changeErrorMessage('floor', '');
+    if (!name) changeErrorMessage('name', '공백일 수 없습니다.');
+    else changeErrorMessage('name', '');
+    if (!east_description)
+      changeErrorMessage('eastDescription', '공백일 수 없습니다.');
+    else changeErrorMessage('eastDescription', '');
+    if (!west_description)
+      changeErrorMessage('westDescription', '공백일 수 없습니다.');
+    else changeErrorMessage('westDescription', '');
+    if (!south_description)
+      changeErrorMessage('southDescription', '공백일 수 없습니다.');
+    else changeErrorMessage('southDescription', '');
+    if (!north_description)
+      changeErrorMessage('northDescription', '공백일 수 없습니다.');
+    else changeErrorMessage('northDescription', '');
+    if (
+      floor &&
+      floor > 0 &&
+      name &&
+      east_description &&
+      west_description &&
+      north_description &&
+      south_description
+    ) {
+      return true;
+    } else return false;
+  };
 
   const createStudyRoom = useCreateStudyRoom({
     ...creatStudyRoomRequest,
@@ -83,6 +134,7 @@ export function CreateRoom() {
       number: alreadyUsedValue?.number || null,
     });
   };
+
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
@@ -108,9 +160,15 @@ export function CreateRoom() {
           name={name}
           total_width_size={total_width_size}
           total_height_size={total_height_size}
+          errorMessages={errorMessages}
+          errorChange={errorChange}
         />
         <_Body>
           <StudyRoom
+            east_description={east_description}
+            west_description={west_description}
+            north_description={north_description}
+            south_description={south_description}
             {...rest}
             seats={studyRoomState.seats.map(
               (i): SeatPreview => ({
@@ -128,8 +186,7 @@ export function CreateRoom() {
             total_height_size={total_height_size}
           />
           <CreateStudyRoomDetailOptions
-            setTimeSlotId={(ids: string[]) => {
-            }}
+            setTimeSlotId={(ids: string[]) => {}}
             onChangeSegmented={onChangeSex}
             onChangeInput={onChangeInput}
             onChangeGrade={onChangeGrade}
@@ -137,6 +194,12 @@ export function CreateRoom() {
             isCreateRoom={true}
             createStudyRoom={createStudyRoom.mutate}
             default_time_slots_id={[]}
+            errorMessages={errorMessages}
+            errorChange={errorChange}
+            east_description={east_description}
+            west_description={west_description}
+            north_description={north_description}
+            south_description={south_description}
             {...rest}
           />
         </_Body>

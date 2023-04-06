@@ -31,6 +31,15 @@ export interface StudyRoom {
   time_slots: Slots[];
 }
 
+export interface StudyRoomErrorMessage {
+  floor: string;
+  name: string;
+  eastDescription: string;
+  westDescription: string;
+  southDescription: string;
+  northDescription: string;
+}
+
 export interface CreateStudyRoomRequest extends StudyRoom {
   seats: Seat[];
 }

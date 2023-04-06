@@ -5,6 +5,7 @@ import { useDropDown } from '@/hooks/useDropDown';
 import { TimePressButton } from './PressTimeButton';
 import { TimePicker } from './TimePicker';
 import { useToast } from '@/hooks/useToast';
+import { AxiosError } from 'axios';
 import {
   useCreateTimeSlots,
   useEditTimeSlots,
@@ -202,7 +203,10 @@ export function SetUseTimeModal({
       buttonList={[
         <Button
           disabled={selectList.length !== 0 ? false : true}
-          onClick={createStudyRoom}
+          onClick={() => {
+            createStudyRoom();
+            close();
+          }}
         >
           {isCreateRoom ? '생성' : '수정'}
         </Button>,

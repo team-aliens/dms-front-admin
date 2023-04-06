@@ -2,6 +2,7 @@ import { pagePath } from '@/utils/pagePath';
 import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../axios';
+import { AxiosError } from 'axios';
 import {
   ApplicationTimeResponse,
   CreateStudyRoomResponse,
@@ -18,6 +19,7 @@ import {
   DeleteStudyTimeSlotsRequest,
   EditStudyTimeSlotsRequest,
   SetApplicationTimeRequest,
+  StudyRoomErrorMessage,
   StudyRoomListRequest,
 } from '@/apis/studyRooms/request';
 import { useToast } from '@/hooks/useToast';
@@ -35,19 +37,89 @@ export const useGetApplicationTime = () =>
     return data;
   });
 
-export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
+interface CustomError extends Error {
+  response?: {
+    data: {
+      field_error?: StudyRoomErrorMessage;
+      status?: number;
+    };
+    status: number;
+    headers: string;
+  };
+}
+
+export const useCreateStudyRoom = (
+  body: CreateStudyRoomRequest,
+) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
   return useMutation(
     async () => instance.post<CreateStudyRoomResponse>(router, body),
     {
-      onSuccess: (response) => {
+      onSuccess: () => {
         toastDispatch({
           toastType: 'SUCCESS',
           actionType: 'APPEND_TOAST',
           message: '자습실이 생성되었습니다.',
         });
         navigate(`${pagePath.apply.studyRoom.list}`);
+      },
+      onError: (error: unknown) => {
+        const customErr = error as CustomError;
+        console.log(customErr.response.data.field_error);
+
+        if (customErr.response.data) {
+          switch (customErr.response.status) {
+            case 400: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '값이 잘못되었습니다.',
+              });
+              break;
+            }
+            case 401: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '계정오류',
+              });
+              break;
+            }
+            case 403: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '권한이 없습니다.',
+              });
+              break;
+            }
+            case 409: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '자습실이 이미 존재합니다',
+              });
+              break;
+            }
+            case 429: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '너무 많이 요청되었습니다.',
+              });
+              break;
+            }
+            default: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: `ERROR CODE : ${customErr.response.status}`,
+              });
+            }
+          }
+          
+        }
       },
     },
   );
@@ -113,6 +185,59 @@ export const usePatchStudyRoom = (
         navigate(`${pagePath.apply.studyRoom.list}`);
         closeModal();
       },
+      onError: (error: AxiosError) => {
+        if (error.request.status) {
+          switch (error.request.status) {
+            case 400: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '값이 잘못되었습니다.',
+              });
+              break;
+            }
+            case 401: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '계정오류',
+              });
+              break;
+            }
+            case 403: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '권한이 없습니다.',
+              });
+              break;
+            }
+            case 409: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '자습실이 이미 존재합니다',
+              });
+              break;
+            }
+            case 429: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '너무 많이 요청되었습니다.',
+              });
+              break;
+            }
+            default: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: `ERROR CODE : ${error.request.status}`,
+              });
+            }
+          }
+        }
+      },
     },
   );
 };
@@ -159,8 +284,9 @@ export const useStudyTimeSlots = () =>
 export const useCreateTimeSlots = (
   body: CreateStudyTimeSlotsRequest,
   options?: MutationOptions,
-) =>
-  useMutation(
+) => {
+  const { toastDispatch } = useToast();
+  return useMutation(
     () =>
       instance.post<CreateStudyTimeSlotsResponse>(
         `${router}/time-slots`,
@@ -168,13 +294,86 @@ export const useCreateTimeSlots = (
       ),
     {
       ...options,
+      onError: (error: AxiosError) => {
+        if (error.request.status) {
+          switch (error.request.status) {
+            case 400: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '값이 잘못되었습니다.',
+              });
+            }
+            case 401: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '계정오류',
+              });
+            }
+            case 403: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '권한이 없습니다.',
+              });
+            }
+            case 409: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '이미 존재합니다.',
+              });
+            }
+          }
+        }
+      },
     },
   );
+};
 
-export const useEditTimeSlots = ({ path, body }: EditStudyTimeSlotsRequest) =>
-  useMutation(() =>
-    instance.patch(`${router}/time-slots/${path.time_slot_id}`, body),
+export const useEditTimeSlots = ({ path, body }: EditStudyTimeSlotsRequest) => {
+  const { toastDispatch } = useToast();
+  return useMutation(
+    () => instance.patch(`${router}/time-slots/${path.time_slot_id}`, body),
+    {
+      onError: (error: AxiosError) => {
+        if (error.request.status) {
+          switch (error.request.status) {
+            case 400: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '값이 잘못되었습니다.',
+              });
+            }
+            case 401: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '계정오류',
+              });
+            }
+            case 403: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '권한이 없습니다.',
+              });
+            }
+            case 409: {
+              toastDispatch({
+                toastType: 'ERROR',
+                actionType: 'APPEND_TOAST',
+                message: '이미 존재합니다.',
+              });
+            }
+          }
+        }
+      },
+    },
   );
+};
 
 export const useDeleteTimeSlots = ({ path }: DeleteStudyTimeSlotsRequest) =>
   useMutation(() =>
@@ -187,15 +386,15 @@ export const useGetStudyExcel = () =>
       instance.post(`${router}/students/file`, null, {
         responseType: 'blob',
       }),
-      {
-        onSuccess: (res) => {
-          const blob = new Blob([res.data], {
-            type: res.headers['content-type'],
-          });
-          const fileName = res.headers['content-disposition'];
-          fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
-        },
+    {
+      onSuccess: (res) => {
+        const blob = new Blob([res.data], {
+          type: res.headers['content-type'],
+        });
+        const fileName = res.headers['content-disposition'];
+        fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
       },
+    },
   );
 
 export const useAddStudyFile = (body: File) =>
@@ -214,8 +413,8 @@ export const useAddStudyFile = (body: File) =>
         });
         const fileName = res.headers['content-disposition'];
         fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
-      }
-    }
+      },
+    },
   );
 
 export const useGetStudyExcelSample = () =>

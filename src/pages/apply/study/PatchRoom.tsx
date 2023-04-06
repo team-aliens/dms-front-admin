@@ -17,11 +17,12 @@ import { SeatSetting } from '@/components/apply/study/SeatSetting';
 
 import { AddSeatType } from '@/components/modals/AddSeatType';
 import { useStudyRoom } from '@/hooks/useStudyRoom';
-import { Seat } from '@/apis/studyRooms/request';
+import { Seat, StudyRoomErrorMessage } from '@/apis/studyRooms/request';
 import { SeatPreview } from '@/apis/studyRooms/response';
 import { pathToKorean } from '@/router';
 import { pagePath } from '@/utils/pagePath';
 import { useForm } from '@/hooks/useForm';
+import { useObj } from '@/hooks/useObj';
 
 export const PatchRoom = () => {
   const { id } = useParams();
@@ -54,8 +55,17 @@ export const PatchRoom = () => {
     initalValue(detail);
   }, [detail]);
 
-  const { name, floor, total_height_size, total_width_size, ...rest } =
-    studyRoomState;
+  const {
+    name,
+    floor,
+    total_height_size,
+    total_width_size,
+    east_description,
+    west_description,
+    south_description,
+    north_description,
+    ...rest
+  } = studyRoomState;
 
   const { seat, ...creatStudyRoomRequest } = studyRoomState;
 
@@ -106,6 +116,42 @@ export const PatchRoom = () => {
       navigate(pagePath.apply.studyRoom.list);
     });
   };
+
+  const { obj: errorMessages, changeObjectValue: changeErrorMessage } =
+    useObj<StudyRoomErrorMessage>({
+      floor: '',
+      name: '',
+      eastDescription: '',
+      westDescription: '',
+      southDescription: '',
+      northDescription: '',
+    });
+
+  const errorChange = () => {
+    if (!floor || floor === 0)
+      changeErrorMessage('floor', '1 이상이어야 합니다.');
+    if (!name) changeErrorMessage('name', '공백일 수 없습니다.');
+    if (!east_description)
+      changeErrorMessage('eastDescription', '공백일 수 없습니다.');
+    if (!west_description)
+      changeErrorMessage('westDescription', '공백일 수 없습니다.');
+    if (!north_description)
+      changeErrorMessage('southDescription', '공백일 수 없습니다.');
+    if (!south_description)
+      changeErrorMessage('northDescription', '공백일 수 없습니다.');
+    if (
+      floor &&
+      floor !== 0 &&
+      name &&
+      east_description &&
+      west_description &&
+      north_description &&
+      south_description
+    ) {
+      return true;
+    } else return false;
+  };
+
   return (
     <WithNavigatorBar>
       {modalState.selectedModal === 'ADD_SEAT_TYPE' && (
@@ -131,9 +177,15 @@ export const PatchRoom = () => {
           name={name}
           total_width_size={total_width_size}
           total_height_size={total_height_size}
+          errorMessages={errorMessages}
+          errorChange={errorChange}
         />
         <_Body>
           <StudyRoom
+            east_description={east_description}
+            west_description={west_description}
+            north_description={north_description}
+            south_description={south_description}
             {...rest}
             seats={studyRoomState.seats.map(
               (i): SeatPreview => ({
@@ -161,6 +213,12 @@ export const PatchRoom = () => {
             onChangeStudyTime={onChangeStudyTime}
             default_time_slots_id={default_time_slots_id()}
             isCreateRoom={false}
+            errorMessages={errorMessages}
+            errorChange={errorChange}
+            east_description={east_description}
+            west_description={west_description}
+            north_description={north_description}
+            south_description={south_description}
             patch
             {...rest}
           />

@@ -5,8 +5,12 @@ import {
   Input,
   Button,
 } from '@team-aliens/design-system';
-import React, { ChangeEvent } from 'react';
-import { GradeType, SexType } from '@/apis/studyRooms/request';
+import React, { ChangeEvent, useState } from 'react';
+import {
+  GradeType,
+  SexType,
+  StudyRoomErrorMessage,
+} from '@/apis/studyRooms/request';
 import {
   gradeTypeToKorean,
   SexToKorean,
@@ -35,6 +39,8 @@ interface PropsType {
   isCreateRoom: boolean;
   setTimeSlotId: (ids: string[]) => void;
   default_time_slots_id: string[];
+  errorMessages: StudyRoomErrorMessage;
+  errorChange: () => boolean;
 }
 
 export function CreateStudyRoomDetailOptions({
@@ -52,8 +58,11 @@ export function CreateStudyRoomDetailOptions({
   isCreateRoom,
   setTimeSlotId,
   default_time_slots_id,
+  errorMessages,
+  errorChange,
 }: PropsType) {
   const { modalState, selectModal, closeModal } = useModal();
+
   return (
     <_Wrapper>
       <SegmentedBtn
@@ -76,6 +85,7 @@ export function CreateStudyRoomDetailOptions({
           value={east_description}
           placeholder="ex) 동쪽"
           width={160}
+          errorMsg={errorMessages?.eastDescription}
           label="동쪽"
         />
         <Input
@@ -85,6 +95,7 @@ export function CreateStudyRoomDetailOptions({
           placeholder="ex) 서쪽"
           width={160}
           margin={['left', 10]}
+          errorMsg={errorMessages?.westDescription}
           label="서쪽"
         />
       </_ColumWrapper>
@@ -95,6 +106,7 @@ export function CreateStudyRoomDetailOptions({
           value={south_description}
           placeholder="ex) 남쪽"
           width={160}
+          errorMsg={errorMessages?.southDescription}
           label="남쪽"
         />
         <Input
@@ -104,6 +116,7 @@ export function CreateStudyRoomDetailOptions({
           placeholder="ex) 북쪽"
           width={160}
           margin={['left', 10]}
+          errorMsg={errorMessages?.northDescription}
           label="북쪽"
         />
       </_RowWrapper>
@@ -114,7 +127,9 @@ export function CreateStudyRoomDetailOptions({
           ['left', 'auto'],
           ['top', 'auto'],
         ]}
-        onClick={() => selectModal('SET_STUDY_TIME')}
+        onClick={() => {
+          errorChange() ? selectModal('SET_STUDY_TIME') : '';
+        }}
       >
         다음
       </Button>

@@ -4,10 +4,14 @@ export const useObj = <T extends object>(initialState: T) => {
   const [obj, setObj] = useState<T>(initialState);
 
   const changeObjectValue = (name: keyof T, value: string) => {
-    setObj({
-      ...obj,
-      [name]: value,
+    setObj((prev: T) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
+    console.log(name, value);
+    console.log(obj);
   };
   return {
     obj,
