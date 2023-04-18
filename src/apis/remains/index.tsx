@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from '@/apis/axios';
+import { instance } from '@/apis';
 import {
   createRemainBody,
   EditRemainBody,

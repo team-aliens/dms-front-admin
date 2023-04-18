@@ -1,7 +1,7 @@
 import { pagePath } from '@/utils/pagePath';
 import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { instance } from '../axios';
+import { instance } from '..';
 import { AxiosError } from 'axios';
 import {
   ApplicationTimeResponse,
@@ -48,9 +48,7 @@ interface CustomError extends Error {
   };
 }
 
-export const useCreateStudyRoom = (
-  body: CreateStudyRoomRequest,
-) => {
+export const useCreateStudyRoom = (body: CreateStudyRoomRequest) => {
   const navigate = useNavigate();
   const { toastDispatch } = useToast();
   return useMutation(
@@ -118,7 +116,6 @@ export const useCreateStudyRoom = (
               });
             }
           }
-          
         }
       },
     },

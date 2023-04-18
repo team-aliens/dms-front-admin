@@ -1,5 +1,5 @@
 import { MutationOptions, useMutation } from 'react-query';
-import { instance } from '../axios';
+import { instance } from '..';
 import { TagListResponse } from './response';
 const router = '/tags';
 

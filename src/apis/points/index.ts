@@ -2,7 +2,7 @@ import { getFileNameFromContentDisposition } from './../../utils/decoder';
 import { MutationOptions, useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '@/hooks/useModal';
-import { instance } from '../axios';
+import { instance } from '..';
 import {
   AllPointListResponse,
   AllPointsOptionResponse,

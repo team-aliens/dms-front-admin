@@ -1,9 +1,0 @@
-addReviewers: true
-
-addAssignees: author
-
-reviewers:
-  - KOVELO2005
-  - paperdeer
-
-numberOfReviewers: 0

@@ -1,5 +1,5 @@
 import { setUseableFeatures } from './../../utils/setUseableFeatures';
-import { instance } from '../axios';
+import { instance } from '..';
 import {
   PostEmailAuthCodeRequest,
   LoginRequest,
