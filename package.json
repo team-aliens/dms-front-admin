@@ -77,10 +77,10 @@
     "styled-normalize": "^8.0.7"
   },
   "lint-staged": {
-    "src/*.{ts,tsx}": [
-      "yarn prettier --write ."
-    ],
-    "*.{js,css,md}": "prettier --write"
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.0"
 }
