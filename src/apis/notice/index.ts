@@ -1,5 +1,5 @@
 import { WriteNoticeRequest } from '@/apis/notice/request';
-import { instance } from '@/apis/axios';
+import { instance } from '@/apis';
 import {
   NoticeDetailResponse,
   NoticeListResponse,

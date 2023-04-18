@@ -14,6 +14,7 @@ instance.interceptors.request.use(
       ...config,
     };
     if (accessToken) {
+      //@ts-ignore
       returnConfig.headers = {
         Authorization: `Bearer ${accessToken}`,
       };

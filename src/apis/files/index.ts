@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from '../axios';
+import { instance } from '..';
 import { FileUploadResponse } from '@/apis/files/response';
 
 const router = '/files';
