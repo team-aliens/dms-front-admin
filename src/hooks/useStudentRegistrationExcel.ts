@@ -19,19 +19,11 @@ export const useStudentAccountIssuance = (
       closeModal();
     },
     onError: (e: AxiosError<{ message: string }>) => {
-      if (e.response.data.message === 'Bad Excel Format') {
-        toastDispatch({
-          actionType: 'APPEND_TOAST',
-          toastType: 'ERROR',
-          message: '올바른 데이터 형식이 아닙니다.',
-        });
-      } else {
-        toastDispatch({
-          actionType: 'APPEND_TOAST',
-          toastType: 'ERROR',
-          message: '중복된 데이터가 존재합니다.',
-        });
-      }
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'ERROR',
+        message: e.message,
+      });
     },
   });
 };

@@ -13,6 +13,8 @@ import { PointType } from '@/apis/points';
 import { useModal } from './useModal';
 import { pagePath } from '@/utils/pagePath';
 import { TagType } from '@/apis/tags/response';
+import {uploadRoomInfoFile, uploadStudentInfoFile} from '@/apis/managers/index';
+import { AxiosError } from "axios";
 
 interface PropsType {
   selectedId: string;
@@ -81,5 +83,56 @@ export const useDeleteStudent = (
 
   return useMutation(() => deleteStudent(student_id), {
     ...options,
+  });
+};
+
+export const useUploadStudentInfoFile = (
+  file: FileList[0],
+  closeModal: () => void,
+) => {
+  const { toastDispatch } = useToast();
+
+  return useMutation(() => uploadStudentInfoFile(file), {
+    onSuccess: () => {
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'SUCCESS',
+        message: '엑셀이 업로드 되었습니다.',
+      });
+      closeModal();
+    },
+    onError: (e: AxiosError<{ message: string }>) => {
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'ERROR',
+        message: e.response.data.message,
+      });
+    },
+  });
+};
+
+export const useUploadRoomInfoFile = (
+  file: FileList[0],
+  closeModal: () => void,
+) => {
+  const { toastDispatch } = useToast();
+
+  return useMutation(() => uploadRoomInfoFile(file), {
+    onSuccess: () => {
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'SUCCESS',
+        message: '엑셀이 업로드 되었습니다.',
+      });
+      closeModal();
+    },
+    onError: (e: AxiosError<{ message: string }>) => {
+      console.log(e);
+      toastDispatch({
+        actionType: 'APPEND_TOAST',
+        toastType: 'ERROR',
+        message: e.response.data.message,
+      });
+    },
   });
 };

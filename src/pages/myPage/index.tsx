@@ -15,12 +15,17 @@ import { useMyProfileInfo } from '@/hooks/useMangersApis';
 import { StudentRegistrationExcel } from '@/components/modals/StudentRegistrationExcel';
 import { pagePath } from '@/utils/pagePath';
 import { SchoolCheckingCodeModal } from '@/components/modals/SchoolCheckingCode';
+import { StudentEditRoom } from '@/components/modals/student/StudentEditRoom';
+import { StudentEditGrade } from '@/components/modals/student/StudentEditGrade';
 
 export function MyPage() {
   const { modalState, selectModal, closeModal } = useModal();
   const openNewQuestionModal = () => selectModal('NEW_QNA');
   const openLogoutModal = () => selectModal('LOGOUT');
   const openStudentExelModal = () => selectModal('STUDENT_EXEL');
+  const openStudentEditRoomExcel = () => selectModal('STUDENT_EDIT_ROOM_EXCEL');
+  const openStudentEditGradeExcel = () =>
+    selectModal('STUDENT_EDIT_GRADE_EXCEL');
 
   const { onHandleChange: onChange, state: qnaState } =
     useForm<ChangeSchoolQnARequest>({
@@ -79,12 +84,26 @@ export function MyPage() {
               answer={myProfileData?.answer}
             />
           </_CardWrapper>
-          <_StudentIssuance onClick={openStudentExelModal}>
-            <Text display="block" size="titleS">
-              학생 등록
-            </Text>
-            <Arrow size={24} direction="right" />
-          </_StudentIssuance>
+          <_StudentExcelWrapper>
+            <_StudentIssuance onClick={openStudentExelModal}>
+              <Text display="block" size="titleS">
+                학생 등록
+              </Text>
+              <Arrow size={24} direction="right" />
+            </_StudentIssuance>
+            <_StudentEditWrapper>
+              <_StudentEdit onClick={openStudentEditRoomExcel}>
+                <Text display="block" size="titleS">
+                  호실 정보 변경
+                </Text>
+              </_StudentEdit>
+              <_StudentEdit onClick={openStudentEditGradeExcel}>
+                <Text display="block" size="titleS">
+                  학년 정보 변경
+                </Text>
+              </_StudentEdit>
+            </_StudentEditWrapper>
+          </_StudentExcelWrapper>
         </_Wrapper>
       </WithNavigatorBar>
       {modalState.selectedModal === 'NEW_QNA' && (
@@ -107,6 +126,12 @@ export function MyPage() {
       )}
       {modalState.selectedModal === 'STUDENT_EXEL' && (
         <StudentRegistrationExcel closeModal={closeModal} />
+      )}
+      {modalState.selectedModal === 'STUDENT_EDIT_ROOM_EXCEL' && (
+        <StudentEditRoom closeModal={closeModal} />
+      )}
+      {modalState.selectedModal === 'STUDENT_EDIT_GRADE_EXCEL' && (
+        <StudentEditGrade closeModal={closeModal} />
       )}
     </>
   );
@@ -137,7 +162,10 @@ const _PasswordChange = styled(Link)`
     margin-right: 60px;
   }
 `;
-
+const _StudentExcelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const _StudentIssuance = styled.div`
   width: 500px;
   height: 70px;
@@ -150,7 +178,23 @@ const _StudentIssuance = styled.div`
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
   border-radius: 4px;
 `;
-
+const _StudentEditWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+`;
+const _StudentEdit = styled.div`
+  width: 233px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 24px;
+  margin-top: 25px;
+  box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);
+  border-radius: 4px;
+`;
 const _Logout = styled(Text)`
   width: 250px;
   box-shadow: 0 1px 20px rgba(204, 204, 204, 0.24);

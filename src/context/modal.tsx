@@ -29,6 +29,8 @@ export type SelectedModalType =
   | 'GIVE_TAG_OPTIONS'
   | 'VIEW_TAG_OPTIONS'
   | 'DELETE_TAG'
+  | 'STUDENT_EDIT_ROOM_EXCEL'
+  | 'STUDENT_EDIT_GRADE_EXCEL'
   | '';
 
 interface ModalState {

@@ -8,6 +8,9 @@ import {
 import { ResetPasswordRequest } from './request';
 import { PointType } from '../points';
 import { TagType } from '../tags/response';
+import { useMutation } from 'react-query';
+import fileSaver from 'file-saver';
+import { getFileNameFromContentDisposition } from '@/utils/decoder';
 
 const router = '/managers';
 
@@ -66,6 +69,44 @@ export const deleteStudent = async (student_id: string) => {
 export const getMyProfile = async () => {
   const { data } = await instance.get<GetMyProfileResponse>(
     `${router}/profile`,
+  );
+  return data;
+};
+
+export const getStudentInfoExcel = () =>
+  useMutation(
+    () =>
+      instance.get(`${router}/students/file`, {
+        responseType: 'blob',
+      }),
+    {
+      onSuccess: (res) => {
+        const blob = new Blob([res.data], {
+          type: res.headers['content-type'],
+        });
+        const fileName = res.headers['content-disposition'];
+
+        fileSaver.saveAs(blob, getFileNameFromContentDisposition(fileName));
+      },
+    },
+  );
+
+export const uploadStudentInfoFile = async (file: FileList[0]) => {
+  const reqeustFile = new FormData();
+  reqeustFile.append('file', file);
+  const { data } = await instance.post(
+    `${router}/students/file/gcn`,
+    reqeustFile,
+  );
+  return data;
+};
+
+export const uploadRoomInfoFile = async (file: FileList[0]) => {
+  const reqeustFile = new FormData();
+  reqeustFile.append('file', file);
+  const { data } = await instance.post(
+    `${router}/students/file/room`,
+    reqeustFile,
   );
   return data;
 };
