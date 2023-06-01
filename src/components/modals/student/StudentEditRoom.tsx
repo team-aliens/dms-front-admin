@@ -26,9 +26,7 @@ export const StudentEditRoom = ({ closeModal }: PropsType) => {
           취소
         </Button>,
         <Button
-          onClick={() => {
-            studentAccount.mutate();
-          }}
+          onClick={() => {studentAccount.mutate();}}
         >
           확인
         </Button>,
