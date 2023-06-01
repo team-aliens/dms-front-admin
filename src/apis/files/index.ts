@@ -21,3 +21,23 @@ export const studentAccountIssuance = async (file: FileList[0]) => {
   );
   return data;
 };
+
+export const studentEditRoom = async (file: FileList[0]) => {
+  const reqeustFile = new FormData();
+  reqeustFile.append('file', file);
+  const { data } = await instance.post<AxiosResponse>(
+    `${router}/students/file/room`,
+    reqeustFile,
+  );
+  return data;
+};
+
+export const studentEditGrade = async (file: FileList[0]) => {
+  const reqeustFile = new FormData();
+  reqeustFile.append('file', file);
+  const { data } = await instance.post<AxiosResponse>(
+    `${router}/students/file/gcn`,
+    reqeustFile,
+  );
+  return data;
+};
