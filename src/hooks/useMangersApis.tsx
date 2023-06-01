@@ -127,7 +127,6 @@ export const useUploadRoomInfoFile = (
       closeModal();
     },
     onError: (e: AxiosError<{ message: string }>) => {
-      console.log(e);
       toastDispatch({
         actionType: 'APPEND_TOAST',
         toastType: 'ERROR',
